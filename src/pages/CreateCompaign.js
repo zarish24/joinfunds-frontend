@@ -20,6 +20,7 @@ const CreateCompaign = () => {
   });
 
   const titleOptions = [
+    "Select Title",
     "Medical",
     "Memorial",
     "Emergency",

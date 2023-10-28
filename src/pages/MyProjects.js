@@ -14,6 +14,7 @@ const MyProjects = () => {
   const [campaignStatus, setCampaignStatus] = useState("Campaign Status");
   const [campaigns, setCampaigns] = useState([]);
   const [page, setPage] = useState(1);
+  
   const [searchText, setSearchText] = useState('');
 
   useEffect(() => {

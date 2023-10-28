@@ -43,6 +43,7 @@ const FundraiserDetail = () => {
   const [campaign, setCampaign] = useState({});
   const [daysLeft, setDaysLeft] = useState(0);
   const [user_id, setUser_id] = useState("");
+  const [paymentUpdate, setPaymentUpdate] = useState(false);
   const [formData, setFormData] = useState({
     compain_id: id,
     amount: 0,
@@ -65,6 +66,7 @@ const FundraiserDetail = () => {
     )
     .then((res) => {
       if (res.status === 200 || res.status === 201) {
+        setPaymentUpdate(true)
         window.alert("Transaction has been completed successfully!");
         setFormData({
             ...formData,
@@ -72,16 +74,22 @@ const FundraiserDetail = () => {
           });
         setModalDonate(false)
       } else {
-        window.alert("Some issue in transaction!");
+        window.alert(res.message);
       }
     })
     .catch((error) => {
-      window.alert(error);
+      console.error("API request failed", error);
+      setFormData({
+        ...formData,
+        ["amount"]: 0,
+      });
+      window.alert(error?.response?.data?.message);
+      setModalDonate(false)
     });
   // setCampaigns(response.data); // Set the campaign data in state
 } catch (error) {
   window.alert("API request failed", error);
-  console.error("API request failed", error);
+  console.error("API request failed", error.message);
 }
   };
   useEffect(() => {
@@ -139,7 +147,7 @@ const FundraiserDetail = () => {
     fetchData(id);
 
     // Call the async function
-  }, []);
+  }, [paymentUpdate]);
   return (
     <>
       <div className="page-content bg-white">
@@ -432,19 +440,19 @@ const FundraiserDetail = () => {
                   {/* <!-- Top Donors --> */}
                   <div className="widget style-1 widget_avatar">
                     <div className="widget-title">
-                      <h5 className="title">Top Donors</h5>
+                      <h5 className="title">Donors List</h5>
                     </div>
                     <div className="avatar-wrapper">
-                      {donorsBlog.map((item, ind) => (
+                      {campaign?.donors_detail?.map((item, ind) => (
                         <div className="avatar-item" key={ind}>
                           <div className="avatar-media">
-                            <img src={item.image} alt="" />
+                            <img src={item?.profileImage ? item?.profileImage : avat5 } alt="" />
                           </div>
                           <div className="avatar-info">
                             <h6 className="title">
-                              <Link to={"#"}>{item.title}</Link>
+                              <Link to={"#"}>{item.firstName} {item.lastName}</Link>
                             </h6>
-                            <span className="donors-item">{item.price}</span>
+                            <span className="donors-item">$ {item.donated_amount}</span>
                           </div>
                         </div>
                       ))}

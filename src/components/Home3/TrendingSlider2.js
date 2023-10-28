@@ -17,15 +17,18 @@ import avat2 from './../../assets/images/avatar/avatar2.jpg';
 import avat3 from './../../assets/images/avatar/avatar3.jpg';
 
 
-const dataBlog = [
-	{title:"He Created the Web. Now He’s Out to Remake", subtitle:"EDUCATION", image: project1, image2:avat1, autor:"Adam Jordon", progres:"50%"},
-	{title:"Online legal advice for asylum seekers in Greece", subtitle:"HEALTH", image: project2, image2: avat2, autor:"KK Sharma", progres:"70%"},
-	{title:"Things parents learned for they jids in 2020", subtitle:"TECHNOLOGY", image: project3, image2: avat3, autor:"Tom wilson", progres:"90%"},
-	{title:"He Created the Web. Now He’s Out to Remake", subtitle:"EDUCATION", image: project4, image2: avat1, autor:"Adam Jordon", progres:"60%"},
-    {title:"Online legal advice for asylum seekers in Greece", subtitle:"HEALTH", image: project5, image2: avat2, autor:"KK Sharma", progres:"70%"},
-];
+// const dataBlog = [
+// 	{title:"He Created the Web. Now He’s Out to Remake", subtitle:"EDUCATION", image: project1, image2:avat1, autor:"Adam Jordon", progres:"50%"},
+// 	{title:"Online legal advice for asylum seekers in Greece", subtitle:"HEALTH", image: project2, image2: avat2, autor:"KK Sharma", progres:"70%"},
+// 	{title:"Things parents learned for they jids in 2020", subtitle:"TECHNOLOGY", image: project3, image2: avat3, autor:"Tom wilson", progres:"90%"},
+// 	{title:"He Created the Web. Now He’s Out to Remake", subtitle:"EDUCATION", image: project4, image2: avat1, autor:"Adam Jordon", progres:"60%"},
+//     {title:"Online legal advice for asylum seekers in Greece", subtitle:"HEALTH", image: project5, image2: avat2, autor:"KK Sharma", progres:"70%"},
+// ];
 
-const TrendingSlider2 = () => {
+const TrendingSlider2 = (props) => {
+    const dataBlog = props.campaigns
+    
+
     return (
         <> 
             <Swiper className="recent-blog2"
@@ -59,21 +62,22 @@ const TrendingSlider2 = () => {
                
 				{dataBlog.map((d,i)=>(
 					<SwiperSlide key={i}>	
+                    {console.log("value of d",d)}
                         <div className="dz-card style-5">
                             <div className="dz-media">
-                                <Link to={"/fundraiser-detail"}><img src={d.image} alt="" /></Link>
+                                <Link to={`/fundraiser-detail/${d?._id}`}><img src={d?.campaign_image} alt="" /></Link>
                             </div>
                             <div className="dz-info">
                                 <ul className="dz-category">
-                                    <li><Link to={"#"}>{d.subtitle}</Link></li>
+                                    <li><Link to={"#"}>{d?.subtitle}</Link></li>
                                 </ul>                                
-                                <h5 className="dz-title"><Link to={"/fundraiser-detail"}>{d.title} </Link></h5>  
+                                <h5 className="dz-title"><Link to={`/fundraiser-detail/${d?._id}`}>{d?.title} </Link></h5>  
                                 <ul className="dz-meta">
                                     <li className="author-wrappper author-wrappper-sm mt-0">
                                         <div className="author-media">
-                                            <img src={d.image2} alt="" /> 
+                                            <img src={avat1} alt="" /> 
                                         </div>
-                                        <span>{d.autor}</span>
+                                        <span>{"Adam Jordon"}</span>
                                     </li>
                                     <li className="dz-date">
                                         <i className="fa-solid fa-calendar"></i>
@@ -83,13 +87,13 @@ const TrendingSlider2 = () => {
                                 <p>Alienum phaedrum torquatos nec eu, vis detraxit periculis ex..</p> 
                                 <div className="progress-bx style-2">
                                     <div className="progress">
-                                        <div className="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style={{width:d.progres}}>
+                                        <div className="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style={{width:d?.progres}}>
                                             <span className="progress-value">{d.progres}</span>
                                         </div>
                                     </div>
                                     <ul className="progress-tag">
-                                        <li className="raised">Raised: <span className="text-primary">$ 5,345</span></li>
-                                        <li className="goal">Goal: <span className="text-primary">$70,000</span></li>
+                                        <li className="raised">Raised: <span className="text-primary">${d?.raised}</span></li>
+                                        <li className="goal">Goal: <span className="text-primary">${d?.total_funding}</span></li>
                                     </ul>
                                 </div> 
                             </div>

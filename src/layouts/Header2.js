@@ -2,12 +2,12 @@ import React, { useState, useEffect, useReducer, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Modal } from "react-bootstrap";
 import styles from "./styles.module.scss";
-import Google from '../assets/icons/social-login/google.svg';
+import Google from "../assets/icons/social-login/google.svg";
 import Collapse from "react-bootstrap/Collapse";
 import { MenuListArray2 } from "./Menu";
 import { IMAGES } from "../constant/theme";
 import DonateModal from "../components/Modal/DonateModal";
-import { LoginSocialGoogle } from 'reactjs-social-login';
+import { LoginSocialGoogle } from "reactjs-social-login";
 import {
   Box,
   Typography,
@@ -25,22 +25,24 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("isLoggedIn") === "true");
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    localStorage.getItem("isLoggedIn") === "true"
+  );
   const [callOnClick, setCallOnClick] = useState(true);
   const [loading, setLoading] = useState(false);
   //Modals end
   //form submit
-// Listen for changes in local storage
-useEffect(() => {
+  // Listen for changes in local storage
+  useEffect(() => {
     const handleStorageChange = () => {
-      console.log('Storage changed');
+      console.log("Storage changed");
       setIsLoggedIn(localStorage.getItem("isLoggedIn") === "true");
     };
-  
-    window.addEventListener('storage', handleStorageChange);
-  
+
+    window.addEventListener("storage", handleStorageChange);
+
     return () => {
-      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener("storage", handleStorageChange);
     };
   }, []);
 
@@ -84,9 +86,12 @@ useEffect(() => {
                 ? res?.data?.data?.message
                 : res?.data?.message
             );
+            console.log('function-called',true)
             setloginModal(false);
+            setSignupModal(false);
             navigate("/index-3");
           } else {
+            console.log('function-called',false)
             setloginModal(true);
           }
         } else {
@@ -191,41 +196,6 @@ useEffect(() => {
                 <span></span>
                 <span></span>
               </button>
-              {/* <div className="extra-nav"> */}
-              {/* <div className="extra-cell d-flex align-items-center">		 */}
-              {/* <ul className="nav-link-list">
-                                        <li><Link to={"#"} className="btn-login text-primary" data-bs-toggle="modal" data-bs-target="#modalLogin"
-                                            onClick={()=>setloginModal(true)}
-                                        >Login</Link></li>
-                                        <li><Link to={"#"} className="btn-login" data-bs-toggle="modal" data-bs-target="#modalLogin"
-                                            onClick={()=>setloginModal(true)}
-                                        >Sign Up</Link></li>
-                                    </ul> */}
-              {/* <Link to={"#"} className="btn btn-primary btnhover1"  data-bs-target="#modalDonate"
-                                       //onClick={()=>onShowDonate(true)}
-                                       onClick={() => {modalRef.current.handleModalOpen(); }}
-                                    >
-                                        <span>Donate Now</span>
-                                        <i className="flaticon-heart text-secondary ms-3"></i>
-                                    </Link> */}
-              {/* <Link to={"#"} className="menu-btn"
-                                        onClick={()=>setSideOverlay(!sideOverlay)}
-                                    >
-                                        <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <rect x="22" y="11" width="4" height="4" rx="2" fill="#003B4A"/>
-                                            <rect x="11" width="4" height="4" rx="2" fill="#003B4A"/>
-                                            <rect x="22" width="4" height="4" rx="2" fill="#003B4A"/>
-                                            <rect x="11" y="11" width="4" height="4" rx="2" fill="#003B4A"/>
-                                            <rect x="11" y="22" width="4" height="4" rx="2" fill="#003B4A"/>
-                                            <rect width="4" height="4" rx="2" fill="#003B4A"/>
-                                            <rect y="11" width="4" height="4" rx="2" fill="#003B4A"/>
-                                            <rect x="22" y="22" width="4" height="4" rx="2" fill="#003B4A"/>
-                                            <rect y="22" width="4" height="4" rx="2" fill="#003B4A"/>
-                                        </svg>
-                                    </Link> */}
-              {/* </div>
-                            </div>
-                             */}
 
               <div
                 className={`header-nav navbar-collapse collapse justify-content-start ${
@@ -246,205 +216,145 @@ useEffect(() => {
                 <ul className="nav navbar-nav navbar navbar-left">
                   {/* <li><Link to={"/index-3"}>Home</Link></li> */}
                   {MenuListArray2.map((data, index) => {
-  let menuClass = data.classChange;
+                    let menuClass = data.classChange;
 
-  if (data.title === "Setting" && !isLoggedIn) {
-    return null; // Skip rendering "Setting" when not logged in
-  }
+                    if (data.title === "Setting" && !isLoggedIn) {
+                      return null; // Skip rendering "Setting" when not logged in
+                    }
 
-  if (menuClass !== "sub-menu-down") {
-    return (
-      <li className={menuClass} key={index}>
-        <Link to={data.to}>{data.title}</Link>
-      </li>
-    );
-  } else {
-    return (
-      <li
-        className={`${menuClass} ${state.active === data.title ? "open" : ""}`}
-        key={index}
-      >
-        {data.content && data.content.length > 0 ? (
-          <>
-            <Link
-              to={"#"}
-              onClick={() => {
-                handleMenuActive(data.title);
-              }}
-            >
-              {data.title}
-            </Link>
-          </>
-        ) : (
-          <Link to={data.to}>{data.title}</Link>
-        )}
-        <ul
-          className={`sub-menu ${menuClass === "mm-collapse" ? "open" : ""}`}
-        >
-          {data.content &&
-            data.content.map((submenuItem, subIndex) => {
-              if (!isLoggedIn && (submenuItem.title === "Create Compaign" || submenuItem.title === "My Project")) {
-                return null; // Skip rendering "Create Compaign" and "My Project" when not logged in
-              }
-
-              return (
-                <li
-                  key={subIndex}
-                  className={`${
-                    state.activeSubmenu === submenuItem.title ? "open" : ""
-                  }`}
-                >
-                  {submenuItem.content && submenuItem.content.length > 0 ? (
-                    <>
-                      <Link
-                        to={submenuItem.to}
-                        onClick={() => {
-                          handleSubmenuActive(submenuItem.title);
-                        }}
-                      >
-                        {submenuItem.title}
-                        <i className="fa fa-angle-right" />
-                      </Link>
-                      <Collapse
-                        in={state.activeSubmenu === submenuItem.title ? true : false}
-                      >
-                        <ul
-                          className={`sub-menu ${
-                            menuClass === "mm-collapse" ? "open" : ""
+                    if (menuClass !== "sub-menu-down") {
+                      return (
+                        <li className={menuClass} key={index}>
+                          <Link to={data.to}>{data.title}</Link>
+                        </li>
+                      );
+                    } else {
+                      return (
+                        <li
+                          className={`${menuClass} ${
+                            state.active === data.title ? "open" : ""
                           }`}
+                          key={index}
                         >
-                          {submenuItem.content &&
-                            submenuItem.content.map((subSubItem, subSubIndex) => {
-                              return (
-                                <li key={subSubIndex}>
-                                  <Link to={subSubItem.to}>{subSubItem.title}</Link>
-                                </li>
-                              );
-                            })}
-                        </ul>
-                      </Collapse>
-                    </>
-                  ) : (
-                    <Link to={submenuItem.to}>{submenuItem.title}</Link>
-                  )}
-                </li>
-              );
-            })}
-        </ul>
-      </li>
-    );
-  }
-})}
+                          {data.content && data.content.length > 0 ? (
+                            <>
+                              <Link
+                                to={"#"}
+                                onClick={() => {
+                                  handleMenuActive(data.title);
+                                }}
+                              >
+                                {data.title}
+                              </Link>
+                            </>
+                          ) : (
+                            <Link to={data.to}>{data.title}</Link>
+                          )}
+                          <ul
+                            className={`sub-menu ${
+                              menuClass === "mm-collapse" ? "open" : ""
+                            }`}
+                          >
+                            {data.content &&
+                              data.content.map((submenuItem, subIndex) => {
+                                if (
+                                  !isLoggedIn &&
+                                  (submenuItem.title === "Create Compaign" ||
+                                    submenuItem.title === "My Project")
+                                ) {
+                                  return null; // Skip rendering "Create Compaign" and "My Project" when not logged in
+                                }
 
-                  {/* {MenuListArray2.map((data, index) => {
-  if (data.title === "Setting" && !isLoggedIn) {
-    return null; // Skip rendering "Setting" when not logged in
-  }
-
-  let menuClass = data.classChange;
-
-  if (menuClass !== "sub-menu-down") {
-    return (
-      <li className={menuClass} key={index}>
-        <Link to={data.to}>{data.title}</Link>
-      </li>
-    );
-  } else {
-    return (
-      <li
-        className={`${menuClass} ${state.active === data.title ? "open" : ""}`}
-        key={index}
-      >
-        {data.content && data.content.length > 0 ? (
-          <>
-            <Link
-              to={"#"}
-              onClick={() => {
-                handleMenuActive(data.title);
-              }}
-            >
-              {data.title}
-            </Link>
-          </>
-        ) : (
-          <Link to={data.to}>{data.title}</Link>
-        )}
-        <ul
-          className={`sub-menu ${menuClass === "mm-collapse" ? "open" : ""}`}
-        >
-          {data.content &&
-            data.content.map((submenuItem, subIndex) => {
-              return (
-                <li
-                  key={subIndex}
-                  className={`${
-                    state.activeSubmenu === submenuItem.title ? "open" : ""
-                  }`}
-                >
-                  {submenuItem.content && submenuItem.content.length > 0 ? (
+                                return (
+                                  <li
+                                    key={subIndex}
+                                    className={`${
+                                      state.activeSubmenu === submenuItem.title
+                                        ? "open"
+                                        : ""
+                                    }`}
+                                  >
+                                    {submenuItem.content &&
+                                    submenuItem.content.length > 0 ? (
+                                      <>
+                                        <Link
+                                          to={submenuItem.to}
+                                          onClick={() => {
+                                            handleSubmenuActive(
+                                              submenuItem.title
+                                            );
+                                          }}
+                                        >
+                                          {submenuItem.title}
+                                          <i className="fa fa-angle-right" />
+                                        </Link>
+                                        <Collapse
+                                          in={
+                                            state.activeSubmenu ===
+                                            submenuItem.title
+                                              ? true
+                                              : false
+                                          }
+                                        >
+                                          <ul
+                                            className={`sub-menu ${
+                                              menuClass === "mm-collapse"
+                                                ? "open"
+                                                : ""
+                                            }`}
+                                          >
+                                            {submenuItem.content &&
+                                              submenuItem.content.map(
+                                                (subSubItem, subSubIndex) => {
+                                                  return (
+                                                    <li key={subSubIndex}>
+                                                      <Link to={subSubItem.to}>
+                                                        {subSubItem.title}
+                                                      </Link>
+                                                    </li>
+                                                  );
+                                                }
+                                              )}
+                                          </ul>
+                                        </Collapse>
+                                      </>
+                                    ) : (
+                                      <Link to={submenuItem.to}>
+                                        {submenuItem.title}
+                                      </Link>
+                                    )}
+                                  </li>
+                                );
+                              })}
+                          </ul>
+                        </li>
+                      );
+                    }
+                  })}
+                  {console.log("log", isLoggedIn)}
+                  {!isLoggedIn && (
                     <>
-                      <Link
-                        to={submenuItem.to}
-                        onClick={() => {
-                          handleSubmenuActive(submenuItem.title);
-                        }}
-                      >
-                        {submenuItem.title}
-                        <i className="fa fa-angle-right" />
-                      </Link>
-                      <Collapse
-                        in={state.activeSubmenu === submenuItem.title ? true : false}
-                      >
-                        <ul
-                          className={`sub-menu ${
-                            menuClass === "mm-collapse" ? "open" : ""
-                          }`}
+                      <li>
+                        <Link
+                          to={"#"}
+                          data-bs-toggle="modal"
+                          data-bs-target="#modalLogin"
+                          onClick={() => setSideOverlay(!sideOverlay)}
                         >
-                          {submenuItem.content &&
-                            submenuItem.content.map((subSubItem, subSubIndex) => {
-                              return (
-                                <li key={subSubIndex}>
-                                  <Link to={subSubItem.to}>{subSubItem.title}</Link>
-                                </li>
-                              );
-                            })}
-                        </ul>
-                      </Collapse>
+                          Contact Us
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to={"#"}
+                          data-bs-toggle="modal"
+                          data-bs-target="#modalLogin"
+                          onClick={() => setloginModal(true)}
+                        >
+                          Login / Sign Up
+                        </Link>
+                      </li>
                     </>
-                  ) : (
-                    <Link to={submenuItem.to}>{submenuItem.title}</Link>
-                  )}
-                </li>
-              );
-            })}
-        </ul>
-      </li>
-    );
-  }
-})} */}
-
-                  {console.log("log",isLoggedIn)}
-                  {!isLoggedIn && (<>
-                    <li>
-                    <Link
-                      to={"#"}
-                      data-bs-toggle="modal"
-                      data-bs-target="#modalLogin"
-                      onClick={() => setSideOverlay(!sideOverlay)}
-                    >
-                      Contact Us
-                    </Link>
-                  </li>
-                    <li>
-                      <Link
-                        to={"#"}
-                        data-bs-toggle="modal"
-                        data-bs-target="#modalLogin"
-                        onClick={() => setloginModal(true)}
-                      >
-                        Login / Sign Up
-                      </Link>
-                    </li></>
                   )}
                 </ul>
                 <div className="header-bottom">
@@ -627,125 +537,117 @@ useEffect(() => {
             </Link>
           </div> */}
           <Box className={styles.loginSocial}>
-                {/* ---Social-Login with Google */}
-                {callOnClick ? (
-                    <LoginSocialGoogle
-                        sx={{ pr: 1 }}
-                        client_id={'1085137082696-c6a9ta6uk6gn30vf7vmsg8c066vmhl7i.apps.googleusercontent.com'}
-                        scope="openid profile email"
-                        discoveryDocs="claims_supported"
-                        access_type="offline"
-                        onResolve={async ({ data }) => {
-                            let checkUser = await axios
-                                .get(
-                                    `${process.env.REACT_APP_BACKEND_URL}/api/user/getSocialAppUserData/${data.email}`
-                                )
-                                .then(async (res) => {
-                                    if (res.status === 200 || res.status === 201) {
-                                        localStorage.setItem(
-                                            `${res.data.data.doc.role}`,
-                                            JSON.stringify({
-                                                _id: res.data.data.doc._id,
-                                                username: res.data.data.doc.username,
-                                                email: res.data.data.doc.email,
-                                                role: res.data.data.doc.role,
-                                                socialLogin: 'User is Login with Google',
-                                                token: res.data.data.token,
-                                                profileImage: res.data.data.doc.profileImage
-                                            })
-                                        );
-                                        // if (res.data.data.doc.role === 'admin') {
-                                        //     navigate('/admin');
-                                        // }
-                                        //  else {
-                                            console.log("resres",res)
-                                            if(res.data.data.doc.role === 'user')
-                                            {
-                                                localStorage.setItem("isLoggedIn", "true");
-                                                setIsLoggedIn(true); // Update the state immediately.
-                                                setloginModal(false);
-                                                // Show the alert
-                                                window.alert(
-                                                    'Login Successful!'
-                                                );
-                                                
-                                                navigate("/index-3");
-                                            }
-                                        // }
-                                        
-                                    }
+            {/* ---Social-Login with Google */}
+            {callOnClick ? (
+              <LoginSocialGoogle
+                sx={{ pr: 1 }}
+                client_id={
+                  "1085137082696-c6a9ta6uk6gn30vf7vmsg8c066vmhl7i.apps.googleusercontent.com"
+                }
+                scope="openid profile email"
+                discoveryDocs="claims_supported"
+                access_type="offline"
+                onResolve={async ({ data }) => {
+                  let checkUser = await axios
+                    .get(
+                      `${process.env.REACT_APP_BACKEND_URL}/api/user/getSocialAppUserData/${data.email}`
+                    )
+                    .then(async (res) => {
+                      if (res.status === 200 || res.status === 201) {
+                        localStorage.setItem(
+                          `${res.data.data.doc.role}`,
+                          JSON.stringify({
+                            _id: res.data.data.doc._id,
+                            username: res.data.data.doc.username,
+                            email: res.data.data.doc.email,
+                            role: res.data.data.doc.role,
+                            socialLogin: "User is Login with Google",
+                            token: res.data.data.token,
+                            profileImage: res.data.data.doc.profileImage,
+                          })
+                        );
+                        // if (res.data.data.doc.role === 'admin') {
+                        //     navigate('/admin');
+                        // }
+                        //  else {
+                        console.log("resres", res);
+                        if (res.data.data.doc.role === "user") {
+                          localStorage.setItem("isLoggedIn", "true");
+                          setIsLoggedIn(true); // Update the state immediately.
+                          setloginModal(false);
+                          // Show the alert
+                          window.alert("Login Successful!");
+
+                          navigate("/index-3");
+                        }
+                        // }
+                      }
+                    })
+                    .catch(async (e) => {
+                      if (e.response.data === "User Not found.") {
+                        const userName = data.name.replace(/\s/g, "");
+                        const givenValues = {
+                          username: userName,
+                          email: data.email,
+                          profileImage: data.picture,
+                        };
+                        await axios
+                          .post(
+                            `${process.env.REACT_APP_BACKEND_URL}/api/user/registerSocialAppUser`,
+                            givenValues
+                          )
+                          .then((res) => {
+                            if (res.status === 200 || res.status === 201) {
+                              localStorage.setItem(
+                                "user",
+                                JSON.stringify({
+                                  _id: res.data.data.user._id,
+                                  username: res.data.data.user.username,
+                                  email: res.data.data.user.email,
+                                  role: res.data.data.user.role,
+                                  socialLogin: "User is Login with Google",
+                                  token: res.data.data.token,
+                                  profileImage: res.data.data.user.profileImage,
                                 })
-                                .catch(async (e) => {
-                                    if (e.response.data === 'User Not found.') {
-                                        const userName = data.name.replace(/\s/g, '');
-                                        const givenValues = {
-                                            username: userName,
-                                            email: data.email,
-                                            profileImage: data.picture
-                                        };
-                                        await axios
-                                            .post(
-                                                `${process.env.REACT_APP_BACKEND_URL}/api/user/registerSocialAppUser`,
-                                                givenValues
-                                            )
-                                            .then((res) => {
-                                                if (res.status === 200 || res.status === 201) {
-                                                    localStorage.setItem(
-                                                        'user',
-                                                        JSON.stringify({
-                                                            _id: res.data.data.user._id,
-                                                            username: res.data.data.user.username,
-                                                            email: res.data.data.user.email,
-                                                            role: res.data.data.user.role,
-                                                            socialLogin: 'User is Login with Google',
-                                                            token: res.data.data.token,
-                                                            profileImage: res.data.data.user.profileImage
-                                                        })
-                                                    );
-                                                    localStorage.setItem("isLoggedIn", "true");
-                                                    setIsLoggedIn(true); // Update the state immediately.
-                                                    setloginModal(false);
-                                                    // Show the alert
-                                                    window.alert(
-                                                        'Login Successful!'
-                                                    );
-                                                    navigate("/index-3");
-                                                    // setLoading(false);
-                                                    // setAlert(true);
-                                                    // setTimeout(() => {
-                                                    //     navigate('/user');
-                                                    // }, 1000);
-                                                }
-                                            })
-                                            .catch((e) => {
-                                                window.alert(
-                                                    'UserName or Email Already Exists'
-                                                );
-                                                // setLoading(false);
-                                                // setErrorMessage('UserName or Email Already Exists');
-                                                // setErrorAlert(true);
-                                                // setTimeout(() => {
-                                                //     setErrorAlert(false);
-                                                // }, 2500);
-                                            });
-                                    }
-                                });
-                        }}
-                        onReject={(err) => {
-                            window.alert(
-                                'Enter correct email to login'
-                            );
-                            // setErrorMessage('Enter correct email to login');
+                              );
+                              localStorage.setItem("isLoggedIn", "true");
+                              setIsLoggedIn(true); // Update the state immediately.
+                              setloginModal(false);
+                              // Show the alert
+                              window.alert("Login Successful!");
+                              navigate("/index-3");
+                              // setLoading(false);
+                              // setAlert(true);
+                              // setTimeout(() => {
+                              //     navigate('/user');
+                              // }, 1000);
+                            }
+                          })
+                          .catch((e) => {
+                            window.alert("UserName or Email Already Exists");
+                            // setLoading(false);
+                            // setErrorMessage('UserName or Email Already Exists');
                             // setErrorAlert(true);
                             // setTimeout(() => {
                             //     setErrorAlert(false);
                             // }, 2500);
-                        }}
-                    >
-                        <img loading="lazy" src={Google} alt="google" />
-                    </LoginSocialGoogle>
-                ) : null}
-            </Box>
+                          });
+                      }
+                    });
+                }}
+                onReject={(err) => {
+                  window.alert("Enter correct email to login");
+                  // setErrorMessage('Enter correct email to login');
+                  // setErrorAlert(true);
+                  // setTimeout(() => {
+                  //     setErrorAlert(false);
+                  // }, 2500);
+                }}
+              >
+                <img loading="lazy" src={Google} alt="google" />
+              </LoginSocialGoogle>
+            ) : null}
+          </Box>
           <div className="sign-text">
             <span>
               Don't have a Crowdfunding account?
@@ -836,7 +738,108 @@ useEffect(() => {
               Sign Up
             </button>
           </div>
-          <div className="form-group">
+          <Box className={styles.loginSocial}>
+            {/* ---Social-Login with Google */}
+            {callOnClick ? (
+              <LoginSocialGoogle
+                sx={{ pr: 1 }}
+                client_id={
+                  "1085137082696-c6a9ta6uk6gn30vf7vmsg8c066vmhl7i.apps.googleusercontent.com"
+                }
+                scope="openid profile email"
+                discoveryDocs="claims_supported"
+                access_type="offline"
+                onResolve={async ({ data }) => {
+                  let checkUser = await axios
+                    .get(
+                      `${process.env.REACT_APP_BACKEND_URL}/api/user/getSocialAppUserData/${data.email}`
+                    )
+                    .then(async (res) => {
+                      if (res.status === 200 || res.status === 201) {
+                        localStorage.setItem(
+                          `${res.data.data.doc.role}`,
+                          JSON.stringify({
+                            _id: res.data.data.doc._id,
+                            username: res.data.data.doc.username,
+                            email: res.data.data.doc.email,
+                            role: res.data.data.doc.role,
+                            socialLogin: "User is Login with Google",
+                            token: res.data.data.token,
+                            profileImage: res.data.data.doc.profileImage,
+                          })
+                        );
+                        // if (res.data.data.doc.role === 'admin') {
+                        //     navigate('/admin');
+                        // }
+                        //  else {
+                        console.log("resres", res);
+                        if (res.data.data.doc.role === "user") {
+                          localStorage.setItem("isLoggedIn", "true");
+                          setIsLoggedIn(true); // Update the state immediately.
+                          setloginModal(false);
+                          // Show the alert
+                          window.alert("Login Successful!");
+
+                          navigate("/index-3");
+                        }
+                        // }
+                      }
+                    })
+                    .catch(async (e) => {
+                      if (e.response.data === "User Not found.") {
+                        const userName = data.name.replace(/\s/g, "");
+                        const givenValues = {
+                          username: userName,
+                          email: data.email,
+                          profileImage: data.picture,
+                        };
+                        await axios
+                          .post(
+                            `${process.env.REACT_APP_BACKEND_URL}/api/user/registerSocialAppUser`,
+                            givenValues
+                          )
+                          .then((res) => {
+                            if (res.status === 200 || res.status === 201) {
+                              localStorage.setItem(
+                                "user",
+                                JSON.stringify({
+                                  _id: res.data.data.user._id,
+                                  username: res.data.data.user.username,
+                                  email: res.data.data.user.email,
+                                  role: res.data.data.user.role,
+                                  socialLogin: "User is Login with Google",
+                                  token: res.data.data.token,
+                                  profileImage: res.data.data.user.profileImage,
+                                })
+                              );
+                              localStorage.setItem("isLoggedIn", "true");
+                              setIsLoggedIn(true); // Update the state immediately.
+                              setloginModal(false);
+                              // Show the alert
+                              window.alert("Login Successful!");
+                              navigate("/index-3");
+                              // setLoading(false);
+                              // setAlert(true);
+                              // setTimeout(() => {
+                              //     navigate('/user');
+                              // }, 1000);
+                            }
+                          })
+                          .catch((e) => {
+                            window.alert("UserName or Email Already Exists");
+                          });
+                      }
+                    });
+                }}
+                onReject={(err) => {
+                  window.alert("Enter correct email to login");
+                }}
+              >
+                <img loading="lazy" src={Google} alt="google" />
+              </LoginSocialGoogle>
+            ) : null}
+          </Box>
+          {/* <div className="form-group">
             <Link to={"#"} className="btn facebook btn-block">
               <i className="fa-brands fa-facebook-f m-r10"></i>Log in with
               Facebook
@@ -846,7 +849,7 @@ useEffect(() => {
             <Link to={"#"} className="btn google-plus btn-block">
               <i className="fa-brands fa-google m-r10"></i>Log in with Google
             </Link>
-          </div>
+          </div> */}
           <div className="sign-text">
             <span>
               Don't have a Crowdfunding account?{" "}
