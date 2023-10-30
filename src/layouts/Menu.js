@@ -139,7 +139,7 @@ export const MenuListArray2 = [
         ],
     },
     {
-        title:"Setting",
+        title:"My Account",
         classChange:"sub-menu-down",
         content:[
             {
@@ -147,8 +147,8 @@ export const MenuListArray2 = [
                 to:"/profile-setting"
             },
             {
-                title:"Wallet Setting",
-                to:"/blog-grid"
+                title:"Wallet",
+                to:"/wallet-address"
             },
             {
                 title:"Logout",

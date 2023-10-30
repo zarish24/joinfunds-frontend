@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Dropdown } from "react-bootstrap";
-
+import styles from './styles.module.scss';
 import PageBanner from "../layouts/PageBanner";
 import ProjectMasonry from "../components/Project/ProjectMasonry";
 import UpdateBlog from "../components/Home/UpdateBlog";
@@ -75,12 +75,12 @@ const MyProjects = () => {
         />
         <div className="find-bx-wrapper">
           <div className="container">
-            <div className="find-bx bg-white">
+            <div className={`${styles.find} bg-white`}>
               <form>
                 <div className="row align-items-center">
-                  <div className="col-lg-3 col-md-4">
-                    <div className="">
-                      <Dropdown className="select-drop-2">
+                  {/* <div className="col-lg-3 col-md-4">
+                    <div className=""> */}
+                      <Dropdown className="col-lg-3 col-md-4 select-drop-2">
                         <Dropdown.Toggle
                           as="div"
                           className="i-false select-drop-btn-2"
@@ -111,7 +111,7 @@ const MyProjects = () => {
                           </Dropdown.Item>
                         </Dropdown.Menu>
                       </Dropdown>
-                      <Dropdown className="select-drop-2">
+                      <Dropdown className="col-lg-3 col-md-4 select-drop-2">
                         <Dropdown.Toggle
                           as="div"
                           className="i-false select-drop-btn-2"
@@ -147,9 +147,9 @@ const MyProjects = () => {
                           </Dropdown.Item>
                         </Dropdown.Menu>
                       </Dropdown>
-                    </div>
-                  </div>
-                  <div className="col-lg-9 col-md-8">
+                    {/* </div>
+                  </div> */}
+                  <div className="col-lg-6 col-md-8">
       <div className="input-group">
         <input
           type="text"

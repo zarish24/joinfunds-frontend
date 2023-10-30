@@ -174,7 +174,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                   </div>
                   <div className="logo-header mostion logo-light">
                     <Link to={"/index-3"}>
-                      <img src={IMAGES.logoWhite3} alt="" />
+                      <img src={IMAGES.logo3} alt="" />
                     </Link>
                   </div>
                 </>
@@ -218,7 +218,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                   {MenuListArray2.map((data, index) => {
                     let menuClass = data.classChange;
 
-                    if (data.title === "Setting" && !isLoggedIn) {
+                    if (data.title === "My Account" && !isLoggedIn) {
                       return null; // Skip rendering "Setting" when not logged in
                     }
 

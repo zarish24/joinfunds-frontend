@@ -20,7 +20,7 @@ const CreateCompaign = () => {
   });
 
   const titleOptions = [
-    "Select Title",
+    "Select Campaign Category",
     "Medical",
     "Memorial",
     "Emergency",
@@ -94,7 +94,7 @@ const CreateCompaign = () => {
                   <div className="form-group mb-3">
                     <div className="row">
                       <div className="col-md-6">
-                        <label>Title:</label>
+                        <label>Campaign Category:</label>
                         <select
                           name="title"
                           value={formData.title}
@@ -133,7 +133,7 @@ const CreateCompaign = () => {
                     />
                   </div>
                   <div className="col-md-6">
-                        <label>Total Funding:</label>
+                        <label>Desired Amount:</label>
                         <input
                           type="number"
                           name="total_funding"
@@ -149,15 +149,12 @@ const CreateCompaign = () => {
     <div className="col-md-6">
       <label>Campaign Status:</label>
       <select
-        name="campaign_status"
+        name="campaign_status disabled"
         value={formData.campaign_status}
         onChange={handleChange}
         className="form-control"
       >
-        <option value="open">Open</option>
-        <option value="close">Close</option>
         <option value="pending">Pending</option>
-        <option value="reject">Reject</option>
       </select>
     </div>
     <div className="col-md-6">
@@ -174,6 +171,7 @@ const CreateCompaign = () => {
     </div>
   </div>
 </div>
+{formData.campaign_type==='funding' ? (<>
                   <div className="row">
                     <div className="col-md-6">
                       <div className="form-group mb-3">
@@ -201,7 +199,7 @@ const CreateCompaign = () => {
                         />
                       </div>
                     </div>
-                  </div>
+                  </div></>): <></>}
                   <div className="row">
                     <div className="col-md-6">
                       <div className="form-group mb-3">
