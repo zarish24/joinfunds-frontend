@@ -141,6 +141,7 @@ const CreateCompaign = () => {
                           onChange={handleChange}
                           className="form-control"
                           required
+                          step="1"
                         />
                       </div>
                   </div>
