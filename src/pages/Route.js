@@ -39,6 +39,7 @@ import MyProjects from './MyProjects';
 import Setting from '../pages/Settings/Setting';
 import Logout from './Logout';
 import WalletAddress from './WalletAddress';
+import EditCampaign from './EditCampaign';
 
 function Index(){
 	return(
@@ -67,6 +68,7 @@ function Index(){
 					<Route path='/fundraiser-detail' element={<FundraiserDetail />} />
 					<Route path='/fundraiser-detail/:id' element={<FundraiserDetail />} />
 					<Route path='/create-compaign' exact element={<CreateCompaign />} />
+					<Route path='/Edit-compaign/:id' exact element={<EditCampaign />} />
 					<Route path='/project' exact element={<Project />} />
 					<Route path='/project-categories' exact element={<ProjectCategories />} />
 					<Route path='/my-project' exact element={<MyProjects />} />

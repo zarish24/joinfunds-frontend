@@ -17,6 +17,38 @@ import UpdateBlog from "../components/Home/UpdateBlog";
 import GallerySlider from "../components/Fundraiser/GallerySlider";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { useTheme } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import MobileStepper from '@mui/material/MobileStepper';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
+import SwipeableViews from 'react-swipeable-views';
+import { autoPlay } from 'react-swipeable-views-utils';
+import { useNavigate } from 'react-router-dom';
+const AutoPlaySwipeableViews = autoPlay(SwipeableViews, { interval: 3000 });
+const numDonorsPerPage = 4; 
+const testimonials = [
+  {
+    profileImage: 'https://images.unsplash.com/photo-1575936123452-b67c3203c357?auto=format&fit=crop&q=80&w=1470&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    name: 'John Doe',
+    amount: '$500',
+  },
+  {
+    profileImage: 'https://images.unsplash.com/photo-1575936123452-b67c3203c357?auto=format&fit=crop&q=80&w=1470&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    name: 'Jane Smith',
+    amount: '$750',
+  },
+  {
+    profileImage: 'https://images.unsplash.com/photo-1575936123452-b67c3203c357?auto=format&fit=crop&q=80&w=1470&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    name: 'Alice Johnson',
+    amount: '$600',
+  },
+  // Add more testimonials as needed
+];
+
 
 const postBlog = [
   { image: blog1, title: "How To Teach Education Like A Pro." },
@@ -37,18 +69,37 @@ const donorsBlog = [
 ];
 
 const FundraiserDetail = () => {
+  const navigate = useNavigate(); 
   const { id } = useParams();
+  const theme = useTheme();
+  const [activeStep, setActiveStep] = React.useState(0);
+  
   const [modalDonate, setModalDonate] = useState(false);
   const [referModal, setReferModal] = useState(false);
   const [campaign, setCampaign] = useState({});
+  const [donners, setDonners] = useState([]);
   const [daysLeft, setDaysLeft] = useState(0);
   const [user_id, setUser_id] = useState("");
+  const numDonorsPerPage = 4; // Number of donors displayed per group
+  const maxSteps = Math.ceil(donners.length / numDonorsPerPage);
   const [paymentUpdate, setPaymentUpdate] = useState(false);
   const [formData, setFormData] = useState({
     compain_id: id,
     amount: 0,
     currency: "USD",
   });
+  const handleStepChange = (step) => {
+    setActiveStep(step);
+  };
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => (prevActiveStep + 1) % maxSteps);
+  };
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) =>
+      (prevActiveStep - 1 + maxSteps) % maxSteps
+    );
+  };
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -104,6 +155,7 @@ const FundraiserDetail = () => {
             if (res.status === 200 || res.status === 201) {
               console.log("all-com", res);
               setCampaign(res?.data?.data?.doc);
+              setDonners(res?.data?.data?.allDonners)
               const today = new Date();
               const startDate = new Date(res?.data?.data?.doc.start_date);
               const endDate = new Date(res?.data?.data?.doc.end_date);
@@ -176,7 +228,8 @@ const FundraiserDetail = () => {
                     aliqua. Ut enim ad minim veniam, quis nostrud exercitation
                     ullamco laboris nisi ut aliquip ex ea commodo consequat."
                   </p>
-
+                  {console.log("sdds",user_id,campaign?.user_id)}
+                  { user_id !== campaign?.user_id ? <>
                   <ul className="fundraiser-bottom">
                     <li>
                       <Link
@@ -209,8 +262,95 @@ const FundraiserDetail = () => {
                         <i className="fa-brands fa-whatsapp me-2"></i>Share
                       </a>
                     </li>
-                  </ul>
+                  </ul></>: <></>}
                 </div>
+                <h5>Donners Detail</h5>
+                <Box sx={{ maxWidth: 900, flexGrow: 1 }}>
+      <Paper
+        square
+        elevation={0}
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          // height: 50,
+          pl: 2,
+          bgcolor: 'background.default',
+        }}
+      >
+        {/* <Typography variant="h6">{testimonials[activeStep].name}</Typography> */}
+      </Paper>
+      <AutoPlaySwipeableViews
+         axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+         index={activeStep}
+         onChangeIndex={handleStepChange}
+         enableMouseEvents
+      >
+       {[...Array(maxSteps)].map((_, step) => (
+  <div key={step}>
+    <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        p: 3,
+      }}
+    >
+      {donners
+        .slice(step * numDonorsPerPage, (step + 1) * numDonorsPerPage)
+        .map((donor, index) => (
+          <Box
+            key={index}
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              p: 3,
+            }}
+          >
+            <img
+              src={donor?.profileImage ? donor.profileImage : avat5}
+              alt=""
+              style={{
+                height: 80,
+                width: 80,
+                borderRadius: '50%',
+              }}
+            />
+            <Typography variant="subtitle1">
+              {donor.firstName} {donor.lastName}
+            </Typography>
+            <Typography variant="body1">${donor.donated_amount}</Typography>
+          </Box>
+        ))}
+    </Box>
+  </div>
+))}
+      </AutoPlaySwipeableViews>
+      <MobileStepper
+        steps={maxSteps}
+        position="static"
+        activeStep={activeStep}
+        nextButton={
+          <Button size="small" onClick={handleNext}>
+            {theme.direction === 'rtl' ? (
+              <KeyboardArrowLeft />
+            ) : (
+              <KeyboardArrowRight />
+            )}  
+          </Button>
+        }
+        backButton={
+          <Button size="small" onClick={handleBack}>
+            {theme.direction === 'rtl' ? (
+              <KeyboardArrowRight />
+            ) : (
+              <KeyboardArrowLeft />
+            )}
+          </Button>
+        }
+      />
+    </Box>
                 <div className="widget style-1 widget_refer">
                   <div className="widget-title">
                     <h4 className="title">Refer a Friend</h4>
@@ -315,6 +455,7 @@ const FundraiserDetail = () => {
 
               <div className="col-xl-4 col-lg-4">
                 <aside className="side-bar sticky-top">
+                { user_id !== campaign?.user_id ? <>
                   <div className="widget style-1 widget_donate">
                     <Link
                       to={"#"}
@@ -357,7 +498,29 @@ const FundraiserDetail = () => {
                       <i className="fa-brands fa-facebook-square me-2"></i>{" "}
                       Spread The World
                     </a>
-                  </div>
+                  </div></>:   
+                 campaign?.status === "pending" || campaign?.status === "open" ? (
+                  <button
+                    style={{
+                      backgroundColor: 'blue',
+                      color: 'white',
+                      border: 'none',
+                      padding: '10px 20px',
+                      marginBottom: "20px",
+                      width: "356px",
+                      height: "44px",
+                      borderRadius: '5px',
+                      cursor: 'pointer',
+                      fontSize: '16px',
+                      boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                      transition: 'background-color 0.3s'
+                    }}
+                    onClick={() => navigate(`/Edit-compaign/${campaign._id}`)}
+                  >
+                    Edit Campaign
+                  </button>
+                ) : null
+                  }
 
                   {/* <!--  Widget Fund --> */}
                   <div className="widget style-1 widget_fund">
@@ -440,7 +603,7 @@ const FundraiserDetail = () => {
                   {/* <!-- Top Donors --> */}
                   <div className="widget style-1 widget_avatar">
                     <div className="widget-title">
-                      <h5 className="title">Donors List</h5>
+                      <h5 className="title">Top Donors</h5>
                     </div>
                     <div className="avatar-wrapper">
                       {campaign?.donors_detail?.map((item, ind) => (
