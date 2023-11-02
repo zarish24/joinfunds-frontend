@@ -77,12 +77,15 @@ const FundraiserDetail = () => {
   const [modalDonate, setModalDonate] = useState(false);
   const [referModal, setReferModal] = useState(false);
   const [campaign, setCampaign] = useState({});
+  const [comments, setComments] = useState([]);
   const [donners, setDonners] = useState([]);
   const [daysLeft, setDaysLeft] = useState(0);
+  const [reply, setReply] = useState(false);
   const [user_id, setUser_id] = useState("");
   const numDonorsPerPage = 4; // Number of donors displayed per group
   const maxSteps = Math.ceil(donners.length / numDonorsPerPage);
   const [paymentUpdate, setPaymentUpdate] = useState(false);
+  const [comment_message, setComment_message] = useState('');
   const [formData, setFormData] = useState({
     compain_id: id,
     amount: 0,
@@ -137,11 +140,41 @@ const FundraiserDetail = () => {
       window.alert(error?.response?.data?.message);
       setModalDonate(false)
     });
-  // setCampaigns(response.data); // Set the campaign data in state
-} catch (error) {
-  window.alert("API request failed", error);
-  console.error("API request failed", error.message);
-}
+   // setCampaigns(response.data); // Set the campaign data in state
+    } catch (error) {
+      window.alert("API request failed", error);
+      console.error("API request failed", error.message);
+    }
+  };
+  const handleCommentSubmit = async (e) => {
+    e.preventDefault();
+    try {
+    const data = {
+      campaign_id: id,
+      user_id: user_id,
+      comment_message: comment_message
+    }
+    const response = await axios
+    .post(
+      `${process.env.REACT_APP_BACKEND_URL}/api/compaign/createComment`,
+      data
+    )
+    .then((res) => {
+      if (res.status === 200 || res.status === 201) {
+        setComment_message("")
+      } else {
+        // window.alert(res.message);
+      }
+    })
+    .catch((error) => {
+      console.error("API request failed", error);
+      window.alert(error?.response?.data?.message);
+    });
+   // setCampaigns(response.data); // Set the campaign data in state
+    } catch (error) {
+      window.alert("API request failed", error);
+      console.error("API request failed", error.message);
+    }
   };
   useEffect(() => {
     const fetchData = async (_id) => {
@@ -197,9 +230,36 @@ const FundraiserDetail = () => {
     const user = JSON.parse(localStorage.getItem("user"));
     setUser_id(user._id)
     fetchData(id);
-
     // Call the async function
-  }, [paymentUpdate]);
+  }, [id,paymentUpdate]);
+  useEffect(() => {
+    const fetchData = async (_id) => {
+      try {
+        console.log("campaign_id", _id);
+        const response = await axios
+          .get(
+            `${process.env.REACT_APP_BACKEND_URL}/api/compaign/getCompaignComments/${_id}`
+          )
+          .then((res) => {
+            if (res.status === 200 || res.status === 201) {
+              console.log("allff-com", res?.data?.data);
+              setComments(res?.data?.data)
+              
+            } else {
+              window.alert("Comments not fount due to some issue!");
+            }
+          })
+          .catch((error) => {
+            window.alert(error);
+          });
+        // setCampaigns(response.data); // Set the campaign data in state
+      } catch (error) {
+        window.alert("API request failed", error);
+        console.error("API request failed", error);
+      }
+    };
+    fetchData(id);
+  }, [id,comment_message,reply]);
   return (
     <>
       <div className="page-content bg-white">
@@ -373,21 +433,39 @@ const FundraiserDetail = () => {
                     <div className="widget-title style-1">
                       <h4 className="title">Comments</h4>
                     </div>
+                    {console.log("comments",comments)}
                     <div className="clearfix">
-                      <ol className="comment-list">
-                        <li className="comment">
-                          <CommentBlog title="Celesto Anderson" image={avat1} />
-                          <ol className="children">
-                            <li className="comment odd parent"></li>
-                            <CommentBlog title="Jake Johnson" image={avat2} />
-                          </ol>
-                        </li>
-                        <li className="comment">
-                          <CommentBlog title="John Doe" image={avat3} />
-                        </li>
-                        <li className="comment">
-                          <CommentBlog title="Celesto Anderson" image={avat4} />
-                        </li>
+                    <ol className="comment-list">
+                    {comments.map((comment, index) => (
+                    <li className="comment" key={comment._id}>
+                      <CommentBlog
+                        title={`${comment.user_detail[0].firstName} ${comment.user_detail[0].lastName}`}
+                        image={comment.user_detail[0].profileImage ? comment.user_detail[0].profileImage : avat1}
+                        comment_message={comment?.comment_message}
+                        user_id={user_id}
+                        commentId={comment._id}
+                        setReply= {setReply}
+                        reply = {reply}
+                        
+                      />
+                      {comment.reply_messages.length > 0 && (
+                        <ol className="children">
+                          {comment.reply_messages.map((reply, replyIndex) => (
+                            <li className="comment odd parent" key={reply._id}>
+                              <CommentBlog
+                                title={`${reply.user_detail[0].firstName} ${reply.user_detail[0].lastName}`}
+                                image={reply.user_detail[0].profileImage ? reply.user_detail[0].profileImage : avat3}
+                                comment_message={reply.reply_message}
+                                user_id={user_id}
+                                commentId={reply._id}
+                                showReply= {false}
+                              />
+                            </li>
+                          ))}
+                        </ol>
+                      )}
+                    </li>
+                  ))} 
                       </ol>
                       <div className="comment-respond" id="respond">
                         <div className="widget-title style-1">
@@ -405,54 +483,29 @@ const FundraiserDetail = () => {
                             </small>
                           </h4>
                         </div>
-                        <form className="comment-form" id="commentform">
-                          <p className="comment-form-author">
-                            <label htmlFor="author">
-                              Name <span className="required">*</span>
-                            </label>
-                            <input
-                              type="text"
-                              name="Author"
-                              placeholder="Author"
-                              id="author"
-                            />
-                          </p>
-                          <p className="comment-form-email">
-                            <label htmlFor="email">
-                              Email <span className="required">*</span>
-                            </label>
-                            <input
-                              type="text"
-                              placeholder="Email"
-                              name="email"
-                              id="email"
-                            />
-                          </p>
-                          <p className="comment-form-comment">
-                            <label htmlFor="comment">Comment</label>
-                            <textarea
-                              rows="8"
-                              name="comment"
-                              placeholder="Comment"
-                              id="comment"
-                            ></textarea>
-                          </p>
-                          <p className="form-submit">
-                            <button
-                              type="submit"
-                              className="btn btn-primary"
-                              id="submit"
-                            >
-                              SUBMIT
-                            </button>
-                          </p>
-                        </form>
+                        <form className="comment-form" id="commentform" onSubmit={handleCommentSubmit}>
+                        <p className="comment-form-comment">
+                          <label htmlFor="comment">Comment</label>
+                          <textarea
+                            rows="8"
+                            name="comment_message"
+                            placeholder="Comment here..."
+                            id="comment"
+                            value={comment_message}
+                            onChange={(e) => setComment_message(e.target.value)}
+                          ></textarea>
+                        </p>
+                        <p className="form-submit">
+                          <button type="submit" className="btn btn-primary" id="submit">
+                            SUBMIT
+                          </button>
+                        </p>
+                      </form>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-
               <div className="col-xl-4 col-lg-4">
                 <aside className="side-bar sticky-top">
                 { user_id !== campaign?.user_id ? <>
