@@ -6,6 +6,7 @@ import axios from "axios";
 
 const EditCampaign = () => {
     const { id } = useParams();
+    const [token, setToken] = useState("")
     const [formData, setFormData] = useState({
         title: '',
         subtitle: '',
@@ -42,12 +43,16 @@ const EditCampaign = () => {
     "Mission",
   ];
   useEffect(() => {
-    const fetchData = async (_id) => {
+    const fetchData = async (_id,token) => {
       try {
-        console.log("campaign_id", _id);
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
+          },
+        };
         const response = await axios
           .get(
-            `${process.env.REACT_APP_BACKEND_URL}/api/compaign/getSingleCompaign/${_id}`
+            `${process.env.REACT_APP_BACKEND_URL}/api/compaign/getSingleCompaign/${_id}`,config
           )
           .then((res) => {
             if (res.status === 200 || res.status === 201) {
@@ -88,7 +93,11 @@ const EditCampaign = () => {
         console.error("API request failed", error);
       }
     };
-    fetchData(id);
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user && user.token) {
+      setToken(user.token)
+      fetchData(id,user.token);
+    }
   }, []);
 
   const navigate = useNavigate();
@@ -102,9 +111,13 @@ const EditCampaign = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('formData', formData);
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
+      },
+    };
     const response = await axios
-      .put(`${process.env.REACT_APP_BACKEND_URL}/api/compaign/updateCompaign/${id}`, formData)
+      .put(`${process.env.REACT_APP_BACKEND_URL}/api/compaign/updateCompaign/${id}`, formData, config)
       .then((res) => {
         if (res.status === 200 || res.status === 201) {
             window.alert(

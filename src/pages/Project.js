@@ -18,13 +18,19 @@ const Project = () => {
   const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async (token) => {
       try {
         const data = {
           status: "",
           campaign_type: "All Category",
           items_per_page: 12,
           page,
+        };
+
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
+          },
         };
 
         if (campaignType !== "Campaign Type") {
@@ -38,7 +44,7 @@ const Project = () => {
         const response = await axios
           .post(
             `${process.env.REACT_APP_BACKEND_URL}/api/compaign/getAllCompaigns`,
-            data
+            data, config
           )
           .then((res) => {
             if (res.status === 200 || res.status === 201) {
@@ -58,7 +64,10 @@ const Project = () => {
       }
     };
 
-      fetchData();
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user && user.token) {
+      fetchData(user.token);
+    }
     
     // Call the async function
   }, [page,campaignType,campaignStatus]);

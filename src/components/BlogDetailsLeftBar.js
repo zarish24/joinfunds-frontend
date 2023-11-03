@@ -27,6 +27,12 @@ export const CommentBlog = (props) => {
     const handleReplySubmit = async (e) => {
         e.preventDefault();
         try {
+        const user = JSON.parse(localStorage.getItem("user"));
+        const config = {
+          headers: {
+            Authorization: `Bearer ${user?.token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
+          },
+        };
         const data = {
           comment_id: props.commentId,
           user_id: props.user_id,
@@ -35,7 +41,7 @@ export const CommentBlog = (props) => {
         const response = await axios
         .post(
           `${process.env.REACT_APP_BACKEND_URL}/api/compaign/commentReply`,
-          data
+          data, config
         )
         .then((res) => {
           if (res.status === 200 || res.status === 201) {

@@ -42,12 +42,16 @@ const Home3 = () => {
         nav("/contact-us");
     };
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchData = async (token) => {
           try {
-           
+            const config = {
+                headers: {
+                  Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
+                },
+              };
             const response = await axios
               .get(
-                `${process.env.REACT_APP_BACKEND_URL}/api/compaign/getTrendingCampaign`
+                `${process.env.REACT_APP_BACKEND_URL}/api/compaign/getTrendingCampaign`,config
               )
               .then((res) => {
                 if (res.status === 200 || res.status === 201) {
@@ -66,7 +70,10 @@ const Home3 = () => {
             console.error("API request failed", error);
           }
         };
-          fetchData();
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (user && user.token) {
+          fetchData(user.token);
+        }
         
         // Call the async function
       }, []);

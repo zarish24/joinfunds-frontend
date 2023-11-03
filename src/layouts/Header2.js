@@ -554,16 +554,18 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                     )
                     .then(async (res) => {
                       if (res.status === 200 || res.status === 201) {
+                        console.log("social-data",res)
                         localStorage.setItem(
                           `${res.data.data.doc.role}`,
                           JSON.stringify({
                             _id: res.data.data.doc._id,
-                            username: res.data.data.doc.username,
+                            firstName: res.data.data.doc.firstName,
+                            lastName: res.data.data.doc.lastName,
                             email: res.data.data.doc.email,
                             role: res.data.data.doc.role,
                             socialLogin: "User is Login with Google",
-                            token: res.data.data.token,
-                            profileImage: res.data.data.doc.profileImage,
+                            token: res.data.data.doc.token,
+                            profileImage: res.data.data.doc.profileImage? res.data.data.doc.profileImage: "",
                           })
                         );
                         // if (res.data.data.doc.role === 'admin') {
@@ -598,16 +600,18 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                           )
                           .then((res) => {
                             if (res.status === 200 || res.status === 201) {
+                              
                               localStorage.setItem(
                                 "user",
                                 JSON.stringify({
                                   _id: res.data.data.user._id,
-                                  username: res.data.data.user.username,
+                                  firstName: res.data.data.user.firstName,
+                                  lastName: res.data.data.user.lastName,
                                   email: res.data.data.user.email,
                                   role: res.data.data.user.role,
                                   socialLogin: "User is Login with Google",
                                   token: res.data.data.token,
-                                  profileImage: res.data.data.user.profileImage,
+                                  profileImage: res.data.data.user.profileImage? res.data.data.user.profileImage: ""
                                 })
                               );
                               localStorage.setItem("isLoggedIn", "true");

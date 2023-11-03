@@ -24,12 +24,16 @@ const WalletAddress = () => {
 
     
   useEffect(() => {
-    const fetchData = async (_id) => {
+    const fetchData = async (_id,token) => {
       try {
-        console.log("user_id", _id);
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
+          },
+        };
             const response = await axios
             .get(
-              `${process.env.REACT_APP_BACKEND_URL}/api/compaign/getWalletAddress/${_id}`
+              `${process.env.REACT_APP_BACKEND_URL}/api/compaign/getWalletAddress/${_id}`, config
             )
             .then((res) => {
               if (res.status === 200 || res.status === 201) {
@@ -58,7 +62,7 @@ const WalletAddress = () => {
     };
     const user = JSON.parse(localStorage.getItem("user"));
     if (user && user._id) {
-      fetchData(user._id);
+      fetchData(user._id,user.token);
     }
     // Call the async function
   }, [walletAddress]);

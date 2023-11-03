@@ -5,6 +5,7 @@ import bg from '../assets/images/banner/bnr3.jpg';
 import axios from "axios";
 
 const CreateCompaign = () => {
+  const [token, setToken] = useState("");
   const [formData, setFormData] = useState({
     title: '',
     subtitle: '',
@@ -44,6 +45,7 @@ const CreateCompaign = () => {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
     if (user && user._id) {
+      setToken(user?.token)
       setFormData({ ...formData, user_id: user._id });
     }
   }, []);
@@ -58,9 +60,13 @@ const CreateCompaign = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('formData', formData);
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
+      },
+    };
     const response = await axios
-      .post(`${process.env.REACT_APP_BACKEND_URL}/api/compaign/createCompaign`, formData)
+      .post(`${process.env.REACT_APP_BACKEND_URL}/api/compaign/createCompaign`, formData, config)
       .then((res) => {
         if (res.status === 200 || res.status === 201) {
             window.alert(

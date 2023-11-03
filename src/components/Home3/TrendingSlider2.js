@@ -60,7 +60,7 @@ const TrendingSlider2 = (props) => {
 				}}
 			>	
                
-				{dataBlog.map((d,i)=>(
+				{dataBlog?.map((d,i)=>(
 					<SwiperSlide key={i}>	
                     {console.log("value of d",d)}
                         <div className="dz-card style-5">

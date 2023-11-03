@@ -79,6 +79,7 @@ const FundraiserDetail = () => {
   const [campaign, setCampaign] = useState({});
   const [comments, setComments] = useState([]);
   const [donners, setDonners] = useState([]);
+  const [token, setToken] = useState("");
   const [daysLeft, setDaysLeft] = useState(0);
   const [reply, setReply] = useState(false);
   const [user_id, setUser_id] = useState("");
@@ -113,10 +114,15 @@ const FundraiserDetail = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
+      },
+    };
     const response = await axios
     .post(
       `${process.env.REACT_APP_BACKEND_URL}/api/payments/create-payment/${user_id}`,
-      formData
+      formData,config
     )
     .then((res) => {
       if (res.status === 200 || res.status === 201) {
@@ -154,10 +160,15 @@ const FundraiserDetail = () => {
       user_id: user_id,
       comment_message: comment_message
     }
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
+      },
+    };
     const response = await axios
     .post(
       `${process.env.REACT_APP_BACKEND_URL}/api/compaign/createComment`,
-      data
+      data,config
     )
     .then((res) => {
       if (res.status === 200 || res.status === 201) {
@@ -177,12 +188,16 @@ const FundraiserDetail = () => {
     }
   };
   useEffect(() => {
-    const fetchData = async (_id) => {
+    const fetchData = async (_id,token) => {
       try {
-        console.log("campaign_id", _id);
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
+          },
+        };
         const response = await axios
           .get(
-            `${process.env.REACT_APP_BACKEND_URL}/api/compaign/getSingleCompaign/${_id}`
+            `${process.env.REACT_APP_BACKEND_URL}/api/compaign/getSingleCompaign/${_id}`,config
           )
           .then((res) => {
             if (res.status === 200 || res.status === 201) {
@@ -229,16 +244,23 @@ const FundraiserDetail = () => {
     };
     const user = JSON.parse(localStorage.getItem("user"));
     setUser_id(user._id)
-    fetchData(id);
+    if (user && user.token) {
+      setToken(user.token)
+      fetchData(id,user.token);
+    }
     // Call the async function
   }, [id,paymentUpdate]);
   useEffect(() => {
-    const fetchData = async (_id) => {
+    const fetchData = async (_id,token) => {
       try {
-        console.log("campaign_id", _id);
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
+          },
+        };
         const response = await axios
           .get(
-            `${process.env.REACT_APP_BACKEND_URL}/api/compaign/getCompaignComments/${_id}`
+            `${process.env.REACT_APP_BACKEND_URL}/api/compaign/getCompaignComments/${_id}`,config
           )
           .then((res) => {
             if (res.status === 200 || res.status === 201) {
@@ -258,7 +280,10 @@ const FundraiserDetail = () => {
         console.error("API request failed", error);
       }
     };
-    fetchData(id);
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user && user.token) {
+      fetchData(id,user.token);
+    }
   }, [id,comment_message,reply]);
   return (
     <>
@@ -356,6 +381,7 @@ const FundraiserDetail = () => {
         p: 3,
       }}
     >
+      {console.log("donners",donners)}
       {donners
         .slice(step * numDonorsPerPage, (step + 1) * numDonorsPerPage)
         .map((donor, index) => (
