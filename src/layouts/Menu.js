@@ -146,6 +146,10 @@ export const MenuListArray2 = [
                 title:"Profile Setting",
                 to:"/profile-setting"
             },
+            // {
+            //     title:"Balance",
+            //     to:"/my-balance"
+            // },
             {
                 title:"Wallet",
                 to:"/wallet-address"

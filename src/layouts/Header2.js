@@ -74,6 +74,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
               lastName: res?.data?.user?.lastName,
               email: res?.data?.user?.email,
               role: res?.data?.user?.role,
+              profileImage: res?.data?.user?.profileImage,
               token: res?.data?.token,
             })
           );

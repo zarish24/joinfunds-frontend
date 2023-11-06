@@ -319,7 +319,7 @@ const ProjectMasonry = (props) => {
                     <div className="dz-card style-2 overlay-skew">
                       <div className="dz-media">
                         <Link to={`/fundraiser-detail/${item._id}`}>
-                          <img src={item.campaign_image} alt="" />
+                          <img src={item?.campaign_images[0]?.url ? item?.campaign_images[0]?.url  : avat3} alt="" />
                         </Link>
                       </div>
                       <div className="dz-info">
@@ -330,7 +330,7 @@ const ProjectMasonry = (props) => {
                         </ul>
                         <h5 className="dz-title">
                           <Link to={`/fundraiser-detail/${item._id}`}>
-                            {item.subtitle.length > 30
+                            {item.subtitle.length > 25
                               ? item.subtitle.slice(0, 25) + "..."
                               : item.subtitle}
                           </Link>
@@ -367,11 +367,11 @@ const ProjectMasonry = (props) => {
 
                         <div className="author-wrappper">
                           <div className="author-media">
-                            <img src={avat3} alt="" />
+                            <img src={item.user_detail[0].profileImage} alt="" />
                           </div>
                           <div className="author-content">
                             <div className="author-head">
-                              <h6 className="author-name">Cheyenne Curtis</h6>
+                              <h6 className="author-name">{item.user_detail[0].firstName} {item.user_detail[0].lastName}</h6>
                               <ul className="rating-list">
                                 <li>
                                   <i className="fa fa-star"></i>

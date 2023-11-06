@@ -7,6 +7,7 @@ import axios from "axios";
 const EditCampaign = () => {
     const { id } = useParams();
     const [token, setToken] = useState("")
+    const [images, setImages] = useState([]);
     const [formData, setFormData] = useState({
         title: '',
         subtitle: '',
@@ -42,6 +43,12 @@ const EditCampaign = () => {
     "General",
     "Mission",
   ];
+
+  const MultipleFileChange = async (e) => {
+    const files = Array.from(e.target.files);
+    setImages(files);
+  };
+
   useEffect(() => {
     const fetchData = async (_id,token) => {
       try {
@@ -56,30 +63,30 @@ const EditCampaign = () => {
           )
           .then((res) => {
             if (res.status === 200 || res.status === 201) {
-                const s_date = new Date(res?.data?.data?.doc.start_date);
+                const s_date = new Date(res?.data?.data?.doc[0].start_date);
                 const s_year = s_date.getFullYear();
                 const s_month = s_date.getMonth() + 1; // Month is zero-based, so add 1
                 const s_day = s_date.getDate();
                 // Create a new formatted date string
                 const formattedStartDate = `${s_year}-${String(s_month).padStart(2, '0')}-${String(s_day).padStart(2, '0')}`;
 
-                const date = new Date(res?.data?.data?.doc.end_date);
+                const date = new Date(res?.data?.data?.doc[0].end_date);
                 const year = date.getFullYear();
                 const month = date.getMonth() + 1; // Month is zero-based, so add 1
                 const day = date.getDate();
                 // Create a new formatted date string
                 const formattedEndDate = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
                 setFormData({
-                title: res?.data?.data?.doc.title || '', // Use the values from "doc" or provide default values
-                subtitle: res?.data?.data?.doc.subtitle || '',
-                total_funding: res?.data?.data?.doc.total_funding || 0,
-                description: res?.data?.data?.doc.description || '',
-                minimum_amount: res?.data?.data?.doc.minimum_amount || 0,
-                maximum_amount: res?.data?.data?.doc.maximum_amount || 0,
+                title: res?.data?.data?.doc[0].title || '', // Use the values from "doc" or provide default values
+                subtitle: res?.data?.data?.doc[0].subtitle || '',
+                total_funding: res?.data?.data?.doc[0].total_funding || 0,
+                description: res?.data?.data?.doc[0].description || '',
+                minimum_amount: res?.data?.data?.doc[0].minimum_amount || 0,
+                maximum_amount: res?.data?.data?.doc[0].maximum_amount || 0,
                 start_date:formattedStartDate || '',
                 end_date: formattedEndDate || '',
-                campaign_status: res?.data?.data?.doc.status || 'pending',
-                campaign_type: res?.data?.data?.doc.campaign_type || 'funding',
+                campaign_status: res?.data?.data?.doc[0].status || 'pending',
+                campaign_type: res?.data?.data?.doc[0].campaign_type || 'funding',
               });
             } else {
               window.alert("Compaigns not fount due to some issue!");
@@ -116,8 +123,27 @@ const EditCampaign = () => {
         Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
       },
     };
+    const option = { 
+      title:   formData.title,
+      subtitle: formData.subtitle,
+      total_funding: formData.total_funding,
+      description: formData.description,
+      minimum_amount: formData.minimum_amount,
+      maximum_amount: formData.maximum_amount,
+      start_date: formData.start_date,
+      end_date: formData.end_date,
+      campaign_status: formData.campaign_status,
+      campaign_type: formData.campaign_type
+    }
+    const bodyData = new FormData();
+    for (var key in option) {
+      bodyData.append(key, option[key]);
+    }
+    for (let i = 0; i < images.length; i++) {
+      bodyData.append("images", images[i]);
+    }
     const response = await axios
-      .put(`${process.env.REACT_APP_BACKEND_URL}/api/compaign/updateCompaign/${id}`, formData, config)
+      .put(`${process.env.REACT_APP_BACKEND_URL}/api/compaign/updateCompaign/${id}`, bodyData, config)
       .then((res) => {
         if (res.status === 200 || res.status === 201) {
             window.alert(
@@ -283,6 +309,12 @@ const EditCampaign = () => {
                         />
                       </div>
                     </div>
+                    <div className="col-6">
+                        <div className="form-group">
+                            <label>Select Compaign Images</label>
+                            <input type="file" onChange={(e) => MultipleFileChange(e)} className="form-control" multiple />
+                        </div>
+                       </div>
                   </div>
                  
                   <button type="submit" className="btn btn-primary mb-5">

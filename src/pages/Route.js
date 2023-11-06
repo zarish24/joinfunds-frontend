@@ -40,6 +40,7 @@ import Setting from '../pages/Settings/Setting';
 import Logout from './Logout';
 import WalletAddress from './WalletAddress';
 import EditCampaign from './EditCampaign';
+import MyBalance from './MyBalance';
 
 function Index(){
 	return(
@@ -79,6 +80,7 @@ function Index(){
 					<Route path='/logout' exact element={<Logout />} />
 					<Route path='/blog-grid' exact element={<BlogGrid />} />
 					<Route path='/wallet-address' exact element={<WalletAddress />} />
+					<Route path='/my-balance' exact element={<MyBalance />} />
 					<Route path='/blog-list' exact element={<BlogList />} />
 					<Route path='/blog-details' exact element={<BlogDetails />} />
 					<Route path='/contact-us' exact element={<ContactUs />} />
