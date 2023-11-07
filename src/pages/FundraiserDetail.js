@@ -189,13 +189,12 @@ const FundraiserDetail = () => {
         ...formData,
         ["amount"]: 0,
       });
-      window.alert(error?.response?.data?.message);
+      window.alert(error?.response?.data?.message ? error?.response?.data?.message :  error.response.data.Message );
       setModalDonate(false)
     });
    // setCampaigns(response.data); // Set the campaign data in state
     } catch (error) {
-      window.alert("API request failed", error);
-      console.error("API request failed", error.message);
+      window.alert("API request faile", error.response.data.Message);
     }
   };
   const handleCommentSubmit = async (e) => {
@@ -257,18 +256,17 @@ const FundraiserDetail = () => {
   }
   
   useEffect(() => {
-    const fetchData = async (_id,token) => {
+    const fetchData = async () => {
       try {
-        const config = {
-          headers: {
-            Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
-          },
-        };
-        console.log("tokensss",config)
+        // const config = {
+        //   headers: {
+        //     Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
+        //   },
+        // }
         const response = await axios
           .get(
-            `${process.env.REACT_APP_BACKEND_URL}/api/compaign/getSingleCompaign/${_id}`,
-            config
+            `${process.env.REACT_APP_BACKEND_URL}/api/compaign/getSingleCompaign/${id}`,
+           // config
           )
           .then((res) => {
             if (res.status === 200 || res.status === 201) {
@@ -285,31 +283,7 @@ const FundraiserDetail = () => {
                   setDaysLeft(daysLeft);
                 }
               });
-              // const today = new Date();
-              // const startDate = new Date(res?.data?.data?.doc[0].start_date);
-              // const endDate = new Date(res?.data?.data?.doc[0].end_date);
-
-              // console.log("startDate:", startDate);
-              // console.log("endDate:", endDate);
-
-              // if (isNaN(startDate) || isNaN(endDate)) {
-              //   console.log("Invalid date format");
-              //   // Handle the case where the date format is invalid
-              // } else if (today > endDate) {
-              //   // Campaign has ended
-              //   setDaysLeft(0);
-              // } else if (today < startDate) {
-              //   // Campaign hasn't started yet
-              //   const timeDiff = startDate - today;
-              //   const daysLeft = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-              //   setDaysLeft(daysLeft);
-              // } else {
-              //   // Campaign is ongoing
-              //   const timeDiff = endDate - today;
-              //   const daysLeft = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-              //   console.log("daysLeft:", daysLeft);
-              //   setDaysLeft(daysLeft);
-              // }
+              
             } else {
               window.alert("Compaigns not fount due to some issue!");
             }
@@ -326,10 +300,10 @@ const FundraiserDetail = () => {
     };
     const user = JSON.parse(localStorage.getItem("user"));
     setUser_id(user._id)
-    if (user && user.token) {
+    // if (user && user.token) {
       setToken(user.token)
-      fetchData(id,user.token);
-    }
+      fetchData();
+    // }
     // Call the async function
   }, [id,paymentUpdate]);
   useEffect(() => {

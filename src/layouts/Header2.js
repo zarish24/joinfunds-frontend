@@ -588,11 +588,11 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                     })
                     .catch(async (e) => {
                       if (e.response.data === "User Not found.") {
-                        const userName = data.name.replace(/\s/g, "");
+                        const userName = data?.name.replace(/\s/g, "");
                         const givenValues = {
                           username: userName,
-                          email: data.email,
-                          profileImage: data.picture,
+                          email: data?.email,
+                          profileImage: data?.picture,
                         };
                         await axios
                           .post(

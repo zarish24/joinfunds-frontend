@@ -40,7 +40,6 @@ const MyProjects = () => {
         if (campaignStatus !== "Campaign Status") {
           data.status = campaignStatus;
         }
-
         const response = await axios
           .post(
             `${process.env.REACT_APP_BACKEND_URL}/api/compaign/getAllCompaigns`,
@@ -101,17 +100,17 @@ const MyProjects = () => {
                           <Dropdown.Item
                             onClick={() => setCampaignType("All Category")}
                           >
-                            All Category
+                            all-category
                           </Dropdown.Item>
                           <Dropdown.Item
-                            onClick={() => setCampaignType("Funding")}
+                            onClick={() => setCampaignType("funding")}
                           >
-                            Funding
+                            funding
                           </Dropdown.Item>
                           <Dropdown.Item
-                            onClick={() => setCampaignType("Donation")}
+                            onClick={() => setCampaignType("donation")}
                           >
-                            Donation
+                            donation
                           </Dropdown.Item>
                         </Dropdown.Menu>
                       </Dropdown>

@@ -42,21 +42,21 @@ const Home3 = () => {
         nav("/contact-us");
     };
     useEffect(() => {
-        const fetchData = async (token) => {
+        const fetchData = async () => {
           try {
-            const config = {
-                headers: {
-                  Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
-                },
-              };
+            // const config = {
+            //     headers: {
+            //       Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
+            //     },
+            //   };
             const response = await axios
               .get(
-                `${process.env.REACT_APP_BACKEND_URL}/api/compaign/getTrendingCampaign`,config
+                `${process.env.REACT_APP_BACKEND_URL}/api/compaign/getTrendingCampaign`  //,config
               )
               .then((res) => {
                 if (res.status === 200 || res.status === 201) {
-                  console.log("all-comp-data", res?.data?.data);
-                  setCampaigns(res?.data?.data);
+                  console.log("all-comp-data", res?.data);
+                  setCampaigns(res?.data);
                 } else {
                   window.alert("Compaigns not fount due to some issue!");
                 }
@@ -70,10 +70,10 @@ const Home3 = () => {
             console.error("API request failed", error);
           }
         };
-        const user = JSON.parse(localStorage.getItem("user"));
-        if (user && user.token) {
-          fetchData(user.token);
-        }
+        // const user = JSON.parse(localStorage.getItem("user"));
+        // if (user && user.token) {
+          fetchData();
+        // }
         
         // Call the async function
       }, []);

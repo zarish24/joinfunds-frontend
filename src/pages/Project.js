@@ -18,7 +18,7 @@ const Project = () => {
   const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
-    const fetchData = async (token) => {
+    const fetchData = async () => {
       try {
         const data = {
           status: "",
@@ -26,13 +26,12 @@ const Project = () => {
           items_per_page: 12,
           page,
         };
-
-        const config = {
-          headers: {
-            Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
-          },
-        };
-
+        // const config = {
+        //   headers: {
+        //     Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
+        //   },
+        // };
+        // console.log("campggg",campaignType)
         if (campaignType !== "Campaign Type") {
           data.campaign_type = campaignType;
         }
@@ -44,7 +43,7 @@ const Project = () => {
         const response = await axios
           .post(
             `${process.env.REACT_APP_BACKEND_URL}/api/compaign/getAllCompaigns`,
-            data, config
+            data //,  config
           )
           .then((res) => {
             if (res.status === 200 || res.status === 201) {
@@ -64,13 +63,14 @@ const Project = () => {
       }
     };
 
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (user && user.token) {
-      fetchData(user.token);
-    }
+    // const user = JSON.parse(localStorage.getItem("user"));
+    // if (user && user.token) {
+      fetchData();
+    // }
     
     // Call the async function
   }, [page,campaignType,campaignStatus]);
+
   return (
     <>
       <div className="page-content bg-white">
@@ -103,17 +103,17 @@ const Project = () => {
                           <Dropdown.Item
                             onClick={() => setCampaignType("All Category")}
                           >
-                            All Category
+                            all-category
                           </Dropdown.Item>
                           <Dropdown.Item
-                            onClick={() => setCampaignType("Funding")}
+                            onClick={() => setCampaignType("funding")}
                           >
-                            Funding
+                            funding
                           </Dropdown.Item>
                           <Dropdown.Item
-                            onClick={() => setCampaignType("Donation")}
+                            onClick={() => setCampaignType("donation")}
                           >
-                            Donation
+                            donation
                           </Dropdown.Item>
                         </Dropdown.Menu>
                       </Dropdown>
