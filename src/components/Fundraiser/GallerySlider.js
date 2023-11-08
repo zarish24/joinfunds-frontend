@@ -18,13 +18,24 @@ import img6 from '../../assets/images/blog/large/pic6.jpg';
 // import required modules
 import { FreeMode, Navigation, Thumbs } from "swiper";
 
-const swiperFirst = [
-    {image: img1},{image: img2},
-    {image: img3},{image: img4},
-    {image: img5},{image: img6},
-];
+// const swiperFirst = [
+//     {image: img1},{image: img2},
+//     {image: img3},{image: img4},
+//     {image: img5},{image: img6},
+// ];
 
-export default function GallerySlider() {
+export default function GallerySlider(props) {
+
+  console.log("campaign_images",props.campaignImages)
+ const swiperFirst = Array.isArray(props.campaignImages)
+  ? props.campaignImages.map((image, index) => {
+      return {
+        image: image.url,
+      };
+    })
+  : [];
+  console.log("swiperFirst", props.campaignImages);
+  const images = props.campaignImages
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
   return (

@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
 import {Link} from 'react-router-dom';
-
+import axios from "axios";
 import  large from '../assets/images/blog/large/pic1.jpg';
 import  blog2 from '../assets/images/blog/blog-grid/pic2.jpg';
 import  blog1 from '../assets/images/blog/blog-grid/pic1.jpg';
@@ -9,25 +9,152 @@ import avat1 from '../assets/images/avatar/avatar1.jpg';
 import avat2 from '../assets/images/avatar/avatar2.jpg';
 import avat3 from '../assets/images/avatar/avatar3.jpg';
 import avat4 from '../assets/images/avatar/avatar4.jpg';
+import "./styles.module.scss"
 
-
-export const CommentBlog = (props) =>{
-    return(
-        <>
-            <div className="comment-body">
-                <div className="comment-author vcard"> 
-                    <img  className="avatar photo" src={props.image} alt="" /> 
-                    <cite className="fn">{props.title}</cite>
-                </div>               
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                <div className="reply"> 
-                    <Link to={"#"} className="comment-reply-link"><i className="fa fa-reply"></i>Reply</Link>
-                </div>
+export const CommentBlog = (props) => {
+    const [replying, setReplying] = useState(false);
+    const [replyText, setReplyText] = useState('');
+  
+    const handleReply = () => {
+      setReplying(true);
+    };
+  
+    const handleCancelReply = () => {
+      setReplying(false);
+      setReplyText(''); // Clear the reply text when canceled
+    };
+  
+    const handleReplySubmit = async (e) => {
+        e.preventDefault();
+        try {
+        const user = JSON.parse(localStorage.getItem("user"));
+        const config = {
+          headers: {
+            Authorization: `Bearer ${user?.token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
+          },
+        };
+        const data = {
+          comment_id: props.commentId,
+          user_id: props.user_id,
+          reply_message: replyText
+        }
+        const response = await axios
+        .post(
+          `${process.env.REACT_APP_BACKEND_URL}/api/compaign/commentReply`,
+          data, config
+        )
+        .then((res) => {
+          if (res.status === 200 || res.status === 201) {
+            if(props.reply===true)
+            {
+               props.setReply(false)
+            }
+            else
+            {
+              props.setReply(true)
+            }
+            
+            setReplying(false);
+            setReplyText('');
+          } else {
+            // window.alert(res.message);
+          }
+        })
+        .catch((error) => {
+          console.error("API request failed", error);
+          window.alert(error?.response?.data?.message);
+        });
+       // setCampaigns(response.data); // Set the campaign data in state
+        } catch (error) {
+          window.alert("API request failed", error);
+          console.error("API request failed", error.message);
+        }
+      };
+  
+    return (
+      <>
+        <div className="comment-body">
+          <div className="comment-author vcard">
+            <img className="avatar photo" src={props.image} alt="" />
+            <cite className="fn">{props.title}</cite>
+          </div>
+          <p>{props.comment_message}</p>
+          {props.showReply === false ? null :
+          <div className="reply">
+          <button
+            onClick={handleReply}
+            style={{
+              backgroundColor: 'transparent', // Transparent background
+              border: 'none', // No border
+              fontSize: '16px', // Adjust font size
+              color: '#007bff', // Text color
+              cursor: 'pointer', // Change cursor to a pointer on hover
+              padding: '0', // Remove padding
+              margin: '0', // Remove margin
+            }}
+          >
+            <i className="fa fa-reply"></i> {/* Add your icon here */}
+          </button>
+        </div>
+          }
+          
+        </div>
+  
+        {replying && (
+          <div className="comment-reply-form">
+            <textarea
+              rows={3} // Set this to the number of rows you desire
+              placeholder="Write your reply here..."
+              value={replyText}
+              onChange={(e) => setReplyText(e.target.value)}
+              style={{
+                height: "43px",
+                width: '100%',
+                padding: '8px',
+                borderRadius: '4px',
+                border: '1px solid #ccc',
+                fontFamily: 'Arial, sans-serif',
+                fontSize: '14px',
+              }}
+            />
+            <div className="button-container">
+              <button
+                style={{
+                  backgroundColor: "#007bff",
+                  color: "#fff",
+                  border: "none",
+                  padding: "5px 10px",
+                  borderRadius: "4px",
+                  fontSize: "12px",
+                  cursor: "pointer",
+                  marginRight: "10px",
+                  marginBottom: "10px",
+                }}
+                onClick={handleReplySubmit}
+              >
+                Submit Reply
+              </button>
+  
+              <button
+                style={{
+                  backgroundColor: "#ccc",
+                  color: "#333",
+                  border: "none",
+                  padding: "5px 10px",
+                  borderRadius: "4px",
+                  fontSize: "12px",
+                  cursor: "pointer",
+                }}
+                onClick={handleCancelReply}
+              >
+                Cancel
+              </button>
             </div>
-        </>
-    )
-}
-
+          </div>
+        )}
+      </>
+    );
+  };
 const BlogDetailsLeftBar = () => {
     return (
         <>

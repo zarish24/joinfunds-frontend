@@ -4,6 +4,7 @@ import {Modal} from 'react-bootstrap';
 import CountUp from 'react-countup';
 import ModalVideo from 'react-modal-video'
 import 'react-modal-video/css/modal-video.min.css';
+import axios from "axios";
 
 //componenet
 import MainSliderIndex3 from '../components/Home3/MainSliderIndex3';
@@ -32,6 +33,7 @@ const Home3 = () => {
 		changeBackground({ value: "data-typography-2", label: "data-typography-2" });
 		changePrimaryColor("color-skin-3");
 	}, []);
+    const [campaigns, setCampaigns] = useState([]);
     const [readModal,setReadModal] = useState(false);
     const [isOpen, setOpen] = useState(false);
     const nav = useNavigate();
@@ -39,6 +41,42 @@ const Home3 = () => {
         e.preventDefault();
         nav("/contact-us");
     };
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            // const config = {
+            //     headers: {
+            //       Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
+            //     },
+            //   };
+            const response = await axios
+              .get(
+                `${process.env.REACT_APP_BACKEND_URL}/api/compaign/getTrendingCampaign`  //,config
+              )
+              .then((res) => {
+                if (res.status === 200 || res.status === 201) {
+                  console.log("all-comp-data", res?.data);
+                  setCampaigns(res?.data);
+                } else {
+                  window.alert("Compaigns not fount due to some issue!");
+                }
+              })
+              .catch((error) => {
+                window.alert(error);
+              });
+            // setCampaigns(response.data); // Set the campaign data in state
+          } catch (error) {
+            window.alert("API request failed", error);
+            console.error("API request failed", error);
+          }
+        };
+        // const user = JSON.parse(localStorage.getItem("user"));
+        // if (user && user.token) {
+          fetchData();
+        // }
+        
+        // Call the async function
+      }, []);
     return (
         <>
             <div className="page-wraper page-wraper-sidebar">
@@ -67,8 +105,9 @@ const Home3 = () => {
                                 </div>
                             </div>
                         </div>
+                        {console.log("campaigns",campaigns)}
                         <div class="resize-wrapper">
-                            <TrendingSlider2 />
+                            <TrendingSlider2 campaigns = {campaigns} />
                         </div>
                     </section>           
                     <section className="content-inner">
@@ -254,7 +293,8 @@ const Home3 = () => {
                         <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
                     </div>
                 </Modal>
-                <ModalVideo channel='youtube' autoplay isOpen={isOpen} videoId="bdBG5VO01e0" onClose={() => setOpen(false)} />
+                {/* <ModalVideo channel='youtube' autoplay isOpen={isOpen} videoId="bdBG5VO01e0" onClose={() => setOpen(false)} /> */}
+                <ModalVideo channel='youtube'  isOpen={isOpen} videoId="bdBG5VO01e0" onClose={() => setOpen(false)} />
                 {/* <Link to={"#"} className={classChange} onClick={()=> setOpen(true)} ><i className="fa-solid fa-play" ></i></Link> */}
                 {/* <DonateModal /> */}
             </div>

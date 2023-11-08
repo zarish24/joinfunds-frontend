@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Dropdown } from "react-bootstrap";
-
+import styles from './styles.module.scss';
 import PageBanner from "../layouts/PageBanner";
 import ProjectMasonry from "../components/Project/ProjectMasonry";
 import UpdateBlog from "../components/Home/UpdateBlog";
+
 
 import bg from "../assets/images/banner/bnr5.jpg";
 import axios from "axios";
@@ -25,7 +26,12 @@ const Project = () => {
           items_per_page: 12,
           page,
         };
-
+        // const config = {
+        //   headers: {
+        //     Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
+        //   },
+        // };
+        // console.log("campggg",campaignType)
         if (campaignType !== "Campaign Type") {
           data.campaign_type = campaignType;
         }
@@ -37,7 +43,7 @@ const Project = () => {
         const response = await axios
           .post(
             `${process.env.REACT_APP_BACKEND_URL}/api/compaign/getAllCompaigns`,
-            data
+            data //,  config
           )
           .then((res) => {
             if (res.status === 200 || res.status === 201) {
@@ -57,10 +63,14 @@ const Project = () => {
       }
     };
 
+    // const user = JSON.parse(localStorage.getItem("user"));
+    // if (user && user.token) {
       fetchData();
+    // }
     
     // Call the async function
   }, [page,campaignType,campaignStatus]);
+
   return (
     <>
       <div className="page-content bg-white">
@@ -71,12 +81,12 @@ const Project = () => {
         />
         <div className="find-bx-wrapper">
           <div className="container">
-            <div className="find-bx bg-white">
+            <div className= {`${styles.find} bg-white`}>
               <form>
                 <div className="row align-items-center">
-                  <div className="col-lg-3 col-md-4">
-                    <div className="">
-                      <Dropdown className="select-drop-2">
+                  {/* <div className="col-lg-3 col-md-4"> */}
+                    {/* <div className="col-lg-3 col-md-4"> */}
+                      <Dropdown className="col-lg-3 col-md-4 select-drop-2">
                         <Dropdown.Toggle
                           as="div"
                           className="i-false select-drop-btn-2"
@@ -93,21 +103,21 @@ const Project = () => {
                           <Dropdown.Item
                             onClick={() => setCampaignType("All Category")}
                           >
-                            All Category
+                            all-category
                           </Dropdown.Item>
                           <Dropdown.Item
-                            onClick={() => setCampaignType("Funding")}
+                            onClick={() => setCampaignType("funding")}
                           >
-                            Funding
+                            funding
                           </Dropdown.Item>
                           <Dropdown.Item
-                            onClick={() => setCampaignType("Donation")}
+                            onClick={() => setCampaignType("donation")}
                           >
-                            Donation
+                            donation
                           </Dropdown.Item>
                         </Dropdown.Menu>
                       </Dropdown>
-                      <Dropdown className="select-drop-2">
+                      <Dropdown className="col-lg-3 col-md-4 select-drop-2">
                         <Dropdown.Toggle
                           as="div"
                           className="i-false select-drop-btn-2"
@@ -143,9 +153,9 @@ const Project = () => {
                           </Dropdown.Item>
                         </Dropdown.Menu>
                       </Dropdown>
-                    </div>
-                  </div>
-                  <div className="col-lg-9 col-md-8">
+                    {/* </div> */}
+                  {/* </div> */}
+                  <div className="col-lg-6 col-md-8">
       <div className="input-group">
         <input
           type="text"

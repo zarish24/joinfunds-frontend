@@ -1,29 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import PageBanner from '../layouts/PageBanner';
-import { Link, useNavigate } from "react-router-dom";
-import styles from "./styles.module.scss";
-import Box from '@mui/material/Box';
+import { Link, useNavigate, useParams } from "react-router-dom";
 import bg from '../assets/images/banner/bnr3.jpg';
 import axios from "axios";
-import { ThreeDots } from '../../node_modules/react-loader-spinner/dist/index';
 
-const CreateCompaign = () => {
-  const [token, setToken] = useState("");
-  const [images, setImages] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    title: '',
-    subtitle: '',
-    total_funding: 0,
-    description: '',
-    minimum_amount: 0,
-    maximum_amount: 0,
-    start_date: '',
-    end_date: '',
-    campaign_status: 'pending',  // Default value for campaign status
-    campaign_type: 'funding',  // Default value for campaign type
-    user_id: ''
-  });
+const EditCampaign = () => {
+    const { id } = useParams();
+    const [token, setToken] = useState("")
+    const [images, setImages] = useState([]);
+    const [formData, setFormData] = useState({
+        title: '',
+        subtitle: '',
+        total_funding: 0,
+        description: '',
+        minimum_amount: 0,
+        maximum_amount: 0,
+        start_date: '',
+        end_date: '',
+        campaign_status: 'pending',  // Default value for campaign status
+        campaign_type: 'funding',  // Default value for campaign type
+    });
 
   const titleOptions = [
     "Select Campaign Category",
@@ -47,13 +43,70 @@ const CreateCompaign = () => {
     "General",
     "Mission",
   ];
+
+  const MultipleFileChange = async (e) => {
+    const files = Array.from(e.target.files);
+    setImages(files);
+  };
+
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (user && user._id) {
-      setToken(user?.token)
-      setFormData({ ...formData, user_id: user._id });
+    const fetchData = async (_id,token) => {
+      try {
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
+          },
+        };
+        const response = await axios
+          .get(
+            `${process.env.REACT_APP_BACKEND_URL}/api/compaign/getSingleCompaign/${_id}`,config
+          )
+          .then((res) => {
+            if (res.status === 200 || res.status === 201) {
+                const s_date = new Date(res?.data?.data?.doc[0].start_date);
+                const s_year = s_date.getFullYear();
+                const s_month = s_date.getMonth() + 1; // Month is zero-based, so add 1
+                const s_day = s_date.getDate();
+                // Create a new formatted date string
+                const formattedStartDate = `${s_year}-${String(s_month).padStart(2, '0')}-${String(s_day).padStart(2, '0')}`;
+
+                const date = new Date(res?.data?.data?.doc[0].end_date);
+                const year = date.getFullYear();
+                const month = date.getMonth() + 1; // Month is zero-based, so add 1
+                const day = date.getDate();
+                // Create a new formatted date string
+                const formattedEndDate = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                setFormData({
+                title: res?.data?.data?.doc[0].title || '', // Use the values from "doc" or provide default values
+                subtitle: res?.data?.data?.doc[0].subtitle || '',
+                total_funding: res?.data?.data?.doc[0].total_funding || 0,
+                description: res?.data?.data?.doc[0].description || '',
+                minimum_amount: res?.data?.data?.doc[0].minimum_amount || 0,
+                maximum_amount: res?.data?.data?.doc[0].maximum_amount || 0,
+                start_date:formattedStartDate || '',
+                end_date: formattedEndDate || '',
+                campaign_status: res?.data?.data?.doc[0].status || 'pending',
+                campaign_type: res?.data?.data?.doc[0].campaign_type || 'funding',
+              });
+            } else {
+              window.alert("Compaigns not fount due to some issue!");
+            }
+          })
+          .catch((error) => {
+            window.alert(error);
+          });
+      } catch (error) {
+        window.alert("API request failed", error);
+        console.error("API request failed", error);
+      }
+    };
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user && user.token) {
+      setToken(user.token)
+      fetchData(id,user.token);
     }
   }, []);
+
   const navigate = useNavigate();
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -62,13 +115,9 @@ const CreateCompaign = () => {
       [name]: value,
     });
   };
-  const MultipleFileChange = async (e) => {
-    const files = Array.from(e.target.files);
-    setImages(files);
-  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
     const config = {
       headers: {
         Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
@@ -84,27 +133,19 @@ const CreateCompaign = () => {
       start_date: formData.start_date,
       end_date: formData.end_date,
       campaign_status: formData.campaign_status,
-      campaign_type: formData.campaign_type, 
-      user_id: formData.user_id
+      campaign_type: formData.campaign_type
     }
     const bodyData = new FormData();
-        for (var key in option) {
-          bodyData.append(key, option[key]);
-        }
-        for (let i = 0; i < images.length; i++) {
-          bodyData.append("images", images[i]);
-        }
+    for (var key in option) {
+      bodyData.append(key, option[key]);
+    }
+    for (let i = 0; i < images.length; i++) {
+      bodyData.append("images", images[i]);
+    }
     const response = await axios
-      .post(`${process.env.REACT_APP_BACKEND_URL}/api/compaign/createCompaign`, bodyData, config,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data", // Set the Content-Type header
-        },
-      }
-        )
+      .put(`${process.env.REACT_APP_BACKEND_URL}/api/compaign/updateCompaign/${id}`, bodyData, config)
       .then((res) => {
         if (res.status === 200 || res.status === 201) {
-          setLoading(false);
             window.alert(
               res?.data?.message
             );
@@ -114,7 +155,6 @@ const CreateCompaign = () => {
         }
       })
       .catch((error) => {
-        setLoading(false);
         window.alert(
             error
         );
@@ -123,19 +163,13 @@ const CreateCompaign = () => {
   return (
     <>
       <div className="page-content bg-white">
-        <PageBanner maintitle="Project" pagetitle="Create Your Own Campaign" background={bg} />
+        <PageBanner maintitle="Project" pagetitle="Edit Your Own Campaign" background={bg} />
 
         <section className="section-padding">
-        {loading ? (
-                            <Box className={styles.bars}>
-                                <ThreeDots color="#E6007C" width={50} height={50} />
-                            </Box>
-                        ) :
-                        <>
-                        <div className="container">
+          <div className="container">
             <div className="row">
               <div className="col-lg-8 mx-auto">
-                <h3>Create Your Campaign</h3>
+                <h3>Edit Your Campaign Here</h3>
                 <form onSubmit={handleSubmit}>
                   <div className="form-group mb-3">
                     <div className="row">
@@ -192,31 +226,31 @@ const CreateCompaign = () => {
                       </div>
                   </div>
                   <div className="form-group mb-3">
-                  <div className="row">
+                <div className="row">
                     <div className="col-md-6">
-                      <label>Campaign Status:</label>
-                      <select
+                    <label>Campaign Status:</label>
+                    <select
                         name="campaign_status disabled"
                         value={formData.campaign_status}
                         onChange={handleChange}
                         className="form-control"
-                      >
+                    >
                         <option value="pending">Pending</option>
-                      </select>
+                    </select>
                     </div>
                     <div className="col-md-6">
-                      <label>Campaign Type:</label>
-                      <select
+                    <label>Campaign Type:</label>
+                    <select
                         name="campaign_type"
                         value={formData.campaign_type}
                         onChange={handleChange}
                         className="form-control"
-                      >
+                    >
                         <option value="funding">Funding</option>
                         <option value="donation">Donation</option>
-                      </select>
+                    </select>
                     </div>
-                  </div>
+                </div>
                 </div>
                 {formData.campaign_type==='funding' ? (<>
                   <div className="row">
@@ -247,6 +281,7 @@ const CreateCompaign = () => {
                       </div>
                     </div>
                   </div></>): <></>}
+                  {console.log("startDate",formData.start_date)}
                   <div className="row">
                     <div className="col-md-6">
                       <div className="form-group mb-3">
@@ -274,28 +309,25 @@ const CreateCompaign = () => {
                         />
                       </div>
                     </div>
-                  </div>
-                  <div className="col-6">
+                    <div className="col-6">
                         <div className="form-group">
                             <label>Select Compaign Images</label>
                             <input type="file" onChange={(e) => MultipleFileChange(e)} className="form-control" multiple />
                         </div>
                        </div>
-                   
+                  </div>
+                 
                   <button type="submit" className="btn btn-primary mb-5">
-                    Create Campaign
+                    Edit Campaign
                   </button>
                 </form>
               </div>
             </div>
           </div>
-                        </>
-        }
-          
         </section>
       </div>
     </>
   );
 };
 
-export default CreateCompaign;
+export default EditCampaign;

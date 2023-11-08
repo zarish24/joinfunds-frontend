@@ -175,7 +175,7 @@ if (items) {
         for (var key in option) {
             formData.append(key, option[key]);
         }
-        console.log("formData",formData)
+        console.log("formDaxxxta",formData)
         await axios
             .put(`${process.env.REACT_APP_BACKEND_URL}/api/user/${userId}`, formData, {
                 headers: {
@@ -316,7 +316,7 @@ if (items) {
                                                     </Box>
                                                 ) : (
                                                     <Box className={styles.RoundedAvatar}>
-                                                        <img loading="lazy" src={HeaderUser} alt="Profile" />
+                                                        {/* <img loading="lazy" src={HeaderUser} alt="Profile" /> */}
                                                     </Box>
                                                 )}
                                                 <Box onClick={handleClick}>
