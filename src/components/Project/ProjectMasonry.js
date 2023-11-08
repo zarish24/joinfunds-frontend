@@ -317,7 +317,7 @@ const ProjectMasonry = (props) => {
                     //transition={{ duration: 0.5 }}
                   >
                     <div className="dz-card style-2 overlay-skew">
-                      <div className="dz-media">
+                      <div className={`dz-media ${styles.cardImgWrapper}`}>
                         <Link to={`/fundraiser-detail/${item._id}`}>
                           <img src={item?.campaign_images[0]?.url ? item?.campaign_images[0]?.url  : avat3} alt="" />
                         </Link>

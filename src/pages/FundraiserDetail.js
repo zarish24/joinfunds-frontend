@@ -28,6 +28,12 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
 import { useNavigate } from 'react-router-dom';
+import { initStripe } from './stripe'
+import { loadStripe } from '@stripe/stripe-js'
+//  import { placeOrder } from './apiService'
+import { CardWidget } from './CardWidget'
+
+
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews, { interval: 3000 });
 const numDonorsPerPage = 4; 
 const testimonials = [
@@ -75,6 +81,7 @@ const FundraiserDetail = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [loading, setLoading] = useState(false);
   const [modalDonate, setModalDonate] = useState(false);
+  const [modalStripeDonate, setModalStripeDonate] = useState(false);
   const [referModal, setReferModal] = useState(false);
   const [campaign, setCampaign] = useState({});
   const [comments, setComments] = useState([]);
@@ -92,6 +99,9 @@ const FundraiserDetail = () => {
   const [formData, setFormData] = useState({
     chain_id: 0, 
     symbol: '', 
+    amount: 0, 
+  });
+  const [stripeFormData, setStripeFormData] = useState({
     amount: 0, 
   });
   const setChain = async(e) => {
@@ -118,6 +128,17 @@ const FundraiserDetail = () => {
         });
         }
   };
+  useEffect(() => {
+    // const initStripe = async () => {
+    //   const stripe = await loadStripe('pk_test_YourPublishableKey');
+    //   const card = new CardWidget(stripe);
+    //   card.mount();
+    // };
+
+    if (modalStripeDonate) {
+      initStripe();
+    }
+  }, [modalStripeDonate]);
   const setHandleSymbol = (e) => {
     const selectedValue = e.target.value; // Keep it as a string
     setFormData({ ...formData, symbol: selectedValue }); // Update the formData state
@@ -141,6 +162,13 @@ const FundraiserDetail = () => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
+      [name]: value,
+    });
+  };
+  const handleStripeChange = (e) => {
+    const { name, value } = e.target;
+    setStripeFormData({
+      ...stripeFormData,
       [name]: value,
     });
   };
@@ -617,6 +645,16 @@ const FundraiserDetail = () => {
                     >
                       <i className="flaticon-like me-3"></i> Donate Now
                     </Link>
+                    <Link
+                      to={"#"}
+                      className="btn btn-donate btn-primary w-100"
+                      data-bs-toggle="modal"
+                      data-bs-target="#modalDonate"
+                      onClick={() => setModalStripeDonate(true)}
+                    >
+                      <i className="flaticon-like me-3"></i> Donate Now Through Stripe
+                    </Link>
+                    
                     {/* <div className="tagcloud">
                       <Link
                         to={"#"}
@@ -865,6 +903,69 @@ const FundraiserDetail = () => {
           </form>
         </div>
       </Modal>
+      <Modal
+  className="modal fade modal-wrapper"
+  id="modalDonate"
+  show={modalStripeDonate}
+  onHide={() => setModalStripeDonate(false)}
+>
+  {
+     loading ? (
+      <Box className={styles.bars}>
+          <ThreeDots color="#E6007C" width={50} height={50} />
+      </Box>
+  ) :
+  <>
+  <div className="modal-header">
+    <h5 className="modal-title">Choose a donation amount</h5>
+    <button
+      type="button"
+      className="btn-close"
+      onClick={() => setModalStripeDonate(false)}
+    >
+      <i className="flaticon-close"></i>
+    </button>
+  </div>
+  
+  <div className="modal-body">
+    <div className="col-lg-12">
+    <div className="form-group">
+</div>
+</div>
+    <div className="col-lg-12">
+      <div className="form-group">
+        <label className="form-label">Amount</label>
+        <div className="input-group">
+          <input
+            type="number"
+            className="form-control"
+            placeholder="Amount"
+            name="amount"
+            value={stripeFormData.amount}
+            onChange={handleChange}
+          />
+        </div>
+      </div>
+    </div>
+    <div id="card-element"></div>
+    <div className="col-lg-12">
+      <div className="form-group mb-0 text-center buttonMargin">
+        <button
+          name="submit"
+          type="submit"
+          value="Submit"
+          className="btn btn-primary btn-block"
+          onClick={handleStripeChange}
+        >
+          Pay Now
+        </button>
+      </div>
+    </div>
+  </div>
+  </>
+  }
+  
+</Modal>;
       <Modal
   className="modal fade modal-wrapper"
   id="modalDonate"

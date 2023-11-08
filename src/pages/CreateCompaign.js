@@ -128,7 +128,7 @@ const CreateCompaign = () => {
         <section className="section-padding">
         {loading ? (
                             <Box className={styles.bars}>
-                                <ThreeDots color="#E6007C" width={50} height={50} />
+                                <ThreeDots color="#121E31" width={50} height={50} />
                             </Box>
                         ) :
                         <>
