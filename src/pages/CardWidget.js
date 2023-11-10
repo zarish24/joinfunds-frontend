@@ -6,7 +6,7 @@ export class CardWidget {
         color: '#32325d',
         fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
         fontSmoothing: 'antialiased',
-        fontSize: '16px',
+        fontSize: '14px',
         '::placeholder': {
             color: '#aab7c4'
         }
@@ -33,6 +33,7 @@ export class CardWidget {
 
     async createToken() {
         try {
+            console.log("function-called")
             const result = await this.stripe.createToken(this.card)
             return result.token
         } catch(err) {
