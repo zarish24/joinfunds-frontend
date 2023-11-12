@@ -75,11 +75,12 @@ const donorsBlog = [
   { title: "Celesto Anderson", image: avat3, price: "$ 1,225" },
   { title: "Jake Johnson", image: avat2, price: "$ 9,00" },
 ];
+let card = null;
 
 const FundraiserDetail = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  var card = null;
+  
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
   const [loading, setLoading] = useState(false);
@@ -173,6 +174,7 @@ const FundraiserDetail = () => {
   };
   const handleStripeChange = async (e) => {
     e.preventDefault()
+    console.log("iii", card);
     if (card) {
       try {
         // Access 'card' and create a token
