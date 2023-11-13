@@ -181,6 +181,7 @@ const FundraiserDetail = () => {
         const token = await card.createToken();
         console.log("Card token:", token);
         if (token) {
+          setLoading(true);
           const bodyData = {
             systemSelectedPercentage: selectedPercentage,
             amount,
@@ -198,17 +199,19 @@ const FundraiserDetail = () => {
         .then((res) => {
           if (res.status === 200 || res.status === 201) {
             // setLoading(false);
+            setPaymentUpdate(true);
+            setLoading(false);
             setAmount(0)
             setModalStripeDonate(false);
             window.alert("Transaction has been completed successfully!");
           } else {
-            // setLoading(false);
+            setLoading(false);
             window.alert(res.message);
           }
         })
         .catch((error) => {
           console.error("API request failed", error);
-          // setLoading(false);
+          setLoading(false);
           setAmount(0)
           window.alert(
             error?.response?.data?.message
@@ -217,7 +220,6 @@ const FundraiserDetail = () => {
           );
           setModalStripeDonate(false);
         });
-
         }
         // console.log("body-data",bodyData)
         // You can handle the token or further actions here.
