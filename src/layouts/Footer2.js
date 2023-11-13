@@ -21,8 +21,9 @@ const Footer2 = () => {
                                 <div className="widget widget_about">
                                     <div className="footer-logo logo-white">
                                         <Link to={"/"}><img src={logowhite} alt="" /></Link> 
+                                        
                                     </div>
-                                    <p>Akcel is a Crowdfunding & Charity Website by DexignZone lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et</p>
+                                    <p>Nfu$e is a Crowdfunding & Charity Website by DexignZone lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et</p>
                                     <div className="dz-social-icon style-3">
                                         <ul>
                                             <li><a target="_blank" className="fab fa-facebook-f"  rel="noreferrer" href="https://www.facebook.com/"></a></li>
@@ -89,7 +90,7 @@ const Footer2 = () => {
                 
                 <div className="footer-bottom text-center">
                     <div className="container">
-                        <span className="copyright-text">Akcel Crowdfunding & Charity Website - © 2023 by <a href="https://dexignzone.com/"  rel="noreferrer" target="_blank">DexignZone</a></span>
+                        <span className="copyright-text">Nfu$e Crowdfunding & Charity Website - © 2023 by <a href="https://dexignzone.com/"  rel="noreferrer" target="_blank">DexignZone</a></span>
                     </div>
                 </div>
             </footer>

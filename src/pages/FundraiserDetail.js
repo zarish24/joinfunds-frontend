@@ -34,6 +34,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { CardWidget } from "./CardWidget";
 import Noty from "noty";
 
+
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews, { interval: 3000 });
 const numDonorsPerPage = 4;
 const testimonials = [
@@ -75,11 +76,12 @@ const donorsBlog = [
   { title: "Celesto Anderson", image: avat3, price: "$ 1,225" },
   { title: "Jake Johnson", image: avat2, price: "$ 9,00" },
 ];
+let card = null;
 
 const FundraiserDetail = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  var card = null;
+  
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
   const [loading, setLoading] = useState(false);
@@ -173,12 +175,14 @@ const FundraiserDetail = () => {
   };
   const handleStripeChange = async (e) => {
     e.preventDefault()
+    console.log("iii", card);
     if (card) {
       try {
         // Access 'card' and create a token
         const token = await card.createToken();
         console.log("Card token:", token);
         if (token) {
+          setLoading(true);
           const bodyData = {
             systemSelectedPercentage: selectedPercentage,
             amount,
@@ -196,17 +200,19 @@ const FundraiserDetail = () => {
         .then((res) => {
           if (res.status === 200 || res.status === 201) {
             // setLoading(false);
+            setPaymentUpdate(true);
+            setLoading(false);
             setAmount(0)
             setModalStripeDonate(false);
             window.alert("Transaction has been completed successfully!");
           } else {
-            // setLoading(false);
+            setLoading(false);
             window.alert(res.message);
           }
         })
         .catch((error) => {
           console.error("API request failed", error);
-          // setLoading(false);
+          setLoading(false);
           setAmount(0)
           window.alert(
             error?.response?.data?.message
@@ -215,7 +221,6 @@ const FundraiserDetail = () => {
           );
           setModalStripeDonate(false);
         });
-
         }
         // console.log("body-data",bodyData)
         // You can handle the token or further actions here.
@@ -617,7 +622,7 @@ const FundraiserDetail = () => {
                   </div>
                   <p>
                     In need of funds for medical treatment or know someone who
-                    might be? Share the details and Akcel will get in touch
+                    might be? Share the details and Nfu$e will get in touch
                     with.
                   </p>
                   <Link
