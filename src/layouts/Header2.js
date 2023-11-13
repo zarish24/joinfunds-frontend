@@ -66,19 +66,19 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
           setEmail("");
           setPassword("");
           // Store user information in local storage
-          localStorage.setItem(
-            "user",
-            JSON.stringify({
-              _id: res?.data?.user?._id,
-              firstName: res?.data?.user?.firstName,
-              lastName: res?.data?.user?.lastName,
-              email: res?.data?.user?.email,
-              role: res?.data?.user?.role,
-              profileImage: res?.data?.user?.profileImage,
-              token: res?.data?.token,
-            })
-          );
-          if (loginModal === true) {
+            localStorage.setItem(
+              "user",
+              JSON.stringify({
+                _id: res?.data?.user?._id,
+                firstName: res?.data?.user?.firstName,
+                lastName: res?.data?.user?.lastName,
+                email: res?.data?.user?.email,
+                role: res?.data?.user?.role,
+                profileImage: res?.data?.user?.profileImage,
+                token: res?.data?.token,
+              })
+            );
+                    if (loginModal === true) {
             localStorage.setItem("isLoggedIn", "true");
             setIsLoggedIn(true); // Update the state immediately.
             // Show the alert

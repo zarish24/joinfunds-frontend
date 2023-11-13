@@ -7,39 +7,4 @@ export async function initStripe() {
     let card = null;
     card = new CardWidget(stripe);
     card.mount()
-    // const token = await card.createToken()
-    // console.log("token_id",token.id)
-    // console.log("card",card)
-    // Ajax call
-// const paymentForm = document.querySelector('#payment-form');
-// if(paymentForm) {
-//     paymentForm.addEventListener('submit', async (e) => {
-//         e.preventDefault();
-//         let formData = new FormData(paymentForm);
-//         let formObject = {}
-//         for(let [key, value] of formData.entries()) {
-//             formObject[key] = value
-//         }
-
-//         if (!card) {
-//             // Ajax
-//             placeOrder(formObject);
-//             return;
-//         }
-
-//         const token = await card.createToken()
-//         formObject.stripeToken = token.id;
-//         placeOrder(formObject);
-
-
-//         // // Verify card
-//         // stripe.createToken(card).then((result) => {
-//         //     formObject.stripeToken = result.token.id;
-//         //     placeOrder(formObject);
-//         // }).catch((err) => {
-//         //     console.log(err)
-//         // })
-
-//     })
-// }
 }
