@@ -34,6 +34,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { CardWidget } from "./CardWidget";
 import Noty from "noty";
 
+
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews, { interval: 3000 });
 const numDonorsPerPage = 4;
 const testimonials = [
@@ -621,7 +622,7 @@ const FundraiserDetail = () => {
                   </div>
                   <p>
                     In need of funds for medical treatment or know someone who
-                    might be? Share the details and Akcel will get in touch
+                    might be? Share the details and Nfu$e will get in touch
                     with.
                   </p>
                   <Link
