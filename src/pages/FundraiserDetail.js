@@ -145,7 +145,6 @@ const FundraiserDetail = () => {
     card.mount();
     console.log("card",card)
   };
-
   const setHandleSymbol = (e) => {
     const selectedValue = e.target.value; // Keep it as a string
     setFormData({ ...formData, symbol: selectedValue }); // Update the formData state
