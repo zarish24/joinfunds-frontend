@@ -38,6 +38,9 @@ import CreateCompaign from './CreateCompaign';
 import MyProjects from './MyProjects';
 import Setting from '../pages/Settings/Setting';
 import Logout from './Logout';
+import WalletAddress from './WalletAddress';
+import EditCampaign from './EditCampaign';
+import MyBalance from './MyBalance';
 
 function Index(){
 	return(
@@ -47,7 +50,7 @@ function Index(){
 				<Route path='/under-maintenance' exact element={<UnderMaintenance />} /> 
 				<Route path='/coming-soon' exact element={<ComingSoon />} />
 				<Route path='/index-2' exact element={<Home2 />} />
-				<Route path='/index-3' exact element={<Home3 />} />
+				<Route path='/home' exact element={<Home3 />} />
 				<Route path='/forgot-password/:token' exact element={<ForgotPassword />} />
 				<Route  element={<MainLayout />} > 
 					<Route path='/' exact element={<Home />} />
@@ -63,8 +66,10 @@ function Index(){
 					<Route path='/terms-and-condition' exact element={<TermsCondition />} />
 					<Route path='/browse-fundraiser' exact element={<BrowseFundraiser />} />
 					<Route path='/become-a-fundraiser' exact element={<BecomeFundraiser />} />
+					<Route path='/fundraiser-detail' element={<FundraiserDetail />} />
 					<Route path='/fundraiser-detail/:id' element={<FundraiserDetail />} />
 					<Route path='/create-compaign' exact element={<CreateCompaign />} />
+					<Route path='/Edit-compaign/:id' exact element={<EditCampaign />} />
 					<Route path='/project' exact element={<Project />} />
 					<Route path='/project-categories' exact element={<ProjectCategories />} />
 					<Route path='/my-project' exact element={<MyProjects />} />
@@ -74,6 +79,8 @@ function Index(){
 					<Route path='/profile-setting' exact element={<Setting/>} />
 					<Route path='/logout' exact element={<Logout />} />
 					<Route path='/blog-grid' exact element={<BlogGrid />} />
+					<Route path='/wallet-address' exact element={<WalletAddress />} />
+					<Route path='/my-balance' exact element={<MyBalance />} />
 					<Route path='/blog-list' exact element={<BlogList />} />
 					<Route path='/blog-details' exact element={<BlogDetails />} />
 					<Route path='/contact-us' exact element={<ContactUs />} />

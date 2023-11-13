@@ -4,7 +4,7 @@ export const IMAGES = {
 	Background10 : require('../assets/images/background/bg10.jpg'),
 	
 	//Logo
-	logo2 : require('../assets/images/logo-2.png'),
+	logo2 : require('../assets/images/logo-2.jpg'),
 	logo3 : require('../assets/images/logo-3.png'),
 	logoWhite3 : require('../assets/images/logo-white-3.png'),
 

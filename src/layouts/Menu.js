@@ -1,7 +1,7 @@
 export const MenuListArray2 = [
     {
         title:"Home",
-        to : "/index-3"
+        to : "/home"
     },
     {
         title:"Pages",
@@ -139,16 +139,20 @@ export const MenuListArray2 = [
         ],
     },
     {
-        title:"Setting",
+        title:"My Account",
         classChange:"sub-menu-down",
         content:[
             {
                 title:"Profile Setting",
                 to:"/profile-setting"
             },
+            // {
+            //     title:"Balance",
+            //     to:"/my-balance"
+            // },
             {
-                title:"Wallet Setting",
-                to:"/blog-grid"
+                title:"Wallet",
+                to:"/wallet-address"
             },
             {
                 title:"Logout",

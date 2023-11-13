@@ -66,18 +66,19 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
           setEmail("");
           setPassword("");
           // Store user information in local storage
-          localStorage.setItem(
-            "user",
-            JSON.stringify({
-              _id: res?.data?.user?._id,
-              firstName: res?.data?.user?.firstName,
-              lastName: res?.data?.user?.lastName,
-              email: res?.data?.user?.email,
-              role: res?.data?.user?.role,
-              token: res?.data?.token,
-            })
-          );
-          if (loginModal === true) {
+            localStorage.setItem(
+              "user",
+              JSON.stringify({
+                _id: res?.data?.user?._id,
+                firstName: res?.data?.user?.firstName,
+                lastName: res?.data?.user?.lastName,
+                email: res?.data?.user?.email,
+                role: res?.data?.user?.role,
+                profileImage: res?.data?.user?.profileImage,
+                token: res?.data?.token,
+              })
+            );
+                    if (loginModal === true) {
             localStorage.setItem("isLoggedIn", "true");
             setIsLoggedIn(true); // Update the state immediately.
             // Show the alert
@@ -174,7 +175,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                   </div>
                   <div className="logo-header mostion logo-light">
                     <Link to={"/index-3"}>
-                      <img src={IMAGES.logoWhite3} alt="" />
+                      <img src={IMAGES.logo3} alt="" />
                     </Link>
                   </div>
                 </>
@@ -218,7 +219,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                   {MenuListArray2.map((data, index) => {
                     let menuClass = data.classChange;
 
-                    if (data.title === "Setting" && !isLoggedIn) {
+                    if (data.title === "My Account" && !isLoggedIn) {
                       return null; // Skip rendering "Setting" when not logged in
                     }
 
@@ -554,16 +555,18 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                     )
                     .then(async (res) => {
                       if (res.status === 200 || res.status === 201) {
+                        console.log("social-data",res)
                         localStorage.setItem(
                           `${res.data.data.doc.role}`,
                           JSON.stringify({
                             _id: res.data.data.doc._id,
-                            username: res.data.data.doc.username,
+                            firstName: res.data.data.doc.firstName,
+                            lastName: res.data.data.doc.lastName,
                             email: res.data.data.doc.email,
                             role: res.data.data.doc.role,
                             socialLogin: "User is Login with Google",
-                            token: res.data.data.token,
-                            profileImage: res.data.data.doc.profileImage,
+                            token: res.data.data.doc.token,
+                            profileImage: res.data.data.doc.profileImage? res.data.data.doc.profileImage: "",
                           })
                         );
                         // if (res.data.data.doc.role === 'admin') {
@@ -585,11 +588,11 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                     })
                     .catch(async (e) => {
                       if (e.response.data === "User Not found.") {
-                        const userName = data.name.replace(/\s/g, "");
+                        const userName = data?.name.replace(/\s/g, "");
                         const givenValues = {
                           username: userName,
-                          email: data.email,
-                          profileImage: data.picture,
+                          email: data?.email,
+                          profileImage: data?.picture,
                         };
                         await axios
                           .post(
@@ -598,16 +601,18 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                           )
                           .then((res) => {
                             if (res.status === 200 || res.status === 201) {
+                              
                               localStorage.setItem(
                                 "user",
                                 JSON.stringify({
                                   _id: res.data.data.user._id,
-                                  username: res.data.data.user.username,
+                                  firstName: res.data.data.user.firstName,
+                                  lastName: res.data.data.user.lastName,
                                   email: res.data.data.user.email,
                                   role: res.data.data.user.role,
                                   socialLogin: "User is Login with Google",
                                   token: res.data.data.token,
-                                  profileImage: res.data.data.user.profileImage,
+                                  profileImage: res.data.data.user.profileImage? res.data.data.user.profileImage: ""
                                 })
                               );
                               localStorage.setItem("isLoggedIn", "true");

@@ -111,13 +111,18 @@ if (items) {
                 setLoading(false);
             }, 5000);
             action.resetForm();
+            const config = {
+                headers: {
+                  Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
+                },
+              };
             let data = {
                 email: email,
                 newPassword: values.newPassword,
                 currentPassword: values.currentPassword
             };
             let result = await axios
-                .post(`${process.env.REACT_APP_BACKEND_URL}/api/user/resetPassword/${userId}`, data)
+                .post(`${process.env.REACT_APP_BACKEND_URL}/api/user/resetPassword`, data,config)
                 .then((res) => {
                     if (res.status === 200 || res.status === 201) {
                         window.alert(
@@ -164,24 +169,26 @@ if (items) {
     const updateProfile = async () => {
         setLoading(true);
         console.log("formData",pic)
+        const config = {
+            headers: {
+              Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
+            },
+          };
         const option = {
             firstName:firstName,
             lastName:lastName,
             email: email,
             profileImage: pic,
             bio: bio
-        };
+        }
         const formData = new FormData();
         for (var key in option) {
             formData.append(key, option[key]);
         }
-        console.log("formData",formData)
+        console.log("formDaxxxta",formData)
         await axios
-            .put(`${process.env.REACT_APP_BACKEND_URL}/api/user/${userId}`, formData, {
-                headers: {
-                    'content-type': 'multipart/form-data'
-                }
-            })
+            .put(`${process.env.REACT_APP_BACKEND_URL}/api/user`, formData, config
+            )
             .then((res) => {
                if ((res.status === 200 || res.status === 201)) {
                     localStorage.removeItem('user');
@@ -189,7 +196,6 @@ if (items) {
                         'user',
                         JSON.stringify({
                             token: token,
-                            _id: res.data.data.doc._id,
                             firstName: res.data.data.doc.firstName,
                             lastName: res.data.data.doc.lastName,
                             role: res.data.data.doc.role,
@@ -316,7 +322,7 @@ if (items) {
                                                     </Box>
                                                 ) : (
                                                     <Box className={styles.RoundedAvatar}>
-                                                        <img loading="lazy" src={HeaderUser} alt="Profile" />
+                                                        {/* <img loading="lazy" src={HeaderUser} alt="Profile" /> */}
                                                     </Box>
                                                 )}
                                                 <Box onClick={handleClick}>

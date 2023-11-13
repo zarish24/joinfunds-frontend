@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
+import styles from "../../pages/styles.module.scss"
 
 // Import Swiper styles
 import "swiper/css";
@@ -18,13 +19,23 @@ import img6 from '../../assets/images/blog/large/pic6.jpg';
 // import required modules
 import { FreeMode, Navigation, Thumbs } from "swiper";
 
-const swiperFirst = [
-    {image: img1},{image: img2},
-    {image: img3},{image: img4},
-    {image: img5},{image: img6},
-];
+// const swiperFirst = [
+//     {image: img1},{image: img2},
+//     {image: img3},{image: img4},
+//     {image: img5},{image: img6},
+// ];
 
-export default function GallerySlider() {
+export default function GallerySlider(props) {
+  console.log("campaign_images",props.campaignImages)
+ const swiperFirst = Array.isArray(props.campaignImages)
+  ? props.campaignImages.map((image, index) => {
+      return {
+        image: image.url,
+      };
+    })
+  : [];
+  console.log("swiperFirst", props.campaignImages);
+  const images = props.campaignImages
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
   return (
@@ -38,7 +49,7 @@ export default function GallerySlider() {
       >
         {swiperFirst.map((item, index)=>(
             <SwiperSlide key={index}>
-                <div className="dz-media"><img src={item.image} alt="" /></div>
+                <div className={`dz-media ${styles.sliderImgWrapper}`}><img src={item.image} alt="" /></div>
             </SwiperSlide>
         ))}
       </Swiper>
@@ -53,7 +64,7 @@ export default function GallerySlider() {
       >
         {swiperFirst.map((item, index)=>(
             <SwiperSlide key={index}>
-                <div className="dz-media"><img src={item.image} alt="" /></div>
+                <div className={`dz-media ${styles.sliderSmallAvatars}`}><img src={item.image} alt="" /></div>
             </SwiperSlide>
         ))}
       </Swiper>
