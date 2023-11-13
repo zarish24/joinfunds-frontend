@@ -80,7 +80,6 @@ let card = null;
 const FundraiserDetail = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
   const [loading, setLoading] = useState(false);
@@ -136,7 +135,6 @@ const FundraiserDetail = () => {
         });
     }
   };
-
   const initStripe = async () => {
     const stripe = await loadStripe(
       "pk_test_51O9nTCAsRAqYaynXo1vM4QJ7RXKi1Vb5Pp7kWvtVKlxiPYw793uWVKJ6WdGNgujugRdh7SNjce0E6fHcKY7E902E00ktI42vtM"
@@ -145,7 +143,6 @@ const FundraiserDetail = () => {
     card.mount();
     console.log("card",card)
   };
-
   const setHandleSymbol = (e) => {
     const selectedValue = e.target.value; // Keep it as a string
     setFormData({ ...formData, symbol: selectedValue }); // Update the formData state

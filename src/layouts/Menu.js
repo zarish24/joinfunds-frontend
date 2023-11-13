@@ -1,7 +1,7 @@
 export const MenuListArray2 = [
     {
         title:"Home",
-        to : "/home"
+        to : "/"
     },
     {
         title:"Pages",
