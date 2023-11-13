@@ -392,9 +392,9 @@ const FundraiserDetail = () => {
       }
     };
     const user = JSON.parse(localStorage.getItem("user"));
-    setUser_id(user._id);
+    setUser_id(user?._id);
     // if (user && user.token) {
-    setToken(user.token);
+    setToken(user?.token);
     fetchData();
     // }
     // Call the async function

@@ -50,7 +50,7 @@ function Index(){
 				<Route path='/under-maintenance' exact element={<UnderMaintenance />} /> 
 				<Route path='/coming-soon' exact element={<ComingSoon />} />
 				<Route path='/index-2' exact element={<Home2 />} />
-				<Route path='/index-3' exact element={<Home3 />} />
+				<Route path='/home' exact element={<Home3 />} />
 				<Route path='/forgot-password/:token' exact element={<ForgotPassword />} />
 				<Route  element={<MainLayout />} > 
 					<Route path='/' exact element={<Home />} />
