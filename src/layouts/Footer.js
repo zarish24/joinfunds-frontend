@@ -17,7 +17,7 @@ const Footer = () => {
                     <div className="container">
                         <div className="row">
                             {/* <FooterCommonData logoImage={logo} /> */}
-                            <FooterCommonData logoImage={IMAGES.logo3} iconStyle={true}/>
+                            <FooterCommonData logoImage={IMAGES.logo3} style={{ height: '60px', width: '112px' }} iconStyle={true}/>
                         </div>
                     </div>
                     <img src={shape7} className="shape-1 move-2" alt="shape" />
