@@ -2,6 +2,8 @@
   "name": "y",
   "version": "0.1.0",
   "private": true,
+ "homepage": "/",
+  "proxy": "http://localhost:5000",
   "dependencies": {
     "@emailjs/browser": "^3.10.0",
     "@mui/icons-material": "^5.14.16",
