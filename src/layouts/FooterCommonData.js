@@ -6,10 +6,12 @@ const FooterCommonData = ({logoImage, iconStyle}) => {
         <>
             <div className="col-xl-4 col-lg-12 col-md-12">
                 <div className="widget widget_about">
-                    <div className="footer-logo logo-white">
-                        <Link to={"/"}><img src={logoImage} alt="" /></Link> 
-                    </div>
-                    <p>Akcel is a Crowdfunding & Charity Website by DexignZone lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et</p>
+                <div className="footer-logo logo-white">
+    <Link to={"/"}>
+        <img src={logoImage} alt="" style={{ height: '80px', width: '150px' }} />
+    </Link>
+                    <p>Nfu$e is a Crowdfunding & Charity Website by DexignZone lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et</p>
+</div>
                     <div className="dz-social-icon style-1">
                         <ul>
                             <li><a target="_blank" className="fab fa-facebook-f"  rel="noreferrer" href="https://www.facebook.com/"></a></li>

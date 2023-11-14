@@ -96,7 +96,7 @@ const AboutUs = () => {
                     <div className="container">
                         <div className="section-head text-center">
                             <h5 className="sub-title">CATEGORIES</h5>
-                            <h2 className="m-b20">Why choose Akcel</h2>
+                            <h2 className="m-b20">Why choose Nfu$e</h2>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis no</p>
                         </div>
                         <div className="row">
@@ -134,7 +134,7 @@ const AboutUs = () => {
                 <section className="content-inner-2">
                     <div className="container">
                         <div className="section-head text-center">
-                            <h2 className="title">Akcel News</h2>
+                            <h2 className="title">Nfu$e News</h2>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
                         </div>
                         <NewsSlider />     

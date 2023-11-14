@@ -33,6 +33,8 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
   //Modals end
   //form submit
   // Listen for changes in local storage
+  const url = process.env.REACT_APP_BACKEND_URL
+  
   useEffect(() => {
     const handleStorageChange = () => {
       console.log("Storage changed");
@@ -49,6 +51,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
   const nav = useNavigate();
   const formSubmit = async (e, apiEndpoint) => {
     e.preventDefault();
+    console.log('urllllllllllllllllllllll',url)
     const data = {
       email: "",
       password: "",
@@ -90,7 +93,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
             console.log('function-called',true)
             setloginModal(false);
             setSignupModal(false);
-            navigate("/index-3");
+            navigate("/");
           } else {
             console.log('function-called',false)
             setloginModal(true);
@@ -170,7 +173,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                 <>
                   <div className="logo-header mostion logo-dark">
                     <Link to={"/index-3"}>
-                      <img src={IMAGES.logo3} alt="" />
+                      <img src={IMAGES.logo3} alt="" style={{ height: '60px', width: '150px' }} />
                     </Link>
                   </div>
                   <div className="logo-header mostion logo-light">
@@ -581,7 +584,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                           // Show the alert
                           window.alert("Login Successful!");
 
-                          navigate("/index-3");
+                          navigate("/");
                         }
                         // }
                       }
@@ -620,7 +623,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                               setloginModal(false);
                               // Show the alert
                               window.alert("Login Successful!");
-                              navigate("/index-3");
+                              navigate("/");
                               // setLoading(false);
                               // setAlert(true);
                               // setTimeout(() => {
@@ -785,7 +788,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                           // Show the alert
                           window.alert("Login Successful!");
 
-                          navigate("/index-3");
+                          navigate("/");
                         }
                         // }
                       }
@@ -822,7 +825,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                               setloginModal(false);
                               // Show the alert
                               window.alert("Login Successful!");
-                              navigate("/index-3");
+                              navigate("/");
                               // setLoading(false);
                               // setAlert(true);
                               // setTimeout(() => {

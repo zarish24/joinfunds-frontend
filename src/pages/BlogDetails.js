@@ -27,7 +27,6 @@ const tagData = [
     { title:"Workers"},
     { title:"Modern"},
 ];
-
 const BlogDetails = () => {
     
     return (

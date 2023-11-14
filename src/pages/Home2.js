@@ -166,7 +166,7 @@ const Home2 = () => {
                             <div className="container">
                                 <div className="section-head text-center wow fadeInUp" data-wow-delay="0.2s">
                                     <h5 className="sub-title">Services</h5>
-                                    <h2 className="title">Why Akcel</h2>
+                                    <h2 className="title">Why Nfu$e</h2>
                                 </div>
                                 <div className="row justify-content-center">
                                     <ServiceBlog />

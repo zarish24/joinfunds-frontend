@@ -34,6 +34,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { CardWidget } from "./CardWidget";
 import Noty from "noty";
 
+
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews, { interval: 3000 });
 const numDonorsPerPage = 4;
 const testimonials = [
@@ -137,7 +138,7 @@ const FundraiserDetail = () => {
   };
   const initStripe = async () => {
     const stripe = await loadStripe(
-      "pk_test_51O9nTCAsRAqYaynXo1vM4QJ7RXKi1Vb5Pp7kWvtVKlxiPYw793uWVKJ6WdGNgujugRdh7SNjce0E6fHcKY7E902E00ktI42vtM"
+      `${process.env.REACT_APP_PUBLIC_KEY}`
     );
     card = new CardWidget(stripe);
     card.mount();
@@ -618,7 +619,7 @@ const FundraiserDetail = () => {
                   </div>
                   <p>
                     In need of funds for medical treatment or know someone who
-                    might be? Share the details and Akcel will get in touch
+                    might be? Share the details and Nfu$e will get in touch
                     with.
                   </p>
                   <Link

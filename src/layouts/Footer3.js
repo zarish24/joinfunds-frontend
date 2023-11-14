@@ -33,7 +33,7 @@ const Footer3 = () => {
                 <div className="footer-top">
                     <div className="container">
                         <div className="row">
-                           <FooterCommonData logoImage={IMAGES.logoWhite3} iconStyle={true}/>
+                           <FooterCommonData logoImage={IMAGES.logo3} iconStyle={true}/>
                         </div>
                     </div>
                 </div>

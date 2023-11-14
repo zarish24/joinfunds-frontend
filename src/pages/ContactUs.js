@@ -17,7 +17,7 @@ import shape7 from '../assets/images/pattern/shape7.png';
 
 const cardBlog = [
     {title:"Trusted Partner", subtitle:"394-091-3312", icon:"flaticon-phone-call-1"},
-    {title:"Mail", subtitle:"support@akcel.com", icon:"flaticon-email"},
+    {title:"Mail", subtitle:"support@Nfu$e.com", icon:"flaticon-email"},
     {title:"Our Address", subtitle:"832  Thompson Drive, San Fransisco, United States", icon:"flaticon-pin"},
 ];
 
