@@ -40,7 +40,7 @@ const PasswordResetPageHeader = ({onShowDonate, changeStyle, changeLogo}) => {
                 setNewPassword('')
                 setConfermNewPassword('');
                 window.alert("your password changed successfuly!");
-                    navigate('/index-3');
+                    navigate('/');
                     setloginModal(true);
             } else {
                 window.alert('The new password you entered does not match. Please double-check your new password and try again!');
@@ -93,7 +93,7 @@ const PasswordResetPageHeader = ({onShowDonate, changeStyle, changeLogo}) => {
                 if(loginModal === true)
                 {
                     setloginModal(false);
-                    navigate('/index-3');
+                    navigate('/');
                 }
                 else
                 {
