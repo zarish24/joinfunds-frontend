@@ -115,9 +115,7 @@ const CreateCompaign = () => {
       })
       .catch((error) => {
         setLoading(false);
-        window.alert(
-            error
-        );
+        window.alert(error?.response?.data?.message || error);
       });
   };
   return (
