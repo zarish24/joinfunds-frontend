@@ -10,7 +10,7 @@ const Logout = () => {
     // setLoggingOut(true);
     // setTimeout(() => {
       localStorage.clear();
-      navigate('/index-3'); // Navigate to the '/login' route
+      navigate('/'); // Navigate to the '/login' route
     // }, 2000); // Delay for 2 seconds (you can adjust the time)
   };
 
