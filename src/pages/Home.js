@@ -145,7 +145,7 @@ const Home = () => {
                 <section className="content-inner-2 section-pattren1">
                     <div className="container">
                         <div className="section-head text-center wow fadeInUp" data-wow-delay="0.2s">
-                            <h2 className="title">Akcel News</h2>
+                            <h2 className="title">Nfu$e News</h2>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
                         </div>
                          <NewsSlider />   

@@ -33,6 +33,8 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
   //Modals end
   //form submit
   // Listen for changes in local storage
+  const url = process.env.REACT_APP_BACKEND_URL
+  
   useEffect(() => {
     const handleStorageChange = () => {
       console.log("Storage changed");
@@ -49,6 +51,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
   const nav = useNavigate();
   const formSubmit = async (e, apiEndpoint) => {
     e.preventDefault();
+    console.log('urllllllllllllllllllllll',url)
     const data = {
       email: "",
       password: "",
@@ -170,7 +173,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                 <>
                   <div className="logo-header mostion logo-dark">
                     <Link to={"/index-3"}>
-                      <img src={IMAGES.logo3} alt="" />
+                      <img src={IMAGES.logo3} alt="" style={{ height: '60px', width: '150px' }} />
                     </Link>
                   </div>
                   <div className="logo-header mostion logo-light">

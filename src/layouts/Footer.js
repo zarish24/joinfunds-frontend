@@ -7,6 +7,7 @@ import logo from './../assets/images/logo-white.png';
 import shape7 from './../assets/images/pattern/shape7.png';
 import shape8 from './../assets/images/pattern/shape8.png';
 import shape9 from './../assets/images/pattern/shape9.png';
+import {IMAGES} from '../constant/theme';
 
 const Footer = () => {
     return (
@@ -15,7 +16,8 @@ const Footer = () => {
                 <div className="footer-top">
                     <div className="container">
                         <div className="row">
-                            <FooterCommonData logoImage={logo} />
+                            {/* <FooterCommonData logoImage={logo} /> */}
+                            <FooterCommonData logoImage={IMAGES.logo3} iconStyle={true}/>
                         </div>
                     </div>
                     <img src={shape7} className="shape-1 move-2" alt="shape" />
