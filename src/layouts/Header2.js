@@ -173,19 +173,19 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                 <>
                   <div className="logo-header mostion logo-dark">
                     <Link to={"/index-3"}>
-                      <img src={IMAGES.logo3} alt="" style={{ height: '60px', width: '150px' }} />
+                      <img src={IMAGES.logo3} alt="" style={{ height: '60px', width: '112px' }} />
                     </Link>
                   </div>
                   <div className="logo-header mostion logo-light">
                     <Link to={"/index-3"}>
-                      <img src={IMAGES.logo3} alt="" />
+                      <img src={IMAGES.logo3} style={{ height: '60px', width: '112px' }}  alt="" />
                     </Link>
                   </div>
                 </>
               ) : (
                 <div className="logo-header mostion logo-dark">
                   <Link to={"/"}>
-                    <img src={IMAGES.logo2} alt="" />
+                    <img src={IMAGES.logo2} style={{ height: '60px', width: '112px' }} alt="" />
                   </Link>
                 </div>
               )}
@@ -209,11 +209,11 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                 <div className="logo-header logo-dark">
                   {changeLogo ? (
                     <Link to={"/"}>
-                      <img src={IMAGES.logo3} alt="" />
+                      <img src={IMAGES.logo3} style={{ height: '60px', width: '112px' }} alt="" />
                     </Link>
                   ) : (
                     <Link to={"/"}>
-                      <img src={IMAGES.logo2} alt="" />
+                      <img src={IMAGES.logo2} style={{ height: '60px', width: '112px' }} alt="" />
                     </Link>
                   )}
                 </div>

@@ -74,7 +74,7 @@ const Header = () => {
                         <div className="dz-topbar-inner d-flex justify-content-between align-items-center">
                             <div className="dz-topbar-left">
                                 <ul>
-                                    <li>Welcome to Akcel, Crowdfunding & Charity Agency</li>
+                                    <li>Welcome to Nfu$e, Crowdfunding & Charity Agency</li>
                                     <li>
                                         <Link to={"#"} className="badge badge-primary btn-login" data-bs-toggle="modal" data-bs-target="#modalLogin" 
                                             onClick={()=>setloginModal(true)}
@@ -87,7 +87,7 @@ const Header = () => {
                             <div className="dz-topbar-right">
                                 <ul>
                                     <li><i className="fas fa-map-marker-alt"></i> 394-091-3312</li>
-                                    <li><i className="fas fa-envelope"></i>support@akcel.com</li>
+                                    <li><i className="fas fa-envelope"></i>support@Nfu$e.com</li>
                                 </ul>
                             </div>
                         </div>
