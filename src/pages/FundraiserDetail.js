@@ -5,6 +5,7 @@ import styles from "./styles.module.scss";
 import PageBanner from "../layouts/PageBanner";
 import { CommentBlog } from "../components/BlogDetailsLeftBar";
 import { ThreeDots } from "../../node_modules/react-loader-spinner/dist/index";
+import PayOutModal from '../components/Modal/PayOutModal'
 import bg from "../assets/images/banner/bnr4.jpg";
 import avat1 from "../assets/images/avatar/avatar1.jpg";
 import avat2 from "../assets/images/avatar/avatar2.jpg";
@@ -84,6 +85,20 @@ const FundraiserDetail = () => {
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
   const [loading, setLoading] = useState(false);
+   const [isModalOpen, setModalOpen] = useState(false);
+console.log("isModalOpen",isModalOpen)
+const [CampaignId, setCampaignId] = useState("");
+
+const openModal = (campaignId) => {
+  setModalOpen(true);
+  setCampaignId(campaignId); // Assuming you have a state variable to store the campaign ID
+};
+const closeModal = () => {
+  setModalOpen(false);
+  console.log('closeeeeee')
+  setCampaignId(null); // Reset the campaign ID when closing the modal
+};
+
   const [modalDonate, setModalDonate] = useState(false);
   const [modalStripeDonate, setModalStripeDonate] = useState(false);
   const [referModal, setReferModal] = useState(false);
@@ -791,6 +806,7 @@ const FundraiserDetail = () => {
                     </>
                   ) : campaign?.status === "pending" ||
                     campaign?.status === "open" ? (
+                      <>
                     <button
                       style={{
                         backgroundColor: "blue",
@@ -810,6 +826,27 @@ const FundraiserDetail = () => {
                     >
                       Edit Campaign
                     </button>
+                     <button
+                     style={{
+                       backgroundColor: "blue",
+                       color: "white",
+                       border: "none",
+                       padding: "10px 20px",
+                       marginBottom: "20px",
+                       width: "356px",
+                       height: "44px",
+                       borderRadius: "5px",
+                       cursor: "pointer",
+                       fontSize: "16px",
+                       boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                       transition: "background-color 0.3s",
+                     }}
+                     onClick={() => openModal(campaign._id)}
+                   >
+                     QUICK payouT OF FuNDS
+                      
+                   </button>
+                   </>
                   ) : null}
 
                   {/* <!--  Widget Fund --> */}
@@ -1221,6 +1258,8 @@ const FundraiserDetail = () => {
           </>
         )}
       </Modal>
+      <PayOutModal isOpen={isModalOpen} closeModal={closeModal} campaignId={CampaignId} />
+
       ;
     </>
   );

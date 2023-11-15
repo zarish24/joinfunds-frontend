@@ -20,12 +20,12 @@ import Footer3 from '../layouts/Footer3';
 import { ThemeContext } from "../context/ThemeContext";
 import { IMAGES } from '../constant/theme';
 
-const counterBlog = [
-    {title: "Completed Projects", number:"1854", },
-    {title: "Countries Served", number:"35", symbal:"+"},
-    {title: "People With Clean Water", number:"29", symbal:"M"},
-    {title: "People With Clean Tank", number:"41", symbal:"M"}
-];
+// const counterBlog = [
+//     {title: "Completed Projects", number:"1854", },
+//     {title: "Countries Served", number:"35", symbal:"+"},
+//     {title: "People With Clean Water", number:"29", symbal:"M"},
+//     {title: "People With Clean Tank", number:"41", symbal:"M"}
+// ];
 
 const Home3 = () => {    
     const { changeBackground, changePrimaryColor } = useContext(ThemeContext);
@@ -128,7 +128,8 @@ const Home3 = () => {
                                         <h2>Help is <br/>Our Main Goal</h2>
                                     </div>
                                     <h4 className="font-weight-500 m-b10">We Need Your Help</h4>
-                                    <p className="m-b20">Nunc vulputate urna ut erat posuere accumsan. Curabitur ut commodo mauris, ac volutpat dui. Nullam eget enim ut mi bibendum ultrices. Pellentesque non feugiat nisi. </p>
+                                    <p className="m-b20">YOUR DONATION IS HELPING IMPROVE LIFE AND FREEDOM FOR INDIVIDUALS AND THE WORLD
+Helping others improve their lives physically, medically or financially feels wonderful. </p>
                                     <div className="dz-about-info">
                                         <div className="row">
                                             <div className="col-lg-6 col-sm-6">
@@ -190,9 +191,9 @@ const Home3 = () => {
                     </section>
 
                     <section className="testimonial-wrapper3 content-inner" style={{backgroundImage:"url("+ IMAGES.Background10 +")", backgroundPosition: "center"}}>
-                        <SuccessStoriesSlider setReadModal={setReadModal}/>
+                        {/* <SuccessStoriesSlider setReadModal={setReadModal}/> */}
                         <div className="container">
-                            <div className="row">
+                            {/* <div className="row">
                                 {counterBlog.map((item, ind)=>(
                                     <div className="col-lg-3 col-6 m-b30" key={ind}>
                                         <div className="counter-style-3 text-center text-white">
@@ -203,7 +204,7 @@ const Home3 = () => {
                                         </div>
                                     </div>
                                 ))}                            
-                            </div>
+                            </div> */}
                         </div>
                     </section>
                     {/* Section-5  end*/}
@@ -214,7 +215,7 @@ const Home3 = () => {
                                 <div className="col-lg-3 wow fadeInUp" data-wow-delay="0.2s">
                                     <div className="section-head">
                                         <h5 className="sub-title text-white">JOIN US</h5>
-                                        <h2 className="title text-white">We Need Your Help</h2>
+                                        <h2 className="title text-white">LET'S GET STARTED</h2>
                                     </div>
                                 </div>
                                 <div className="col-lg-9">

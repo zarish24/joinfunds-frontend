@@ -44,9 +44,26 @@ const AboutUs = () => {
                             <div className="col-lg-7">
                                 <div className="section-head">
                                     <h5 className="sub-title">Who We Are</h5>
-                                    <h2>Experienced more than 25 Years in Crowdfunding</h2>
-                                    <p className="m-t20">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip </p>
+                                    <h2>NFUSE</h2>
+                                    <p className="m-t20">Nfuse is a donation platform supporting freedom loving people and projects. 
+We support freedom for everyone.  Freedom doesn’t pick a political side- 
+everyone should have access to many forms of freedom.  We have  xxx # of 
+categories where you can help expand freedom for yourself and for others.  
+Nfuse is here for ALL.  By having a large reach of potential donors,  large 
+platform such as Nfuse can do so much more than an individual or small 
+group of people .
+Initially, NFUSW will serve campaigns in the USA and Canada.  Ultimately, we
+will offer Nfuse globally
+WHY CHOOSE NFUSE?
+We are certainly not the only donation platform.  However, we are the 
+platform with freedom at our core.  It’s ingrained in everything we do here at
+Nfuse.  We understand that Freedom is Macro  meaning the Constitution, 
+First Amendment, 2nd Amendment , etc... and we understand that Freedom is
+Micro- individualized and personal.  We are here to support all kinds of 
+freedom because we want the world to gain liberty and live in peace be it a 
+personalized improvement or a bigger matter. </p>
                                 </div>
+                                
                                 {iconBlog.map((data, index)=>(
                                     <div className="icon-bx-wraper box-hover style-2 m-b30" key={index}>
                                         <div className="icon-lg"> 
@@ -97,7 +114,13 @@ const AboutUs = () => {
                         <div className="section-head text-center">
                             <h5 className="sub-title">CATEGORIES</h5>
                             <h2 className="m-b20">Why choose Nfu$e</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis no</p>
+                            <p>We are certainly not the only donation platform.  However, we are the 
+platform with freedom at our core.  It’s ingrained in everything we do here at
+Nfuse.  We understand that Freedom is Macro  meaning the Constitution, 
+First Amendment, 2nd Amendment , etc... and we understand that Freedom is
+Micro- individualized and personal.  We are here to support all kinds of 
+freedom because we want the world to gain liberty and live in peace be it a 
+personalized improvement or a bigger matter.</p>
                         </div>
                         <div className="row">
                             {wrapperBlog.map((item, ind)=>(

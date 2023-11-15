@@ -26,11 +26,12 @@ const FooterCommonData = ({logoImage, iconStyle}) => {
                 <div className="widget widget_services">
                     <h5 className="footer-title">Resources</h5>
                     <ul>
-                        <li><Link to={"/how-it-works"}>How It Works</Link></li>
+                        {/* <li><Link to={"/how-it-works"}>How It Works</Link></li> */}
                         <li><Link to={"/Linksk-a-question"}>Ask A Question</Link></li>
-                        <li><Link to={"/project-story"}>Project Story</Link></li>
-                        <li><Link to={"/mission"}>Mission</Link></li>
-                        <li><Link to={"/certificates"}>Certificates</Link></li>
+                        {/* <li><Link to={"/project-story"}>Project Story</Link></li> */}
+                        {/* to={"/mission"} */}
+                        <li><Link >Mission-Nfuse is here to help freedom loving people and projects.</Link></li>
+                        {/* <li><Link to={"/certificates"}>Certificates</Link></li> */}
                         <li><Link to={"/terms-and-condition"}>Terms And Condition</Link></li>
                     </ul>
                 </div>
@@ -40,10 +41,10 @@ const FooterCommonData = ({logoImage, iconStyle}) => {
                     <h5 className="footer-title">Company</h5>
                     <ul>
                         <li><Link to={"/about-us"}>About Us</Link></li>
-                        <li><Link to={"/volunteer"}>Volunteer</Link></li>
-                        <li><Link to={"/happy-clients"}>Happy Clients</Link></li>
-                        <li><Link to={"/project"}>Project</Link></li>
-                        <li><Link to={"/contact-us"}>Contact Us</Link></li>
+                        {/* <li><Link to={"/volunteer"}>Volunteer</Link></li> */}
+                        <li><Link to={"/happy-clients"}>success stories</Link></li>
+                        {/* <li><Link to={"/project"}>Project</Link></li> */}
+                        {/* <li><Link to={"/contact-us"}>Contact Us</Link></li> */}
                         <li><Link to={"/faq"}>Faq</Link></li>
                     </ul>
                 </div>
@@ -52,21 +53,21 @@ const FooterCommonData = ({logoImage, iconStyle}) => {
                 <div className="widget widget_getintuch">
                     <h5 className="footer-title">Get in Touch with Us</h5>
                     <ul>
-                        <li>
+                        {/* <li>
                             {iconStyle   ? 
                                 <i className="fas fa-map-marker-alt text-primary"></i>
                                 :  
                                 <i className="fas fa-map-marker-alt"></i>
                             }
                             <span>832  Thompson Drive, San Fransisco CA 94107, United States</span>
-                        </li>
+                        </li> */}
                         <li>
-                            {iconStyle   ? 
+                            {/* {iconStyle   ? 
                                 <i className="fa-solid fa-phone text-primary"></i>
                                 :
                                 <i className="fa-solid fa-phone"></i>
                             }
-                            <span>394-091-3312</span>
+                            <span>*******</span> */}
                         </li>
                         <li>
                             {iconStyle   ? 
@@ -74,7 +75,7 @@ const FooterCommonData = ({logoImage, iconStyle}) => {
                                 :
                                 <i className="fa fa-envelope"></i> 
                             }
-                            <span>support@gmail.com</span>
+                            <span>info@ email.com</span>
                         </li>
                     </ul>
                 </div>
