@@ -138,7 +138,7 @@ const FundraiserDetail = () => {
   };
   const initStripe = async () => {
     const stripe = await loadStripe(
-      "pk_test_51O9nTCAsRAqYaynXo1vM4QJ7RXKi1Vb5Pp7kWvtVKlxiPYw793uWVKJ6WdGNgujugRdh7SNjce0E6fHcKY7E902E00ktI42vtM"
+      `${process.env.REACT_APP_PUBLIC_KEY}`
     );
     card = new CardWidget(stripe);
     card.mount();

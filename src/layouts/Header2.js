@@ -93,7 +93,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
             console.log('function-called',true)
             setloginModal(false);
             setSignupModal(false);
-            navigate("/index-3");
+            navigate("/");
           } else {
             console.log('function-called',false)
             setloginModal(true);
@@ -584,7 +584,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                           // Show the alert
                           window.alert("Login Successful!");
 
-                          navigate("/index-3");
+                          navigate("/");
                         }
                         // }
                       }
@@ -623,7 +623,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                               setloginModal(false);
                               // Show the alert
                               window.alert("Login Successful!");
-                              navigate("/index-3");
+                              navigate("/");
                               // setLoading(false);
                               // setAlert(true);
                               // setTimeout(() => {
@@ -788,7 +788,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                           // Show the alert
                           window.alert("Login Successful!");
 
-                          navigate("/index-3");
+                          navigate("/");
                         }
                         // }
                       }
@@ -825,7 +825,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                               setloginModal(false);
                               // Show the alert
                               window.alert("Login Successful!");
-                              navigate("/index-3");
+                              navigate("/");
                               // setLoading(false);
                               // setAlert(true);
                               // setTimeout(() => {
