@@ -338,7 +338,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                   {console.log("log", isLoggedIn)}
                   {!isLoggedIn && (
                     <>
-                      <li>
+                      {/* <li>
                         <Link
                           to={"#"}
                           data-bs-toggle="modal"
@@ -347,7 +347,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                         >
                           Contact Us
                         </Link>
-                      </li>
+                      </li> */}
                       <li>
                         <Link
                           to={"#"}

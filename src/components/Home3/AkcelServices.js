@@ -58,11 +58,11 @@ const AkcelServices = () => {
                             </div>
                             <h3 className="title">Want To Help?</h3>
                             <p className="m-b30">Your financial support is very important for our global projects.</p>
-                            <Link className="btn btn-primary" to={"/become-a-fundraiser"}>Online Voter</Link>
+                            <Link className="btn btn-primary" to={"/project"}>Donate Now</Link>
                         </div>
                     </div>
                 </div>
-                <div className="col-lg-4 col-md-6 m-t30 wow fadeInUp" data-wow-delay="0.6s">
+                {/* <div className="col-lg-4 col-md-6 m-t30 wow fadeInUp" data-wow-delay="0.6s">
                     <div className="content-bx style-1 bg-dark text-center">
                         <div className="inner-content">
                             <h2 className="title text-white">33,986+</h2>
@@ -70,7 +70,7 @@ const AkcelServices = () => {
                             <Link to={"/fundraiser-detail"} className="btn btn-primary">Online Voter</Link>
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>   
         </>
     );

@@ -13,8 +13,8 @@ const dataBlog = [
   {
     bgimage: IMAGES.SliderBg1,
     style: 'banner-media',
-    title: 'GIVE A HAND TO MAKE',
-    title2: 'Your Donation Can Change the World',
+    title: 'DISCOVER/SEARCH A CAMPAIGN',
+    title2: 'Both for individual and Business',
     image2: IMAGES.SliderPic1,
   },
   {
@@ -62,10 +62,7 @@ const MainSliderIndex3 = ({ onShowDonate }) => {
                         <h5 className="sub-title text-primary">{d.title}</h5>
                         <h1 className="title">{d.title2}</h1>
                         <p>
-                          Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                          sed do eiusmod tempor incididunt ut labore et dolore
-                          magna aliqua. Ut enim ad minim veniam, quis nostrud
-                          exercitation ullamco laboris nisi ut aliquip
+                        START A CAMPAIGN-both for an individual and for a business Show this language " Get Enthused, Get NFUSED"
                         </p>
                         <div className="d-flex align-items-center">
                           {/* <Link

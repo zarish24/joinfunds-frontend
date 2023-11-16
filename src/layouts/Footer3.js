@@ -40,7 +40,7 @@ const Footer3 = () => {
                 <div className="footer-bottom">
                     <div className="container">
                         <div className="text-center">
-                            <span className="copyright-text">Akcel Crowdfunding & Charity Website  -  © 2023 by <a href="https://dexignzone.com/" target="_blank">DexignZone</a></span> 
+                            <span className="copyright-text">Nfu$e Crowdfunding & Charity Website  -  © 2023  </span> 
                         </div>
                     </div>
                 </div>

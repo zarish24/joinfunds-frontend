@@ -6,6 +6,7 @@ import Header from './../layouts/Header';
 import Footer from './../layouts/Footer';
 import Home from './Home';
 import Home2 from './Home2';
+import MyRequests from './MyRequests';
 import Home3 from './Home3';
 import AboutUs from './AboutUs';
 import Volunteer from './Volunteer';
@@ -80,6 +81,7 @@ function Index(){
 					<Route path='/logout' exact element={<Logout />} />
 					<Route path='/blog-grid' exact element={<BlogGrid />} />
 					<Route path='/wallet-address' exact element={<WalletAddress />} />
+					<Route path='/my-requests' exact element={<MyRequests />} />
 					<Route path='/my-balance' exact element={<MyBalance />} />
 					<Route path='/blog-list' exact element={<BlogList />} />
 					<Route path='/blog-details' exact element={<BlogDetails />} />
