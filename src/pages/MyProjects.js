@@ -72,8 +72,8 @@ const MyProjects = () => {
     <>
       <div className="page-content bg-white">
         <PageBanner
-          maintitle="Project"
-          pagetitle="My-Projects"
+          maintitle="Campaigns"
+          pagetitle="My Campaigns"
           background={bg}
         />
         <div className="find-bx-wrapper">
@@ -161,11 +161,11 @@ const MyProjects = () => {
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
         />
-        {/* <div className="input-group-prepend">
-          <button className="btn" onClick={handleSearch}>
-            <i className="las la-search"></i>
-          </button>
-        </div> */}
+    <div className="input-group-prepend" style={buttonStyle}>
+        <Link to={"/create-compaign"} style={{color:'white'}}  className="btn">
+        + New Campaign 
+        </Link>
+      </div>
       </div>
     </div>
                   {/* <div className="col-lg-9 col-md-8">
@@ -212,6 +212,16 @@ const MyProjects = () => {
       </div>
     </>
   );
+};
+const buttonStyle = {
+  backgroundColor: 'rgb(27,130,113)', 
+  color: '#ffffff', 
+  // padding: '4px 4px', 
+  borderRadius: '4px', 
+  border: 'none',
+  // margin: '2px',  
+  marginLeft: '14px', 
+  cursor: 'pointer', 
 };
 
 export default MyProjects;

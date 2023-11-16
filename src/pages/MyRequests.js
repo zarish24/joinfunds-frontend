@@ -14,7 +14,8 @@ import React, {
   import { CardWidget } from "./CardWidget";
   import Box from "@mui/material/Box";
   import { ThreeDots } from "../../node_modules/react-loader-spinner/dist/index";
-  
+  import PageBanner from '../layouts/PageBanner';
+  import bg from '../assets/images/banner/bnr3.jpg';
   
   let card = null;
   const MyRequests = () => {
@@ -117,6 +118,7 @@ import React, {
     return (
         <>
             {/* <h2>Requests</h2> */}
+            <PageBanner maintitle=" Requests" pagetitle="My Requests" background={bg} />
          <div style={{ textAlign: 'center', marginTop: '20px', height:'70vh', marginBottom: '30px' }}>
          {dummyData.length > 0 ? (
                 <table style={{ borderCollapse: 'collapse', width: '70%', margin: 'auto' }}>

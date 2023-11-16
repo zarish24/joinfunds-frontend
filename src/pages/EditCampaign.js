@@ -3,14 +3,15 @@ import PageBanner from '../layouts/PageBanner';
 import { Link, useNavigate, useParams } from "react-router-dom";
 import bg from '../assets/images/banner/bnr3.jpg';
 import axios from "axios";
-
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const EditCampaign = () => {
     const { id } = useParams();
     const [token, setToken] = useState("")
     const [images, setImages] = useState([]);
     const [formData, setFormData] = useState({
-        title: '',
-        subtitle: '',
+      category_id:'',
+      title: '',
         total_funding: 0,
         description: '',
         minimum_amount: 0,
@@ -20,29 +21,31 @@ const EditCampaign = () => {
         campaign_status: 'pending',  // Default value for campaign status
         campaign_type: 'funding',  // Default value for campaign type
     });
-
-  const titleOptions = [
-    "Select Campaign Category",
-    "Medical",
-    "Memorial",
-    "Emergency",
-    "Nonprofit",
-    "Education",
-    "Animals",
-    "Business",
-    "Community",
-    "Creative",
-    "Current Events",
-    "Event",
-    "Faith",
-    "Family",
-    "Sport",
-    "Travel",
-    "Veteran",
-    "Legal",
-    "General",
-    "Mission",
-  ];
+    const [titleOptions, setTitleOptions] = useState([]);
+  
+    useEffect(() => {
+      const fetchCategories = async () => {
+        try {
+          const config = {
+            headers: {
+              Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
+            },
+          };
+          const response = await axios.get('http://44.219.245.56/api/category/getCategories',config);
+          if (response.status === 200) {
+            // Extract category names from the response
+            const categories = response.data.categories
+            console.log('categories',categories)
+  
+            setTitleOptions(categories);
+          }
+        } catch (error) {
+          console.error('Error fetching categories:', error);
+        }
+      };
+  
+      fetchCategories();
+    }, []);
 
   const MultipleFileChange = async (e) => {
     const files = Array.from(e.target.files);
@@ -62,6 +65,7 @@ const EditCampaign = () => {
             `${process.env.REACT_APP_BACKEND_URL}/api/compaign/getSingleCompaign/${_id}`,config
           )
           .then((res) => {
+            console.log('ressssssssssssssssss',res)
             if (res.status === 200 || res.status === 201) {
                 const s_date = new Date(res?.data?.data?.doc[0].start_date);
                 const s_year = s_date.getFullYear();
@@ -77,8 +81,8 @@ const EditCampaign = () => {
                 // Create a new formatted date string
                 const formattedEndDate = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
                 setFormData({
-                title: res?.data?.data?.doc[0].title || '', // Use the values from "doc" or provide default values
-                subtitle: res?.data?.data?.doc[0].subtitle || '',
+                  category_id: res?.data?.data?.doc[0].category_id || '', // Use the values from "doc" or provide default values
+                  title: res?.data?.data?.doc[0].title || '',
                 total_funding: res?.data?.data?.doc[0].total_funding || 0,
                 description: res?.data?.data?.doc[0].description || '',
                 minimum_amount: res?.data?.data?.doc[0].minimum_amount || 0,
@@ -89,14 +93,14 @@ const EditCampaign = () => {
                 campaign_type: res?.data?.data?.doc[0].campaign_type || 'funding',
               });
             } else {
-              window.alert("Compaigns not fount due to some issue!");
+              toast.error("Compaigns not fount due to some issue!");
             }
           })
           .catch((error) => {
-            window.alert(error);
+            toast.error(error);
           });
       } catch (error) {
-        window.alert("API request failed", error);
+        toast.error("API request failed", error);
         console.error("API request failed", error);
       }
     };
@@ -120,12 +124,12 @@ const EditCampaign = () => {
     e.preventDefault();
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
+        Authorization: `Bearer ${token}`, 
       },
     };
     const option = { 
-      title:   formData.title,
-      subtitle: formData.subtitle,
+      category_id:   formData.category_id,
+      title: formData.title,
       total_funding: formData.total_funding,
       description: formData.description,
       minimum_amount: formData.minimum_amount,
@@ -146,16 +150,16 @@ const EditCampaign = () => {
       .put(`${process.env.REACT_APP_BACKEND_URL}/api/compaign/updateCompaign/${id}`, bodyData, config)
       .then((res) => {
         if (res.status === 200 || res.status === 201) {
-            window.alert(
+            toast.success(
               res?.data?.message
             );
             navigate("/my-project");
         } else {
-          window.alert("Failed to create a campaign.");
+          toast.error("Failed to create a campaign.");
         }
       })
       .catch((error) => {
-        window.alert(
+        toast.error(
             error
         );
       });
@@ -176,14 +180,14 @@ const EditCampaign = () => {
                       <div className="col-md-6">
                         <label>Campaign Category:</label>
                         <select
-                          name="title"
-                          value={formData.title}
+                          name="category_id"
+                          value={formData.category_id}
                           onChange={handleChange}
                           className="form-control"
                         >
                           {titleOptions.map((option) => (
-                            <option key={option} value={option}>
-                              {option}
+                            <option key={option._id} value={option._id}>
+                              {option.name}
                             </option>
                           ))}
                         </select>
@@ -192,7 +196,7 @@ const EditCampaign = () => {
                         <label>SubTitle:</label>
                         <input
                           type="text"
-                          name="subtitle"
+                          name="title"
                           value={formData.subtitle}
                           onChange={handleChange}
                           className="form-control"
@@ -318,7 +322,7 @@ const EditCampaign = () => {
                   </div>
                  
                   <button type="submit" className="btn btn-primary mb-5">
-                    Edit Campaign
+                   Save Changes
                   </button>
                 </form>
               </div>

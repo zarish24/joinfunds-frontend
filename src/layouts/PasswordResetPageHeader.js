@@ -32,7 +32,7 @@ const PasswordResetPageHeader = ({onShowDonate, changeStyle, changeLogo}) => {
         const token = location.pathname.split('/').pop();
     const data = {
         password: newPassword,
-        token
+        password_token:token,
         };
         const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/${apiEndpoint}`, data)
         .then((res) => {
@@ -427,7 +427,7 @@ const PasswordResetPageHeader = ({onShowDonate, changeStyle, changeLogo}) => {
             <Modal className="modal fade modal-wrapper auth-modal"  show={passwordForgotModal} onHide={setPasswordForgotModal} centered>
                 <div  className="reset-password" id="reset-password">
                     <h2 className="title">Forget password?</h2>
-                    <form onSubmit={(e)=>handleFormSubmit(e,'api/user/updateForgetPassword')}>
+                    <form onSubmit={(e)=>handleFormSubmit(e,'api/user/forgetPassword')}>
                         <div className="form-group password-icon-bx">
                             <i className="fa fa-lock"></i>
                             <p>Change your password here...</p>
