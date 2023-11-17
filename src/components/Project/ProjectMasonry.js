@@ -33,9 +33,15 @@ import {
   FacebookShareButton,
   TwitterShareButton,
   LinkedinShareButton,
+  WhatsappShareButton, // add this
  } from 'react-share';
- import { FacebookIcon, TwitterIcon, LinkedinIcon } from 'react-share';
-
+ 
+ import {
+  FacebookIcon,
+  TwitterIcon,
+  LinkedinIcon,
+  WhatsappIcon , // add this
+ } from 'react-share';
 
 
 const RecordsPerPage = 12;
@@ -364,6 +370,9 @@ const [isShareModalOpen, setShareModalOpen] = useState(false);
     <LinkedinShareButton url={`http://44.219.245.56/my-project/${item._id}`}>
       <LinkedinIcon size={32} round />
     </LinkedinShareButton>
+    <WhatsappShareButton url={`http://44.219.245.56/my-project/${item._id}`} >
+ <WhatsappIcon size={32} round />
+</WhatsappShareButton>
   </div>
 )}
                     </h5>
