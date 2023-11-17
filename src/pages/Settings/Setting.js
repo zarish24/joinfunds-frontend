@@ -50,6 +50,12 @@ const Setting = (props) => {
     const [items, setItems] = useState([]);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
+    const [phone, setphone] = useState("");
+    const [link, setlink] = useState("");
+    const [country, setcountry] = useState("");
+    const [city, setcity] = useState("");
+    const [zip, setzip] = useState("");
+    
     const [email, setEmail] = useState();
     const [bio, setBio] = useState('');
     const [pic, setPic] = useState('');
@@ -62,6 +68,11 @@ const Setting = (props) => {
     const [passwordTypeNew, setPasswordTypeNew] = useState('password');
     const [loading, setLoading] = useState(false);
     const [passwordTypeConfirm, setPasswordTypeConfirm] = useState('password');
+   
+
+    
+ 
+   
     useEffect(() => {
         setLoading(true);
        const items = JSON.parse(localStorage.getItem('user'));
@@ -71,10 +82,25 @@ if (items) {
 
     setItems(items);
 
-    const { email, firstName, lastName, bio, profileImage } = items;
+    const { email, firstName, lastName, phone,link,country,city,zip, bio, profileImage } = items;
 
     if (email) {
         setEmail(email);
+    }
+    if (phone) {
+        setphone(phone);
+    } 
+    if (link) {
+        setlink(link);
+    } 
+    if (country) {
+        setcountry(country);
+    }
+    if (zip) {
+        setzip(zip);
+    }
+    if (city) {
+        setcity(city);
     }
 
     if (firstName) {
@@ -103,6 +129,7 @@ if (items) {
     // const setUserHeaderProfileImage = (urlImage) => {
     //     props.setUserProfileImageHandler(urlImage);
     // };
+    
     const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
         initialValues: initialValues,
         validationSchema: ValidationPassword,
@@ -162,8 +189,44 @@ if (items) {
                 });
         }
     });
+    
     const userId = items?._id;
     const token = items?.token;
+       useEffect(() => {
+        const fetchProfileDetails = async () => {
+const items = JSON.parse(localStorage.getItem('user'));
+ const token = items?.token;
+const config = {
+    headers: {
+      Authorization: `Bearer ${token}`, 
+    },
+  };
+            try {
+
+                
+                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/getProfileDetails`,config,);
+                if(response.status === 200){
+                  console.log('Error fetching profile details:', response);
+const data = await response.json();
+const data1 = response.user_details
+                console.log('Error data profile details:', data);
+                console.log('Error data1 profile details:', data1);
+                }
+              
+
+                // if (!response.ok) {
+                //     throw new Error('Failed to fetch profile details');
+                // }
+
+                
+                // setProfileDetails(data); // Assuming the API response is an object with profile details
+            } catch (error) {
+                console.error('Error fetching profile details:', error);
+            }
+        };
+
+        fetchProfileDetails();
+    }, []); 
     const hiddenFileInput = useRef(null);
     const handleClick = (event) => {
         hiddenFileInput.current.click();
@@ -180,15 +243,20 @@ if (items) {
         console.log("formData",pic)
         const config = {
             headers: {
-              Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
+              Authorization: `Bearer ${token}`, 
             },
           };
         const option = {
             firstName:firstName,
             lastName:lastName,
             email: email,
+            country:country,
+            city:city,
+            zipcode:zip,
+            phoneNumber:phone,
+            socialMediaProfile:link,
             profileImage: pic,
-            bio: bio
+            bio: 'sada'
         }
         const formData = new FormData();
         for (var key in option) {
@@ -207,6 +275,11 @@ if (items) {
                             token: token,
                             firstName: res.data.data.doc.firstName,
                             lastName: res.data.data.doc.lastName,
+                            city: res.data.data.doc.city,
+                            country: res.data.data.doc.country,
+                            phone: res.data.data.doc.phoneNumber,
+                            link: res.data.user.doc.socialMediaProfile,
+                            zip: res.data.data.doc.zipcode,
                             role: res.data.data.doc.role,
                             email: res.data.data.doc.email,
                             bio: res.data.data.doc.bio,
@@ -215,7 +288,7 @@ if (items) {
                     );
                     setUrlImage(res.data.data.doc.profileImage);
                     setLoading(false);
-                    toast.alert(
+                    toast.success(
                         "Profile updated successfully! "
                       );
                     // setAlert(true);
@@ -225,7 +298,7 @@ if (items) {
                     // setUserHeaderProfileImage(urlImage);
                 } else {
                     setLoading(false);
-                    toast.alert(
+                    toast.error(
                         "Something went wrong! "
                       );
                     
@@ -238,9 +311,9 @@ if (items) {
             })
             .catch((e) => {
                 setLoading(false);
-                toast.alert(
-                    e.response.data.message || e.response.data
-                  );
+                // toast.error(
+                //     e.response.data.message || e.response.data
+                //   );
                 // setErrorMessage(e.response.data.message || e.response.data);
                 // setErrorAlert(true);
                 // setTimeout(() => {
@@ -312,7 +385,7 @@ if (items) {
                             </Box>
                         ) : (
                             <Grid container sx={{ display: 'flex', justifyContent: 'space-around' }}>
-                                <Grid item sx={12} md={2.5} lg={3.5} xl={4}>
+                                <Grid item sx={12} md={2.5} lg={2.5} xl={3}>
                                     <Box className={styles.RoundedBox}>
                                         <Box sx={{ pt: 6, ml: { xl: 6, lg: 2 } }}>
                                             <Box className={styles.profileImg}>
@@ -349,72 +422,149 @@ if (items) {
                                     xl={7.5}
                                     sx={{ pl: { lg: 2, xl: 0 }, display: 'flex', justifyContent: { xs: 'center', md: 'flex-start' } }}
                                 >
-                                    <Box sx={{ px: 3 }} className={styles.profileForm}>
-                                        <Box sx={{ display: { xl: 'flex' }, pt: 3 }}>
-                                            <form>
-                                                <label htmlFor="fname">Fist Name</label>
-                                                <br />
-                                                <input
-                                                    type="text"
-                                                    name="firstName"
-                                                    id="fname"
-                                                    value={firstName}
-                                                    onChange={(e) => {
-                                                        setFirstName(e.target.value);
-                                                    }}
-                                                />
-                                            </form>
-                                            <form>
-                                                <label htmlFor="lname">Last Name</label>
-                                                <br />
-                                                <input
-                                                    type="text"
-                                                    name="lastName"
-                                                    id="lname"
-                                                    value={lastName}
-                                                    onChange={(e) => {
-                                                        setLastName(e.target.value);
-                                                    }}
-                                                />
-                                            </form>
-                                            <form>
-                                            <br />
-                                                <label htmlFor="email">Email</label>
-                                                <br />
-                                                <input
-                                                    text="email"
-                                                    name="email"
-                                                    id="email"
-                                                    value={email}
-                                                    onChange={(e) => {
-                                                        setEmail(e.target.value);
-                                                    }}
-                                                />
-                                            </form>
-                                        </Box>
-                                        <Box sx={{ pt: 3 }}>
-                                            <form>
-                                                <label htmlFor="bio">Bio</label>
-                                                <br />
-                                                <textarea
-                                                    name="bio"
-                                                    id="bio"
-                                                    placeholder="Enter your bio here"
-                                                    value={bio}
-                                                    onChange={(e) => {
-                                                        setBio(e.target.value);
-                                                    }}
-                                                />
-                                            </form>
-                                        </Box>
-                                        <Box sx={{ mt: 4 }}>
-                                            <form>
-                                                <Button className={styles.profileBtn} onClick={updateProfile}>
-                                                    Save
-                                                </Button>
-                                            </form>
-                                        </Box>
-                                    </Box>
+      <Box sx={{ px: 3 }} className={styles.profileForm}>
+    <Grid container spacing={3}>
+        <Grid hidden item xs={6}>
+           
+        </Grid>
+        <Grid hidden item xs={6}>
+           
+        </Grid>
+
+
+
+        <Grid item xs={6}>
+        <form>
+                <label htmlFor="fname">First Name</label>
+                <br />
+                <input
+                    type="text"
+                    name="firstName"
+                    id="fname"
+                    value={firstName}
+                    onChange={(e) => {
+                        setFirstName(e.target.value);
+                    }}
+                />
+            </form>
+        </Grid>
+        <Grid item xs={6}>
+        <form>
+                <label htmlFor="lname">Last Name</label>
+                <br />
+                <input
+                    type="text"
+                    name="lastName"
+                    id="lname"
+                    value={lastName}
+                    onChange={(e) => {
+                        setLastName(e.target.value);
+                    }}
+                />
+            </form>
+        </Grid>
+        <Grid item xs={6}>
+            <form>
+                <label htmlFor="email">Email</label>
+                <br />
+                <input
+                    type="text"
+                    name="email"
+                    id="email"
+                    value={email}
+                    onChange={(e) => {
+                        setEmail(e.target.value);
+                    }}
+                />
+            </form>
+        </Grid>
+        <Grid item xs={6}>
+            <form>
+                <label htmlFor="phone">Phone</label>
+                <br />
+                <input
+                    type="text"
+                    name="phone"
+                    id="phone"
+                    value={phone}
+                    onChange={(e) => {
+                        setphone(e.target.value);
+                    }}
+                />
+            </form>
+        </Grid>
+        <Grid item xs={6}>
+            <form>
+                <label htmlFor="zip">Zip Code</label>
+                <br />
+                <input
+                    type="text"
+                    name="zip"
+                    id="zip"
+                    value={zip}
+                    onChange={(e) => {
+                        setzip(e.target.value);
+                    }}
+                />
+            </form>
+        </Grid>
+        <Grid item xs={6}>
+            <form>
+                <label htmlFor="city">City</label>
+                <br />
+                <input
+                    type="text"
+                    name="city"
+                    id="city"
+                    value={city}
+                    onChange={(e) => {
+                        setcity(e.target.value);
+                    }}
+                />
+            </form>
+        </Grid>
+        <Grid item xs={6}>
+            <form>
+                <label htmlFor="country">Country</label>
+                <br />
+                <input
+                    type="text"
+                    name="country"
+                    id="country"
+                    value={country}
+                    onChange={(e) => {
+                        setcountry(e.target.value);
+                    }}
+                />
+            </form>
+        </Grid>
+        <Grid item xs={6}>
+            <form>
+                <label htmlFor="link">Social Media Link</label>
+                <br />
+                <input
+                    type="text"
+                    name="link"
+                    id="link"
+                    value={link}
+                    onChange={(e) => {
+                        setlink(e.target.value);
+                    }}
+                />
+            </form>
+        </Grid>
+    </Grid>
+
+    <Box sx={{ mt: 4 }}>
+        <form>
+            <Button className={styles.profileBtn} onClick={updateProfile}>
+                Save
+            </Button>
+        </form>
+    </Box>
+</Box>
+
+
                                 </Grid>
                             </Grid>
                         )}

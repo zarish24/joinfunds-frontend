@@ -328,7 +328,7 @@ const ProjectMasonry = (props) => {
                   <div className="dz-info">
                     <ul className="dz-category">
                       <li>
-                        <Link to={"#"}>{item.title}</Link>
+                        <Link to={"#"}>{item.campaign_type}</Link>
                       </li>
                     </ul>
                     <h5 className="dz-title">

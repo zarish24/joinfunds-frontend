@@ -16,6 +16,7 @@ import PartnershipSlider from '../components/Home/PartnershipSlider';
 
 //layouts
 import Header2 from '../layouts/Header2';
+import Header from '../layouts/Header';
 import Footer3 from '../layouts/Footer3';
 import { ThemeContext } from "../context/ThemeContext";
 import { IMAGES } from '../constant/theme';
@@ -28,6 +29,14 @@ import { IMAGES } from '../constant/theme';
 // ];
 
 const Home3 = () => {    
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+     
+      const storedValue = localStorage.getItem('isLoggedIn');
+      setIsLoggedIn(storedValue === 'true');
+    }, [isLoggedIn]); 
+  
     const { changeBackground, changePrimaryColor } = useContext(ThemeContext);
 	useEffect(() => {
 		changeBackground({ value: "data-typography-2", label: "data-typography-2" });
@@ -88,7 +97,11 @@ const Home3 = () => {
                     </ul>
                     <Link to={"#"} className="btn-bottom btn btn-primary light" data-bs-toggle="modal" data-bs-target="#modalDonate">Donate Now</Link>
                 </div>  
-                <Header2   changeStyle="header-transparent" changeLogo={true}/>              
+                {isLoggedIn ? (
+        <Header2 changeStyle="header-transparent" changeLogo={true} />
+      ) : (
+        <Header changeStyle="header-transparent" changeLogo={true} />
+      )}           
                 <div className="page-content bg-white">	
                     <div className="main-bnr-two">
                         <MainSliderIndex3  />

@@ -4,7 +4,7 @@ import {Modal} from 'react-bootstrap';
 import Collapse from 'react-bootstrap/Collapse';
 import {MenuListArray2} from './Menu';
 
-import logo from './../assets/images/logo-2.png';
+// import logo from './../assets/images/logo-2.png';
 
 const Header2 = ({onShowDonate}) => {
  //form submit
@@ -75,7 +75,7 @@ const Header2 = ({onShowDonate}) => {
                     <div className="main-bar clearfix ">
                         <div className="container-fluid clearfix">                
                             <div className="logo-header mostion logo-dark">
-                                <Link to={"/"}><img src={logo} alt="" /></Link>
+                                {/* <Link to={"/"}><img src={logo} alt="" /></Link> */}
                             </div>
                             <button 
                                 type="button"
@@ -123,7 +123,7 @@ const Header2 = ({onShowDonate}) => {
                 
                             <div className={`header-nav navbar-collapse collapse justify-content-start ${sidebarOpen ? "show" : ""}`}>
                                 <div className="logo-header logo-dark">
-                                    <Link to={"/"}><img src={logo} alt="" /></Link>
+                                    {/* <Link to={"/"}><img src={logo} alt="" /></Link> */}
                                 </div>
                                 <ul className="nav navbar-nav navbar navbar-left">
                                     <li><Link to={"/index-3"}>Home</Link></li>
@@ -218,7 +218,7 @@ const Header2 = ({onShowDonate}) => {
             <div className={`contact-sidebar ${sideOverlay ? "active" : ""}`}>
                 <div className="contact-box">
                     <div className="logo-contact logo-dark">
-                        <Link to={"/"}><img src={logo} alt="" /></Link>
+                        {/* <Link to={"/"}><img src={logo} alt="" /></Link> */}
                     </div>
                     <div className="m-b50 contact-text">
                         <div className="dz-title">

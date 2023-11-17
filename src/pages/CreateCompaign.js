@@ -8,6 +8,7 @@ import axios from "axios";
 import { ThreeDots } from '../../node_modules/react-loader-spinner/dist/index';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { ShareButtons, generateShareIcon } from 'react-share';
 
 const CreateCompaign = () => {
   const [token, setToken] = useState("");
@@ -23,7 +24,7 @@ const CreateCompaign = () => {
     maximum_amount: 0,
     start_date: '',
     end_date: '',
-    campaign_status: 'pending',  // Default value for campaign status
+    campaign_status: 'pending',  
     campaign_type: 'funding',  
     user_id: ''
   });
@@ -115,14 +116,14 @@ const CreateCompaign = () => {
       .post(`${process.env.REACT_APP_BACKEND_URL}/api/compaign/createCompaign`, bodyData, config,
       {
         headers: {
-          "Content-Type": "multipart/form-data", // Set the Content-Type header
+          "Content-Type": "multipart/form-data", 
         },
       }
         )
       .then((res) => {
         if (res.status === 200 || res.status === 201) {
           setLoading(false);
-            toast.success.alert(
+            toast.success(
               res?.data?.message
             );
             navigate("/my-project");
