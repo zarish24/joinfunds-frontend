@@ -6,14 +6,17 @@ import Box from '@mui/material/Box';
 import bg from '../assets/images/banner/bnr3.jpg';
 import axios from "axios";
 import { ThreeDots } from '../../node_modules/react-loader-spinner/dist/index';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const CreateCompaign = () => {
   const [token, setToken] = useState("");
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
+    category_id:'',
     title: '',
-    subtitle: '',
+    // subtitle: '',
     total_funding: 0,
     description: '',
     minimum_amount: 0,
@@ -21,32 +24,37 @@ const CreateCompaign = () => {
     start_date: '',
     end_date: '',
     campaign_status: 'pending',  // Default value for campaign status
-    campaign_type: 'funding',  // Default value for campaign type
+    campaign_type: 'funding',  
     user_id: ''
   });
+  console.log('formData',formData)
 
-  const titleOptions = [
-    "Select Campaign Category",
-    "Medical",
-    "Memorial",
-    "Emergency",
-    "Nonprofit",
-    "Education",
-    "Animals",
-    "Business",
-    "Community",
-    "Creative",
-    "Current Events",
-    "Event",
-    "Faith",
-    "Family",
-    "Sport",
-    "Travel",
-    "Veteran",
-    "Legal",
-    "General",
-    "Mission",
-  ];
+  const [titleOptions, setTitleOptions] = useState([]);
+  
+  console.log('titleOptions',titleOptions)
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
+          },
+        };
+        const response = await axios.get('http://44.219.245.56/api/category/getCategories',config);
+        if (response.status === 200) {
+          // Extract category names from the response
+          const categories = response.data.categories
+          console.log('categories',categories)
+
+          setTitleOptions(categories);
+        }
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
     if (user && user._id) {
@@ -57,6 +65,8 @@ const CreateCompaign = () => {
   const navigate = useNavigate();
   const handleChange = (e) => {
     const { name, value } = e.target;
+    console.log('name',name);
+    console.log('value',value);
     setFormData({
       ...formData,
       [name]: value,
@@ -75,8 +85,8 @@ const CreateCompaign = () => {
       },
     };
     const option = { 
-      title:   formData.title,
-      subtitle: formData.subtitle,
+      category_id:   formData.category_id,
+      title: formData.title,
       total_funding: formData.total_funding,
       description: formData.description,
       minimum_amount: formData.minimum_amount,
@@ -86,6 +96,13 @@ const CreateCompaign = () => {
       campaign_status: formData.campaign_status,
       campaign_type: formData.campaign_type, 
       user_id: formData.user_id
+    }
+  console.log('option',option)
+
+    const areFieldsFilled = Object.values(option).every((value) => value !== undefined && value !== '');
+    if (!areFieldsFilled) {
+      toast.error('Please fill in all required fields.');
+      // Optionally display a message to the user or handle the validation failure
     }
     const bodyData = new FormData();
         for (var key in option) {
@@ -105,23 +122,23 @@ const CreateCompaign = () => {
       .then((res) => {
         if (res.status === 200 || res.status === 201) {
           setLoading(false);
-            window.alert(
+            toast.success.alert(
               res?.data?.message
             );
             navigate("/my-project");
         } else {
-          window.alert("Failed to create a campaign.");
+          toast.error("Failed to create a campaign.");
         }
       })
       .catch((error) => {
         setLoading(false);
-        window.alert(error?.response?.data?.message || error);
+        toast.error(error?.response?.data?.message || error);
       });
   };
   return (
     <>
       <div className="page-content bg-white">
-        <PageBanner maintitle="Project" pagetitle="Create Your Own Campaign" background={bg} />
+        <PageBanner maintitle="Campaign" pagetitle="Create Your Own Campaign" background={bg} />
 
         <section className="section-padding">
         {loading ? (
@@ -131,32 +148,36 @@ const CreateCompaign = () => {
                         ) :
                         <>
                         <div className="container">
-            <div className="row">
+            <div className="row mt-5">
               <div className="col-lg-8 mx-auto">
-                <h3>Create Your Campaign</h3>
+                {/* <h3>Create Your Campaign</h3> */}
                 <form onSubmit={handleSubmit}>
                   <div className="form-group mb-3">
                     <div className="row">
                       <div className="col-md-6">
-                        <label>Campaign Category:</label>
+                        <label> Category</label>
                         <select
-                          name="title"
-                          value={formData.title}
+                          name="category_id"
+                          value={formData.category_id}
                           onChange={handleChange}
                           className="form-control"
+                          required
                         >
+                            <option value="" disabled>
+    Select Campaign Category
+  </option>
                           {titleOptions.map((option) => (
-                            <option key={option} value={option}>
-                              {option}
+                            <option key={option._id} value={option._id}>
+                              {option.name}
                             </option>
                           ))}
                         </select>
                       </div>
                       <div className="col-md-6">
-                        <label>SubTitle:</label>
+                        <label>Title</label>
                         <input
                           type="text"
-                          name="subtitle"
+                          name="title"
                           value={formData.subtitle}
                           onChange={handleChange}
                           className="form-control"
@@ -209,6 +230,7 @@ const CreateCompaign = () => {
                         value={formData.campaign_type}
                         onChange={handleChange}
                         className="form-control"
+                        required
                       >
                         <option value="funding">Funding</option>
                         <option value="donation">Donation</option>

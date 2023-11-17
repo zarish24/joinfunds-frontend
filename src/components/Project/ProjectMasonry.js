@@ -280,129 +280,138 @@ const ProjectMasonry = (props) => {
         >
           {console.log("fileterData", filtered)}
           <AnimatePresence>
-            {loading ? (
-              <Box
-                className={styles.centeredBox}
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                height="20vh" // Adjust the height as needed
+  {loading ? (
+    <Box
+      className={styles.centeredBox}
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      height="20vh"
+    >
+      <ThreeDots color="#E6007C" width={50} height={50} />
+    </Box>
+  ) : (
+    (filtered &&
+      Array.isArray(filtered) &&
+      filtered.length === 0) ? (
+        <Box
+          className={styles.noDataFound}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Typography variant="h4">
+            No Campaign Found. Go to Previous Page!
+          </Typography>
+        </Box>
+      ) : (
+        Array.isArray(filtered) && filtered.length > 0 ? (
+          filtered.map((item, index) => {
+            const progressValue = parseInt(item.progres, 10);
+            console.log("progressValue", progressValue);
+            return (
+              <motion.li
+                layout
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="card-container col-xl-4 col-lg-6 col-md-6 col-sm-12 Fashion m-b30"
+                key={index}
               >
-                <ThreeDots color="#E6007C" width={50} height={50} />
-              </Box>
-            ) : filtered && filtered.length === 0 ? (
-              <Box
-                className={styles.noDataFound}
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-              >
-                <Typography variant="h4">
-                  No Campaign Found Goto Prrevious Page!
-                </Typography>
-              </Box>
-            ) : (
-              filtered.map((item, index) => {
-                const progressValue = parseInt(item.progres, 10);
-                console.log("progressValue", progressValue);
-                return (
-                  <motion.li
-                    layout
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    exit={{ scale: 0, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                    className="card-container col-xl-4 col-lg-6 col-md-6 col-sm-12 Fashion m-b30"
-                    key={index}
-                    //transition={{ duration: 0.5 }}
-                  >
-                    <div className="dz-card style-2 overlay-skew">
-                      <div className={`dz-media ${styles.cardImgWrapper}`}>
-                        <Link to={`/fundraiser-detail/${item._id}`}>
-                          <img src={item?.campaign_images[0]?.url ? item?.campaign_images[0]?.url  : avat3} alt="" />
-                        </Link>
+                <div className="dz-card style-2 overlay-skew">
+                  <div className={`dz-media ${styles.cardImgWrapper}`}>
+                    <Link to={`/fundraiser-detail/${item._id}`}>
+                      <img src={item?.campaign_images[0]?.url ? item?.campaign_images[0]?.url : avat3} alt="" />
+                    </Link>
+                  </div>
+                  <div className="dz-info">
+                    <ul className="dz-category">
+                      <li>
+                        <Link to={"#"}>{item.title}</Link>
+                      </li>
+                    </ul>
+                    <h5 className="dz-title">
+                      <Link to={`/fundraiser-detail/${item._id}`}>
+                        {item.title.length > 25
+                          ? item.title.slice(0, 25) + "..."
+                          : item.title}
+                      </Link>
+                    </h5>
+      
+                    <div className="progress-bx style-1">
+                      <div className="progress">
+                        <div
+                          className={`progress-bar ${
+                            progressValue >= 60
+                              ? "bg-success"
+                              : progressValue >= 30
+                              ? "bg-warning"
+                              : "bg-danger"
+                          } progress-bar-striped progress-bar-animated`}
+                          style={{ width: `${progressValue}%` }}
+                        ></div>
                       </div>
-                      <div className="dz-info">
-                        <ul className="dz-category">
-                          <li>
-                            <Link to={"#"}>{item.title}</Link>
-                          </li>
-                        </ul>
-                        <h5 className="dz-title">
-                          <Link to={`/fundraiser-detail/${item._id}`}>
-                            {item.subtitle.length > 25
-                              ? item.subtitle.slice(0, 25) + "..."
-                              : item.subtitle}
-                          </Link>
-                        </h5>
-
-                        <div className="progress-bx style-1">
-                          <div className="progress">
-                            <div
-                              className={`progress-bar ${
-                                progressValue >= 60
-                                  ? "bg-success"
-                                  : progressValue >= 30
-                                  ? "bg-warning"
-                                  : "bg-danger"
-                              } progress-bar-striped progress-bar-animated`}
-                              style={{ width: `${progressValue}%` }}
-                            ></div>
-                          </div>
-                          <ul className="progress-tag">
-                            <li className="raised">
-                              <i className="las la-coins"></i> Raised:{" "}
-                              <span className="text-primary">
-                                $ {item.raised}
-                              </span>
-                            </li>
-                            <li className="goal">
-                              <i className="lar la-calendar"></i> Goal:{" "}
-                              <span className="text-primary">
-                                ${item.total_funding}
-                              </span>
+                      <ul className="progress-tag">
+                        <li className="raised">
+                          <i className="las la-coins"></i> Raised:{" "}
+                          <span className="text-primary">
+                            $ {item.raised}
+                          </span>
+                        </li>
+                        <li className="goal">
+                          <i className="lar la-calendar"></i> Goal:{" "}
+                          <span className="text-primary">
+                            ${item.total_funding}
+                          </span>
+                        </li>
+                      </ul>
+                    </div>
+      
+                    <div className="author-wrappper">
+                      <div className="author-media">
+                        <img src={item.user_detail[0].profileImage} alt="" />
+                      </div>
+                      <div className="author-content">
+                        <div className="author-head">
+                          <h6 className="author-name">{item.user_detail[0].firstName} {item.user_detail[0].lastName}</h6>
+                          <ul className="rating-list">
+                            <li>
+                              <i className="fa fa-star"></i>
+                            </li>{" "}
+                            <li>
+                              <i className="fa fa-star"></i>
+                            </li>{" "}
+                            <li>
+                              <i className="fa fa-star"></i>
+                            </li>{" "}
+                            <li>
+                              <i className="fa fa-star gray-light"></i>
+                            </li>{" "}
+                            <li>
+                              <i className="fa fa-star gray-light"></i>
                             </li>
                           </ul>
                         </div>
-
-                        <div className="author-wrappper">
-                          <div className="author-media">
-                            <img src={item.user_detail[0].profileImage} alt="" />
-                          </div>
-                          <div className="author-content">
-                            <div className="author-head">
-                              <h6 className="author-name">{item.user_detail[0].firstName} {item.user_detail[0].lastName}</h6>
-                              <ul className="rating-list">
-                                <li>
-                                  <i className="fa fa-star"></i>
-                                </li>{" "}
-                                <li>
-                                  <i className="fa fa-star"></i>
-                                </li>{" "}
-                                <li>
-                                  <i className="fa fa-star"></i>
-                                </li>{" "}
-                                <li>
-                                  <i className="fa fa-star gray-light"></i>
-                                </li>{" "}
-                                <li>
-                                  <i className="fa fa-star gray-light"></i>
-                                </li>
-                              </ul>
-                            </div>
-                            <ul className="author-meta">
-                              <li className="campaign">12 Campaign</li>
-                              <li className="location">New York, London</li>
-                            </ul>
-                          </div>
-                        </div>
+                        <ul className="author-meta">
+                          <li className="campaign">12 Campaign</li>
+                          <li className="location">New York, London</li>
+                        </ul>
                       </div>
                     </div>
-                  </motion.li>
-                );
-              })
-            )}
-          </AnimatePresence>
+                  </div>
+                </div>
+              </motion.li>
+            );
+          })
+        ) : (
+          // Add a fallback JSX if filtered is not an array or has length 0
+          <p>No data available</p>
+        )
+      )
+  )}
+</AnimatePresence>
+
         </ul>
       </div>
       <div className="row">

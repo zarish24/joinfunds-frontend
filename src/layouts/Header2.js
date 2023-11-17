@@ -8,6 +8,9 @@ import { MenuListArray2 } from "./Menu";
 import { IMAGES } from "../constant/theme";
 import DonateModal from "../components/Modal/DonateModal";
 import { LoginSocialGoogle } from "reactjs-social-login";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import {
   Box,
   Typography,
@@ -23,18 +26,29 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
   const [resetModal, setResetModal] = useState(false);
   const [signupModal, setSignupModal] = useState(false);
   const [email, setEmail] = useState("");
+  const [FirstN, setFirstN] = useState("");
+  const [LastN, setLastN] = useState("");
+  const [Zip, setZip] = useState("");
+  const [country, setCountry] = useState('');
+  const [MediaLink, setMediaLink] = useState('');
+  const [City, setCity] = useState("");
   const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(
     localStorage.getItem("isLoggedIn") === "true"
   );
   const [callOnClick, setCallOnClick] = useState(true);
   const [loading, setLoading] = useState(false);
-  //Modals end
-  //form submit
-  // Listen for changes in local storage
-  const url = process.env.REACT_APP_BACKEND_URL
-  
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
+ 
+  const url = process.env.REACT_APP_BACKEND_URL;
+
   useEffect(() => {
     const handleStorageChange = () => {
       console.log("Storage changed");
@@ -51,11 +65,26 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
   const nav = useNavigate();
   const formSubmit = async (e, apiEndpoint) => {
     e.preventDefault();
-    console.log('urllllllllllllllllllllll',url)
-    const data = {
-      email: "",
-      password: "",
+    console.log("urllllllllllllllllllllll",e);
+    let data = {
+      email: email,
+      password: password,
+      firstName: FirstN,
+      lastName: LastN,
+      country: country,
+      city: City,
+      zipcode: Zip,
+      phoneNumber: `+${phone}`,
+      socialMediaProfile: MediaLink,
     };
+    
+    if (apiEndpoint === "api/user/login") {
+      // If the endpoint is "api/user/login", only include the email and password fields
+      data = {
+        email: email,
+        password: password,
+      };
+    }
     if (apiEndpoint === "api/user/sendForgetEmail") {
       data.email = email;
     } else {
@@ -68,42 +97,50 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
         if (res.status === 200 || res.status === 201) {
           setEmail("");
           setPassword("");
+          setSignupModal(false);
+          console.log("res rsgister", res);
+          console.log("res res.data.message", res.data);
+          toast.success(
+            res?.data?.data?.message
+              ? res?.data?.data?.message
+              : res?.data?.message
+          );
           // Store user information in local storage
-            localStorage.setItem(
-              "user",
-              JSON.stringify({
-                _id: res?.data?.user?._id,
-                firstName: res?.data?.user?.firstName,
-                lastName: res?.data?.user?.lastName,
-                email: res?.data?.user?.email,
-                role: res?.data?.user?.role,
-                profileImage: res?.data?.user?.profileImage,
-                token: res?.data?.token,
-              })
-            );
-                    if (loginModal === true) {
+          localStorage.setItem(
+            "user",
+            JSON.stringify({
+              _id: res?.data?.user?._id,
+              firstName: res?.data?.user?.firstName,
+              lastName: res?.data?.user?.lastName,
+              email: res?.data?.user?.email,
+              role: res?.data?.user?.role,
+              profileImage: res?.data?.user?.profileImage,
+              token: res?.data?.token,
+            })
+          );
+          if (loginModal === true) {
             localStorage.setItem("isLoggedIn", "true");
-            setIsLoggedIn(true); // Update the state immediately.
-            // Show the alert
-            window.alert(
-              res?.data?.data?.message
-                ? res?.data?.data?.message
-                : res?.data?.message
-            );
-            console.log('function-called',true)
+            setIsLoggedIn(true); 
+            setSignupModal(false);
+            // toast.success(
+            //   res?.data?.data?.message
+            //     ? res?.data?.data?.message
+            //     : res?.data?.message
+            // );
+            console.log("function-called", true);
             setloginModal(false);
             setSignupModal(false);
             navigate("/");
           } else {
-            console.log('function-called',false)
+            console.log("function-called", false);
             setloginModal(true);
           }
         } else {
-          window.alert("Authentication failed. Please check your credentials.");
+          toast.error("Authentication failed. Please check your credentials.");
         }
       })
       .catch((e) => {
-        window.alert(
+        toast.error(
           e?.response?.data?.message
             ? e?.response?.data?.message
             : e?.response?.data
@@ -173,19 +210,31 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                 <>
                   <div className="logo-header mostion logo-dark">
                     <Link to={"/index-3"}>
-                      <img src={IMAGES.logo3} alt="" style={{ height: '60px', width: '112px' }} />
+                      <img
+                        src={IMAGES.logo3}
+                        alt=""
+                        style={{ height: "60px", width: "112px" }}
+                      />
                     </Link>
                   </div>
                   <div className="logo-header mostion logo-light">
                     <Link to={"/index-3"}>
-                      <img src={IMAGES.logo3} style={{ height: '60px', width: '112px' }}  alt="" />
+                      <img
+                        src={IMAGES.logo3}
+                        style={{ height: "60px", width: "112px" }}
+                        alt=""
+                      />
                     </Link>
                   </div>
                 </>
               ) : (
                 <div className="logo-header mostion logo-dark">
                   <Link to={"/"}>
-                    <img src={IMAGES.logo2} style={{ height: '60px', width: '112px' }} alt="" />
+                    <img
+                      src={IMAGES.logo2}
+                      style={{ height: "60px", width: "112px" }}
+                      alt=""
+                    />
                   </Link>
                 </div>
               )}
@@ -209,11 +258,19 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                 <div className="logo-header logo-dark">
                   {changeLogo ? (
                     <Link to={"/"}>
-                      <img src={IMAGES.logo3} style={{ height: '60px', width: '112px' }} alt="" />
+                      <img
+                        src={IMAGES.logo3}
+                        style={{ height: "60px", width: "112px" }}
+                        alt=""
+                      />
                     </Link>
                   ) : (
                     <Link to={"/"}>
-                      <img src={IMAGES.logo2} style={{ height: '60px', width: '112px' }} alt="" />
+                      <img
+                        src={IMAGES.logo2}
+                        style={{ height: "60px", width: "112px" }}
+                        alt=""
+                      />
                     </Link>
                   )}
                 </div>
@@ -558,7 +615,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                     )
                     .then(async (res) => {
                       if (res.status === 200 || res.status === 201) {
-                        console.log("social-data",res)
+                        console.log("social-data", res);
                         localStorage.setItem(
                           `${res.data.data.doc.role}`,
                           JSON.stringify({
@@ -569,7 +626,9 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                             role: res.data.data.doc.role,
                             socialLogin: "User is Login with Google",
                             token: res.data.data.doc.token,
-                            profileImage: res.data.data.doc.profileImage? res.data.data.doc.profileImage: "",
+                            profileImage: res.data.data.doc.profileImage
+                              ? res.data.data.doc.profileImage
+                              : "",
                           })
                         );
                         // if (res.data.data.doc.role === 'admin') {
@@ -582,7 +641,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                           setIsLoggedIn(true); // Update the state immediately.
                           setloginModal(false);
                           // Show the alert
-                          window.alert("Login Successful!");
+                          toast.success("Login Successful!");
 
                           navigate("/");
                         }
@@ -604,7 +663,6 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                           )
                           .then((res) => {
                             if (res.status === 200 || res.status === 201) {
-                              
                               localStorage.setItem(
                                 "user",
                                 JSON.stringify({
@@ -615,14 +673,16 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                                   role: res.data.data.user.role,
                                   socialLogin: "User is Login with Google",
                                   token: res.data.data.token,
-                                  profileImage: res.data.data.user.profileImage? res.data.data.user.profileImage: ""
+                                  profileImage: res.data.data.user.profileImage
+                                    ? res.data.data.user.profileImage
+                                    : "",
                                 })
                               );
                               localStorage.setItem("isLoggedIn", "true");
                               setIsLoggedIn(true); // Update the state immediately.
                               setloginModal(false);
                               // Show the alert
-                              window.alert("Login Successful!");
+                              toast.success("Login Successful!");
                               navigate("/");
                               // setLoading(false);
                               // setAlert(true);
@@ -632,7 +692,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                             }
                           })
                           .catch((e) => {
-                            window.alert("UserName or Email Already Exists");
+                            toast.success("UserName or Email Already Exists");
                             // setLoading(false);
                             // setErrorMessage('UserName or Email Already Exists');
                             // setErrorAlert(true);
@@ -644,7 +704,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                     });
                 }}
                 onReject={(err) => {
-                  window.alert("Enter correct email to login");
+                  toast.success("Enter correct email to login");
                   // setErrorMessage('Enter correct email to login');
                   // setErrorAlert(true);
                   // setTimeout(() => {
@@ -716,153 +776,383 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
         </div>
       </Modal>
       <Modal
-        className="modal fade modal-wrapper auth-modal"
+        className="fade modal   "
         show={signupModal}
         onHide={setSignupModal}
+        size="lg"
         centered
       >
-        <h2 className="title">Sign Up Your Account</h2>
-        <form onSubmit={(e) => formSubmit(e, "api/user/register")}>
-          <div className="form-group">
-            <input
-              type="email"
-              className="form-control"
-              placeholder="Email Address"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              type="password"
-              className="form-control"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <div className="form-group">
-            <button type="submit" className="btn btn-outline-primary btn-block">
-              Sign Up
-            </button>
-          </div>
+      
+        <Modal.Header
+          className="d-flex justify-content-center align-items-center "
+          style={{ backgroundColor: "rgb(27, 130, 113)" }}
+        >
+          <h4 className=" text-center " style={{ Color: "#fff" }}>Sign Up Your Account</h4>
+        </Modal.Header>
+        <Modal.Body className="modal-body">
+          <form onSubmit={(e) => formSubmit(e, "api/user/register")} style={{ display: "grid", gap: "10px" }}>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "10px",
+              }}
+            >
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr ",
+                  gap: "10px",
+                }}
+              >
+                <label>
+                  First Name
+                  <input
+                    type="text"
+                    value={FirstN}
+                    style={{
+                      width: "100%",
+                      padding: "2px",
+                      borderRadius: "5px",
+                      border: "2px solid #ccc",
+                    }}
+                    onChange={(e) => setFirstN(e.target.value)}
+                    required
+                  />
+                </label>
+              </div>
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr ",
+                  gap: "10px",
+                }}
+              >
+                <label>
+                  Last Name
+                  <input
+                    type="text"
+                    value={LastN}
+                    style={{
+                      width: "100%",
+                      padding: "2px",
+                      borderRadius: "5px",
+                      border: "2px solid #ccc",
+                    }}
+                    onChange={(e) => setLastN(e.target.value)}
+                    required
+                  />
+                </label>
+              </div>
+            </div>
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "10px",
+              }}
+            >
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr ",
+                  gap: "10px",
+                }}
+              >
+                <label>
+                  Email
+                  <input
+                    type="email"
+                    value={email}
+                    style={{
+                      width: "100%",
+                      padding: "2px",
+                      borderRadius: "5px",
+                      border: "2px solid #ccc",
+                    }}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                </label>
+              </div>
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr ",
+                  gap: "10px",
+                }}
+              >
+                <label>
+                  Phone
+                  <input
+                    type="text"
+                    value={phone}
+                    style={{
+                      width: "100%",
+                      padding: "2px",
+                      borderRadius: "5px",
+                      border: "2px solid #ccc",
+                    }}
+                    onChange={(e) => setPhone(e.target.value)}
+                    required
+                  />
+                </label>
+              </div>
+            </div>
+
+            <div
+  style={{
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr 1fr", 
+    gap: "10px",
+  }}
+>
+  <label>
+    Password
+ 
+    <input
+  
+      type={showPassword ? 'text' : 'password'}
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+      style={{
+        width: 'calc(100% - 30px)',
+        padding: '2px',
+        borderRadius: '5px',
+        border: '2px solid #ccc',
+        marginRight: '30px',
+      }}
+      required
+    />
+     <button
+        type="button"
+        onClick={togglePasswordVisibility}
+        style={{
+          position: 'relative',
+    right: '8px',
+    top: '-37%',
+    left: '75%',
+    /* transform: translateY(-2%), */
+    border: 'none',
+    background: 'transparent',
+    cursor: 'pointer',
+        }}
+      >
+        {showPassword ? <FaEyeSlash /> : <FaEye />}
+      </button>
+  </label>
+  
+  <label>
+    City
+    <input
+      type="text"
+      value={City}
+      onChange={(e) => setCity(e.target.value)}
+      style={{
+        width: "100%",
+        padding: "2px",
+        borderRadius: "5px",
+        border: "2px solid #ccc",
+      }}
+      required
+    />
+  </label>
+  
+  <label>
+  Zip Code
+    <input
+      type="text"
+      value={Zip}
+      onChange={(e) => setZip(e.target.value)}
+      style={{
+        width: "100%",
+        padding: "2px",
+        borderRadius: "5px",
+        border: "2px solid #ccc",
+      }}
+      required
+    />
+  </label>
+</div>
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "10px",
+              }}
+            >
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr",
+                  gap: "10px",
+                }}
+              >
+                <label>
+                  Country:
+                  <div style={{ display: "flex", flexDirection: "column" }}>
+                    <select
+                      value={country}
+                      style={{
+                        padding: "2px",
+                        borderRadius: "5px",
+                        border: "2px solid #ccc",
+                      }}
+                      onChange={(e) => setCountry(e.target.value)}
+                      required
+                    >
+                      <option value="" disabled>
+                        Select a country
+                      </option>
+                      <option value="USA">United States</option>
+                      <option value="CAN">Canada</option>
+                      {/* Add more country options as needed */}
+                    </select>
+                  </div>
+                </label>
+              </div>
+
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr ",
+                  gap: "10px",
+                }}
+              >
+                <label>
+                  Social Media Profile Link
+                  <input
+                    type="text"
+                    // placeholder="Enter your social media profile link"
+                    value={MediaLink}
+                    onChange={(e) => setMediaLink(e.target.value)}
+                    // onChange={handleSocialMediaLinkChange}
+                    style={{
+                      width: "100%",
+                      padding: "2px",
+                      borderRadius: "5px",
+                      border: "2px solid #ccc",
+                    }}
+                    required
+                  />
+                  {/* Optionally, you can display the entered link */}
+                  {/* {socialMediaLink && <p>Entered Social Media Link: {socialMediaLink}</p>} */}
+                </label>
+              </div>
+            </div>
+
+            {/* <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "10px",
+              }}
+            >
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr ",
+                  gap: "10px",
+                }}
+              >
+                <label>
+                  City
+                  <input
+                    type="text"
+                    // value={email}
+                    style={{
+                      width: "100%",
+                      padding: "2px",
+                      borderRadius: "5px",
+                      border: "2px solid #ccc",
+                    }}
+                    // onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                </label>
+              </div>
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr ",
+                  gap: "10px",
+                }}
+              >
+                <label>
+                  Zip Code
+                  <input
+                    type="number"
+                    // value={email}
+                    style={{
+                      width: "100%",
+                      padding: "2px",
+                      borderRadius: "5px",
+                      border: "2px solid #ccc",
+                    }}
+                    // onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                </label>
+              </div>
+            </div> */}
+<div className='d-flex justify-content-center'>
+  
+  <div className="w-50">
+    <button
+      type="submit"
+      className="btn btn-outline-primary btn-block p-2 mx-auto mb-0"
+   
+    >
+      Signup
+    </button>
+  </div>
+</div>
+          </form>
+        </Modal.Body>
+        <Modal.Footer
+          style={{ display: "flex", justifyContent: "space-between" }}
+        >
           <Box className={styles.loginSocial}>
-            {/* ---Social-Login with Google */}
             {callOnClick ? (
               <LoginSocialGoogle
                 sx={{ pr: 1 }}
-                client_id={
-                  "1085137082696-c6a9ta6uk6gn30vf7vmsg8c066vmhl7i.apps.googleusercontent.com"
-                }
+                client_id="1085137082696-c6a9ta6uk6gn30vf7vmsg8c066vmhl7i.apps.googleusercontent.com"
                 scope="openid profile email"
                 discoveryDocs="claims_supported"
                 access_type="offline"
                 onResolve={async ({ data }) => {
-                  let checkUser = await axios
-                    .get(
-                      `${process.env.REACT_APP_BACKEND_URL}/api/user/getSocialAppUserData/${data.email}`
-                    )
-                    .then(async (res) => {
-                      if (res.status === 200 || res.status === 201) {
-                        localStorage.setItem(
-                          `${res.data.data.doc.role}`,
-                          JSON.stringify({
-                            _id: res.data.data.doc._id,
-                            username: res.data.data.doc.username,
-                            email: res.data.data.doc.email,
-                            role: res.data.data.doc.role,
-                            socialLogin: "User is Login with Google",
-                            token: res.data.data.token,
-                            profileImage: res.data.data.doc.profileImage,
-                          })
-                        );
-                        // if (res.data.data.doc.role === 'admin') {
-                        //     navigate('/admin');
-                        // }
-                        //  else {
-                        console.log("resres", res);
-                        if (res.data.data.doc.role === "user") {
-                          localStorage.setItem("isLoggedIn", "true");
-                          setIsLoggedIn(true); // Update the state immediately.
-                          setloginModal(false);
-                          // Show the alert
-                          window.alert("Login Successful!");
-
-                          navigate("/");
-                        }
-                        // }
-                      }
-                    })
-                    .catch(async (e) => {
-                      if (e.response.data === "User Not found.") {
-                        const userName = data.name.replace(/\s/g, "");
-                        const givenValues = {
-                          username: userName,
-                          email: data.email,
-                          profileImage: data.picture,
-                        };
-                        await axios
-                          .post(
-                            `${process.env.REACT_APP_BACKEND_URL}/api/user/registerSocialAppUser`,
-                            givenValues
-                          )
-                          .then((res) => {
-                            if (res.status === 200 || res.status === 201) {
-                              localStorage.setItem(
-                                "user",
-                                JSON.stringify({
-                                  _id: res.data.data.user._id,
-                                  username: res.data.data.user.username,
-                                  email: res.data.data.user.email,
-                                  role: res.data.data.user.role,
-                                  socialLogin: "User is Login with Google",
-                                  token: res.data.data.token,
-                                  profileImage: res.data.data.user.profileImage,
-                                })
-                              );
-                              localStorage.setItem("isLoggedIn", "true");
-                              setIsLoggedIn(true); // Update the state immediately.
-                              setloginModal(false);
-                              // Show the alert
-                              window.alert("Login Successful!");
-                              navigate("/");
-                              // setLoading(false);
-                              // setAlert(true);
-                              // setTimeout(() => {
-                              //     navigate('/user');
-                              // }, 1000);
-                            }
-                          })
-                          .catch((e) => {
-                            window.alert("UserName or Email Already Exists");
-                          });
-                      }
-                    });
+                  // ... your existing logic
                 }}
                 onReject={(err) => {
-                  window.alert("Enter correct email to login");
+                  toast.success("Enter correct email to login");
                 }}
               >
-                <img loading="lazy" src={Google} alt="google" />
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    cursor: "pointer",
+                  }}
+                >
+                  <img
+                    loading="lazy"
+                    src={Google}
+                    alt="google"
+                    style={{ marginRight: "8px" }}
+                  />
+                  Sign up with Google
+                </div>
               </LoginSocialGoogle>
             ) : null}
           </Box>
-          {/* <div className="form-group">
-            <Link to={"#"} className="btn facebook btn-block">
-              <i className="fa-brands fa-facebook-f m-r10"></i>Log in with
-              Facebook
-            </Link>
-          </div>
-          <div className="form-group">
-            <Link to={"#"} className="btn google-plus btn-block">
-              <i className="fa-brands fa-google m-r10"></i>Log in with Google
-            </Link>
-          </div> */}
+
           <div className="sign-text">
             <span>
-              Don't have a Crowdfunding account?{" "}
+              Already have a Crowdfunding account?{" "}
               <Link
-                to={"#"}
+                to="#"
                 className="btn-link collapsed"
                 data-bs-toggle="collapse"
                 onClick={() => (setSignupModal(false), setloginModal(true))}
@@ -871,8 +1161,9 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
               </Link>
             </span>
           </div>
-        </form>
+        </Modal.Footer>
       </Modal>
+
       <DonateModal ref={modalRef} />
     </>
   );

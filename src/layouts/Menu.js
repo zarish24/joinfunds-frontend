@@ -87,24 +87,24 @@ export const MenuListArray2 = [
     //     ],
     // },
     {
-        title:"Projects",
+        title:"Campaigns",
         classChange:"sub-menu-down",
         content : [
             {
-                title:"My Project",
+                title:"My Campaigns",
                 to:"/my-project"
             },
             {
-                title:"Create Compaign",
+                title:"Create Campaign",
                 to:"/create-compaign"
             },
            
             {
-                title:"Projects",
+                title:"Campaigns",
                 to:"/project"
             },
             {
-                title:"Project Categories",
+                title:"Campaign Categories",
                 // to:"/project-categories"
                 to:"/project-sidebar"
             },
@@ -163,6 +163,10 @@ export const MenuListArray2 = [
             {
                 title:"Wallet",
                 to:"/wallet-address"
+            },
+            {
+                title:"My Donations",
+                to:"/my-donations"
             },
             {
                 title:"My Requests",

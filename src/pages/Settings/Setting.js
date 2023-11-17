@@ -10,7 +10,8 @@ import { useFormik } from 'formik';
 import { ValidationPassword } from '../../pages/schema/index';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
-
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -116,23 +117,31 @@ if (items) {
                   Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
                 },
               };
+
+           
             let data = {
-                email: email,
                 newPassword: values.newPassword,
                 currentPassword: values.currentPassword
-            };
+              };
+              
+             
+              if (values.confirmPassword !== values.newPassword) {
+              
+                toast.error("New password and confirm password do not match");
+                
+              }
             let result = await axios
-                .post(`${process.env.REACT_APP_BACKEND_URL}/api/user/resetPassword`, data,config)
+                .post(`${process.env.REACT_APP_BACKEND_URL}/api/user/changePassword`, data,config)
                 .then((res) => {
                     if (res.status === 200 || res.status === 201) {
-                        window.alert(
+                        toast.success(
                             res?.data?.data?.message
                               ? res?.data?.data?.message
                               : res?.data?.message
                           );
                         // navigate('/login');
                     } else {
-                        window.alert(
+                        toast.error(
                             'Current Password is not Correct'
                           );
                         // setErrorMessage('Current Password is not Correct');
@@ -142,7 +151,7 @@ if (items) {
                     }
                 })
                 .catch((e) => {
-                    window.alert(
+                    toast.error(
                         e.response.data.message
                           );
                     // setErrorMessage(e.response.data.message);
@@ -206,7 +215,7 @@ if (items) {
                     );
                     setUrlImage(res.data.data.doc.profileImage);
                     setLoading(false);
-                    window.alert(
+                    toast.alert(
                         "Profile updated successfully! "
                       );
                     // setAlert(true);
@@ -216,7 +225,7 @@ if (items) {
                     // setUserHeaderProfileImage(urlImage);
                 } else {
                     setLoading(false);
-                    window.alert(
+                    toast.alert(
                         "Something went wrong! "
                       );
                     
@@ -229,7 +238,7 @@ if (items) {
             })
             .catch((e) => {
                 setLoading(false);
-                window.alert(
+                toast.alert(
                     e.response.data.message || e.response.data
                   );
                 // setErrorMessage(e.response.data.message || e.response.data);
