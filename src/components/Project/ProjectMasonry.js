@@ -29,6 +29,15 @@ import avat6 from "../../assets/images/avatar/avatar6.jpg";
 import avat7 from "../../assets/images/avatar/avatar7.jpg";
 import avat8 from "../../assets/images/avatar/avatar8.jpg";
 import avat9 from "../../assets/images/avatar/avatar9.jpg";
+import {
+  FacebookShareButton,
+  TwitterShareButton,
+  LinkedinShareButton,
+ } from 'react-share';
+ import { FacebookIcon, TwitterIcon, LinkedinIcon } from 'react-share';
+
+
+
 const RecordsPerPage = 12;
 
 const ProjectMasonry = (props) => {
@@ -41,7 +50,10 @@ const ProjectMasonry = (props) => {
   const [popular, setPopular] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [activeGenre, setActiveGenre] = useState("All");
+const [isShareModalOpen, setShareModalOpen] = useState(false);
 
+
+  const toggleShareModal = () => { setShareModalOpen(!isShareModalOpen); };
   useEffect(() => {
     // Initialize filtered with the data from props when the component mounts
     setFiltered(cardData);
@@ -337,6 +349,23 @@ const ProjectMasonry = (props) => {
                           ? item.title.slice(0, 25) + "..."
                           : item.title}
                       </Link>
+                      <button onClick={toggleShareModal} className="share-button">
+    Share
+  </button>
+
+                      {isShareModalOpen && (
+  <div className="share-modal">
+    <FacebookShareButton url={`http://44.219.245.56/my-project/${item._id}`}>
+      <FacebookIcon size={32} round />
+    </FacebookShareButton>
+    <TwitterShareButton url={`http://44.219.245.56/my-project/${item._id}`}>
+      <TwitterIcon size={32} round />
+    </TwitterShareButton>
+    <LinkedinShareButton url={`http://44.219.245.56/my-project/${item._id}`}>
+      <LinkedinIcon size={32} round />
+    </LinkedinShareButton>
+  </div>
+)}
                     </h5>
                     
       
