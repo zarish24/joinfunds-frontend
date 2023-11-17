@@ -338,6 +338,7 @@ const ProjectMasonry = (props) => {
                           : item.title}
                       </Link>
                     </h5>
+                    
       
                     <div className="progress-bx style-1">
                       <div className="progress">
