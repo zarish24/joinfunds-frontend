@@ -109,16 +109,16 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
             "user",
             JSON.stringify({
               _id: res?.data?.user?._id,
-              city: res?.data?.user?.city,
-              country: res?.data?.user?.country,
-              phone: res?.data?.user?.phoneNumber,
-              link: res?.data?.user?.socialMediaProfile,
-              zip: res?.data?.user?.zipcode,
-              firstName: res?.data?.user?.firstName,
-              lastName: res?.data?.user?.lastName,
-              email: res?.data?.user?.email,
-              role: res?.data?.user?.role,
-              profileImage: res?.data?.user?.profileImage,
+              // city: res?.data?.user?.city,
+              // country: res?.data?.user?.country,
+              // phone: res?.data?.user?.phoneNumber,
+              // link: res?.data?.user?.socialMediaProfile,
+              // zip: res?.data?.user?.zipcode,
+              // firstName: res?.data?.user?.firstName,
+              // lastName: res?.data?.user?.lastName,
+              // email: res?.data?.user?.email,
+              // role: res?.data?.user?.role,
+              // profileImage: res?.data?.user?.profileImage,
               token: res?.data?.token,
             })
           );
@@ -721,7 +721,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
             ) : null}
           </Box>
           <div className="sign-text">
-            <span>
+            <span>Sign Up
               Don't have a Crowdfunding account?
               <Link
                 to={"#"}

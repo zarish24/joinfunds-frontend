@@ -29,6 +29,7 @@ import avat6 from "../../assets/images/avatar/avatar6.jpg";
 import avat7 from "../../assets/images/avatar/avatar7.jpg";
 import avat8 from "../../assets/images/avatar/avatar8.jpg";
 import avat9 from "../../assets/images/avatar/avatar9.jpg";
+import clipboardCopy from 'clipboard-copy';
 import {
   FacebookShareButton,
   TwitterShareButton,
@@ -42,6 +43,8 @@ import {
   LinkedinIcon,
   WhatsappIcon , // add this
  } from 'react-share';
+ import { toast } from 'react-toastify';
+ import 'react-toastify/dist/ReactToastify.css';
 
 
 const RecordsPerPage = 12;
@@ -57,9 +60,27 @@ const ProjectMasonry = (props) => {
   const [filtered, setFiltered] = useState([]);
   const [activeGenre, setActiveGenre] = useState("All");
 const [isShareModalOpen, setShareModalOpen] = useState(false);
+const [shareItemId, setShareItemId] = useState(null);
+
+const toggleShareModal = (itemId) => {
+  setShareItemId(itemId);
+  setShareModalOpen(!isShareModalOpen);
+
+};
 
 
-  const toggleShareModal = () => { setShareModalOpen(!isShareModalOpen); };
+
+const handleCopyUrl = async (url) => {
+  try {
+    await clipboardCopy(url);
+   
+    toast.success('URL copied to clipboard!');
+  } catch (err) {
+    console.error('Unable to copy to clipboard', err);
+  }
+};
+
+
   useEffect(() => {
     // Initialize filtered with the data from props when the component mounts
     setFiltered(cardData);
@@ -349,34 +370,44 @@ const [isShareModalOpen, setShareModalOpen] = useState(false);
                         <Link to={"#"}>{item.campaign_type}</Link>
                       </li>
                     </ul>
+                    {/* <div className="d-flex justify-content-end align-items-center"> */}
                     <h5 className="dz-title">
                       <Link to={`/fundraiser-detail/${item._id}`}>
                         {item.title.length > 25
                           ? item.title.slice(0, 25) + "..."
                           : item.title}
                       </Link>
-                      <button onClick={toggleShareModal} className="share-button">
-    Share
+                      
+  <button
+    onClick={() => {
+      toggleShareModal(item._id);
+      handleCopyUrl(`http://44.219.245.56/my-project/${item._id}`);
+    }}
+    className="btn  share-button float-right"
+  >
+    <i className="fas fa-share"></i> 
   </button>
 
+
                       {isShareModalOpen && (
+                        
   <div className="share-modal">
-    <FacebookShareButton url={`http://44.219.245.56/my-project/${item._id}`}>
+    <FacebookShareButton url={`http://44.219.245.56/my-project/${shareItemId}`}>
       <FacebookIcon size={32} round />
     </FacebookShareButton>
-    <TwitterShareButton url={`http://44.219.245.56/my-project/${item._id}`}>
+    <TwitterShareButton url={`http://44.219.245.56/my-project/${shareItemId}`}>
       <TwitterIcon size={32} round />
     </TwitterShareButton>
-    <LinkedinShareButton url={`http://44.219.245.56/my-project/${item._id}`}>
+    <LinkedinShareButton url={`http://44.219.245.56/my-project/${shareItemId}`}>
       <LinkedinIcon size={32} round />
     </LinkedinShareButton>
-    <WhatsappShareButton url={`http://44.219.245.56/my-project/${item._id}`} >
+    <WhatsappShareButton url={`http://44.219.245.56/my-project/${shareItemId}`} >
  <WhatsappIcon size={32} round />
 </WhatsappShareButton>
   </div>
 )}
                     </h5>
-                    
+                    {/* </div> */}
       
                     <div className="progress-bx style-1">
                       <div className="progress">
