@@ -16,7 +16,8 @@ const Project = () => {
   const [campaigns, setCampaigns] = useState([]);
   const [page, setPage] = useState(1);
   const [searchText, setSearchText] = useState('');
-
+  
+  
   useEffect(() => {
     const fetchData = async () => {
       try {

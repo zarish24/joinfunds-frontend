@@ -10,8 +10,10 @@ import { useFormik } from 'formik';
 import { ValidationPassword } from '../../pages/schema/index';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
+import Select from 'react-select';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import countriesData from './CountryCode'
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -44,10 +46,23 @@ const initialValues = {
     confirmPassword: '',
     newPassword: ''
 };
-
+const CountrySelect = ({ value, onChange }) => {
+    const options = countriesData.map(country => ({
+      label: `${country.name} (${country.dial_code})`,
+      value: country.dial_code,
+    }));
+return (
+    <Select
+      value={options.find(option => option.value === value)}
+      onChange={(selectedOption) => onChange(selectedOption.value)}
+      options={options}
+      isSearchable
+    />
+  );
+};
 const Setting = (props) => {
     const navigate = useNavigate();
-    const [items, setItems] = useState([]);
+    const [item, setItems] = useState([]);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [phone, setphone] = useState("");
@@ -55,7 +70,8 @@ const Setting = (props) => {
     const [country, setcountry] = useState("");
     const [city, setcity] = useState("");
     const [zip, setzip] = useState("");
-    
+    const [countryCode, setCountryCode] = useState("");
+   
     const [email, setEmail] = useState();
     const [bio, setBio] = useState('');
     const [pic, setPic] = useState('');
@@ -70,75 +86,24 @@ const Setting = (props) => {
     const [passwordTypeConfirm, setPasswordTypeConfirm] = useState('password');
    
 
-    
- 
    
-    useEffect(() => {
-        setLoading(true);
-       const items = JSON.parse(localStorage.getItem('user'));
-
-if (items) {
-    console.log("items", items);
-
-    setItems(items);
-
-    const { email, firstName, lastName, phone,link,country,city,zip, bio, profileImage } = items;
-
-    if (email) {
-        setEmail(email);
-    }
-    if (phone) {
-        setphone(phone);
-    } 
-    if (link) {
-        setlink(link);
-    } 
-    if (country) {
-        setcountry(country);
-    }
-    if (zip) {
-        setzip(zip);
-    }
-    if (city) {
-        setcity(city);
-    }
-
-    if (firstName) {
-        setFirstName(firstName);
-    }
-
-    if (lastName) {
-        setLastName(lastName);
-    }
-
-    if (bio) {
-        setBio(bio);
-    }
-
-    if (profileImage) {
-        setPic(profileImage);
-        setUrlImage(profileImage);
-    }
-}
-        setLoading(false);
-    }, []);
-
-    // const response = (urlImage) => {
-    //     props.setProfileImageHandler(urlImage);
-    // };
-    // const setUserHeaderProfileImage = (urlImage) => {
-    //     props.setUserProfileImageHandler(urlImage);
-    // };
+    console.log('CountryCode',countriesData);    
+   
+   
     
     const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
         initialValues: initialValues,
         validationSchema: ValidationPassword,
+        
         onSubmit: async (values, action) => {
             setLoading(true);
             setTimeout(() => {
                 setLoading(false);
             }, 5000);
             action.resetForm();
+            const items = JSON.parse(localStorage.getItem('user'));
+            const token = items?.token;
+            const userId = items?._id;
             const config = {
                 headers: {
                   Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
@@ -190,12 +155,13 @@ if (items) {
         }
     });
     
-    const userId = items?._id;
-    const token = items?.token;
+  
        useEffect(() => {
+        const items = JSON.parse(localStorage.getItem('user'));
+        const token = items?.token;
+        const userId = items?._id;
         const fetchProfileDetails = async () => {
-const items = JSON.parse(localStorage.getItem('user'));
- const token = items?.token;
+
 const config = {
     headers: {
       Authorization: `Bearer ${token}`, 
@@ -205,21 +171,22 @@ const config = {
 
                 
                 const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/getProfileDetails`,config,);
-                if(response.status === 200){
-                  console.log('Error fetching profile details:', response);
-const data = await response.json();
-const data1 = response.user_details
-                console.log('Error data profile details:', data);
-                console.log('Error data1 profile details:', data1);
-                }
-              
-
-                // if (!response.ok) {
-                //     throw new Error('Failed to fetch profile details');
-                // }
-
-                
-                // setProfileDetails(data); // Assuming the API response is an object with profile details
+                if (response.status === 200) {
+                    console.log('Error fetching profile details:', response);
+                    const data = await response.json();
+                    const data1 = data.user_details;
+                    setEmail(data1.email);
+                    setphone(data1.phoneNumber);
+                    setLastName(data1.lastName);
+                    setlink(data1.socialMediaProfile);
+                    setFirstName(data1.firstName);
+                    setcity(data1.city);
+                    setzip(data1.zipcode);
+                    setcountry(data1.country);
+           
+                    setUrlImage(data1.profileImage);
+                    console.log('Profile details fetched successfully:', data1);
+                  }
             } catch (error) {
                 console.error('Error fetching profile details:', error);
             }
@@ -227,6 +194,42 @@ const data1 = response.user_details
 
         fetchProfileDetails();
     }, []); 
+
+   
+    const fetchProfileDetails = async () => {
+        const items = JSON.parse(localStorage.getItem('user'));
+        const token = items?.token;
+        const userId = items?._id;
+        const config = {
+            headers: {
+              Authorization: `Bearer ${token}`, 
+            },
+          };
+          try {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/getProfileDetails`, config);
+            if (response.status === 200) {
+              console.log('Error fetching profile details:', response);
+              const data = await response.json();
+              const data1 = data.user_details;
+              setEmail(data1.email);
+              setphone(data1.phoneNumber);
+              setLastName(data1.lastName);
+              setlink(data1.socialMediaProfile);
+              setFirstName(data1.firstName);
+              setcity(data1.city);
+              setzip(data1.zipcode);
+              setcountry(data1.country);
+     
+              setUrlImage(data1.profileImage);
+              console.log('Profile details fetched successfully:', data1);
+            }
+          } catch (error) {
+            console.error('Error fetching profile details:', error);
+          }
+                };
+        
+
+
     const hiddenFileInput = useRef(null);
     const handleClick = (event) => {
         hiddenFileInput.current.click();
@@ -239,6 +242,10 @@ const data1 = response.user_details
     };
     
     const updateProfile = async () => {
+        const items = JSON.parse(localStorage.getItem('user'));
+        const token = items?.token;
+        const userId = items?._id;
+       
         setLoading(true);
         console.log("formData",pic)
         const config = {
@@ -253,7 +260,7 @@ const data1 = response.user_details
             country:country,
             city:city,
             zipcode:zip,
-            phoneNumber:phone,
+            phoneNumber: `${countryCode} ${phone}`,
             socialMediaProfile:link,
             profileImage: pic,
             bio: 'sada'
@@ -273,20 +280,21 @@ const data1 = response.user_details
                         'user',
                         JSON.stringify({
                             token: token,
-                            firstName: res.data.data.doc.firstName,
-                            lastName: res.data.data.doc.lastName,
-                            city: res.data.data.doc.city,
-                            country: res.data.data.doc.country,
-                            phone: res.data.data.doc.phoneNumber,
-                            link: res.data.user.doc.socialMediaProfile,
-                            zip: res.data.data.doc.zipcode,
-                            role: res.data.data.doc.role,
-                            email: res.data.data.doc.email,
-                            bio: res.data.data.doc.bio,
-                            profileImage: res.data.data.doc.profileImage
+                            // firstName: res.data.data.doc.firstName,
+                            // lastName: res.data.data.doc.lastName,
+                            // city: res.data.data.doc.city,
+                            // country: res.data.data.doc.country,
+                            // phone: res.data.data.doc.phoneNumber,
+                            // link: res.data.user.doc.socialMediaProfile,
+                            // zip: res.data.data.doc.zipcode,
+                            // role: res.data.data.doc.role,
+                            // email: res.data.data.doc.email,
+                            // bio: res.data.data.doc.bio,
+                            // profileImage: res.data.data.doc.profileImage
                         })
                     );
                     setUrlImage(res.data.data.doc.profileImage);
+                    fetchProfileDetails();
                     setLoading(false);
                     toast.success(
                         "Profile updated successfully! "
@@ -479,19 +487,33 @@ const data1 = response.user_details
             </form>
         </Grid>
         <Grid item xs={6}>
-            <form>
-                <label htmlFor="phone">Phone</label>
-                <br />
-                <input
-                    type="text"
-                    name="phone"
-                    id="phone"
-                    value={phone}
-                    onChange={(e) => {
-                        setphone(e.target.value);
-                    }}
-                />
-            </form>
+        <form>
+    <label htmlFor="phone" style={{ marginLeft: '5px' }}>
+      Phone
+    </label>
+  <div style={{ display: 'flex', alignItems: 'center' }}>
+   
+  <CountrySelect  value={countryCode} onChange={setCountryCode} />
+   
+  <input
+    type="text"
+    name="phone"
+    id="phone"
+    value={phone}
+    onChange={(e) => {
+      if (e.target.value.length <= 11) {
+        setphone(e.target.value);
+      }
+    }}
+  />
+  </div>
+  <br />
+  {phone.length < 10 && (
+    <p style={{ color: 'red' }}>
+      Phone number must be at least 10 digits long.
+    </p>
+  )}
+</form>
         </Grid>
         <Grid item xs={6}>
             <form>
