@@ -71,7 +71,7 @@ const Header2 = ({onShowDonate}) => {
     return (
         <>
             <header className="site-header mo-left header style-2">                
-                <div className={`sticky-header main-bar-wraper navbar-expand-lg ${headerFix ? "is-fixed" : ""}`}>
+                <div className="sticky-header main-bar-wraper navbar-expand-lg is-fixed">
                     <div className="main-bar clearfix ">
                         <div className="container-fluid clearfix">                
                             <div className="logo-header mostion logo-dark">
