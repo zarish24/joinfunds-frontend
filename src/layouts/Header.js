@@ -104,9 +104,9 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
     const value = e.target.value;
 
     // Validate the phone number
-    if (validatePhone(value)) {
+    // if (validatePhone(value)) {
       setPhone(value);
-    }
+    // }
   };
 
 
