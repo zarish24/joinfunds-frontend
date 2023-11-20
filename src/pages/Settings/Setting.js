@@ -104,7 +104,7 @@ const Setting = (props) => {
    
 
    
-    console.log('CountryCode',countriesData);    
+    //   console.log('CountryCode',countriesData);    
    
    
     
@@ -189,7 +189,7 @@ const config = {
                 
                 const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/getProfileDetails`,config,);
                 if (response.status === 200) {
-                    console.log('Error fetching profile details:', response);
+                    //   console.log('Error fetching profile details:', response);
                     const data = await response.json();
                     const data1 = data.user_details;
                     setEmail(data1.email);
@@ -202,10 +202,10 @@ const config = {
                     setcountry(data1.country);
            
                     setUrlImage(data1.profileImage);
-                    console.log('Profile details fetched successfully:', data1);
+                    //   console.log('Profile details fetched successfully:', data1);
                   }
             } catch (error) {
-                console.error('Error fetching profile details:', error);
+                //   console.error('Error fetching profile details:', error);
             }
         };
 
@@ -225,7 +225,7 @@ const config = {
           try {
             const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/getProfileDetails`, config);
             if (response.status === 200) {
-              console.log('Error fetching profile details:', response);
+              //   console.log('Error fetching profile details:', response);
               const data = await response.json();
               const data1 = data.user_details;
               setEmail(data1.email);
@@ -238,10 +238,10 @@ const config = {
               setcountry(data1.country);
      
               setUrlImage(data1.profileImage);
-              console.log('Profile details fetched successfully:', data1);
+              //   console.log('Profile details fetched successfully:', data1);
             }
           } catch (error) {
-            console.error('Error fetching profile details:', error);
+            //   console.error('Error fetching profile details:', error);
           }
                 };
         
@@ -264,7 +264,7 @@ const config = {
         const userId = items?._id;
        
         setLoading(true);
-        console.log("formData",pic)
+        //   console.log("formData",pic)
         const config = {
             headers: {
               Authorization: `Bearer ${token}`, 
@@ -286,7 +286,7 @@ const config = {
         for (var key in option) {
             formData.append(key, option[key]);
         }
-        console.log("formDaxxxta",formData)
+        //   console.log("formDaxxxta",formData)
         await axios
             .put(`${process.env.REACT_APP_BACKEND_URL}/api/user`, formData, config
             )

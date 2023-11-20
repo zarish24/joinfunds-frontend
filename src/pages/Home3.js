@@ -82,7 +82,7 @@ const Home3 = () => {
               )
               .then((res) => {
                 if (res.status === 200 || res.status === 201) {
-                  console.log("all-comp-data", res?.data);
+                  //   console.log("all-comp-data", res?.data);
                   setCampaigns(res?.data);
                 } else {
                   window.alert("Compaigns not fount due to some issue!");
@@ -94,7 +94,7 @@ const Home3 = () => {
             // setCampaigns(response.data); // Set the campaign data in state
           } catch (error) {
             window.alert("API request failed", error);
-            console.error("API request failed", error);
+            //   console.error("API request failed", error);
           }
         };
         // const user = JSON.parse(localStorage.getItem("user"));
@@ -130,10 +130,10 @@ const Home3 = () => {
               dzMessage: '',
             });
       
-          console.log('Form submitted successfully:', response.data);
+          //   console.log('Form submitted successfully:', response.data);
         } catch (error) {
           toast.success('Error submitting form:',error);
-          console.error('Error submitting form:', error);
+          //   console.error('Error submitting form:', error);
         }
       };
     return (
@@ -168,7 +168,7 @@ const Home3 = () => {
                                 </div>
                             </div>
                         </div>
-                        {console.log("campaigns",campaigns)}
+                        {/* {//   console.log("campaigns",campaigns)} */}
                         <div class="resize-wrapper">
                             <TrendingSlider2 campaigns = {campaigns} />
                         </div>

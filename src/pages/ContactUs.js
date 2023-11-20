@@ -73,10 +73,10 @@ const ContactUs = () => {
             dzMessage: '',
           });
     
-        console.log('Form submitted successfully:', response.data);
+        // console.log('Form submitted successfully:', response.data);
       } catch (error) {
         toast.success('Error submitting form:',error);
-        console.error('Error submitting form:', error);
+        // console.error('Error submitting form:', error);
       }
     };
   

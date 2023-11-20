@@ -20,7 +20,7 @@ const MyDonations = () => {
       const token = user?.token;
 
       if (!token) {
-        console.error('User token not found in local storage');
+        // console.error('User token not found in local storage');
         return;
       }
 
@@ -45,7 +45,7 @@ const MyDonations = () => {
         setTotalPages(Math.ceil(data.totalCount / RecordsPerPage));
         setDummyData(data.transactions);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        // console.error('Error fetching data/:', error);
       }
     };
 

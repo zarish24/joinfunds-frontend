@@ -86,7 +86,7 @@ const FundraiserDetail = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [loading, setLoading] = useState(false);
    const [isModalOpen, setModalOpen] = useState(false);
-console.log("isModalOpen",isModalOpen)
+// console.log("isModalOpen",isModalOpen)
 const [CampaignId, setCampaignId] = useState("");
 
 const openModal = (campaignId) => {
@@ -95,7 +95,7 @@ const openModal = (campaignId) => {
 };
 const closeModal = () => {
   setModalOpen(false);
-  console.log('closeeeeee')
+  // console.log('closeeeeee')
   setCampaignId(null); // Reset the campaign ID when closing the modal
 };
 
@@ -127,7 +127,7 @@ const closeModal = () => {
   const [stripeFormData, setStripeFormData] = useState({
     amount: 0,
   });
-  console.log("current-amount", amount);
+  // console.log("current-amount", amount);
   const setChain = async (e) => {
     const selectedValue = parseInt(e.target.value, 10); // Parse the selected value to an integer
     setFormData({ ...formData, chain_id: selectedValue }); // Update the formData state
@@ -157,15 +157,15 @@ const closeModal = () => {
     );
     card = new CardWidget(stripe);
     card.mount();
-    console.log("card",card)
+    // console.log("card",card)
   };
   const setHandleSymbol = (e) => {
     const selectedValue = e.target.value; // Keep it as a string
     setFormData({ ...formData, symbol: selectedValue }); // Update the formData state
-    console.log("formdata", formData); // Move the console.log inside this function if needed
+    // console.log("formdata", formData); // Move the console.log inside this function if needed
   };
 
-  console.log("formdatas", formData);
+  // console.log("formdatas", formData);
   const handleStepChange = (step) => {
     setActiveStep(step);
   };
@@ -187,12 +187,12 @@ const closeModal = () => {
   };
   const handleStripeChange = async (e) => {
     e.preventDefault()
-    console.log("iii", card);
+    // console.log("iii", card);
     if (card) {
       try {
         // Access 'card' and create a token
         const token = await card.createToken();
-        console.log("Card token:", token);
+        // console.log("Card token:", token);
         if (token) {
           setLoading(true);
           const bodyData = {
@@ -203,7 +203,7 @@ const closeModal = () => {
             stripeToken: token.id,
           };
 
-          console.log("body-data", bodyData);
+          // console.log("body-data", bodyData);
           const response = await axios
         .post(
           `${process.env.REACT_APP_BACKEND_URL}/api/payments/makeStripePayment`,
@@ -223,7 +223,7 @@ const closeModal = () => {
           }
         })
         .catch((error) => {
-          console.error("API request failed", error);
+          // console.error("API request failed", error);
           setLoading(false);
           setAmount(0)
           window.alert(
@@ -237,10 +237,10 @@ const closeModal = () => {
         // console.log("body-data",bodyData)
         // You can handle the token or further actions here.
       } catch (error) {
-        console.error("Error creating token:", error);
+        // console.error("Error creating token:", error);
       }
     } else {
-      console.log("Card widget is not initialized");
+      // console.log("Card widget is not initialized");
     }
 
     // Other code...
@@ -284,7 +284,7 @@ const closeModal = () => {
           }
         })
         .catch((error) => {
-          console.error("API request failed", error);
+          // console.error("API request failed", error);
           setLoading(false);
           setFormData({
             ...formData,
@@ -329,13 +329,13 @@ const closeModal = () => {
           }
         })
         .catch((error) => {
-          console.error("API request failed", error);
+          // console.error("API request failed", error);
           window.alert(error?.response?.data?.message);
         });
       // setCampaigns(response.data); // Set the campaign data in state
     } catch (error) {
       window.alert("API request failed", error);
-      console.error("API request failed", error.message);
+      // console.error("API request failed", error.message);
     }
   };
   const calculateDaysLeft = (startDateString, endDateString, callback) => {
@@ -344,7 +344,7 @@ const closeModal = () => {
     const endDate = new Date(endDateString);
 
     if (isNaN(startDate) || isNaN(endDate)) {
-      console.log("Invalid date format");
+      // console.log("Invalid date format");
       // Handle the case where the date format is invalid
       callback(null);
     } else if (today > endDate) {
@@ -376,7 +376,7 @@ const closeModal = () => {
           )
           .then((res) => {
             if (res.status === 200 || res.status === 201) {
-              console.log("all-com", res);
+              // console.log("all-com", res);
               setCampaign(res?.data?.data?.doc[0]);
               setDonners(res?.data?.data?.allDonners);
               setTopDonners(res?.data?.data?.topDonors);
@@ -385,7 +385,7 @@ const closeModal = () => {
 
               calculateDaysLeft(startDateString, endDateString, (daysLeft) => {
                 if (daysLeft !== null) {
-                  console.log("daysLeft:", daysLeft);
+                  // console.log("daysLeft:", daysLeft);
                   setDaysLeft(daysLeft);
                 }
               });
@@ -394,13 +394,13 @@ const closeModal = () => {
             }
           })
           .catch((error) => {
-            console.log("error", error);
+            // console.log("error", error);
             // window.alert(error);
           });
         // setCampaigns(response.data); // Set the campaign data in state
       } catch (error) {
         window.alert("API request failed", error);
-        console.error("API request failed", error);
+        // console.error("A/PI request failed", error);
       }
     };
     const user = JSON.parse(localStorage.getItem("user"));
@@ -426,20 +426,20 @@ const closeModal = () => {
           )
           .then((res) => {
             if (res.status === 200 || res.status === 201) {
-              console.log("allff-com", res?.data?.data);
+              // console.log("allff-com", res?.data?.data);
               setComments(res?.data?.data);
             } else {
               window.alert("Comments not fount due to some issue!");
             }
           })
           .catch((error) => {
-            console.log("error", error);
+            // console.log("error", error);
             // window.alert(error);
           });
         // setCampaigns(response.data); // Set the campaign data in state
       } catch (error) {
         window.alert("API request failed", error);
-        console.error("API request failed", error);
+        // console.error("API request failed", error);
       }
     };
     const user = JSON.parse(localStorage.getItem("user"));
@@ -463,7 +463,7 @@ const closeModal = () => {
                   <div className="swiper fundraiser-gallery-wrapper">
                     <GallerySlider campaignImages={campaign?.campaign_images} />
                   </div>
-                  {console.log("titssle", campaign?.subtitle)}
+                  // {console.log("titssle", campaign?.subtitle)}
                   <h2 className="title">{campaign?.subtitle}</h2>
                   <p>{campaign?.description}</p>
                   {/* <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."</p> */}
@@ -475,7 +475,7 @@ const closeModal = () => {
                     aliqua. Ut enim ad minim veniam, quis nostrud exercitation
                     ullamco laboris nisi ut aliquip ex ea commodo consequat."
                   </p>
-                  {console.log("sdds", user_id, campaign)}
+                  // {console.log("sdds", user_id, campaign)}
                   {user_id !== campaign?.user_id ? (
                     <>
                       <ul className="fundraiser-bottom">
@@ -560,7 +560,7 @@ const closeModal = () => {
                               p: 3,
                             }}
                           >
-                            {console.log("donners", donners)}
+                            // {console.log("donners", donners)}
                             {donners
                               ?.slice(
                                 step * numDonorsPerPage,
@@ -804,28 +804,10 @@ const closeModal = () => {
                     </a> */}
                       </div>
                     </>
-                  ) : campaign?.status === "pending" ||
-                    campaign?.status === "open" ? (
+                  ) : campaign?.status === "close" ||
+                    campaign?.status === "close" ? (
                       <>
-                    <button
-                      style={{
-                        backgroundColor: "blue",
-                        color: "white",
-                        border: "none",
-                        padding: "10px 20px",
-                        marginBottom: "20px",
-                        width: "356px",
-                        height: "44px",
-                        borderRadius: "5px",
-                        cursor: "pointer",
-                        fontSize: "16px",
-                        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                        transition: "background-color 0.3s",
-                      }}
-                      onClick={() => navigate(`/Edit-compaign/${campaign._id}`)}
-                    >
-                      Edit Campaign
-                    </button>
+                 
                      <button
                      style={{
                        backgroundColor: "blue",
@@ -1099,38 +1081,7 @@ const closeModal = () => {
               <div className="col-lg-12">
                 <div id="card-element"></div>
               </div>
-              <form>
-              <label style={{ fontSize: '14px', marginTop: '20px', fontWeight: '500' }}>Donate to System</label>
-              <div className={`d-flex ${styles.donation}`}>
-                <div>
-                  <input
-                    type="radio"
-                    name="percentage"
-                    style={{ cursor: 'pointer' }}
-                    onChange={() => setSelectedPercentage(2)}
-                  />
-                  <span className="ps-1">2%</span>
-                </div>
-                <div className="mx-5">
-                  <input
-                    type="radio"
-                    name="percentage"
-                    style={{ cursor: 'pointer' }}
-                    onChange={() => setSelectedPercentage(5)}
-                  />
-                  <span className="ps-1">5%</span>
-                </div>
-                <div>
-                  <input
-                    type="radio"
-                    name="percentage"
-                    style={{ cursor: 'pointer' }}
-                    onChange={() => setSelectedPercentage(10)}
-                  />
-                  <span className="ps-1">10%</span>
-                </div>
-              </div>
-            </form>
+          
 
               <div className="col-lg-12">
                 <div className="form-group mb-0 text-center buttonMargin">

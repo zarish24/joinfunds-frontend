@@ -32,9 +32,9 @@ import React, {
     const [loading, setLoading] = useState(false);
   
     const [user_id, setUser_id] = useState("");
-    console.log('StripeAccNum', StripeAccNum)
-    console.log('maskedAddress', maskedAddress)
-    console.log('token', token)
+    //   console.log('StripeAccNum', StripeAccNum)
+    //   console.log('maskedAddress', maskedAddress)
+    //   console.log('token', token)
     const dummyData = [
         {
             "_id": "6554ad406c495944ac9ff28d",

@@ -17,7 +17,7 @@ const Project = () => {
   const [page, setPage] = useState(1);
   const [searchText, setSearchText] = useState('');
   const [CategoryId, setCategoryId] = useState('');
-  console.log('CategoryId',CategoryId)
+  // console.log('CategoryId',CategoryId)
   
   useEffect(() => {
     const fetchData = async () => {
@@ -50,7 +50,7 @@ const Project = () => {
           )
           .then((res) => {
             if (res.status === 200 || res.status === 201) {
-              console.log("all-comp-data", res?.data?.data?.data);
+              // console.log("all-comp-data", res?.data?.data?.data);
               setCampaigns(res?.data?.data?.data);
             } else {
               window.alert("Compaigns not fount due to some issue!");
@@ -62,7 +62,7 @@ const Project = () => {
         // setCampaigns(response.data); // Set the campaign data in state
       } catch (error) {
         window.alert("API request failed", error);
-        console.error("API request failed", error);
+        // console.error("API request failed", error);
       }
     };
 

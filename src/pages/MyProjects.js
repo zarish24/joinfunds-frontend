@@ -20,7 +20,7 @@ const MyProjects = () => {
   useEffect(() => {
     const fetchData = async (user_id, token) => {
       try {
-        console.log("user_id", user_id);
+        // console.log("user_id", user_id);
         const data = {
           status: "",
           campaign_type: "All Category",
@@ -47,7 +47,7 @@ const MyProjects = () => {
           )
           .then((res) => {
             if (res.status === 200 || res.status === 201) {
-              console.log("all-comp-data", res?.data?.data?.data);
+              // console.log("all-comp-data", res?.data?.data?.data);
               setCampaigns(res?.data?.data?.data);
             } else {
               window.alert("Compaigns not fount due to some issue!");
@@ -59,7 +59,7 @@ const MyProjects = () => {
         // setCampaigns(response.data); // Set the campaign data in state
       } catch (error) {
         window.alert("API request failed", error);
-        console.error("API request failed", error);
+        // console.error("API request failed", error);
       }
     };
     const user = JSON.parse(localStorage.getItem("user"));
