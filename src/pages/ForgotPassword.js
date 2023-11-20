@@ -55,7 +55,7 @@ const ForgotPassword = () => {
               )
               .then((res) => {
                 if (res.status === 200 || res.status === 201) {
-                  console.log("all-comp-data", res?.data);
+                  //   console.log("all-comp-data", res?.data);
                   setCampaigns(res?.data);
                 } else {
                   window.alert("Compaigns not fount due to some issue!");
@@ -67,7 +67,7 @@ const ForgotPassword = () => {
             // setCampaigns(response.data); // Set the campaign data in state
           } catch (error) {
             window.alert("API request failed", error);
-            console.error("API request failed", error);
+            //   console.error("API request failed", error);
           }
         };
         const user = JSON.parse(localStorage.getItem("user"));

@@ -33,11 +33,11 @@ export class CardWidget {
 
     async createToken() {
         try {
-            console.log("function-called")
+            //   console.log("function-called")
             const result = await this.stripe.createToken(this.card)
             return result.token
         } catch(err) {
-            console.log(err);
+            //   console.log(err);
         }
     }
 

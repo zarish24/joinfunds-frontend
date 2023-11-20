@@ -28,11 +28,11 @@ const CreateCompaign = () => {
     campaign_type: 'funding',  
     user_id: ''
   });
-  console.log('formData',formData)
+  //   console.log('formData',formData)
 
   const [titleOptions, setTitleOptions] = useState([]);
   
-  console.log('titleOptions',titleOptions)
+  //   console.log('titleOptions',titleOptions)
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -45,12 +45,12 @@ const CreateCompaign = () => {
         if (response.status === 200) {
           // Extract category names from the response
           const categories = response.data.categories
-          console.log('categories',categories)
+          //   console.log('categories',categories)
 
           setTitleOptions(categories);
         }
       } catch (error) {
-        console.error('Error fetching categories:', error);
+        //   console.error('Error fetching categories:', error);
       }
     };
 
@@ -81,8 +81,8 @@ const CreateCompaign = () => {
         return;
       }
     }
-    console.log('name',name);
-    console.log('value',value);
+    //   console.log('name',name);
+    //   console.log('value',value);
     setFormData({
       ...formData,
       [name]: value,
@@ -123,7 +123,7 @@ const CreateCompaign = () => {
       campaign_type: formData.campaign_type, 
       user_id: formData.user_id
     }
-  console.log('option',option)
+  //   console.log('option',option)
 
     const areFieldsFilled = Object.values(option).every((value) => value !== undefined && value !== '');
     if (!areFieldsFilled) {

@@ -18,7 +18,7 @@ const Footer3 = () => {
           const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/subscribe/subscribeForm`,  payload );
          
          
-          console.log('Subscription successful:', response.data);
+          //   console.log('Subscription successful:', response.data);
     toast.success('Subscription successful')
          
         //   setSubscribeMsg('Subscription successful');
@@ -27,7 +27,7 @@ const Footer3 = () => {
     
         } catch (error) {
          
-          console.error('Error subscribing:', error);
+          //   console.error('Error subscribing:', error);
           toast.error("Email is already subscribed")
          
         //   setSubscribeMsg('Error subscribing. Please try again.');

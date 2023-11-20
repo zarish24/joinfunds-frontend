@@ -52,7 +52,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
 
   useEffect(() => {
     const handleStorageChange = () => {
-      console.log("Storage changed");
+      //   console.log("Storage changed");
       setIsLoggedIn(localStorage.getItem("isLoggedIn") === "true");
     };
 
@@ -178,8 +178,8 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
           setEmail("");
           setPassword("");
           setSignupModal(false);
-          console.log("res rsgister", res);
-          console.log("res res.data.message", res.data);
+          //   console.log("res rsgister", res);
+          //   console.log("res res.data.message", res.data);
           toast.success(
             res?.data?.data?.message
               ? res?.data?.data?.message
@@ -212,12 +212,12 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
             //     ? res?.data?.data?.message
             //     : res?.data?.message
             // );
-            console.log("function-called", true);
+            //   console.log("function-called", true);
             setloginModal(false);
             setSignupModal(false);
             navigate("/");
           } else {
-            console.log("function-called", false);
+            //   console.log("function-called", false);
             setloginModal(true);
           }
         } else {
@@ -477,7 +477,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                       );
                     }
                   })}
-                  {console.log("log", isLoggedIn)}
+                  {/* {//   console.log("log", isLoggedIn)} */}
                   {!isLoggedIn && (
                     <>
                       {/* <li>
@@ -700,7 +700,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                     )
                     .then(async (res) => {
                       if (res.status === 200 || res.status === 201) {
-                        console.log("social-data", res);
+                        //   console.log("social-data", res);
                         localStorage.setItem(
                           `${res.data.data.doc.role}`,
                           JSON.stringify({
@@ -720,7 +720,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                         //     navigate('/admin');
                         // }
                         //  else {
-                        console.log("resres", res);
+                        //   console.log("resres", res);
                         if (res.data.data.doc.role === "user") {
                           localStorage.setItem("isLoggedIn", "true");
                           setIsLoggedIn(true); // Update the state immediately.

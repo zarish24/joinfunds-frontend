@@ -31,9 +31,9 @@ const WalletAddress = () => {
   const [loading, setLoading] = useState(false);
 
   const [user_id, setUser_id] = useState("");
-  console.log('StripeAccNum', StripeAccNum)
-  console.log('maskedAddress', maskedAddress)
-  console.log('token', token)
+  // console.log('StripeAccNum', StripeAccNum)
+  // console.log('maskedAddress', maskedAddress)
+  // console.log('token', token)
   const copyToClipboard = () => {
     const textField = document.createElement("textarea");
     textField.innerText = walletAddress;
@@ -65,11 +65,11 @@ const WalletAddress = () => {
             config
           )
           .then((res) => {
-            console.log('setWalletAddress res',res)
+            // console.log('setWalletAddress res',res)
 
             if (res.status === 200 || res.status === 201) {
               setWalletAddress(res?.data?.data?.walletAddress);
-              console.log('setWalletAddress',setWalletAddress)
+              // console.log('setWalletAddress',setWalletAddress)
               // Extract the first six and last eight characters
               if (walletAddress) {
                 const firstSix = walletAddress.substring(0, 6);
@@ -89,7 +89,7 @@ const WalletAddress = () => {
           });
       } catch (error) {
         window.alert("API request failed", error);
-        console.error("API request failed", error);
+        // console.error("API request failed", error);
       }
     };
     const fetchStripeAccount = async (token) => {
@@ -106,14 +106,14 @@ const WalletAddress = () => {
   
         if (response.status === 200 || response.status === 201) {
           setStripeAccNum(response.data.data.stripeAccountNumber)
-          console.log('Stripe Account Data:', response.data);
-          console.log('Stripe setStripeAccNum Data:', setStripeAccNum);
+          // console.log('Stripe Account Data:', response.data);
+          // console.log('Stripe setStripeAccNum Data:', setStripeAccNum);
         } else {
           window.alert("Stripe Account data not found due to some issue!");
         }
       } catch (error) {
         window.alert(error.message || "API request failed");
-        console.error("API request failed", error);
+        // console.error("A/PI request failed", error);
       }
     };
   
@@ -154,10 +154,10 @@ const WalletAddress = () => {
         payload,
         config
       );
-      console.log('API response:', response.data);
+      // console.log('API response:', response.data);
       setModalStripeDonate(false)
     } catch (error) {
-      console.error('API request failed', error);
+      // console.error('API request failed', error);
     }
   };
   return (
