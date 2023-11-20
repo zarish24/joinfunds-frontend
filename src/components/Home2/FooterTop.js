@@ -8,7 +8,7 @@ const FooterTop = () => {
                 <div className="col-lg-4 col-md-6 m-b30 wow fadeInUp" data-wow-delay="0.2s">
                     <div className="content-bx style-1 bg-primary text-center">
                         <div className="inner-content">
-                            <h2 className="title text-white">Newsletter</h2>
+                            <h2 className="title text-white">Newsletterrr</h2>
                             <p className="text-white">Sign up for our monthly newsletter to get the latest news, volunteer opportunities.</p>
                             <form className="dzSubscribe" action="script/mailchamp.php" method="post">
                                 <div className="dzSubscribeMsg text-white"></div>

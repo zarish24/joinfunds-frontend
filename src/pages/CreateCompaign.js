@@ -8,6 +8,7 @@ import axios from "axios";
 import { ThreeDots } from '../../node_modules/react-loader-spinner/dist/index';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { ShareButtons, generateShareIcon } from 'react-share';
 
 const CreateCompaign = () => {
   const [token, setToken] = useState("");
@@ -23,7 +24,7 @@ const CreateCompaign = () => {
     maximum_amount: 0,
     start_date: '',
     end_date: '',
-    campaign_status: 'pending',  // Default value for campaign status
+    campaign_status: 'pending',  
     campaign_type: 'funding',  
     user_id: ''
   });
@@ -40,7 +41,7 @@ const CreateCompaign = () => {
             Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
           },
         };
-        const response = await axios.get('http://44.219.245.56/api/category/getCategories',config);
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/category/getCategories`,config);
         if (response.status === 200) {
           // Extract category names from the response
           const categories = response.data.categories
@@ -65,6 +66,21 @@ const CreateCompaign = () => {
   const navigate = useNavigate();
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if (name === 'start_date') {
+      const endDateIsValid = isEndDateValid(value, formData.end_date);
+      if (!endDateIsValid) {
+        alert('End date must be a future date and not the same as start date.');
+        return;
+      }
+    }
+
+    if (name === 'end_date') {
+      const startDateIsValid = isStartDateValid(formData.start_date, value);
+      if (!startDateIsValid) {
+        alert('Start date must be present or future, and end date cannot be the same as start date.');
+        return;
+      }
+    }
     console.log('name',name);
     console.log('value',value);
     setFormData({
@@ -72,6 +88,16 @@ const CreateCompaign = () => {
       [name]: value,
     });
   };
+  const isStartDateValid = (startDate, endDate) => {
+    const today = new Date().toISOString().split('T')[0];
+    return startDate >= today && startDate !== endDate;
+  };
+
+  const isEndDateValid = (startDate, endDate) => {
+    const today = new Date().toISOString().split('T')[0];
+    return endDate >= today && startDate !== endDate;
+  };
+
   const MultipleFileChange = async (e) => {
     const files = Array.from(e.target.files);
     setImages(files);
@@ -115,14 +141,14 @@ const CreateCompaign = () => {
       .post(`${process.env.REACT_APP_BACKEND_URL}/api/compaign/createCompaign`, bodyData, config,
       {
         headers: {
-          "Content-Type": "multipart/form-data", // Set the Content-Type header
+          "Content-Type": "multipart/form-data", 
         },
       }
         )
       .then((res) => {
         if (res.status === 200 || res.status === 201) {
           setLoading(false);
-            toast.success.alert(
+            toast.success(
               res?.data?.message
             );
             navigate("/my-project");

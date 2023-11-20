@@ -1,4 +1,5 @@
-import React,{useRef} from 'react';
+import React, { useRef,useState } from 'react';
+import axios from 'axios';
 import emailjs from '@emailjs/browser';
 import swal from "sweetalert";
 import {Link, useNavigate} from 'react-router-dom';
@@ -13,29 +14,72 @@ import shape3 from '../assets/images/pattern/shape3.png';
 import shape5 from '../assets/images/pattern/shape5.png';
 import shape6 from '../assets/images/pattern/shape6.png';
 import shape7 from '../assets/images/pattern/shape7.png';
-
+import { toast,  } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const cardBlog = [
-    {title:"Trusted Partner", subtitle:"394-091-3312", icon:"flaticon-phone-call-1"},
-    {title:"Mail", subtitle:"support@Nfu$e.com", icon:"flaticon-email"},
-    {title:"Our Address", subtitle:"832  Thompson Drive, San Fransisco, United States", icon:"flaticon-pin"},
+    {title:"Mail", subtitle:"info@nfuse-me.com", icon:"flaticon-email"},
+    // {title:"", subtitle:"", },
+    // {title:"Our Address", subtitle:"832  Thompson Drive, San Fransisco, United States", icon:"flaticon-pin"},
 ];
 
 const ContactUs = () => {
+    const [formData, setFormData] = useState({
+        dzFirstName: '',
+        dzLastName: '',
+        dzEmail: '',
+        dzPhoneNumber: '',
+        dzMessage: '',
+      });
+    // const form = useRef();
+	// const sendEmail = (e) => {
+	// 	e.preventDefault();
+	// 	//emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', form.current, 'YOUR_USER_ID')
+	// 	emailjs.sendForm('service_gfykn6i', 'template_iy1pb0b', e.target, 'HccoOtZS6GHw-N-m6')
+	// 	  .then((result) => {
+	// 		  console.log(result.text);
+	// 	  }, (error) => {
+	// 		  console.log(error.text);
+	// 	  });
+	// 	  e.target.reset()
+	// 	  swal('Good job!', 'form successfuly submmited', "success");
+	// };
+
+
+    const form = useRef(null);
+
+    const sendEmail = async (e) => {
+      e.preventDefault();
+  
+      const formData = new FormData(form.current);
+      const formObject = {};
     
-    const form = useRef();
-	const sendEmail = (e) => {
-		e.preventDefault();
-		//emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', form.current, 'YOUR_USER_ID')
-		emailjs.sendForm('service_gfykn6i', 'template_iy1pb0b', e.target, 'HccoOtZS6GHw-N-m6')
-		  .then((result) => {
-			  console.log(result.text);
-		  }, (error) => {
-			  console.log(error.text);
-		  });
-		  e.target.reset()
-		  swal('Good job!', 'form successfuly submmited', "success");
-	};
+    
+      formObject.firstName = formData.get("dzFirstName");
+      formObject.lastName = formData.get("dzLastName");
+      formObject.email = formData.get("dzEmail");
+      formObject.phoneNumber = formData.get("dzPhoneNumber");
+      formObject.message = formData.get("dzMessage");
+     
+      try {
+        
+        const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/contactUs/submitForm`, formObject);
+        toast.success('Message Sent successfully',);
+        setFormData({
+            dzFirstName: '',
+            dzLastName: '',
+            dzEmail: '',
+            dzPhoneNumber: '',
+            dzMessage: '',
+          });
+    
+        console.log('Form submitted successfully:', response.data);
+      } catch (error) {
+        toast.success('Error submitting form:',error);
+        console.error('Error submitting form:', error);
+      }
+    };
+  
 
     return (
         <>
@@ -70,7 +114,8 @@ const ContactUs = () => {
                 <section className="content-inner map-wrapper1">
                     <div className="container-fluid">
                         <div className="map-iframe style-1">
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14448.884443175983!2d75.81853095!3d25.128214449999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396f835fcc2a9e43%3A0x69e74069e551d77d!2sRajasthan%20Technical%20University%2C%20Kota!5e0!3m2!1sen!2sin!4v1645506412870!5m2!1sen!2sin" style={{border:"0"}} allowfullscreen="" loading="lazy"></iframe>
+                            {/* <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14448.884443175983!2d75.81853095!3d25.128214449999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396f835fcc2a9e43%3A0x69e74069e551d77d!2sRajasthan%20Technical%20University%2C%20Kota!5e0!3m2!1sen!2sin!4v1645506412870!5m2!1sen!2sin" style={{border:"0"}} allowfullscreen="" loading="lazy"></iframe> */}
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d50921.957033264225!2d-95.75409074959893!3d37.090301341761!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54eab584e432360b%3A0x1c3bb99243deb742!2sUnited%20States!5e0!3m2!1sen!2s!4v1700467956131!5m2!1sen!2s" style={{border:"0"}} allowfullscreen="" loading="lazy" ></iframe>
                         </div>
                         <div className="row justify-content-end">
                             <div className="col-xl-6 col-lg-8 col-sm-12">
@@ -118,7 +163,9 @@ const ContactUs = () => {
                                                     </div>
                                                 </div>
                                                 <div className="col-md-12">
-                                                    <button name="submit" type="submit" value="Submit" className="btn btn-secondary">Submit Now</button>
+                                                <button name="submit" type="submit" value="Submit" className="btn btn-secondary">
+          Submit Now
+        </button>
                                                 </div>
                                             </div>
                                         </form>

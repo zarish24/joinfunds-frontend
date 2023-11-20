@@ -1,4 +1,4 @@
-import React,{useState,useContext, useEffect} from 'react';
+import React,{useState,useContext, useEffect,useRef} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import {Modal} from 'react-bootstrap';
 import CountUp from 'react-countup';
@@ -16,10 +16,12 @@ import PartnershipSlider from '../components/Home/PartnershipSlider';
 
 //layouts
 import Header2 from '../layouts/Header2';
+import Header from '../layouts/Header';
 import Footer3 from '../layouts/Footer3';
 import { ThemeContext } from "../context/ThemeContext";
 import { IMAGES } from '../constant/theme';
-
+import { toast,  } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // const counterBlog = [
 //     {title: "Completed Projects", number:"1854", },
 //     {title: "Countries Served", number:"35", symbal:"+"},
@@ -28,6 +30,24 @@ import { IMAGES } from '../constant/theme';
 // ];
 
 const Home3 = () => {    
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const form = useRef(null);
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+          const storedValue = localStorage.getItem('user');
+          const isUserLoggedIn = Boolean(storedValue);
+          setIsLoggedIn(isUserLoggedIn);
+    
+          
+          if (isUserLoggedIn) {
+            clearInterval(intervalId);
+          }
+        }, 1000); 
+    
+      
+        return () => clearInterval(intervalId);
+      }, []);
+  
     const { changeBackground, changePrimaryColor } = useContext(ThemeContext);
 	useEffect(() => {
 		changeBackground({ value: "data-typography-2", label: "data-typography-2" });
@@ -36,6 +56,13 @@ const Home3 = () => {
     const [campaigns, setCampaigns] = useState([]);
     const [readModal,setReadModal] = useState(false);
     const [isOpen, setOpen] = useState(false);
+    const [formData, setFormData] = useState({
+        dzFirstName: '',
+        dzLastName: '',
+        dzEmail: '',
+        dzPhoneNumber: '',
+        dzMessage: '',
+      });
     const nav = useNavigate();
     const FormSubmit = (e) => {
         e.preventDefault();
@@ -77,6 +104,38 @@ const Home3 = () => {
         
         // Call the async function
       }, []);
+
+      const sendEmail = async (e) => {
+        e.preventDefault();
+    
+        const formData = new FormData(form.current);
+        const formObject = {};
+      
+      
+        formObject.firstName = formData.get("dzFirstName");
+        formObject.lastName = formData.get("dzLastName");
+        formObject.email = formData.get("dzEmail");
+        formObject.phoneNumber = formData.get("dzPhoneNumber");
+        formObject.message = formData.get("dzMessage");
+  
+        try {
+          
+          const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/contactUs/submitForm`, formObject);
+          toast.success('Message Sent successfully',);
+          setFormData({
+              dzFirstName: '',
+              dzLastName: '',
+              dzEmail: '',
+              dzPhoneNumber: '',
+              dzMessage: '',
+            });
+      
+          console.log('Form submitted successfully:', response.data);
+        } catch (error) {
+          toast.success('Error submitting form:',error);
+          console.error('Error submitting form:', error);
+        }
+      };
     return (
         <>
             <div className="page-wraper page-wraper-sidebar">
@@ -88,7 +147,11 @@ const Home3 = () => {
                     </ul>
                     <Link to={"#"} className="btn-bottom btn btn-primary light" data-bs-toggle="modal" data-bs-target="#modalDonate">Donate Now</Link>
                 </div>  
-                <Header2   changeStyle="header-transparent" changeLogo={true}/>              
+                {isLoggedIn ? (
+        <Header2 changeStyle="header-transparent" changeLogo={true} />
+      ) : (
+        <Header changeStyle="header-transparent" changeLogo={true} />
+      )}           
                 <div className="page-content bg-white">	
                     <div className="main-bnr-two">
                         <MainSliderIndex3  />
@@ -162,7 +225,7 @@ Helping others improve their lives physically, medically or financially feels wo
                         <div className="container">
                             <div className="section-head text-center wow fadeInUp" data-wow-delay="0.2s">
                                 <h5 className="sub-title">Services</h5>
-                                <h2 className="title text-white">Why Nfu$e</h2>
+                                <h2 className="title text-white">Why Nfuse</h2>
                             </div>
                                 <AkcelServices />
                         </div>                     
@@ -219,7 +282,7 @@ Helping others improve their lives physically, medically or financially feels wo
                                     </div>
                                 </div>
                                 <div className="col-lg-9">
-                                    <form className="dzForm" onSubmit={(e)=>FormSubmit(e)}>
+                                    <form className="dzForm" ref={form} onSubmit={sendEmail}>
                                         <div className="dzFormMsg"></div>
                                         <input type="hidden" className="form-control" name="dzToDo" value="Contact" />
                                         <input type="hidden" className="form-control" name="reCaptchaEnable" value="0" />

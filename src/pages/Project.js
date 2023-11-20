@@ -16,12 +16,15 @@ const Project = () => {
   const [campaigns, setCampaigns] = useState([]);
   const [page, setPage] = useState(1);
   const [searchText, setSearchText] = useState('');
-
+  const [CategoryId, setCategoryId] = useState('');
+  console.log('CategoryId',CategoryId)
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = {
           status: "",
+          Category_id:CategoryId,
           campaign_type: "All Category",
           items_per_page: 12,
           page,
@@ -69,14 +72,14 @@ const Project = () => {
     // }
     
     // Call the async function
-  }, [page,campaignType,campaignStatus]);
+  }, [page,campaignType,campaignStatus,CategoryId]);
 
   return (
     <>
       <div className="page-content bg-white">
         <PageBanner
-          maintitle="Project"
-          pagetitle="Project"
+          maintitle="Campaign"
+          pagetitle="Campaign"
           background={bg}
         />
         <div className="find-bx-wrapper">
@@ -103,7 +106,7 @@ const Project = () => {
                           <Dropdown.Item
                             onClick={() => setCampaignType("All Category")}
                           >
-                            all-category
+                            All
                           </Dropdown.Item>
                           <Dropdown.Item
                             onClick={() => setCampaignType("funding")}
@@ -182,6 +185,7 @@ const Project = () => {
           <div className="container">
             <ProjectMasonry
               campaigns = {campaigns}
+              setCategoryId={setCategoryId}
               page = {page}
               setPage = {setPage}
               searchText = {searchText}

@@ -10,8 +10,10 @@ import { useFormik } from 'formik';
 import { ValidationPassword } from '../../pages/schema/index';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
+import Select from 'react-select';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import countriesData from './CountryCode'
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -44,12 +46,49 @@ const initialValues = {
     confirmPassword: '',
     newPassword: ''
 };
-
+// const CountrySelect = ({ value, onChange }) => {
+//     const options = countriesData.map(country => ({
+//       label: ` ${country.name}`,
+//       value: country.dial_code,
+//     }));
+  
+//     return (
+//       <Select
+//         value={options.find(option => option.value === value)}
+//         onChange={(selectedOption) => onChange(selectedOption.value)}
+//         options={options}
+//         styles={{
+//           control: (provided, state) => ({
+//             ...provided,
+//             width: '100px', // Adjust the width as needed
+//             height: '35px',
+//             borderRadius: '5px', // Add rounded corners
+//             border: state.isFocused ? '1px solid #297EFF' : '1px solid #CED4DA', // Add focus border
+//             boxShadow: state.isFocused ? '0 0 5px rgba(41, 126, 255, 0.5)' : 'none', // Add focus shadow
+//           }),
+//           option: (provided, state) => ({
+//             ...provided,
+//             backgroundColor: state.isFocused ? '#297EFF' : 'white', // Highlight focused option
+//             color: state.isFocused ? 'white' : 'black', // Set text color for focused option
+//           }),
+//         }}
+//         isSearchable
+//       />
+//     );
+//   };
+  
 const Setting = (props) => {
     const navigate = useNavigate();
-    const [items, setItems] = useState([]);
+    const [item, setItems] = useState([]);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
+    const [phone, setphone] = useState("");
+    const [link, setlink] = useState("");
+    const [country, setcountry] = useState("");
+    const [city, setcity] = useState("");
+    const [zip, setzip] = useState("");
+    const [countryCode, setCountryCode] = useState("");
+   
     const [email, setEmail] = useState();
     const [bio, setBio] = useState('');
     const [pic, setPic] = useState('');
@@ -62,56 +101,26 @@ const Setting = (props) => {
     const [passwordTypeNew, setPasswordTypeNew] = useState('password');
     const [loading, setLoading] = useState(false);
     const [passwordTypeConfirm, setPasswordTypeConfirm] = useState('password');
-    useEffect(() => {
-        setLoading(true);
-       const items = JSON.parse(localStorage.getItem('user'));
+   
 
-if (items) {
-    console.log("items", items);
-
-    setItems(items);
-
-    const { email, firstName, lastName, bio, profileImage } = items;
-
-    if (email) {
-        setEmail(email);
-    }
-
-    if (firstName) {
-        setFirstName(firstName);
-    }
-
-    if (lastName) {
-        setLastName(lastName);
-    }
-
-    if (bio) {
-        setBio(bio);
-    }
-
-    if (profileImage) {
-        setPic(profileImage);
-        setUrlImage(profileImage);
-    }
-}
-        setLoading(false);
-    }, []);
-
-    // const response = (urlImage) => {
-    //     props.setProfileImageHandler(urlImage);
-    // };
-    // const setUserHeaderProfileImage = (urlImage) => {
-    //     props.setUserProfileImageHandler(urlImage);
-    // };
+   
+    console.log('CountryCode',countriesData);    
+   
+   
+    
     const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
         initialValues: initialValues,
         validationSchema: ValidationPassword,
+        
         onSubmit: async (values, action) => {
             setLoading(true);
             setTimeout(() => {
                 setLoading(false);
             }, 5000);
             action.resetForm();
+            const items = JSON.parse(localStorage.getItem('user'));
+            const token = items?.token;
+            const userId = items?._id;
             const config = {
                 headers: {
                   Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
@@ -162,8 +171,82 @@ if (items) {
                 });
         }
     });
-    const userId = items?._id;
-    const token = items?.token;
+    
+  
+       useEffect(() => {
+        const items = JSON.parse(localStorage.getItem('user'));
+        const token = items?.token;
+        const userId = items?._id;
+        const fetchProfileDetails = async () => {
+
+const config = {
+    headers: {
+      Authorization: `Bearer ${token}`, 
+    },
+  };
+            try {
+
+                
+                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/getProfileDetails`,config,);
+                if (response.status === 200) {
+                    console.log('Error fetching profile details:', response);
+                    const data = await response.json();
+                    const data1 = data.user_details;
+                    setEmail(data1.email);
+                    setphone(data1.phoneNumber);
+                    setLastName(data1.lastName);
+                    setlink(data1.socialMediaProfile);
+                    setFirstName(data1.firstName);
+                    setcity(data1.city);
+                    setzip(data1.zipcode);
+                    setcountry(data1.country);
+           
+                    setUrlImage(data1.profileImage);
+                    console.log('Profile details fetched successfully:', data1);
+                  }
+            } catch (error) {
+                console.error('Error fetching profile details:', error);
+            }
+        };
+
+        fetchProfileDetails();
+    }, []); 
+
+   
+    const fetchProfileDetails = async () => {
+        const items = JSON.parse(localStorage.getItem('user'));
+        const token = items?.token;
+        const userId = items?._id;
+        const config = {
+            headers: {
+              Authorization: `Bearer ${token}`, 
+            },
+          };
+          try {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/getProfileDetails`, config);
+            if (response.status === 200) {
+              console.log('Error fetching profile details:', response);
+              const data = await response.json();
+              const data1 = data.user_details;
+              setEmail(data1.email);
+              setphone(data1.phoneNumber);
+              setLastName(data1.lastName);
+              setlink(data1.socialMediaProfile);
+              setFirstName(data1.firstName);
+              setcity(data1.city);
+              setzip(data1.zipcode);
+              setcountry(data1.country);
+     
+              setUrlImage(data1.profileImage);
+              console.log('Profile details fetched successfully:', data1);
+            }
+          } catch (error) {
+            console.error('Error fetching profile details:', error);
+          }
+                };
+        
+
+
     const hiddenFileInput = useRef(null);
     const handleClick = (event) => {
         hiddenFileInput.current.click();
@@ -176,19 +259,28 @@ if (items) {
     };
     
     const updateProfile = async () => {
+        const items = JSON.parse(localStorage.getItem('user'));
+        const token = items?.token;
+        const userId = items?._id;
+       
         setLoading(true);
         console.log("formData",pic)
         const config = {
             headers: {
-              Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
+              Authorization: `Bearer ${token}`, 
             },
           };
         const option = {
             firstName:firstName,
             lastName:lastName,
             email: email,
+            country:country,
+            city:city,
+            zipcode:zip,
+            phoneNumber: `${countryCode} ${phone}`,
+            socialMediaProfile:link,
             profileImage: pic,
-            bio: bio
+            bio: 'sada'
         }
         const formData = new FormData();
         for (var key in option) {
@@ -205,17 +297,23 @@ if (items) {
                         'user',
                         JSON.stringify({
                             token: token,
-                            firstName: res.data.data.doc.firstName,
-                            lastName: res.data.data.doc.lastName,
-                            role: res.data.data.doc.role,
-                            email: res.data.data.doc.email,
-                            bio: res.data.data.doc.bio,
-                            profileImage: res.data.data.doc.profileImage
+                            // firstName: res.data.data.doc.firstName,
+                            // lastName: res.data.data.doc.lastName,
+                            // city: res.data.data.doc.city,
+                            // country: res.data.data.doc.country,
+                            // phone: res.data.data.doc.phoneNumber,
+                            // link: res.data.user.doc.socialMediaProfile,
+                            // zip: res.data.data.doc.zipcode,
+                            // role: res.data.data.doc.role,
+                            // email: res.data.data.doc.email,
+                            // bio: res.data.data.doc.bio,
+                            // profileImage: res.data.data.doc.profileImage
                         })
                     );
                     setUrlImage(res.data.data.doc.profileImage);
+                    fetchProfileDetails();
                     setLoading(false);
-                    toast.alert(
+                    toast.success(
                         "Profile updated successfully! "
                       );
                     // setAlert(true);
@@ -225,7 +323,7 @@ if (items) {
                     // setUserHeaderProfileImage(urlImage);
                 } else {
                     setLoading(false);
-                    toast.alert(
+                    toast.error(
                         "Something went wrong! "
                       );
                     
@@ -238,9 +336,9 @@ if (items) {
             })
             .catch((e) => {
                 setLoading(false);
-                toast.alert(
-                    e.response.data.message || e.response.data
-                  );
+                // toast.error(
+                //     e.response.data.message || e.response.data
+                //   );
                 // setErrorMessage(e.response.data.message || e.response.data);
                 // setErrorAlert(true);
                 // setTimeout(() => {
@@ -312,7 +410,7 @@ if (items) {
                             </Box>
                         ) : (
                             <Grid container sx={{ display: 'flex', justifyContent: 'space-around' }}>
-                                <Grid item sx={12} md={2.5} lg={3.5} xl={4}>
+                                <Grid item sx={12} md={2.5} lg={2.5} xl={3}>
                                     <Box className={styles.RoundedBox}>
                                         <Box sx={{ pt: 6, ml: { xl: 6, lg: 2 } }}>
                                             <Box className={styles.profileImg}>
@@ -349,72 +447,164 @@ if (items) {
                                     xl={7.5}
                                     sx={{ pl: { lg: 2, xl: 0 }, display: 'flex', justifyContent: { xs: 'center', md: 'flex-start' } }}
                                 >
-                                    <Box sx={{ px: 3 }} className={styles.profileForm}>
-                                        <Box sx={{ display: { xl: 'flex' }, pt: 3 }}>
-                                            <form>
-                                                <label htmlFor="fname">Fist Name</label>
-                                                <br />
-                                                <input
-                                                    type="text"
-                                                    name="firstName"
-                                                    id="fname"
-                                                    value={firstName}
-                                                    onChange={(e) => {
-                                                        setFirstName(e.target.value);
-                                                    }}
-                                                />
-                                            </form>
-                                            <form>
-                                                <label htmlFor="lname">Last Name</label>
-                                                <br />
-                                                <input
-                                                    type="text"
-                                                    name="lastName"
-                                                    id="lname"
-                                                    value={lastName}
-                                                    onChange={(e) => {
-                                                        setLastName(e.target.value);
-                                                    }}
-                                                />
-                                            </form>
-                                            <form>
-                                            <br />
-                                                <label htmlFor="email">Email</label>
-                                                <br />
-                                                <input
-                                                    text="email"
-                                                    name="email"
-                                                    id="email"
-                                                    value={email}
-                                                    onChange={(e) => {
-                                                        setEmail(e.target.value);
-                                                    }}
-                                                />
-                                            </form>
-                                        </Box>
-                                        <Box sx={{ pt: 3 }}>
-                                            <form>
-                                                <label htmlFor="bio">Bio</label>
-                                                <br />
-                                                <textarea
-                                                    name="bio"
-                                                    id="bio"
-                                                    placeholder="Enter your bio here"
-                                                    value={bio}
-                                                    onChange={(e) => {
-                                                        setBio(e.target.value);
-                                                    }}
-                                                />
-                                            </form>
-                                        </Box>
-                                        <Box sx={{ mt: 4 }}>
-                                            <form>
-                                                <Button className={styles.profileBtn} onClick={updateProfile}>
-                                                    Save
-                                                </Button>
-                                            </form>
-                                        </Box>
-                                    </Box>
+      <Box sx={{ px: 3 }} className={styles.profileForm}>
+    <Grid container spacing={3}>
+        <Grid hidden item xs={6}>
+           
+        </Grid>
+        <Grid hidden item xs={6}>
+           
+        </Grid>
+
+
+
+        <Grid item xs={6}>
+        <form>
+                <label htmlFor="fname">First Name</label>
+                <br />
+                <input
+                    type="text"
+                    name="firstName"
+                    id="fname"
+                    value={firstName}
+                    onChange={(e) => {
+                        setFirstName(e.target.value);
+                    }}
+                />
+            </form>
+        </Grid>
+        <Grid item xs={6}>
+        <form>
+                <label htmlFor="lname">Last Name</label>
+                <br />
+                <input
+                    type="text"
+                    name="lastName"
+                    id="lname"
+                    value={lastName}
+                    onChange={(e) => {
+                        setLastName(e.target.value);
+                    }}
+                />
+            </form>
+        </Grid>
+        <Grid item xs={6}>
+            <form>
+                <label htmlFor="email">Email</label>
+                <br />
+                <input
+                    type="text"
+                    name="email"
+                    id="email"
+                    value={email}
+                    onChange={(e) => {
+                        setEmail(e.target.value);
+                    }}
+                />
+            </form>
+        </Grid>
+        <Grid item xs={6}>
+        <form>
+    <label htmlFor="phone" style={{ marginLeft: '5px' }}>
+      Phone
+    </label>
+  <div style={{ display: 'flex', alignItems: 'center' }}>
+   
+
+   
+  <input
+    type="text"
+    name="phone"
+    placeholder='e.g:+920342366456'
+    id="phone"
+    value={phone}
+    onChange={(e) => {
+      if (e.target.value.length <= 14) {
+        setphone(e.target.value);
+      }
+    }}
+  />
+  </div>
+  <br />
+  {phone.length < 13 && (
+    <p style={{ color: 'red' }}>
+      Phone number must be at least 13 digits long.
+    </p>
+  )}
+</form>
+        </Grid>
+        <Grid item xs={6}>
+            <form>
+                <label htmlFor="zip">Zip Code</label>
+                <br />
+                <input
+                    type="text"
+                    name="zip"
+                    id="zip"
+                    value={zip}
+                    onChange={(e) => {
+                        setzip(e.target.value);
+                    }}
+                />
+            </form>
+        </Grid>
+        <Grid item xs={6}>
+            <form>
+                <label htmlFor="city">City</label>
+                <br />
+                <input
+                    type="text"
+                    name="city"
+                    id="city"
+                    value={city}
+                    onChange={(e) => {
+                        setcity(e.target.value);
+                    }}
+                />
+            </form>
+        </Grid>
+        <Grid item xs={6}>
+            <form>
+                <label htmlFor="country">Country</label>
+                <br />
+                <input
+                    type="text"
+                    name="country"
+                    id="country"
+                    value={country}
+                    onChange={(e) => {
+                        setcountry(e.target.value);
+                    }}
+                />
+            </form>
+        </Grid>
+        <Grid item xs={6}>
+            <form>
+                <label htmlFor="link">Social Media Link</label>
+                <br />
+                <input
+                    type="text"
+                    name="link"
+                    id="link"
+                    value={link}
+                    onChange={(e) => {
+                        setlink(e.target.value);
+                    }}
+                />
+            </form>
+        </Grid>
+    </Grid>
+
+    <Box sx={{ mt: 4 }}>
+        <form>
+            <Button className={styles.profileBtn} onClick={updateProfile}>
+                Save
+            </Button>
+        </form>
+    </Box>
+</Box>
+
+
                                 </Grid>
                             </Grid>
                         )}
