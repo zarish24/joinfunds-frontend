@@ -103,9 +103,9 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
     const value = e.target.value;
 
     // Validate the phone number
-    if (validatePhone(value)) {
+   // if (validatePhone(value)) {
       setPhone(value);
-    }
+   //  }
   };
   const nav = useNavigate();
   const formSubmit = async (e, apiEndpoint) => {
