@@ -317,7 +317,7 @@ const Header2 = ({onShowDonate}) => {
                 </div>  
             </Modal>
             <Modal className="modal fade modal-wrapper auth-modal"  show={signupModal} onHide={setSignupModal} centered>               
-                <h2 className="title">Sign Up Your Account</h2>
+                <h2 className="title">Sign Up Your Accountgggg</h2>
                 <form onSubmit={(e)=>formSubmit(e)}>
                     <div className="form-group">
                         <input type="email" className="form-control" placeholder="Email Address" />

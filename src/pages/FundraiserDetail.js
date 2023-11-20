@@ -634,7 +634,7 @@ const closeModal = () => {
                   </div>
                   <p>
                     In need of funds for medical treatment or know someone who
-                    might be? Share the details and Nfu$e will get in touch
+                    might be? Share the details and Nfuse will get in touch
                     with.
                   </p>
                   <Link

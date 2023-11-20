@@ -46,20 +46,37 @@ const initialValues = {
     confirmPassword: '',
     newPassword: ''
 };
-const CountrySelect = ({ value, onChange }) => {
-    const options = countriesData.map(country => ({
-      label: `${country.name} (${country.dial_code})`,
-      value: country.dial_code,
-    }));
-return (
-    <Select
-      value={options.find(option => option.value === value)}
-      onChange={(selectedOption) => onChange(selectedOption.value)}
-      options={options}
-      isSearchable
-    />
-  );
-};
+// const CountrySelect = ({ value, onChange }) => {
+//     const options = countriesData.map(country => ({
+//       label: ` ${country.name}`,
+//       value: country.dial_code,
+//     }));
+  
+//     return (
+//       <Select
+//         value={options.find(option => option.value === value)}
+//         onChange={(selectedOption) => onChange(selectedOption.value)}
+//         options={options}
+//         styles={{
+//           control: (provided, state) => ({
+//             ...provided,
+//             width: '100px', // Adjust the width as needed
+//             height: '35px',
+//             borderRadius: '5px', // Add rounded corners
+//             border: state.isFocused ? '1px solid #297EFF' : '1px solid #CED4DA', // Add focus border
+//             boxShadow: state.isFocused ? '0 0 5px rgba(41, 126, 255, 0.5)' : 'none', // Add focus shadow
+//           }),
+//           option: (provided, state) => ({
+//             ...provided,
+//             backgroundColor: state.isFocused ? '#297EFF' : 'white', // Highlight focused option
+//             color: state.isFocused ? 'white' : 'black', // Set text color for focused option
+//           }),
+//         }}
+//         isSearchable
+//       />
+//     );
+//   };
+  
 const Setting = (props) => {
     const navigate = useNavigate();
     const [item, setItems] = useState([]);
@@ -493,24 +510,25 @@ const config = {
     </label>
   <div style={{ display: 'flex', alignItems: 'center' }}>
    
-  <CountrySelect  value={countryCode} onChange={setCountryCode} />
+
    
   <input
     type="text"
     name="phone"
+    placeholder='e.g:+920342366456'
     id="phone"
     value={phone}
     onChange={(e) => {
-      if (e.target.value.length <= 11) {
+      if (e.target.value.length <= 14) {
         setphone(e.target.value);
       }
     }}
   />
   </div>
   <br />
-  {phone.length < 10 && (
+  {phone.length < 13 && (
     <p style={{ color: 'red' }}>
-      Phone number must be at least 10 digits long.
+      Phone number must be at least 13 digits long.
     </p>
   )}
 </form>

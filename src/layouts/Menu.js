@@ -118,28 +118,28 @@ export const MenuListArray2 = [
             // },
         ],
     },
-    {
-        title:"Blog",
-        classChange:"sub-menu-down",
-        content:[
-            {
-                title:"Blog",
-                to:"/blog"
-            },
-            {
-                title:"Blog Grid",
-                to:"/blog-grid"
-            },
-            {
-                title:"Blog List",
-                to:"/blog-list"
-            },
-            {
-                title:"Blog Details",
-                to:"/blog-details"
-            },
-        ],
-    },
+    // {
+    //     title:"Blog",
+    //     classChange:"sub-menu-down",
+    //     content:[
+    //         {
+    //             title:"Blog",
+    //             to:"/blog"
+    //         },
+    //         {
+    //             title:"Blog Grid",
+    //             to:"/blog-grid"
+    //         },
+    //         {
+    //             title:"Blog List",
+    //             to:"/blog-list"
+    //         },
+    //         {
+    //             title:"Blog Details",
+    //             to:"/blog-details"
+    //         },
+    //     ],
+    // },
     {
         title:"About Us",
         to : "/about-us"
@@ -302,28 +302,28 @@ export const MenuListArray3 = [
             // },
         ],
     },
-    {
-        title:"Blog",
-        classChange:"sub-menu-down",
-        content:[
-            {
-                title:"Blog",
-                to:"/blog"
-            },
-            {
-                title:"Blog Grid",
-                to:"/blog-grid"
-            },
-            {
-                title:"Blog List",
-                to:"/blog-list"
-            },
-            {
-                title:"Blog Details",
-                to:"/blog-details"
-            },
-        ],
-    },
+    // {
+    //     title:"Blog",
+    //     classChange:"sub-menu-down",
+    //     content:[
+    //         {
+    //             title:"Blog",
+    //             to:"/blog"
+    //         },
+    //         {
+    //             title:"Blog Grid",
+    //             to:"/blog-grid"
+    //         },
+    //         {
+    //             title:"Blog List",
+    //             to:"/blog-list"
+    //         },
+    //         {
+    //             title:"Blog Details",
+    //             to:"/blog-details"
+    //         },
+    //     ],
+    // },
     {
         title:"About Us",
         to : "/about-us"
@@ -344,10 +344,10 @@ export const MenuListArray3 = [
             //     title:"Balance",
             //     to:"/my-balance"
             // },
-            {
-                title:"Wallet",
-                to:"/wallet-address"
-            },
+            // {
+            //     title:"Wallet",
+            //     to:"/wallet-address"
+            // },
             {
                 title:"My Donations",
                 to:"/my-donations"

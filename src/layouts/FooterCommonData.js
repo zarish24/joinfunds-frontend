@@ -10,7 +10,7 @@ const FooterCommonData = ({logoImage, iconStyle}) => {
     <Link to={"/"}>
         <img src={logoImage} alt="" style={{ height: '80px', width: '150px' }} />
     </Link>
-                    <p>Nfu$e is a Crowdfunding & Charity Website by DexignZone lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et</p>
+                    <p>Nfuse is a Crowdfunding & Charity Website by DexignZone lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et</p>
 </div>
                     <div className="dz-social-icon style-1">
                         <ul>
@@ -75,7 +75,7 @@ const FooterCommonData = ({logoImage, iconStyle}) => {
                                 :
                                 <i className="fa fa-envelope"></i> 
                             }
-                            <span>info@ email.com</span>
+                            <span>info@nfuse-me.com</span>
                         </li>
                     </ul>
                 </div>

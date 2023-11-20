@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 import {Link} from 'react-router-dom';
-
+import { toast,  } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { SVGICON } from '../../constant/theme';
 
 const servicesBlog = [
@@ -15,6 +17,33 @@ const servicesBlog = [
 ];
 
 const AkcelServices = () => {
+    const [email, setEmail] = useState('');
+    const [subscribeMsg, setSubscribeMsg] = useState('');
+  
+    const handleSubscribe = async (e) => {
+      e.preventDefault();
+  const payload = {
+    email:email
+  }
+      try {
+        const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/subscribe/subscribeForm`,  payload );
+       
+       
+        console.log('Subscription successful:', response.data);
+  toast.success('Subscription successful')
+       
+        setSubscribeMsg('Subscription successful');
+  
+        setEmail('');
+  
+      } catch (error) {
+       
+        console.error('Error subscribing:', error);
+        toast.error("Email is already subscribed")
+       
+        setSubscribeMsg('Error subscribing. Please try again.');
+      }
+    };
     return (
         <>
             <div className="row justify-content-center">
@@ -40,10 +69,21 @@ const AkcelServices = () => {
                         <div className="inner-content">
                             <h2 className="title text-white">Newsletter</h2>
                             <p className="text-white">Sign up for our monthly newsletter to get the latest news, volunteer opportunities.</p>
-                            <form className="dzSubscribe">
+                            <form className="dzSubscribe" onSubmit={handleSubscribe}>
                                 <div className="dzSubscribeMsg text-white"></div>
-                                <input name="dzEmail" required="required" type="email" className="form-control transparent m-b15" placeholder="Enter your email address" />
-                                <button name="submit" value="Submit" type="submit" className="btn btn-light btn-rounded btn-block">Subscribe Now</button>
+                                <input
+        name="dzEmail"
+        required="required"
+        type="email"
+        className="form-control transparent m-b15"
+        placeholder="Enter your email address"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+                <button name="submit" value="Submit" type="submit" className="btn btn-light btn-rounded btn-block">
+        Subscribe Now
+      </button>
+
                             </form>
                         </div>
                     </div>

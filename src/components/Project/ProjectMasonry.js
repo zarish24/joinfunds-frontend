@@ -30,6 +30,7 @@ import avat7 from "../../assets/images/avatar/avatar7.jpg";
 import avat8 from "../../assets/images/avatar/avatar8.jpg";
 import avat9 from "../../assets/images/avatar/avatar9.jpg";
 import clipboardCopy from 'clipboard-copy';
+import axios from "axios";
 import {
   FacebookShareButton,
   TwitterShareButton,
@@ -61,13 +62,39 @@ const ProjectMasonry = (props) => {
   const [activeGenre, setActiveGenre] = useState("All");
 const [isShareModalOpen, setShareModalOpen] = useState(false);
 const [shareItemId, setShareItemId] = useState(null);
-
+const [titleOptions, setTitleOptions] = useState([]);
 const toggleShareModal = (itemId) => {
   setShareItemId(itemId);
   setShareModalOpen(!isShareModalOpen);
 
 };
+console.log('categories titleOptions',titleOptions)
 
+useEffect(() => {
+  const user = JSON.parse(localStorage.getItem('user'));
+ const token= user?.token;
+  const fetchCategories = async () => {
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`, 
+        },
+      };
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/category/getCategories`,config);
+      if (response.status === 200) {
+        
+        const categories = response.data.categories
+        console.log('categories',categories)
+
+        setTitleOptions(categories);
+      }
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    }
+  };
+
+  fetchCategories();
+}, []);
 
 
 const handleCopyUrl = async (url) => {
@@ -131,170 +158,15 @@ const handleCopyUrl = async (url) => {
       <div className="row m-b30">
         <div className="col-xl-10 col-lg-9">
           <div className="site-filters style-1 clearfix">
-            <ul
-              className="filters justify-content-between"
-              data-bs-toggle="buttons"
-            >
-              <li className={`btn ${activeGenre === "All" ? "active" : ""}`}>
-                <Link to={"#"} onClick={() => setActiveGenre("All")}>
-                  All Projects
-                </Link>
-              </li>
-              <li
-                data-filter=".Technology"
-                className={`btn ${activeGenre === "Medical" ? "active" : ""}`}
-              >
-                <Link to={"#"} onClick={() => setActiveGenre("Medical")}>
-                  Medical
-                </Link>
-              </li>
-              <li
-                data-filter=".Medical"
-                className={`btn ${activeGenre === "Memorial" ? "active" : ""}`}
-              >
-                <Link to={"#"} onClick={() => setActiveGenre("Memorial")}>
-                  Memorial
-                </Link>
-              </li>
-              <li
-                data-filter=".Business"
-                className={`btn ${activeGenre === "Emergency" ? "active" : ""}`}
-              >
-                <Link to={"#"} onClick={() => setActiveGenre("Emergency")}>
-                  Emergency
-                </Link>
-              </li>
-              <li
-                data-filter=".Fashion"
-                className={`btn ${activeGenre === "Nonprofit" ? "active" : ""}`}
-              >
-                <Link to={"#"} onClick={() => setActiveGenre("Nonprofit")}>
-                  Nonprofit
-                </Link>
-              </li>
-              <li
-                data-filter=".Technology"
-                className={`btn ${activeGenre === "Education" ? "active" : ""}`}
-              >
-                <Link to={"#"} onClick={() => setActiveGenre("Education")}>
-                  Education
-                </Link>
-              </li>
-              <li
-                data-filter=".Medical"
-                className={`btn ${activeGenre === "Animals" ? "active" : ""}`}
-              >
-                <Link to={"#"} onClick={() => setActiveGenre("Animals")}>
-                  Animals
-                </Link>
-              </li>
-              <li
-                data-filter=".Business"
-                className={`btn ${activeGenre === "Business" ? "active" : ""}`}
-              >
-                <Link to={"#"} onClick={() => setActiveGenre("Business")}>
-                  Business
-                </Link>
-              </li>
-              <li
-                data-filter=".Fashion"
-                className={`btn ${activeGenre === "Community" ? "active" : ""}`}
-              >
-                <Link to={"#"} onClick={() => setActiveGenre("Community")}>
-                  Community
-                </Link>
-              </li>
-              <li
-                data-filter=".Technology"
-                className={`btn ${activeGenre === "Creative" ? "active" : ""}`}
-              >
-                <Link to={"#"} onClick={() => setActiveGenre("Creative")}>
-                  Creative
-                </Link>
-              </li>
-              <li
-                data-filter=".Medical"
-                className={`btn ${
-                  activeGenre === "Current Events" ? "active" : ""
-                }`}
-              >
-                <Link to={"#"} onClick={() => setActiveGenre("Current Events")}>
-                  Current Events
-                </Link>
-              </li>
-              <li
-                data-filter=".Business"
-                className={`btn ${activeGenre === "Event" ? "active" : ""}`}
-              >
-                <Link to={"#"} onClick={() => setActiveGenre("Event")}>
-                  Event
-                </Link>
-              </li>
-              <li
-                data-filter=".Fashion"
-                className={`btn ${activeGenre === "Faith" ? "active" : ""}`}
-              >
-                <Link to={"#"} onClick={() => setActiveGenre("Faith")}>
-                  Faith
-                </Link>
-              </li>
-              <li
-                data-filter=".Technology"
-                className={`btn ${activeGenre === "Family" ? "active" : ""}`}
-              >
-                <Link to={"#"} onClick={() => setActiveGenre("Family")}>
-                  Family
-                </Link>
-              </li>
-              <li
-                data-filter=".Medical"
-                className={`btn ${activeGenre === "Sport" ? "active" : ""}`}
-              >
-                <Link to={"#"} onClick={() => setActiveGenre("Sport")}>
-                  Sport
-                </Link>
-              </li>
-              <li
-                data-filter=".Business"
-                className={`btn ${activeGenre === "Travel" ? "active" : ""}`}
-              >
-                <Link to={"#"} onClick={() => setActiveGenre("Travel")}>
-                  Travel
-                </Link>
-              </li>
-              <li
-                data-filter=".Fashion"
-                className={`btn ${activeGenre === "Veteran" ? "active" : ""}`}
-              >
-                <Link to={"#"} onClick={() => setActiveGenre("Veteran")}>
-                  Veteran
-                </Link>
-              </li>
-              <li
-                data-filter=".Medical"
-                className={`btn ${activeGenre === "Legal" ? "active" : ""}`}
-              >
-                <Link to={"#"} onClick={() => setActiveGenre("Legal")}>
-                  Legal
-                </Link>
-              </li>
-              <li
-                data-filter=".Business"
-                className={`btn ${activeGenre === "General" ? "active" : ""}`}
-              >
-                <Link to={"#"} onClick={() => setActiveGenre("General")}>
-                  General
-                </Link>
-              </li>
-              <li
-                data-filter=".Fashion"
-                className={`btn ${activeGenre === "Mission" ? "active" : ""}`}
-              >
-                <Link to={"#"} onClick={() => setActiveGenre("Mission")}>
-                  Mission
-                </Link>
-              </li>
-            </ul>
+          <ul className="filters justify-content-between" data-bs-toggle="buttons">
+  {titleOptions.map((option) => (
+    <li key={option._id} className={`btn ${activeGenre === option.name ? "active" : ""}`}>
+      <Link to={"#"} onClick={() => { setActiveGenre(option.name); props.setCategoryId(option._id); }}>
+        {option.name}
+      </Link>
+    </li>
+  ))} 
+</ul>
           </div>
         </div>
         {/* <div className="col-xl-2 col-lg-3 text-start text-lg-end m-b20">
@@ -330,9 +202,9 @@ const handleCopyUrl = async (url) => {
       <ThreeDots color="#E6007C" width={50} height={50} />
     </Box>
   ) : (
-    (filtered &&
-      Array.isArray(filtered) &&
-      filtered.length === 0) ? (
+    (cardData &&
+      Array.isArray(cardData) &&
+      cardData.length === 0) ? (
         <Box
           className={styles.noDataFound}
           display="flex"
@@ -344,8 +216,8 @@ const handleCopyUrl = async (url) => {
           </Typography>
         </Box>
       ) : (
-        Array.isArray(filtered) && filtered.length > 0 ? (
-          filtered.map((item, index) => {
+        Array.isArray(cardData) && cardData.length > 0 ? (
+          cardData.map((item, index) => {
             const progressValue = parseInt(item.progres, 10);
             console.log("progressValue", progressValue);
             return (

@@ -10,7 +10,7 @@ import DonateModal from "../components/Modal/DonateModal";
 import { LoginSocialGoogle } from "reactjs-social-login";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import {
   Box,
   Typography,
@@ -29,8 +29,8 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
   const [FirstN, setFirstN] = useState("");
   const [LastN, setLastN] = useState("");
   const [Zip, setZip] = useState("");
-  const [country, setCountry] = useState('');
-  const [MediaLink, setMediaLink] = useState('');
+  const [country, setCountry] = useState("");
+  const [MediaLink, setMediaLink] = useState("");
   const [City, setCity] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
@@ -40,13 +40,14 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
   );
   const [callOnClick, setCallOnClick] = useState(true);
   const [loading, setLoading] = useState(false);
-
+  const [phoneError, setPhoneError] = useState("");
+  const [passwordError, setPasswordError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
- 
+
   const url = process.env.REACT_APP_BACKEND_URL;
 
   useEffect(() => {
@@ -62,10 +63,60 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
     };
   }, []);
 
+  const validatePassword = (password) => {
+   
+   
+    const hasMinimumLength = password.length >= 8;
+
+    
+    const hasCapitalLetter = /[A-Z]/.test(password);
+
+  
+    const hasSpecialCharacter = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+    
+    const hasNumber = /\d/.test(password);
+
+    return hasMinimumLength && hasCapitalLetter && hasSpecialCharacter && hasNumber;
+  };
+
+  const handlePasswordChange = (e) => {
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+    setPasswordError('')
+    
+  };
+
+ 
+  const validatePhone = (value) => {
+    const numericValue = value.replace(/\D/g, ''); // Remove non-numeric characters
+  
+    if (!/^\+?1?[-.\s]?\(?(\d{3})\)?[-.\s]?(\d{3})[-.\s]?(\d{4})$/.test(value)) {
+      setPhoneError('Please enter a valid American phone number');
+      return false;
+    } else {
+      setPhoneError('');
+      return true;
+    }
+  };
+
+  const handlePhoneChange = (e) => {
+    const value = e.target.value;
+
+    // Validate the phone number
+    if (validatePhone(value)) {
+      setPhone(value);
+    }
+  };
+
+
+
+
   const nav = useNavigate();
   const formSubmit = async (e, apiEndpoint) => {
     e.preventDefault();
-    console.log("urllllllllllllllllllllll",e);
+    
+ 
     let data = {
       email: email,
       password: password,
@@ -77,7 +128,37 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
       phoneNumber: `+${phone}`,
       socialMediaProfile: MediaLink,
     };
+    if (apiEndpoint === "api/user/register") {
+
+      const validateAmericanPhoneNumber = (phoneNumber) => {
+      
+        const numericValue = phoneNumber.replace(/\D/g, '');
+      
+        return /^1?\d{10}$/.test(numericValue);
+      };
     
+      if (!validateAmericanPhoneNumber(`+${phone}`)) {
+        toast.error('Please enter a valid American phone number.');
+        return;
+      }
+    
+      // Validate the password
+      if (!validatePassword(password)) {
+        toast.error('Password must be 8 characters long and include a capital letter, a special character, and a number.');
+        return;
+      }
+      data = {
+        email: email,
+        password: password,
+        firstName: FirstN,
+        lastName: LastN,
+        country: 'america',
+        city: City,
+        zipcode: Zip,
+        phoneNumber: `+${phone}`,
+        socialMediaProfile: MediaLink,
+      };
+    }
     if (apiEndpoint === "api/user/login") {
       data = {
         email: email,
@@ -124,7 +205,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
           );
           if (loginModal === true) {
             localStorage.setItem("isLoggedIn", "true");
-            setIsLoggedIn(true); 
+            setIsLoggedIn(true);
             setSignupModal(false);
             // toast.success(
             //   res?.data?.data?.message
@@ -721,8 +802,8 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
             ) : null}
           </Box>
           <div className="sign-text">
-            <span>Sign Up
-              Don't have a Crowdfunding account?
+            <span>
+              Sign Up Don't have a Crowdfunding account?
               <Link
                 to={"#"}
                 className="btn-link collapsed"
@@ -786,15 +867,19 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
         size="lg"
         centered
       >
-      
         <Modal.Header
           className="d-flex justify-content-center align-items-center "
           style={{ backgroundColor: "rgb(27, 130, 113)" }}
         >
-          <h4 className=" text-center " style={{ Color: "#fff" }}>Sign Up Your Account</h4>
+          <h4 className="text-center" style={{ color: "white" }}>
+            Sign Up Your Account
+          </h4>
         </Modal.Header>
         <Modal.Body className="modal-body">
-          <form onSubmit={(e) => formSubmit(e, "api/user/register")} style={{ display: "grid", gap: "10px" }}>
+          <form
+            onSubmit={(e) => formSubmit(e, "api/user/register")}
+            style={{ display: "grid", gap: "10px" }}
+          >
             <div
               style={{
                 display: "grid",
@@ -892,93 +977,96 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                   <input
                     type="text"
                     value={phone}
+                    placeholder='e.g: +1 XXX-XXX-XXXX'
                     style={{
                       width: "100%",
                       padding: "2px",
                       borderRadius: "5px",
                       border: "2px solid #ccc",
                     }}
-                    onChange={(e) => setPhone(e.target.value)}
+                    onChange={handlePhoneChange}
                     required
                   />
+                  {phoneError && <p style={{ color: "red" }}>{phoneError}</p>}
                 </label>
               </div>
             </div>
 
             <div
-  style={{
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr 1fr", 
-    gap: "10px",
-  }}
->
-  <label>
-    Password
- 
-    <input
-  
-      type={showPassword ? 'text' : 'password'}
-      value={password}
-      onChange={(e) => setPassword(e.target.value)}
-      style={{
-        width: 'calc(100% - 30px)',
-        padding: '2px',
-        borderRadius: '5px',
-        border: '2px solid #ccc',
-        marginRight: '30px',
-      }}
-      required
-    />
-     <button
-        type="button"
-        onClick={togglePasswordVisibility}
-        style={{
-          position: 'relative',
-    right: '8px',
-    top: '-37%',
-    left: '75%',
-    /* transform: translateY(-2%), */
-    border: 'none',
-    background: 'transparent',
-    cursor: 'pointer',
-        }}
-      >
-        {showPassword ? <FaEyeSlash /> : <FaEye />}
-      </button>
-  </label>
-  
-  <label>
-    City
-    <input
-      type="text"
-      value={City}
-      onChange={(e) => setCity(e.target.value)}
-      style={{
-        width: "100%",
-        padding: "2px",
-        borderRadius: "5px",
-        border: "2px solid #ccc",
-      }}
-      required
-    />
-  </label>
-  
-  <label>
-  Zip Code
-    <input
-      type="text"
-      value={Zip}
-      onChange={(e) => setZip(e.target.value)}
-      style={{
-        width: "100%",
-        padding: "2px",
-        borderRadius: "5px",
-        border: "2px solid #ccc",
-      }}
-      required
-    />
-  </label>
-</div>
+              style={{
+                display: "grid",
+                gridTemplateColumns: "2fr 1fr 1fr",
+                gap: "10px",
+              }}
+            >
+              <label>
+                Password
+                {passwordError && <p style={{ color: 'red', fontSize: '12px', marginLeft: '8px', marginTop: '4px' }}>{passwordError}</p>}
+                <input
+                className='mb-0'
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={handlePasswordChange}
+                  style={{
+                    width: "calc(100% - 30px)",
+                    padding: "2px",
+                    borderRadius: "5px",
+                    border: "2px solid #ccc",
+                    marginRight: "30px",
+                    marginBotttom: "0px",
+                  }}
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={togglePasswordVisibility}
+                  style={{
+                    position: "relative",
+                    right: "8px",
+                    top: passwordError ? "-60%" : "-36%",
+                    left: "85%",
+                    border: "none",
+                    background: "transparent",
+                    cursor: "pointer",
+                  }}
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </button>
+             
+              </label>
+
+              <label>
+                City
+                <input
+                  type="text"
+                  value={City}
+                  onChange={(e) => setCity(e.target.value)}
+                  style={{
+                    width: "100%",
+                    padding: "2px",
+                    borderRadius: "5px",
+                    border: "2px solid #ccc",
+                  }}
+                  required
+                />
+              </label>
+
+              <label>
+                Zip Code
+                <input
+                  type="text"
+                  value={Zip}
+                  onChange={(e) => setZip(e.target.value)}
+                  style={{
+                    width: "100%",
+                    padding: "2px",
+                    borderRadius: "5px",
+                    border: "2px solid #ccc",
+                  }}
+                  required
+                />
+              </label>
+            </div>
 
             <div
               style={{
@@ -987,36 +1075,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                 gap: "10px",
               }}
             >
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr",
-                  gap: "10px",
-                }}
-              >
-                <label>
-                  Country:
-                  <div style={{ display: "flex", flexDirection: "column" }}>
-                    <select
-                      value={country}
-                      style={{
-                        padding: "2px",
-                        borderRadius: "5px",
-                        border: "2px solid #ccc",
-                      }}
-                      onChange={(e) => setCountry(e.target.value)}
-                      required
-                    >
-                      <option value="" disabled>
-                        Select a country
-                      </option>
-                      <option value="USA">United States</option>
-                      <option value="CAN">Canada</option>
-                      {/* Add more country options as needed */}
-                    </select>
-                  </div>
-                </label>
-              </div>
+              
 
               <div
                 style={{
@@ -1039,7 +1098,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                       borderRadius: "5px",
                       border: "2px solid #ccc",
                     }}
-                    required
+               
                   />
                   {/* Optionally, you can display the entered link */}
                   {/* {socialMediaLink && <p>Entered Social Media Link: {socialMediaLink}</p>} */}
@@ -1101,18 +1160,16 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                 </label>
               </div>
             </div> */}
-<div className='d-flex justify-content-center'>
-  
-  <div className="w-50">
-    <button
-      type="submit"
-      className="btn btn-outline-primary btn-block p-2 mx-auto mb-0"
-   
-    >
-      Signup
-    </button>
-  </div>
-</div>
+            <div className="d-flex justify-content-center">
+              <div className="w-50">
+                <button
+                  type="submit"
+                  className="btn btn-outline-primary btn-block p-2 mx-auto mb-0"
+                >
+                  Signup
+                </button>
+              </div>
+            </div>
           </form>
         </Modal.Body>
         <Modal.Footer
