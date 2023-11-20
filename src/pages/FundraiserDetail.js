@@ -804,28 +804,10 @@ const closeModal = () => {
                     </a> */}
                       </div>
                     </>
-                  ) : campaign?.status === "pending" ||
-                    campaign?.status === "open" ? (
+                  ) : campaign?.status === "close" ||
+                    campaign?.status === "close" ? (
                       <>
-                    <button
-                      style={{
-                        backgroundColor: "blue",
-                        color: "white",
-                        border: "none",
-                        padding: "10px 20px",
-                        marginBottom: "20px",
-                        width: "356px",
-                        height: "44px",
-                        borderRadius: "5px",
-                        cursor: "pointer",
-                        fontSize: "16px",
-                        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                        transition: "background-color 0.3s",
-                      }}
-                      onClick={() => navigate(`/Edit-compaign/${campaign._id}`)}
-                    >
-                      Edit Campaign
-                    </button>
+                 
                      <button
                      style={{
                        backgroundColor: "blue",
@@ -1099,38 +1081,7 @@ const closeModal = () => {
               <div className="col-lg-12">
                 <div id="card-element"></div>
               </div>
-              <form>
-              <label style={{ fontSize: '14px', marginTop: '20px', fontWeight: '500' }}>Donate to System</label>
-              <div className={`d-flex ${styles.donation}`}>
-                <div>
-                  <input
-                    type="radio"
-                    name="percentage"
-                    style={{ cursor: 'pointer' }}
-                    onChange={() => setSelectedPercentage(2)}
-                  />
-                  <span className="ps-1">2%</span>
-                </div>
-                <div className="mx-5">
-                  <input
-                    type="radio"
-                    name="percentage"
-                    style={{ cursor: 'pointer' }}
-                    onChange={() => setSelectedPercentage(5)}
-                  />
-                  <span className="ps-1">5%</span>
-                </div>
-                <div>
-                  <input
-                    type="radio"
-                    name="percentage"
-                    style={{ cursor: 'pointer' }}
-                    onChange={() => setSelectedPercentage(10)}
-                  />
-                  <span className="ps-1">10%</span>
-                </div>
-              </div>
-            </form>
+          
 
               <div className="col-lg-12">
                 <div className="form-group mb-0 text-center buttonMargin">

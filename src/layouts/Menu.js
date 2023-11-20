@@ -160,10 +160,10 @@ export const MenuListArray2 = [
             //     title:"Balance",
             //     to:"/my-balance"
             // },
-            {
-                title:"Wallet",
-                to:"/wallet-address"
-            },
+            // {
+            //     title:"Wallet",
+            //     to:"/wallet-address"
+            // },
             {
                 title:"My Donations",
                 to:"/my-donations"

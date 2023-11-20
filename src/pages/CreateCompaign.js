@@ -66,21 +66,9 @@ const CreateCompaign = () => {
   const navigate = useNavigate();
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === 'start_date') {
-      const endDateIsValid = isEndDateValid(value, formData.end_date);
-      if (!endDateIsValid) {
-        alert('End date must be a future date and not the same as start date.');
-        return;
-      }
-    }
-
-    if (name === 'end_date') {
-      const startDateIsValid = isStartDateValid(formData.start_date, value);
-      if (!startDateIsValid) {
-        alert('Start date must be present or future, and end date cannot be the same as start date.');
-        return;
-      }
-    }
+    console.log('name',name)
+    console.log('value',value)
+   
     //   console.log('name',name);
     //   console.log('value',value);
     setFormData({
@@ -105,6 +93,7 @@ const CreateCompaign = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+   
     const config = {
       headers: {
         Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
@@ -123,13 +112,43 @@ const CreateCompaign = () => {
       campaign_type: formData.campaign_type, 
       user_id: formData.user_id
     }
-  //   console.log('option',option)
-
-    const areFieldsFilled = Object.values(option).every((value) => value !== undefined && value !== '');
+    const areFieldsFilled = Object.values(option).every(
+      (value) => value !== undefined && value !== ''
+    );
+  
     if (!areFieldsFilled) {
+      setLoading(false);
       toast.error('Please fill in all required fields.');
-      // Optionally display a message to the user or handle the validation failure
+      return; // Stop further processing if fields are not filled
     }
+  
+   
+    const startDateIsValid = isStartDateValid(option.start_date, option.end_date);
+    const endDateIsValid = isEndDateValid(option.start_date, option.end_date);
+    const getDaysDifference = (startDate, endDate) => {
+      const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+      const start = new Date(option.start_date);
+      const end = new Date(option.end_date);
+      const diffDays = Math.round(Math.abs((start - end) / oneDay));
+      return diffDays;
+    };
+    if (!startDateIsValid || !endDateIsValid) {
+      setLoading(false);
+    
+      
+      if (option.start_date === option.end_date) {
+        toast.error('Start and end date cannot be the same.');
+      } else if (startDateIsValid && endDateIsValid) {
+        toast.error('Start and end date must be present or future.');
+      } else if (getDaysDifference(option.start_date, option.end_date) > 90) {
+        toast.error('Campaign Can only be valid for 90 days select a date between them  ');
+      }
+    
+      return; 
+    }
+
+
+    
     const bodyData = new FormData();
         for (var key in option) {
           bodyData.append(key, option[key]);
