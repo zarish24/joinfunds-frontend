@@ -285,10 +285,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
     <>
       <header className={`site-header mo-left header style-2 ${changeStyle}`}>
         <div
-          className={`sticky-header main-bar-wraper navbar-expand-lg ${
-            headerFix ? "is-fixed" : ""
-          }`}
-        >
+          className="sticky-header main-bar-wraper navbar-expand-lg is-fixed">
           <div className="main-bar clearfix ">
             <div className="container-fluid clearfix">
               {changeLogo ? (

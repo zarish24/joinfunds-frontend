@@ -86,7 +86,7 @@ personalized improvement or a bigger matter. </p>
                         </div>
                     </div>
                 </section>
-                <section className="content-inner-2 overlay-primary-dark about-wrapper2 bg-img-fix" style={{backgroundImage:"url("+ bg4 +")",  backgroundSize: "cover", backgroundRepeat: "no-repeat"}}>
+                <section hidden className="content-inner-2 overlay-primary-dark about-wrapper2 bg-img-fix" style={{backgroundImage:"url("+ bg4 +")",  backgroundSize: "cover", backgroundRepeat: "no-repeat"}}>
                     <div className="container">
                         <div className="about-bx2">
                             <div className="row g-0">
@@ -109,7 +109,7 @@ personalized improvement or a bigger matter. </p>
                         </div>
                     </div>
                 </section>
-                <section className="content-inner"> 
+                <section hidden className="content-inner"> 
                     <div className="container">
                         <div className="section-head text-center">
                             <h5 className="sub-title">CATEGORIES</h5>
@@ -141,7 +141,7 @@ personalized improvement or a bigger matter.</p>
                         </div>
                     </div>
                 </section>
-                <section className="content-inner-2 bg-light section-pattren1">
+                <section hidden className="content-inner-2 bg-light section-pattren1">
                     <div className="container">
                         <div className="row about-bx3 align-items-center">
                             <OurMission />
@@ -154,7 +154,7 @@ personalized improvement or a bigger matter.</p>
                     <img src={IMAGES.Shape6} className="shape-5 rotating" alt="shape"/>
                     <img src={IMAGES.Shape6} className="shape-6 rotating" alt="shape"/>
                 </section>
-                <section className="content-inner-2">
+                <section hidden className="content-inner-2">
                     <div className="container">
                         <div className="section-head text-center">
                             <h2 className="title">Nfu$e News</h2>
