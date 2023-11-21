@@ -103,11 +103,11 @@ export const MenuListArray2 = [
                 title:"Campaigns",
                 to:"/project"
             },
-            {
-                title:"Campaign Categories",
-                // to:"/project-categories"
-                to:"/project-sidebar"
-            },
+            // {
+            //     title:"Campaign Categories",
+            //     // to:"/project-categories"
+            //     to:"/project-sidebar"
+            // },
             // {
             //     title:"Project Sidebar",
             //     to:"/project-sidebar"
@@ -287,11 +287,11 @@ export const MenuListArray3 = [
                 title:"Campaigns",
                 to:"/project"
             },
-            {
-                title:"Campaign Categories",
-                // to:"/project-categories"
-                to:"/project-sidebar"
-            },
+            // {
+            //     title:"Campaign Categories",
+            //     // to:"/project-categories"
+            //     to:"/project-sidebar"
+            // },
             // {
             //     title:"Project Sidebar",
             //     to:"/project-sidebar"

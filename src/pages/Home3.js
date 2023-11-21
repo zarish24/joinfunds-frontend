@@ -57,11 +57,11 @@ const Home3 = () => {
     const [readModal,setReadModal] = useState(false);
     const [isOpen, setOpen] = useState(false);
     const [formData, setFormData] = useState({
-        dzFirstName: '',
-        dzLastName: '',
-        dzEmail: '',
-        dzPhoneNumber: '',
-        dzMessage: '',
+        firstName: '',
+        lastName: '',
+        email: '',
+        phoneNumber: '',
+        message: '',
       });
     const nav = useNavigate();
     const FormSubmit = (e) => {
@@ -108,32 +108,34 @@ const Home3 = () => {
       const sendEmail = async (e) => {
         e.preventDefault();
     
-        const formData = new FormData(form.current);
-        const formObject = {};
-      
-      
-        formObject.firstName = formData.get("dzFirstName");
-        formObject.lastName = formData.get("dzLastName");
-        formObject.email = formData.get("dzEmail");
-        formObject.phoneNumber = formData.get("dzPhoneNumber");
-        formObject.message = formData.get("dzMessage");
-  
-        try {
-          
-          const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/contactUs/submitForm`, formObject);
-          toast.success('Message Sent successfully',);
-          setFormData({
-              dzFirstName: '',
-              dzLastName: '',
-              dzEmail: '',
-              dzPhoneNumber: '',
-              dzMessage: '',
-            });
-      
-          //   console.log('Form submitted successfully:', response.data);
-        } catch (error) {
-          toast.success('Error submitting form:',error);
-          //   console.error('Error submitting form:', error);
+        // Validation
+        const { firstName, lastName, email, phoneNumber, message } = formData;
+        console.log('formDatattt',formData);
+        if (!firstName.trim() || !lastName.trim() || !email.trim() || !phoneNumber.trim() || !message.trim()) {
+          toast.error("All fields are required");
+        } else {
+          try {
+            const response = await axios.post(
+              `${process.env.REACT_APP_BACKEND_URL}/api/contactUs/submitForm`,
+              formData
+            );
+    
+            if (response.status === 200) {
+              toast.success("Message Sent successfully");
+              // Clear form fields
+              setFormData({
+                firstName: '',
+                lastName: '',
+                email: '',
+                phoneNumber: '',
+                message: '',
+              });
+            } else {
+              toast.error("Error submitting form");
+            }
+          } catch (error) {
+            toast.error("Error submitting form. Please try again.");
+          }
         }
       };
     return (
@@ -282,29 +284,68 @@ Helping others improve their lives physically, medically or financially feels wo
                                     </div>
                                 </div>
                                 <div className="col-lg-9">
-                                    <form className="dzForm" ref={form} onSubmit={sendEmail}>
+                                    <form className="dzForm"  onSubmit={sendEmail}>
                                         <div className="dzFormMsg"></div>
                                         <input type="hidden" className="form-control" name="dzToDo" value="Contact" />
                                         <input type="hidden" className="form-control" name="reCaptchaEnable" value="0" />
                                         
                                         <div className="row g-4">
                                             <div className="col-md-4 col-sm-6">
-                                                <input name="dzFirstName" required="" type="text" className="form-control" placeholder="First Name" />
+                                                <input 
+                                                 name="firstName"
+                                                 required
+                                                 type="text"
+                                                 className="form-control"
+                                                 placeholder="firstName"
+                                                 value={formData.firstName}
+                                                 onChange={(e) => setFormData({ ...formData, firstName: e.target.value })} />
                                             </div>
                                             <div className="col-md-4 col-sm-6">
-                                                <input name="dzLastName" required="" type="text" className="form-control" placeholder="Last Name" />
+                                                <input 
+                                            name="lastName"
+                                            required
+                                            type="text"
+                                            className="form-control"
+                                            placeholder="lastName"
+                                            value={formData.lastName}
+                                            onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                                                />
                                             </div>
                                             <div className="col-md-4 col-sm-6">
-                                                <input name="dzEmail" required="" type="text" className="form-control" placeholder="Email Address" />
+                                                <input 
+                                            name="email"
+                                            required
+                                            type="text"
+                                            className="form-control"
+                                            placeholder="email@example.com"
+                                            value={formData.email}
+                                            onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
                                             </div>
                                             <div className="col-md-4 col-sm-6">
-                                                <input name="dzPhoneNumber" required="" type="text" className="form-control" placeholder="Phone Number" />
+                                                <input 
+                                               name="phoneNumber"
+                                               required
+                                               type="tel"
+                                               className="form-control"
+                                               placeholder="+1 987 654 321"
+                                               pattern="[0-9]+"
+                                               value={formData.phoneNumber}
+                                               onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })} />
                                             </div>
                                             <div className="col-md-4 col-sm-6">
-                                                <input name="dzMessage" required="" type="text" className="form-control" placeholder="Your Message" />
+                                                <input 
+                                                name="message"
+                                                rows="7"
+                                                required
+                                                className="form-control"
+                                                placeholder="message"
+                                                value={formData.message}
+                                                onChange={(e) => setFormData({ ...formData, message: e.target.value })} />
                                             </div>
                                             <div className="col-md-4 col-sm-6">
-                                                <button name="submit" type="submit" value="Submit" className="btn btn-dark btn-block h-100">Submit Now</button>
+                                                <button 
+                                                name="submit" type="submit" value="Submit" 
+                                                className="btn btn-dark btn-block h-100">Submit Now</button>
                                             </div>
                                         </div>
                                     </form>

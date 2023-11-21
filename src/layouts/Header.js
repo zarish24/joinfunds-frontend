@@ -104,9 +104,9 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
     const value = e.target.value;
 
     // Validate the phone number
-    if (validatePhone(value)) {
+    // if (validatePhone(value)) {
       setPhone(value);
-    }
+    // }
   };
 
 
@@ -125,19 +125,21 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
       country: country,
       city: City,
       zipcode: Zip,
-      phoneNumber: `+${phone}`,
+      phoneNumber: phone,
       socialMediaProfile: MediaLink,
     };
     if (apiEndpoint === "api/user/register") {
 
       const validateAmericanPhoneNumber = (phoneNumber) => {
-      
+        console.log('phoneNumberphoneNumber',phoneNumber)
+        // Remove non-numeric characters
         const numericValue = phoneNumber.replace(/\D/g, '');
       
-        return /^1?\d{10}$/.test(numericValue);
+        // Check if it matches the pattern ###-###-#### or ##########
+        return /^(\d{3}-\d{3}-\d{4}|\d{10})$/.test(numericValue);
       };
     
-      if (!validateAmericanPhoneNumber(`+${phone}`)) {
+      if (!validateAmericanPhoneNumber(phone)) {
         toast.error('Please enter a valid American phone number.');
         return;
       }
@@ -155,7 +157,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
         country: 'america',
         city: City,
         zipcode: Zip,
-        phoneNumber: `+${phone}`,
+        phoneNumber: phone,
         socialMediaProfile: MediaLink,
       };
     }
@@ -1008,12 +1010,13 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                   value={password}
                   onChange={handlePasswordChange}
                   style={{
-                    width: "calc(100% - 30px)",
+                    width: "calc(100% - 10px)",
                     padding: "2px",
                     borderRadius: "5px",
                     border: "2px solid #ccc",
                     marginRight: "30px",
                     marginBotttom: "0px",
+                    // boxShadow: "rgba(0, 0, 0, 0.4) 0px 2px 5px",
                   }}
                   required
                 />
@@ -1024,7 +1027,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                     position: "relative",
                     right: "8px",
                     top: passwordError ? "-60%" : "-36%",
-                    left: "85%",
+                    left: "91%",
                     border: "none",
                     background: "transparent",
                     cursor: "pointer",
