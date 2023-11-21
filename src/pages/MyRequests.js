@@ -86,7 +86,7 @@ import React, {
     return (
         <>
            
-            <PageBanner maintitle=" Requests" pagetitle="My Requests" background={bg} />
+            <PageBanner maintitle=" My Payout Requests" pagetitle="My Payout Requests" background={bg} />
          <div style={{ textAlign: 'center', marginTop: '20px', height:'70vh', marginBottom: '30px' }}>
          {dummyData && dummyData.length > 0 ? (
     <table style={{ borderCollapse: 'collapse', width: '70%', margin: 'auto' }}>
