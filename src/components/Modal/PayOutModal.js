@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
+import { toast } from 'react-toastify';
 
 const PayOutModal = ({ isOpen, closeModal ,campaignId}) => {
   const [email, setEmail] = useState('');
@@ -18,10 +19,7 @@ const PayOutModal = ({ isOpen, closeModal ,campaignId}) => {
     e.preventDefault();
   
    
-    if (!email || !firstName || !lastName || !cardNumber || !expiryDate || !cvc || !nameOnCard || !postalCode || !country) {
-      alert('Please fill in all required fields.');
-      return;
-    }
+   
     const user = JSON.parse(localStorage.getItem("user"));
 const  setToken=user?.token;
    
@@ -35,20 +33,25 @@ const  setToken=user?.token;
       postalCode: postalCode,
       country:country,
     };
-  
+  console.log('payload',payload )
     try {
-     
-      const response = await fetch('http://44.219.245.56/api/payments/makePayoutRequest', {
+      // if (!email || !firstName || !lastName || !cardNumber ||  !postalCode || !country) {
+      //   alert('Please fill in all required fields.');
+      //   return;
+      // }
+      const response = await fetch( `${process.env.REACT_APP_BACKEND_URL}/api/payments/makePayoutRequest`, {
         method: 'POST',
         headers: {
-          'Content-Type': setToken,
+          'Authorization': `Bearer${setToken}`,
           
         },
         body: JSON.stringify(payload),
       });
-  
+      if (response.ok) {
+        toast.success('Payout Request Created Successfully');
+      }
       if (!response.ok) {
-        throw new Error('Failed to make payout request');
+        toast.error('Failed to make payout request');
       }
   
       

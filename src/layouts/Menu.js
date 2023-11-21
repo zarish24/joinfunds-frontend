@@ -165,8 +165,12 @@ export const MenuListArray2 = [
             //     to:"/wallet-address"
             // },
             {
-                title:"My Donations",
+                title:"Donations",
                 to:"/my-donations"
+            },
+            {
+                title:"Received Donations ",
+                to:"/my-reciveddonations"
             },
             {
                 title:"My Requests",
@@ -349,9 +353,10 @@ export const MenuListArray3 = [
             //     to:"/wallet-address"
             // },
             {
-                title:"My Donations",
+                title:"Donations",
                 to:"/my-donations"
             },
+         
             {
                 title:"My Requests",
                 to:"/my-requests"

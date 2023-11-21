@@ -8,7 +8,7 @@ import styles from "./styles.module.scss";
 
 const RecordsPerPage = 10;
 
-const MyDonations = () => {
+const RecivedDonations = () => {
   const [dummyData, setDummyData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -25,7 +25,7 @@ const MyDonations = () => {
       }
 
       try {
-        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/payments/getAllUserRecievedTransactions`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/payments/getSentDonationDetails`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -33,7 +33,7 @@ const MyDonations = () => {
             },
             body: JSON.stringify({
               page: currentPage,
-              limit: RecordsPerPage,
+              items_per_page: RecordsPerPage,
             }),
           });
 
@@ -43,7 +43,7 @@ const MyDonations = () => {
 
         const data = await response.json();
         setTotalPages(Math.ceil(data.totalCount / RecordsPerPage));
-        setDummyData(data.transactions);
+        setDummyData(data.sentDonations);
       } catch (error) {
         // console.error('Error fetching data/:', error);
       }
@@ -66,7 +66,7 @@ const MyDonations = () => {
       setTimeout(() => {
         setCurrentPage(currentPage + 1);
         setLoading(false);
-      }, 1000); // Simulate loading for 1 second (adjust as needed)
+      }, 1000);
     }
   };
 
@@ -76,13 +76,13 @@ const MyDonations = () => {
       setTimeout(() => {
         setCurrentPage(currentPage - 1);
         setLoading(false);
-      }, 1000); // Simulate loading for 1 second (adjust as needed)
+      }, 1000); 
     }
   };
 
   return (
     <>
-      <PageBanner maintitle=" Donations" pagetitle="My Donations" background={bg} />
+      <PageBanner maintitle=" RecivedDonations" pagetitle="My RecivedDonations" background={bg} />
       <div style={{ textAlign: 'center', marginTop: '20px', height: '100vh', marginBottom: '30px' }}>
         {dummyData.length > 0 ? (
           <table style={{ borderCollapse: 'collapse', width: '70%', margin: 'auto' }}>
@@ -163,4 +163,4 @@ const cellStylethead = {
   textAlign: 'center',
 };
 
-export default MyDonations;
+export default RecivedDonations;

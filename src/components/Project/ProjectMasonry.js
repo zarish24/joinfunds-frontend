@@ -159,6 +159,11 @@ const handleCopyUrl = async (url) => {
         <div className="col-xl-10 col-lg-9">
           <div className="site-filters style-1 clearfix">
           <ul className="filters justify-content-between" data-bs-toggle="buttons">
+          <li className={`btn ${activeGenre === 'All' ? "active" : ""}`}>
+  <Link to={"#"} onClick={() => { setActiveGenre('All'); props.setCategoryId(''); }}>
+    All
+  </Link>
+</li>
   {titleOptions.map((option) => (
     <li key={option._id} className={`btn ${activeGenre === option.name ? "active" : ""}`}>
       <Link to={"#"} onClick={() => { setActiveGenre(option.name); props.setCategoryId(option._id); }}>
@@ -166,6 +171,7 @@ const handleCopyUrl = async (url) => {
       </Link>
     </li>
   ))} 
+
 </ul>
           </div>
         </div>
@@ -348,7 +354,7 @@ const handleCopyUrl = async (url) => {
           })
         ) : (
           // Add a fallback JSX if filtered is not an array or has length 0
-          <p>No data available</p>
+          <p>No Campaigns available</p>
         )
       )
   )}
