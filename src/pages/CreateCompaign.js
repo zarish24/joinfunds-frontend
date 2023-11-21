@@ -24,6 +24,11 @@ const CreateCompaign = () => {
     maximum_amount: 0,
     start_date: '',
     end_date: '',
+    goal_type:'',
+    created_by:'',
+    donation_to_nfuse:'',
+    campaign_url:'',
+    country:'',
     campaign_status: 'pending',  
     campaign_type: 'funding',  
     user_id: ''
@@ -66,8 +71,8 @@ const CreateCompaign = () => {
   const navigate = useNavigate();
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log('name',name)
-    console.log('value',value)
+    // console.log('name',name)
+    // console.log('value',value)
    
     //   console.log('name',name);
     //   console.log('value',value);
@@ -106,6 +111,11 @@ const CreateCompaign = () => {
       description: formData.description,
       minimum_amount: formData.minimum_amount,
       maximum_amount: formData.maximum_amount,
+      goal_type:formData.goal_type,
+      created_by:formData.created_by,
+      donation_to_nfuse:formData.donation_to_nfuse,
+      campaign_url:formData.campaign_url,
+      country:formData.country,
       start_date: formData.start_date,
       end_date: formData.end_date,
       campaign_status: formData.campaign_status,
@@ -115,7 +125,7 @@ const CreateCompaign = () => {
     const areFieldsFilled = Object.values(option).every(
       (value) => value !== undefined && value !== ''
     );
-  
+  // console.log('optionoption',option)
     if (!areFieldsFilled) {
       setLoading(false);
       toast.error('Please fill in all required fields.');
@@ -150,6 +160,8 @@ const CreateCompaign = () => {
 
     
     const bodyData = new FormData();
+  // console.log('optionoption /bodyData',bodyData)
+
         for (var key in option) {
           bodyData.append(key, option[key]);
         }
@@ -255,6 +267,7 @@ const CreateCompaign = () => {
                         />
                       </div>
                   </div>
+                 
                   <div className="form-group mb-3">
                   <div className="row">
                     <div className="col-md-6">
@@ -283,7 +296,72 @@ const CreateCompaign = () => {
                     </div>
                   </div>
                 </div>
-                {formData.campaign_type==='funding' ? (<>
+
+                <div className="row">
+                  <div className="col-md-6">
+                        <label>Created By</label>
+                        <input
+                          type="text"
+                          name="created_by"
+                          value={formData.created_by}
+                          onChange={handleChange}
+                          className="form-control"
+                          required
+                        />
+                      </div>
+                   
+                    <div className="col-md-6">
+                      <label>Country</label>
+                      <select
+                        name="country"
+                        value={formData.country}
+                        onChange={handleChange}
+                        className="form-control"
+                        required
+                      >
+                        <option value="america">America</option>
+                        <option value="USA">USA</option>
+                 
+                    
+                      </select>
+                    </div>
+                  </div>
+
+                <div className="row">
+                <div className="col-md-6">
+                  <label>Donation To Nfuse:</label>
+                  
+                  <select
+                        name="donation_to_nfuse"
+                        value={formData.donation_to_nfuse}
+                        onChange={handleChange}
+                        className="form-control"
+                        required
+                      >
+                        <option value="1%">1%</option>
+                        <option value="2%">2%</option>
+                        <option value="3%">3%</option>
+                        <option value="4%">4%</option>
+                        <option value="5%">5%</option>
+                    
+                      </select>
+                </div>
+                <div className="col-md-6">
+                  <label>Choose Goal Type</label>
+                  <select
+                    name="goal_type"
+                    value={formData.goal_type}
+                    onChange={handleChange}
+                    className="form-control"
+                    required
+                  >
+                    <option value="monthly">Monthly</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="daily">Daily</option>
+                  </select>
+                </div>
+              </div>
+                {/* {formData.campaign_type==='funding' ? (<>
                   <div className="row">
                     <div className="col-md-6">
                       <div className="form-group mb-3">
@@ -311,7 +389,7 @@ const CreateCompaign = () => {
                         />
                       </div>
                     </div>
-                  </div></>): <></>}
+                  </div></>): <></>} */}
                   <div className="row">
                     <div className="col-md-6">
                       <div className="form-group mb-3">
@@ -340,11 +418,26 @@ const CreateCompaign = () => {
                       </div>
                     </div>
                   </div>
+                  <div className="row">
                   <div className="col-6">
                         <div className="form-group">
                             <label>Select Compaign Images</label>
                             <input type="file" onChange={(e) => MultipleFileChange(e)} className="form-control" multiple />
                         </div>
+                       </div>
+                       <div className="col-6">
+                        <div className="form-group">
+                            <label>Campagin Url</label>
+                            <input
+                          type="text"
+                          name="campaign_url"
+                          value={formData.campagn_url}
+                          onChange={handleChange}
+                          className="form-control"
+                          required
+                        />
+                        </div>
+                       </div>
                        </div>
                    
                   <button type="submit" className="btn btn-primary mb-5">

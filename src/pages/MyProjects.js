@@ -5,7 +5,7 @@ import styles from './styles.module.scss';
 import PageBanner from "../layouts/PageBanner";
 import ProjectMasonry from "../components/Project/ProjectMasonry";
 import UpdateBlog from "../components/Home/UpdateBlog";
-
+import { toast } from 'react-toastify';
 import bg from "../assets/images/banner/bnr5.jpg";
 import axios from "axios";
 
@@ -14,16 +14,17 @@ const MyProjects = () => {
   const [campaignStatus, setCampaignStatus] = useState("Campaign Status");
   const [campaigns, setCampaigns] = useState([]);
   const [page, setPage] = useState(1);
-  
+  const [loading, setLoading] = useState(false);
   const [searchText, setSearchText] = useState('');
-
+  const [CategoryId, setCategoryId] = useState('');
   useEffect(() => {
     const fetchData = async (user_id, token) => {
       try {
         // console.log("user_id", user_id);
         const data = {
           status: "",
-          campaign_type: "All Category",
+          category_id:CategoryId,
+          campaign_type: "",
           user_id,
           items_per_page: 12,
           page,
@@ -42,23 +43,27 @@ const MyProjects = () => {
         }
         const response = await axios
           .post(
-            `${process.env.REACT_APP_BACKEND_URL}/api/compaign/getAllCompaigns`,
+            `${process.env.REACT_APP_BACKEND_URL}/api/compaign/getMyCampaigns`,
             data,config
           )
           .then((res) => {
             if (res.status === 200 || res.status === 201) {
               // console.log("all-comp-data", res?.data?.data?.data);
-              setCampaigns(res?.data?.data?.data);
+              setCampaigns(res?.data?.data);
+              setLoading(false);
             } else {
-              window.alert("Compaigns not fount due to some issue!");
+              setLoading(false);
+              toast.error("Compaigns not fount due to some issue!");
             }
           })
           .catch((error) => {
-            window.alert(error);
+            setLoading(false);
+            setCampaigns([]);
+            toast.error(error);
           });
         // setCampaigns(response.data); // Set the campaign data in state
       } catch (error) {
-        window.alert("API request failed", error);
+        toast.error("API request failed", error);
         // console.error("API request failed", error);
       }
     };
@@ -198,6 +203,7 @@ const MyProjects = () => {
           <div className="container">
             <ProjectMasonry
               campaigns = {campaigns}
+              setCategoryId={setCategoryId}
               page = {page}
               setPage = {setPage}
               searchText = {searchText}

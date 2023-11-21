@@ -5,7 +5,7 @@ import styles from './styles.module.scss';
 import PageBanner from "../layouts/PageBanner";
 import ProjectMasonry from "../components/Project/ProjectMasonry";
 import UpdateBlog from "../components/Home/UpdateBlog";
-
+import { toast } from 'react-toastify';
 
 import bg from "../assets/images/banner/bnr5.jpg";
 import axios from "axios";
@@ -17,15 +17,17 @@ const Project = () => {
   const [page, setPage] = useState(1);
   const [searchText, setSearchText] = useState('');
   const [CategoryId, setCategoryId] = useState('');
+  const [loading, setLoading] = useState(false);
   // console.log('CategoryId',CategoryId)
   
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         const data = {
           status: "",
-          Category_id:CategoryId,
-          campaign_type: "All Category",
+          category_id:CategoryId,
+          campaign_type: "",
           items_per_page: 12,
           page,
         };
@@ -50,18 +52,26 @@ const Project = () => {
           )
           .then((res) => {
             if (res.status === 200 || res.status === 201) {
-              // console.log("all-comp-data", res?.data?.data?.data);
-              setCampaigns(res?.data?.data?.data);
+              console.log("all-comp-data", res?.data?.data?.data);
+              setCampaigns(res?.data?.data?.data || res?.data);
+        setLoading(false);
+
+              // setCampaigns(res?.data?.data);
             } else {
-              window.alert("Compaigns not fount due to some issue!");
+        setLoading(false);
+
+              toast.error("Compaigns not fount due to some issue!");
             }
           })
           .catch((error) => {
-            window.alert(error);
+        setLoading(false);
+
+            setCampaigns([]);
+            toast.error(error);
           });
         // setCampaigns(response.data); // Set the campaign data in state
       } catch (error) {
-        window.alert("API request failed", error);
+        toast.error("API request failed", error);
         // console.error("API request failed", error);
       }
     };

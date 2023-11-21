@@ -29,7 +29,7 @@ const Footer3 = () => {
          
           //   console.error('Error subscribing:', error);
           toast.error("Email is already subscribed")
-         
+          setEmail('');
         //   setSubscribeMsg('Error subscribing. Please try again.');
         }
       };
@@ -41,7 +41,7 @@ const Footer3 = () => {
                         <div className="wrapper-inner">
                             <div className="row align-items-center">
                                 <div className="col-xl-6 col-lg-9 wow fadeInUp" data-wow-delay="0.2s">
-                                    <h2 className="title text-white m-b0">Don’ttt miss our weekly updates about donations</h2>
+                                    <h2 className="title text-white m-b0">Don’t miss our weekly updates about donations</h2>
                                 </div>
                                 <div className="col-xl-6 col-lg-9 wow fadeInUp" data-wow-delay="0.4s">
                                     <form className="dzSubscribe" action="script/mailchamp.php" method="post">

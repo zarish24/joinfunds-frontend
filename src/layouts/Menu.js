@@ -165,11 +165,15 @@ export const MenuListArray2 = [
             //     to:"/wallet-address"
             // },
             {
-                title:"My Donations",
+                title:"Donations",
                 to:"/my-donations"
             },
             {
-                title:"My Requests",
+                title:"Received Donations ",
+                to:"/my-reciveddonations"
+            },
+            {
+                title:"My Payout Requests",
                 to:"/my-requests"
             },
             {
@@ -287,11 +291,11 @@ export const MenuListArray3 = [
                 title:"Campaigns",
                 to:"/project"
             },
-            {
-                title:"Campaign Categories",
-                // to:"/project-categories"
-                to:"/project-sidebar"
-            },
+            // {
+            //     title:"Campaign Categories",
+            //     // to:"/project-categories"
+            //     to:"/project-sidebar"
+            // },
             // {
             //     title:"Project Sidebar",
             //     to:"/project-sidebar"
@@ -349,9 +353,10 @@ export const MenuListArray3 = [
             //     to:"/wallet-address"
             // },
             {
-                title:"My Donations",
+                title:"Donations",
                 to:"/my-donations"
             },
+         
             {
                 title:"My Requests",
                 to:"/my-requests"

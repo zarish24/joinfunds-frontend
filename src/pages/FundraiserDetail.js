@@ -804,8 +804,8 @@ const closeModal = () => {
                     </a> */}
                       </div>
                     </>
-                  ) : campaign?.status === "close" ||
-                    campaign?.status === "close" ? (
+                  ) : campaign?.status === "open" ||
+                    campaign?.status === "open" ? (
                       <>
                  
                      <button
