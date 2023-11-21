@@ -103,9 +103,9 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
     const value = e.target.value;
 
     // Validate the phone number
-   // if (validatePhone(value)) {
+    // if (validatePhone(value)) {
       setPhone(value);
-   //  }
+    // }
   };
   const nav = useNavigate();
   const formSubmit = async (e, apiEndpoint) => {
@@ -120,7 +120,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
       country: country,
       city: City,
       zipcode: Zip,
-      phoneNumber: `+${phone}`,
+      phoneNumber: phone,
       socialMediaProfile: MediaLink,
     };
     if (apiEndpoint === "api/user/register") {
@@ -132,7 +132,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
         return /^1?\d{10}$/.test(numericValue);
       };
     
-      if (!validateAmericanPhoneNumber(`+${phone}`)) {
+      if (!validateAmericanPhoneNumber(phone)) {
         toast.error('Please enter a valid American phone number.');
         return;
       }
@@ -150,7 +150,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
         country: 'america',
         city: City,
         zipcode: Zip,
-        phoneNumber: `+${phone}`,
+        phoneNumber: phone,
         socialMediaProfile: MediaLink,
       };
     }
@@ -968,7 +968,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
               <label>
                 Phone
                 <input
-                  type="text"
+                  type="tel"
                   value={phone}
                   placeholder='e.g: +1 XXX-XXX-XXXX'
                   style={{
@@ -993,7 +993,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
             }}
           >
             <label>
-              Password
+              Passworddddd
               {passwordError && <p style={{ color: 'red', fontSize: '12px', marginLeft: '8px', marginTop: '4px' }}>{passwordError}</p>}
               <input
               className='mb-0'
@@ -1001,12 +1001,13 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                 value={password}
                 onChange={handlePasswordChange}
                 style={{
-                  width: "calc(100% - 30px)",
+                  width: "calc(100% - 50px)",
                   padding: "2px",
                   borderRadius: "5px",
                   border: "2px solid #ccc",
                   marginRight: "30px",
                   marginBotttom: "0px",
+              
                 }}
                 required
               />

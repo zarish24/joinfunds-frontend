@@ -25,6 +25,7 @@ import grid2 from '../assets/images/blog/blog-grid/pic2.jpg';
 //Layouts
 import { ThemeContext } from "../context/ThemeContext";
 import Header2 from '../layouts/Header2';
+import Header from '../layouts/Header';
 import Footer2 from './../layouts/Footer2';
 import { IMAGES } from '../constant/theme';
 //componenet
@@ -56,7 +57,22 @@ const Home2 = () => {
 		changeBackground({ value: "data-typography-1", label: "data-typography-1" });
 		changePrimaryColor("color-skin-2");
 	}, []);
-
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+          const storedValue = localStorage.getItem('user');
+          const isUserLoggedIn = Boolean(storedValue);
+          setIsLoggedIn(isUserLoggedIn);
+    
+          
+          if (isUserLoggedIn) {
+            clearInterval(intervalId);
+          }
+        }, 1000); 
+    
+      
+        return () => clearInterval(intervalId);
+      }, []);
     const [donateValue, setDonateValue] = useState(priceBlog[0].price);
     function changeValue(price){
         setDonateValue(price);
@@ -72,7 +88,12 @@ const Home2 = () => {
     const [readModal, setReadModal] = useState(false);
     return (
         <>
-            <Header2  logoStyle={IMAGES.logo2}/>
+      {isLoggedIn ? (
+  <Header2 logoStyle={IMAGES.logo2} />
+) : (
+  <Header logoStyle={IMAGES.logo2} />
+)};          
+            {/* <Header2  logoStyle={IMAGES.logo2}/> */}
             <div className="page-content bg-white">	
                 <div className="main-bnr-one">
                     <Mainslider2 />

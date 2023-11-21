@@ -25,60 +25,48 @@ const cardBlog = [
 
 const ContactUs = () => {
     const [formData, setFormData] = useState({
-        dzFirstName: '',
-        dzLastName: '',
-        dzEmail: '',
-        dzPhoneNumber: '',
-        dzMessage: '',
+        firstName: '',
+        lastName: '',
+        email: '',
+        phoneNumber: '',
+        message: '',
       });
-    // const form = useRef();
-	// const sendEmail = (e) => {
-	// 	e.preventDefault();
-	// 	//emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', form.current, 'YOUR_USER_ID')
-	// 	emailjs.sendForm('service_gfykn6i', 'template_iy1pb0b', e.target, 'HccoOtZS6GHw-N-m6')
-	// 	  .then((result) => {
-	// 		  console.log(result.text);
-	// 	  }, (error) => {
-	// 		  console.log(error.text);
-	// 	  });
-	// 	  e.target.reset()
-	// 	  swal('Good job!', 'form successfuly submmited', "success");
-	// };
-
-
-    const form = useRef(null);
-
-    const sendEmail = async (e) => {
-      e.preventDefault();
-  
-      const formData = new FormData(form.current);
-      const formObject = {};
     
+      const sendEmail = async (e) => {
+        e.preventDefault();
     
-      formObject.firstName = formData.get("dzFirstName");
-      formObject.lastName = formData.get("dzLastName");
-      formObject.email = formData.get("dzEmail");
-      formObject.phoneNumber = formData.get("dzPhoneNumber");
-      formObject.message = formData.get("dzMessage");
-     
-      try {
+        // Validation
+        const { firstName, lastName, email, phoneNumber, message } = formData;
+        console.log('formData',formData);
+        if (!firstName.trim() || !lastName.trim() || !email.trim() || !phoneNumber.trim() || !message.trim()) {
+          toast.error("All fields are required");
+        } else {
+          try {
+            const response = await axios.post(
+              `${process.env.REACT_APP_BACKEND_URL}/api/contactUs/submitForm`,
+              formData
+            );
+    
+            if (response.status === 200) {
+              toast.success("Message Sent successfully");
+              // Clear form fields
+              setFormData({
+                firstName: '',
+                lastName: '',
+                email: '',
+                phoneNumber: '',
+                message: '',
+              });
+            } else {
+              toast.error("Error submitting form");
+            }
+          } catch (error) {
+            toast.error("Error submitting form. Please try again.");
+          }
+        }
+      };
         
-        const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/contactUs/submitForm`, formObject);
-        toast.success('Message Sent successfully',);
-        setFormData({
-            dzFirstName: '',
-            dzLastName: '',
-            dzEmail: '',
-            dzPhoneNumber: '',
-            dzMessage: '',
-          });
-    
-        // console.log('Form submitted successfully:', response.data);
-      } catch (error) {
-        toast.success('Error submitting form:',error);
-        // console.error('Error submitting form:', error);
-      }
-    };
+   
   
 
     return (
@@ -122,53 +110,93 @@ const ContactUs = () => {
                                 <div className="contact-info form-wrapper style-1">
                                     <h2 className="title">Write us a message</h2>
                                     <div className="contact-area">
-                                        <form className="dz-form dzForm contact-bx" ref={form} onSubmit={sendEmail}>
-                                            <div className="dzFormMsg"></div>
-                                            <input type="hidden" className="form-control" name="dzToDo" value="Contact" />
-                                            <div className="row sp15">
-                                                <div className="col-md-6">
-                                                    <label className="form-label">First Name</label>
-                                                    <div className="input-group">
-                                                        <input name="dzFirstName" required type="text" className="form-control" placeholder="John" />
-                                                    </div>
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <label className="form-label">Last Name</label>
-                                                    <div className="input-group">
-                                                        <input name="dzLastName" required type="text" className="form-control" placeholder="Deo" />
-                                                    </div>
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <label className="form-label">Email address</label>
-                                                    <div className="input-group">
-                                                        <input name="dzEmail" required type="text" className="form-control" placeholder="info@example.com" />
-                                                    </div>
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <label className="form-label">Phone Number</label>
-                                                    <div className="input-group">
-                                                        <input name="dzPhoneNumber" required type="text" className="form-control" placeholder="987 654 3210" />
-                                                    </div>
-                                                </div>
-                                                <div className="col-md-12">
-                                                    <label className="form-label">Message</label>
-                                                    <div className="input-group">
-                                                        <textarea name="dzMessage" rows="7" required className="form-control" placeholder="Dear Sir/Madam"></textarea>
-                                                    </div>
-                                                </div>
-                                                <div className="col-md-12">
-                                                    <div className="input-recaptcha">
-                                                        {/* <div className="g-recaptcha" data-sitekey="6LefsVUUAAAAADBPsLZzsNnETChealv6PYGzv3ZN" data-callback="verifyRecaptchaCallback" data-expired-callback="expiredRecaptchaCallback"></div>
-                                                        <input className="form-control d-none" style={{display:"none"}} data-recaptcha="true" required data-error="Please complete the Captcha" /> */}
-                                                    </div>
-                                                </div>
-                                                <div className="col-md-12">
-                                                <button name="submit" type="submit" value="Submit" className="btn btn-secondary">
-          Submit Now
-        </button>
-                                                </div>
-                                            </div>
-                                        </form>
+                                    <form className="dz-form dzForm contact-bx" onSubmit={sendEmail}>
+            <div className="dzFormMsg"></div>
+            <input type="hidden" className="form-control" name="dzToDo" value="Contact" />
+            <div className="row sp15">
+                <div className="col-md-6">
+                    <label className="form-label">First Name</label>
+                    <div className="input-group">
+                        <input
+                            name="firstName"
+                            required
+                            type="text"
+                            className="form-control"
+                            placeholder="John"
+                            value={formData.firstName}
+                            onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                        />
+                    </div>
+                </div>
+                <div className="col-md-6">
+                    <label className="form-label">Last Name</label>
+                    <div className="input-group">
+                        <input
+                           name="lastName"
+                           required
+                           type="text"
+                           className="form-control"
+                           placeholder="Deo"
+                           value={formData.lastName}
+                           onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                        />
+                    </div>
+                </div>
+                <div className="col-md-6">
+                    <label className="form-label">Email address</label>
+                    <div className="input-group">
+                        <input
+                            name="email"
+                            required
+                            type="text"
+                            className="form-control"
+                            placeholder="info@example.com"
+                            value={formData.email}
+                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        />
+                    </div>
+                </div>
+                <div className="col-md-6">
+                    <label className="form-label">Phone Number</label>
+                    <div className="input-group">
+                        <input
+                            name="phoneNumber"
+                            required
+                            type="tel"
+                            className="form-control"
+                            placeholder="+1 987 654 321"
+                            pattern="[0-9]+"
+                            value={formData.phoneNumber}
+                            onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
+                        />
+                    </div>
+                </div>
+                <div className="col-md-12">
+                    <label className="form-label">Message</label>
+                    <div className="input-group">
+                        <textarea
+                            name="message"
+                            rows="7"
+                            required
+                            className="form-control"
+                            placeholder="Dear Sir/Madam"
+                            value={formData.message}
+                            onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                        ></textarea>
+                    </div>
+                </div>
+                <div className="col-md-12">
+                    <div className="input-recaptcha">
+                        {/* Add your reCAPTCHA component here */}
+                    </div>
+                </div>
+                <div className="col-md-12">
+                    <button name="submit" type="submit" value="Submit" className="btn btn-secondary">
+                        Submit Now
+                    </button>
+                </div>
+            </div>
+        </form>
                                     </div>	
                                 </div>
                             </div>
