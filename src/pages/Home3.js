@@ -246,7 +246,6 @@ Helping others improve their lives physically, medically or financially feels wo
                                     <div className="inner-content">
                                         <div className="section-head">
                                             <h2 className="title">Save The<br/> Planet For Better Future</h2>
-                                            <p className="max-w400">Lorem ipsum dolor sit amet, consectetur adipiscing elit Suspendisse.</p>
                                         </div>
                                         <Link to={"/project-story"} className="btn btn-primary">Project Story</Link>
                                     </div>
