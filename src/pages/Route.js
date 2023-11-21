@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState, useEffect,} from 'react';
 import {  Route, Routes, Outlet  } from 'react-router-dom';
 
 import ScrollToTop from './../layouts/ScrollToTop';
@@ -97,10 +97,30 @@ function Index(){
 } 
 
 function MainLayout(){
-	
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
+   
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+          const storedValue = localStorage.getItem('user');
+          const isUserLoggedIn = Boolean(storedValue);
+          setIsLoggedIn(isUserLoggedIn);
+    
+          
+          if (isUserLoggedIn) {
+            clearInterval(intervalId);
+          }
+        }, 1000); 
+    
+      
+        return () => clearInterval(intervalId);
+      }, []);
 	return (
 		<div className="page-wraper">
-			<Header2 />
+		      {isLoggedIn ? (
+        <Header2 changeStyle="header-transparent" changeLogo={true} />
+      ) : (
+        <Header changeStyle="header-transparent" changeLogo={true} />
+      )}  
 			<Outlet /> 
 			<Footer />
 		</div>
