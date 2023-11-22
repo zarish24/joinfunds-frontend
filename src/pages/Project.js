@@ -9,15 +9,17 @@ import { toast } from 'react-toastify';
 
 import bg from "../assets/images/banner/bnr5.jpg";
 import axios from "axios";
-
+const RecordsPerPage = 12;
 const Project = () => {
   const [campaignType, setCampaignType] = useState("Campaign Type");
   const [campaignStatus, setCampaignStatus] = useState("Campaign Status");
   const [campaigns, setCampaigns] = useState([]);
   const [page, setPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
   const [searchText, setSearchText] = useState('');
   const [CategoryId, setCategoryId] = useState('');
   const [loading, setLoading] = useState(false);
+  const [totalPages, setTotalPages] = useState(0)
   // console.log('CategoryId',CategoryId)
   
   useEffect(() => {
@@ -28,8 +30,8 @@ const Project = () => {
           status: "",
           category_id:CategoryId,
           campaign_type: "",
-          items_per_page: 12,
-          page,
+          items_per_page: RecordsPerPage,
+          page:currentPage,
         };
         // const config = {
         //   headers: {
@@ -52,7 +54,8 @@ const Project = () => {
           )
           .then((res) => {
             if (res.status === 200 || res.status === 201) {
-              console.log("all-comp-data", res?.data?.data?.data);
+              // console.log("all-comp-data", res?.data?.data?.data);
+              setTotalPages(Math.ceil(res?.data?.data?.count / RecordsPerPage));
               setCampaigns(res?.data?.data?.data || res?.data);
         setLoading(false);
 
@@ -65,13 +68,13 @@ const Project = () => {
           })
           .catch((error) => {
         setLoading(false);
-
+        setTotalPages(0);
             setCampaigns([]);
-            toast.error(error);
+            console.error(error);
           });
         // setCampaigns(response.data); // Set the campaign data in state
       } catch (error) {
-        toast.error("API request failed", error);
+        console.error("API request failed", error);
         // console.error("API request failed", error);
       }
     };
@@ -82,8 +85,18 @@ const Project = () => {
     // }
     
     // Call the async function
-  }, [page,campaignType,campaignStatus,CategoryId]);
+  }, [currentPage,campaignType,campaignStatus,CategoryId]);
+  const goToNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
 
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
   return (
     <>
       <div className="page-content bg-white">
@@ -202,6 +215,45 @@ const Project = () => {
             />
           </div>
         </section>
+        <div className="col-12 m-sm-t0 m-t30">
+          <nav className="pagination-bx">
+            <div className="page-item">
+              <Link
+                to={"#"}
+                className={`page-link prev ${currentPage === 1 && "disabled"}`}
+                onClick={goToPreviousPage}
+              >
+                <i className="fas fa-chevron-left"></i>
+              </Link>
+            </div>
+            <ul className="pagination">
+              {Array.from({ length: totalPages }, (_, i) => (
+                <li className="page-item" key={i}>
+                  <Link
+                    to={"#"}
+                    className={`page-link ${
+                      currentPage === i + 1 ? "active" : ""
+                    }`}
+                    onClick={() => setCurrentPage(i + 1)}
+                  >
+                    {i + 1}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <div className="page-item">
+              <Link
+                to={"#"}
+                className={`page-link next ${
+                  currentPage === totalPages && "disabled"
+                }`}
+                onClick={goToNextPage}
+              >
+                <i className="fas fa-chevron-right"></i>
+              </Link>
+            </div>
+          </nav>
+        </div>
         <div className="call-action style-1 content-inner-1">
           <div className="container">
             <UpdateBlog />

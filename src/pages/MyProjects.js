@@ -8,15 +8,19 @@ import UpdateBlog from "../components/Home/UpdateBlog";
 import { toast } from 'react-toastify';
 import bg from "../assets/images/banner/bnr5.jpg";
 import axios from "axios";
-
+const RecordsPerPage = 12;
 const MyProjects = () => {
   const [campaignType, setCampaignType] = useState("Campaign Type");
   const [campaignStatus, setCampaignStatus] = useState("Campaign Status");
   const [campaigns, setCampaigns] = useState([]);
   const [page, setPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [CategoryId, setCategoryId] = useState('');
+  const [totalPages, setTotalPages] = useState(0);
+  console.log("all-totalPages-data", totalPages);
+
   useEffect(() => {
     const fetchData = async (user_id, token) => {
       try {
@@ -26,8 +30,8 @@ const MyProjects = () => {
           category_id:CategoryId,
           campaign_type: "",
           user_id,
-          items_per_page: 12,
-          page,
+          items_per_page: RecordsPerPage,
+          page:currentPage,
         };
         const config = {
           headers: {
@@ -47,8 +51,13 @@ const MyProjects = () => {
             data,config
           )
           .then((res) => {
+            console.log("all-totalPages-data", res);
             if (res.status === 200 || res.status === 201) {
+
               // console.log("all-comp-data", res?.data?.data?.data);
+              setTotalPages(Math.ceil(res?.data?.count / RecordsPerPage));
+
+
               setCampaigns(res?.data?.data);
               setLoading(false);
             } else {
@@ -72,7 +81,19 @@ const MyProjects = () => {
       fetchData(user._id,user.token);
     }
     // Call the async function
-  }, [page,campaignType,campaignStatus]);
+  }, [currentPage,page,campaignType,campaignStatus]);
+
+  const goToNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
   return (
     <>
       <div className="page-content bg-white">
@@ -210,6 +231,45 @@ const MyProjects = () => {
             />
           </div>
         </section>
+        <div className="col-12 m-sm-t0 m-t30">
+          <nav className="pagination-bx">
+            <div className="page-item">
+              <Link
+                to={"#"}
+                className={`page-link prev ${currentPage === 1 && "disabled"}`}
+                onClick={goToPreviousPage}
+              >
+                <i className="fas fa-chevron-left"></i>
+              </Link>
+            </div>
+            <ul className="pagination">
+              {Array.from({ length: totalPages }, (_, i) => (
+                <li className="page-item" key={i}>
+                  <Link
+                    to={"#"}
+                    className={`page-link ${
+                      currentPage === i + 1 ? "active" : ""
+                    }`}
+                    onClick={() => setCurrentPage(i + 1)}
+                  >
+                    {i + 1}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <div className="page-item">
+              <Link
+                to={"#"}
+                className={`page-link next ${
+                  currentPage === totalPages && "disabled"
+                }`}
+                onClick={goToNextPage}
+              >
+                <i className="fas fa-chevron-right"></i>
+              </Link>
+            </div>
+          </nav>
+        </div>
         <div className="call-action style-1 content-inner-1">
           <div className="container">
             <UpdateBlog />
