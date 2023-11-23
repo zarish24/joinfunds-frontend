@@ -101,7 +101,25 @@ const Setting = (props) => {
     const [passwordTypeNew, setPasswordTypeNew] = useState('password');
     const [loading, setLoading] = useState(false);
     const [passwordTypeConfirm, setPasswordTypeConfirm] = useState('password');
-   
+
+    const [legalIdentity, setLegalIdentity] = useState("");   
+    const [legalFirstName, setLegalFirstName] = useState("");   
+    const [legalLastName, setLegalLastName] = useState("");      
+    const [legalEmail, setLegalEmail] = useState("");       
+    const [legalPhoneNumber, setLegalPhoneNumber] = useState("");   
+    const [legalSocailMedia, setLegalSocailMedia] = useState("");   
+    const [legalAddress, setLegalAddress] = useState("");
+    const [legalCity, setLegalCity] = useState("");             
+    const [legalState, setLegalState] = useState("");          
+    const [legalPostal, setLegalPostal] = useState("");
+    const [legalCountry, setLegalCountry] = useState("");      
+    const [legalSecurityNumber, setLegalSecurityNumber] = useState("");      
+    const [legalDay, setLegalDay] = useState("");           
+    const [legalMonth, setLegalMonth] = useState("");                      
+    const [legalYear, setLegalYear] = useState("");
+    const [legalCheckingAccountNumber, setLegalCheckingAccountNumber] = useState("");    
+    const [legalRoutingNumber, setLegalRoutingNumber] = useState("");
+    const [legalConfirmCheckingAccountNumber, setLegalConfirmCheckingAccountNumber] = useState("");                                  
 
    
     //   console.log('CountryCode',countriesData);    
@@ -257,6 +275,84 @@ const config = {
         setUrlImage(url);
         setPic(file);
     };
+
+    const saveRecipientDetails = async () => {
+        const items = JSON.parse(localStorage.getItem('user'));
+        const token = items?.token;       
+        setLoading(true);
+        const config = {
+            headers: {
+              Authorization: `Bearer ${token}`, 
+            },
+        };
+
+        const option = {
+            identity: legalIdentity,
+            firstName: legalFirstName,
+            lastName: legalLastName,
+            email: legalEmail,
+            phoneNumber: legalPhoneNumber,
+            socialMediaLink: legalSocailMedia,
+            address: legalAddress,
+            city: legalCity,
+            state: legalState,
+            postalCode: legalPostal,
+            country: legalCountry,
+            socialSecurityNumber: legalSecurityNumber,
+            dateOfBirth: `${legalDay} ${legalMonth} ${legalYear}`,
+            accountNumber: legalCheckingAccountNumber,
+            routingNumber: legalRoutingNumber
+        } 
+        // const option = {
+        //     identity: "MySelf",
+        //     firstName: "Bilal",
+        //     lastName: "Aslam",
+        //     email: "bilal.aslam@amcoitsystems.com",
+        //     phoneNumber: "+1234567890",
+        //     socialMediaLink: "http://localhost:3000/project",
+        //     address: "123 Main St",
+        //     city: "Anytown",
+        //     state: "CA",
+        //     postalCode: "12345",
+        //     country: "America",
+        //     socialSecurityNumber: "123-45-6789",
+        //     dateOfBirth: "1990-01-01",
+        //     accountNumber: "acct_1OBtGpPCrk1ywUjk",
+        //     routingNumber: "123456789"
+        // }
+        const formData = new FormData();
+        for (var key in option) {
+            formData.append(key, option[key]);
+        }
+        console.log("formData Recipent >>>>> ", formData);
+        await axios
+            .post(`${process.env.REACT_APP_BACKEND_URL}/api/bank-details/createBankAccountDetails`, formData, config
+            )
+            .then((res) => {
+                if ((res.status === 200 || res.status === 201)) {
+                    localStorage.removeItem('user');
+                    localStorage.setItem(
+                        'user',
+                        JSON.stringify({
+                            token: token,
+                        })
+                    );
+                    fetchProfileDetails();
+                    setLoading(false);
+                    toast.success(
+                        "Bank Account Details successfully Stored"
+                      );
+                } else {
+                    setLoading(false);
+                    toast.error(
+                        "Something went wrong!"
+                      );
+                }
+            })
+            .catch((e) => {
+                setLoading(false);
+            });
+    };
     
     const updateProfile = async () => {
         const items = JSON.parse(localStorage.getItem('user'));
@@ -409,6 +505,7 @@ const config = {
                                 <ThreeDots color="#E6007C" width={50} height={50} />
                             </Box>
                         ) : (
+                            <>
                             <Grid container sx={{ display: 'flex', justifyContent: 'space-around' }}>
                                 <Grid item sx={12} md={2.5} lg={2.5} xl={3}>
                                     <Box className={styles.RoundedBox}>
@@ -447,166 +544,758 @@ const config = {
                                     xl={7.5}
                                     sx={{ pl: { lg: 2, xl: 0 }, display: 'flex', justifyContent: { xs: 'center', md: 'flex-start' } }}
                                 >
-      <Box sx={{ px: 3 }} className={styles.profileForm}>
-    <Grid container spacing={3}>
-        <Grid hidden item xs={6}>
-           
-        </Grid>
-        <Grid hidden item xs={6}>
-           
-        </Grid>
-
-
-
-        <Grid item xs={6}>
-        <form>
-                <label htmlFor="fname">First Name</label>
-                <br />
-                <input
-                    type="text"
-                    name="firstName"
-                    id="fname"
-                    value={firstName}
-                    onChange={(e) => {
-                        setFirstName(e.target.value);
-                    }}
-                />
-            </form>
-        </Grid>
-        <Grid item xs={6}>
-        <form>
-                <label htmlFor="lname">Last Name</label>
-                <br />
-                <input
-                    type="text"
-                    name="lastName"
-                    id="lname"
-                    value={lastName}
-                    onChange={(e) => {
-                        setLastName(e.target.value);
-                    }}
-                />
-            </form>
-        </Grid>
-        <Grid item xs={6}>
-            <form>
-                <label htmlFor="email">Email</label>
-                <br />
-                <input
-                    type="text"
-                    name="email"
-                    id="email"
-                    value={email}
-                    onChange={(e) => {
-                        setEmail(e.target.value);
-                    }}
-                />
-            </form>
-        </Grid>
-        <Grid item xs={6}>
-        <form>
-    <label htmlFor="phone" style={{ marginLeft: '5px' }}>
-      Phone
-    </label>
-  <div style={{ display: 'flex', alignItems: 'center' }}>
-   
-
-   
-  <input
-    type="text"
-    name="phone"
-    placeholder='e.g:+920342366456'
-    id="phone"
-    value={phone}
-    onChange={(e) => {
-      if (e.target.value.length <= 14) {
-        setphone(e.target.value);
-      }
-    }}
-  />
-  </div>
-  <br />
-  {phone.length < 13 && (
-    <p style={{ color: 'red' }}>
-      Phone number must be at least 13 digits long.
-    </p>
-  )}
-</form>
-        </Grid>
-        <Grid item xs={6}>
-            <form>
-                <label htmlFor="zip">Zip Code</label>
-                <br />
-                <input
-                    type="text"
-                    name="zip"
-                    id="zip"
-                    value={zip}
-                    onChange={(e) => {
-                        setzip(e.target.value);
-                    }}
-                />
-            </form>
-        </Grid>
-        <Grid item xs={6}>
-            <form>
-                <label htmlFor="city">City</label>
-                <br />
-                <input
-                    type="text"
-                    name="city"
-                    id="city"
-                    value={city}
-                    onChange={(e) => {
-                        setcity(e.target.value);
-                    }}
-                />
-            </form>
-        </Grid>
-        <Grid item xs={6}>
-            <form>
-                <label htmlFor="country">Country</label>
-                <br />
-                <input
-                    type="text"
-                    name="country"
-                    id="country"
-                    value={country}
-                    onChange={(e) => {
-                        setcountry(e.target.value);
-                    }}
-                />
-            </form>
-        </Grid>
-        <Grid item xs={6}>
-            <form>
-                <label htmlFor="link">Social Media Link</label>
-                <br />
-                <input
-                    type="text"
-                    name="link"
-                    id="link"
-                    value={link}
-                    onChange={(e) => {
-                        setlink(e.target.value);
-                    }}
-                />
-            </form>
-        </Grid>
-    </Grid>
-
-    <Box sx={{ mt: 4 }}>
-        <form>
-            <Button className={styles.profileBtn} onClick={updateProfile}>
-                Save
-            </Button>
-        </form>
-    </Box>
-</Box>
-
-
+                                    <Box sx={{ px: 3 }} className={styles.profileForm}>
+                                        <Grid container spacing={3}>
+                                            <Grid hidden item xs={6}></Grid>
+                                            <Grid hidden item xs={6}></Grid>
+                                            <Grid item xs={6}>
+                                                <form>
+                                                    <label className="mb-1" htmlFor="fname">First Name</label>
+                                                    <br />
+                                                    <input
+                                                        type="text"
+                                                        name="firstName"
+                                                        className="form-control"
+                                                        id="fname"
+                                                        value={firstName}
+                                                        onChange={(e) => {
+                                                            setFirstName(e.target.value);
+                                                        }}
+                                                    />
+                                                </form>
+                                            </Grid>
+                                            <Grid item xs={6}>
+                                                <form>
+                                                    <label className="mb-1" htmlFor="lname">Last Name</label>
+                                                    <br />
+                                                    <input
+                                                        type="text"
+                                                        name="lastName"
+                                                        className="form-control"
+                                                        id="lname"
+                                                        value={lastName}
+                                                        onChange={(e) => {
+                                                            setLastName(e.target.value);
+                                                        }}
+                                                    />
+                                                </form>
+                                            </Grid>
+                                            <Grid item xs={6}>
+                                                <form>
+                                                    <label className="mb-1" htmlFor="email">Email</label>
+                                                    <br />
+                                                    <input
+                                                        type="text"
+                                                        name="email"
+                                                        className="form-control"
+                                                        id="email"
+                                                        value={email}
+                                                        onChange={(e) => {
+                                                            setEmail(e.target.value);
+                                                        }}
+                                                    />
+                                                </form>
+                                            </Grid>
+                                            <Grid item xs={6}>
+                                                <form>
+                                                    <label className="mb-1" htmlFor="phone" style={{ marginLeft: '5px' }}>Phone</label>
+                                                        <div style={{ display: 'flex', alignItems: 'center' }}>                                                                
+                                                        <input
+                                                            type="text"
+                                                            name="phone"
+                                                            className="form-control"
+                                                            placeholder='e.g:+920342366456'
+                                                            id="phone"
+                                                            value={phone}
+                                                            onChange={(e) => {
+                                                            // if (e.target.value.length <= 14) {
+                                                                setphone(e.target.value);
+                                                            // }
+                                                            }}
+                                                        />
+                                                        </div>
+                                                    {/* {phone.length < 13 && (
+                                                        <small style={{ color: 'red' }}>
+                                                        Phone number must be at least 13 digits long.
+                                                        </small>
+                                                    )} */}
+                                                </form>
+                                            </Grid>
+                                            <Grid item xs={6}>
+                                                <form>
+                                                    <label className="mb-1" htmlFor="zip">Zip Code</label>
+                                                    <br />
+                                                    <input
+                                                        type="text"
+                                                        name="zip"
+                                                        className="form-control"
+                                                        id="zip"
+                                                        value={zip}
+                                                        onChange={(e) => {
+                                                            setzip(e.target.value);
+                                                        }}
+                                                    />
+                                                </form>
+                                            </Grid>
+                                            <Grid item xs={6}>
+                                                <form>
+                                                    <label className="mb-1" htmlFor="city">City</label>
+                                                    <br />
+                                                    <input
+                                                        type="text"
+                                                        name="city"
+                                                        id="city"
+                                                        className="form-control"
+                                                        value={city}
+                                                        onChange={(e) => {
+                                                            setcity(e.target.value);
+                                                        }}
+                                                    />
+                                                </form>
+                                            </Grid>
+                                            <Grid item xs={6}>
+                                                <form>
+                                                    <label className="mb-1" htmlFor="country">Country</label>
+                                                    <br />
+                                                    <input
+                                                        type="text"
+                                                        name="country"
+                                                        id="country"
+                                                        className="form-control"
+                                                        value={country}
+                                                        onChange={(e) => {
+                                                            setcountry(e.target.value);
+                                                        }}
+                                                    />
+                                                </form>
+                                            </Grid>
+                                            <Grid item xs={6}>
+                                                <form>
+                                                    <label className="mb-1" htmlFor="link">Social Media Link</label>
+                                                    <br />
+                                                    <input
+                                                        type="text"
+                                                        name="link"
+                                                        id="link"
+                                                        className="form-control"
+                                                        value={link}
+                                                        onChange={(e) => {
+                                                            setlink(e.target.value);
+                                                        }}
+                                                    />
+                                                </form>
+                                            </Grid>
+                                        </Grid>
+                                        <Box sx={{ mt: 4 }}>
+                                            <form>
+                                                <Button className={styles.profileBtn} onClick={updateProfile}>
+                                                    Save
+                                                </Button>
+                                            </form>
+                                        </Box>
+                                    </Box>
                                 </Grid>
                             </Grid>
+                            <Grid container sx={{ display: 'flex', justifyContent: 'space-around' }}>
+                                <Grid item sx={12} md={2.5} lg={2.5} xl={3}></Grid>
+                                <Grid
+                                    item
+                                    xs={12}
+                                    md={5}
+                                    lg={6}
+                                    xl={7.5}
+                                    sx={{ pl: { lg: 2, xl: 0 }, display: 'flex', justifyContent: { xs: 'center', md: 'flex-start' } }}
+                                >
+                                    <form
+                                        style={{ gap: "10px", marginTop: "10px", }}
+                                    >
+                                    <h2> Recipient Details</h2>
+                                    <small>
+                                        Nfuse will attempt to verify your identity and other information you provide and we may delay, withhold, reverse or refund any contributions or other amounts without notice or 
+                                        liability in the event that we are unable to verify any information to our satistaction.
+                                    </small>
+                                    <div
+                                        style={{
+                                            display: "grid",
+                                            gridTemplateColumns: "1fr 1fr",
+                                            gap: "10px",
+                                            marginTop: "20px",
+                                        }}
+                                    >
+                                        <div
+                                            style={{
+                                                display: "grid",
+                                                gridTemplateColumns: "1fr ",
+                                                gap: "10px",
+                                            }}
+                                        >
+                                            <label className="mt-0">Identity<span className="text-danger">*</span></label>
+                                            <div style={{ height: '100%' }} className="input-group mb-2">
+                                                <select
+                                                    className="form-control"
+                                                    name="chain_id"           
+                                                    value={legalIdentity}
+                                                    onChange={(e) => {
+                                                        setLegalIdentity(e.target.value);
+                                                    }}           
+                                                    style={{ 
+                                                        height: "fit-content",
+                                                        paddingTop: "2%",
+                                                        border: "2px solid rgb(204, 204, 204)",
+                                                        paddingBottom: "1%" 
+                                                    }}
+                                                    >
+                                                    <option value="myselft">Myself</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div
+                                            style={{
+                                                display: "grid",
+                                                gridTemplateColumns: "1fr ",
+                                                gap: "10px",
+                                            }}
+                                        >
+                                        <label className="mt-2">Legal First Name<span className="text-danger">*</span>
+                                        <input
+                                            type="text"
+                                            value={legalFirstName}
+                                            onChange={(e) => {
+                                                setLegalFirstName(e.target.value);
+                                            }}
+                                            style={{
+                                                width: "100%",
+                                                padding: "6px 6px",
+                                                borderRadius: "5px",
+                                                border: "2px solid #ccc",
+                                            }}
+                                            required
+                                        />
+                                        </label>
+                                    </div>
+                                </div>
+                                <div
+                                    style={{
+                                        display: "grid",
+                                        gridTemplateColumns: "1fr 1fr",
+                                        gap: "10px",
+                                        marginTop: "10px",
+                                    }}
+                                >
+                                    <div
+                                        style={{
+                                            display: "grid",
+                                            gridTemplateColumns: "1fr ",
+                                            gap: "10px",
+                                        }}
+                                    >
+                                    <label>Legal Last Name<span className="text-danger">*</span>
+                                    <input
+                                        type="text"
+                                        value={legalLastName}
+                                        onChange={(e) => {
+                                            setLegalLastName(e.target.value);
+                                        }}
+                                        style={{
+                                            width: "100%",
+                                            padding: "6px 6px",
+                                            borderRadius: "5px",
+                                            border: "2px solid #ccc",
+                                        }}
+                                        required
+                                    />
+                                    </label>
+                                </div>
+                                <div
+                                    style={{
+                                        display: "grid",
+                                        gridTemplateColumns: "1fr ",
+                                        gap: "10px",
+                                    }}
+                                >
+                                <label>Email<span className="text-danger">*</span>
+                                <input
+                                    type="email"
+                                    value={legalEmail}
+                                    onChange={(e) => {
+                                        setLegalEmail(e.target.value);
+                                    }}
+                                    style={{
+                                        width: "100%",
+                                        padding: "6px 6px",
+                                        borderRadius: "5px",
+                                        border: "2px solid #ccc",
+                                    }}
+                                    required
+                                />
+                                </label>
+                            </div>
+                        </div>
+                        <div
+                        style={{
+                            display: "grid",
+                            gridTemplateColumns: "1fr 1fr",
+                            gap: "10px",
+                            marginTop: "20px",
+                        }}
+                        >
+                        <div
+                            style={{
+                                display: "grid",
+                                gridTemplateColumns: "1fr ",
+                                gap: "10px",
+                            }}
+                        >
+                        <label>Phone Number<span className="text-danger">*</span>
+                        <div style={{ display: "flex" }}>
+                            <div className="input-group-prepend">
+                                <div 
+                                    className="input-group-text text-white"
+                                    style={{
+                                    background: '#adadad',
+                                    borderTopLeftRadius: "5px",
+                                    borderBottomLeftRadius: "5px",
+                                    borderTopRightRadius: "0px",
+                                    borderBottomRightRadius: "0px",
+                                    padding: "7px 7px",
+                                    }}
+                                >&nbsp; &nbsp; +1&nbsp; &nbsp; </div>
+                            </div>
+                            <input
+                                type="text"
+                                placeholder="111-222-3456"
+                                value={legalPhoneNumber}
+                                onChange={(e) => {
+                                    setLegalPhoneNumber(e.target.value);
+                                }}
+                                style={{
+                                    width: "100%",
+                                    padding: "6px 6px",
+                                    border: "2px solid #ccc",
+                                    borderTopLeftRadius: "0px",
+                                    borderBottomLeftRadius: "0px",
+                                    borderTopRightRadius: "5px",
+                                    borderBottomRightRadius: "5px",
+                                }}
+                                required
+                            />
+                        </div>
+                        </label>
+                    </div>
+                    <div
+                        style={{
+                        display: "grid",
+                        gridTemplateColumns: "1fr ",
+                        gap: "10px",
+                        }}
+                    >
+                    <label>Social Media Profile Link
+                        <input
+                            type="text"
+                            value={legalSocailMedia}
+                            onChange={(e) => {
+                                setLegalSocailMedia(e.target.value);
+                            }}
+                            style={{
+                                width: "100%",
+                                padding: "6px 6px",
+                                borderRadius: "5px",
+                                border: "2px solid #ccc",
+                            }}
+                            required
+                        />
+                        </label>
+                    </div>
+                </div>
+                <div
+                    style={{
+                        display: "grid",
+                        gridTemplateColumns: "1fr 1fr",
+                        gap: "10px",
+                        marginTop: "20px",
+                    }}
+                >
+                    <div
+                        style={{
+                            display: "grid",
+                            gridTemplateColumns: "1fr ",
+                            gap: "10px",
+                        }}
+                    >
+                        <label>Recipient's Address<span className="text-danger">*</span>
+                        <input
+                            type="text"
+                            value={legalAddress}
+                            onChange={(e) => {
+                                setLegalAddress(e.target.value);
+                            }}
+                            style={{
+                                width: "100%",
+                                padding: "6px 6px",
+                                borderRadius: "5px",
+                                border: "2px solid #ccc",
+                            }}
+                            required
+                        />
+                        </label>
+                    </div>
+                    <div
+                        style={{
+                            display: "grid",
+                            gridTemplateColumns: "1fr ",
+                            gap: "10px",
+                        }}
+                    >
+                        <label>Recipient's City/Town/Village<span className="text-danger">*</span>
+                        <input
+                            type="text"
+                            value={legalCity}
+                            onChange={(e) => {
+                                setLegalCity(e.target.value);
+                            }}
+                            style={{
+                                width: "100%",
+                                padding: "6px 6px",
+                                borderRadius: "5px",
+                                border: "2px solid #ccc",
+                            }}
+                            required
+                        />
+                        </label>
+                    </div>
+                </div>
+                <div
+                    style={{
+                        display: "grid",
+                        gridTemplateColumns: "1fr 1fr",
+                        gap: "10px",
+                        marginTop: "20px",
+                    }}
+                >
+                    <div
+                        style={{
+                            display: "grid",
+                            gridTemplateColumns: "1fr ",
+                            gap: "10px",
+                        }}
+                    >
+                        <label>State/Province<span className="text-danger">*</span>
+                        <input
+                            type="text"
+                            value={legalState}
+                            onChange={(e) => {
+                                setLegalState(e.target.value);
+                            }}
+                            style={{
+                                width: "100%",
+                                padding: "6px 6px",
+                                borderRadius: "5px",
+                                border: "2px solid #ccc",
+                            }}
+                            required
+                        />
+                        </label>
+                    </div>
+                    <div
+                        style={{
+                            display: "grid",
+                            gridTemplateColumns: "1fr ",
+                            gap: "10px",
+                        }}
+                    >
+                        <label>Recipient's Postal Code<span className="text-danger">*</span>
+                        <input
+                            type="text"
+                            value={legalPostal}
+                            onChange={(e) => {
+                                setLegalPostal(e.target.value);
+                            }}
+                            style={{
+                                width: "100%",
+                                padding: "6px 6px",
+                                borderRadius: "5px",
+                                border: "2px solid #ccc",
+                            }}
+                            required
+                        />
+                        </label>
+                    </div>
+                </div>
+                <div
+                    style={{
+                        display: "grid",
+                        gridTemplateColumns: "1fr 1fr",
+                        gap: "10px",
+                        marginTop: "20px",
+                    }}
+                >
+                    <div
+                        style={{
+                            display: "grid",
+                            gridTemplateColumns: "1fr ",
+                            gap: "10px",
+                        }}
+                    >
+                        <label className="mb-0">Recipient's Country<span className="text-danger">*</span></label>
+                        <div style={{ height: '100%' }} className="input-group mb-2">
+                            <select
+                                className="form-control"
+                                name="chain_id" 
+                                value={legalCountry}
+                                onChange={(e) => {
+                                    setLegalCountry(e.target.value);
+                                }}                     
+                                style={{ 
+                                    height: "fit-content",
+                                    paddingTop: "3%",
+                                    border: "2px solid rgb(204, 204, 204)",
+                                    paddingBottom: "2%" 
+                                }}
+                            >
+                            <option value={0}>Select Country</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    style={{
+                        display: "grid",
+                        gridTemplateColumns: "1fr 1fr",
+                        gap: "10px",
+                        marginTop: "20px",
+                    }}
+                >
+                    <div
+                        style={{
+                            display: "grid",
+                            gridTemplateColumns: "1fr ",
+                            gap: "10px",
+                        }}
+                    >
+                        <label className="mb-1">Social Security number<span className="text-danger">*</span>
+                        <input
+                            type="text"
+                            placeholder="123456789"
+                            value={legalSecurityNumber}
+                            onChange={(e) => {
+                                setLegalSecurityNumber(e.target.value);
+                            }}   
+                            style={{
+                                width: "100%",
+                                padding: "6px 6px",
+                                borderRadius: "5px",
+                                border: "2px solid #ccc",
+                            }}
+                            required
+                        />
+                        </label>
+                    </div>
+                </div>
+                <label className="mt-3 mb-1">Recipient's  Date of Birth<span className="text-danger">*</span></label>
+                <div
+                    style={{
+                        display: "grid",
+                        gridTemplateColumns: "1fr 2fr 1fr",
+                        gap: "10px",
+                    }}
+                >
+                    <div
+                        style={{
+                            display: "grid",
+                            gridTemplateColumns: "1fr ",
+                            gap: "10px",
+                        }}
+                    >
+                    <div style={{ height: '100%' }} className="input-group mb-2">
+                        <select
+                            className="form-control"
+                            name="chain_id" 
+                            value={legalDay}
+                            onChange={(e) => {
+                                setLegalDay(e.target.value);
+                            }}                       
+                            style={{ 
+                                height: "fit-content",
+                                paddingTop: "5%",
+                                border: "2px solid rgb(204, 204, 204)",
+                                paddingBottom: "5%" 
+                            }}
+                            >
+                                <option disabled>Day</option>
+                                <option value="01">01</option>
+                                <option value="02">02</option>
+                        </select>
+                    </div>
+                </div>
+                <div
+                    style={{
+                        display: "grid",
+                        gridTemplateColumns: "2fr ",
+                        gap: "10px",
+                    }}
+                >                         
+                <div style={{ height: '100%' }} className="input-group mb-2">
+                        <select
+                            className="form-control"
+                            name="chain_id"              
+                            value={legalMonth}
+                            onChange={(e) => {
+                                setLegalMonth(e.target.value);
+                            }}                       
+                            sty        
+                            style={{ 
+                                height: "fit-content",
+                                paddingTop: "3%",
+                                border: "2px solid rgb(204, 204, 204)",
+                                paddingBottom: "2%" }}
+                        >
+                            <option disabled>Month</option>
+                            <option value="Jan">Jan</option>
+                            <option value="Feb">Feb</option>
+                        </select>
+                    </div>
+                </div>
+                <div
+                    style={{
+                        display: "grid",
+                        gridTemplateColumns: "1fr ",
+                        gap: "10px",
+                    }}
+                >                     
+                    <div style={{ height: '100%' }} className="input-group mb-2">
+                        <select
+                            className="form-control"
+                            name="chain_id"         
+                            value={legalYear}
+                            onChange={(e) => {
+                                setLegalYear(e.target.value);
+                            }}                 
+                            style={{ 
+                                height: "fit-content",
+                                paddingTop: "5%",
+                                border: "2px solid rgb(204, 204, 204)",
+                                paddingBottom: "5%" }}
+                        >
+                            <option disabled>Year</option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                            <option value="2026">2026</option>
+                            <option value="2027">2027</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <h5 className="mb-0 mt-3">Bank Account</h5>
+            <div
+              style={{
+                    display: "grid",
+                    gridTemplateColumns: "1fr 1fr",
+                    gap: "10px",
+              }}
+            >
+                <div
+                    style={{
+                        display: "grid",
+                        gridTemplateColumns: "1fr ",
+                        gap: "10px",
+                    }}
+                >
+                    <label>Checking Account number<span className="text-danger">*</span>
+                    <input
+                        type="text"
+                        value={legalCheckingAccountNumber}
+                        onChange={(e) => {
+                            setLegalCheckingAccountNumber(e.target.value);
+                        }}     
+                        style={{
+                            width: "100%",
+                            padding: "6px 6px",
+                            borderRadius: "5px",
+                            border: "2px solid #ccc",
+                        }}
+                        required
+                    />
+                    </label>
+                </div>
+                <div
+                    style={{
+                        display: "grid",
+                        gridTemplateColumns: "1fr ",
+                        gap: "10px",
+                    }}
+                >
+                <label>Routing number<span className="text-danger">*</span>
+                <input
+                    type="text"
+                    value={legalRoutingNumber}
+                    onChange={(e) => {
+                        setLegalRoutingNumber(e.target.value);
+                    }}     
+                    style={{
+                        width: "100%",
+                        padding: "6px 6px",
+                        borderRadius: "5px",
+                        border: "2px solid #ccc",
+                    }}
+                    required
+                  />
+                </label>
+            </div>
+            <div
+                style={{
+                    display: "grid",
+                    gridTemplateColumns: "1fr ",
+                    gap: "10px",
+                }}
+            >
+                <label>Confirm Checking Account number<span className="text-danger">*</span>
+                <input
+                    type="text"
+                    value={legalConfirmCheckingAccountNumber}
+                    onChange={(e) => {
+                        setLegalConfirmCheckingAccountNumber(e.target.value);
+                    }}   
+                    style={{
+                        width: "100%",
+                        padding: "6px 6px",
+                        borderRadius: "5px",
+                        border: "2px solid #ccc",
+                    }}
+                    required
+                  />
+                </label>
+            </div>
+            </div>
+            <div
+                style={{
+                    display: "grid",
+                    gridTemplateColumns: "1fr 1fr",
+                    gap: "10px",
+                    marginTop: "2%",
+                }}
+            >
+                <div
+                    style={{
+                        display: "grid",
+                        gridTemplateColumns: "1fr ",
+                        gap: "10px",
+                    }}
+                >
+                    <button
+                        type="submit"
+                        className="btn btn-primary btn-block p-2 mx-auto mb-0"
+                        onClick={saveRecipientDetails}
+                    >
+                        Save Recipient Details
+                    </button>
+                </div>
+            </div>
+          </form>
+                                </Grid>
+                            </Grid>
+                        </>
                         )}
                     </Box>
                 </TabPanel>
