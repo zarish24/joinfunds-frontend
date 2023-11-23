@@ -31,6 +31,8 @@ import { autoPlay } from "react-swipeable-views-utils";
 import { useNavigate } from "react-router-dom";
 import { initStripe } from "./stripe";
 import { loadStripe } from "@stripe/stripe-js";
+import { toast } from 'react-toastify';
+
 //  import { placeOrder } from './apiService'
 import { CardWidget } from "./CardWidget";
 import Noty from "noty";
@@ -156,11 +158,11 @@ const closeModal = () => {
           if (res.status === 200 || res.status === 201) {
             setSymbol(res?.data?.data);
           } else {
-            window.alert(res.message);
+            toast.success(res.message);
           }
         })
         .catch((error) => {
-          window.alert(error?.response?.data?.message);
+          toast.error(error?.response?.data?.message);
         });
     }
   };
@@ -249,10 +251,10 @@ const closeModal = () => {
             setMonthlySubscription(false);
             setSingleDonation(true);
             setModalStripeDonate(false);
-            window.alert("Transaction has been completed successfully!");
+            toast.success("Transaction has been completed successfully!");
           } else {
             setLoading(false);
-            window.alert(res.message);
+            toast.error(res.message);
           }
         })
         .catch((error) => {
@@ -270,7 +272,7 @@ const closeModal = () => {
           setNfuseAnnouncments(false);
           setMonthlySubscription(false);
           setSingleDonation(true);
-          window.alert(
+          toast.success(
             error?.response?.data?.message
               ? error?.response?.data?.message
               : error.response.data.Message
@@ -319,7 +321,7 @@ const closeModal = () => {
           if (res.status === 200 || res.status === 201) {
             setPaymentUpdate(true);
             setLoading(false);
-            window.alert("Transaction has been completed successfully!");
+            toast.success("Transaction has been completed successfully!");
             setFormData({
               ...formData,
               ["amount"]: 0,
@@ -329,7 +331,7 @@ const closeModal = () => {
             setModalDonate(false);
           } else {
             setLoading(false);
-            window.alert(res.message);
+            toast.success(res.message);
           }
         })
         .catch((error) => {
@@ -339,7 +341,7 @@ const closeModal = () => {
             ...formData,
             ["amount"]: 0,
           });
-          window.alert(
+          toast.error(
             error?.response?.data?.message
               ? error?.response?.data?.message
               : error.response.data.Message
@@ -348,15 +350,31 @@ const closeModal = () => {
         });
       // setCampaigns(response.data); // Set the campaign data in state
     } catch (error) {
-      window.alert("API request faile", error.response.data.Message);
+      toast.error("API request faile", error.response.data.Message);
     }
   };    
   const saveDonateCampaign = () => {
+    if (
+      amount1 === 0 ||
+      email.trim() === "" ||
+      firstName.trim() === "" ||
+      lastName.trim() === ""
+      // Add more conditions as needed for other fields
+    ) {
+      toast.error("Please fill in all required fields.");
+      return;
+    }
     setModalDonate1(false);
     setModalStripeDonate(true);
   };
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
+    const token = localStorage.getItem("user");
+
+    if (!token) {
+      toast.error("Please Login First");
+      return;
+    }
     try {
       const data = {
         campaign_id: id,
@@ -378,16 +396,16 @@ const closeModal = () => {
           if (res.status === 200 || res.status === 201) {
             setComment_message("");
           } else {
-            // window.alert(res.message);
+            toast.error(res.message);
           }
         })
         .catch((error) => {
           // console.error("API request failed", error);
-          window.alert(error?.response?.data?.message);
+          toast.error(error?.response?.data?.message);
         });
       // setCampaigns(response.data); // Set the campaign data in state
     } catch (error) {
-      window.alert("API request failed", error);
+      toast.error("Please Login First");
       // console.error("API request failed", error.message);
     }
   };
@@ -443,16 +461,16 @@ const closeModal = () => {
                 }
               });
             } else {
-              window.alert("Compaigns not fount due to some issue!");
+              toast.error("Compaigns not fount due to some issue!");
             }
           })
           .catch((error) => {
             // console.log("error", error);
-            // window.alert(error);
+            // toast.alert(error);
           });
         // setCampaigns(response.data); // Set the campaign data in state
       } catch (error) {
-        window.alert("API request failed", error);
+        toast.error("API request failed", error);
         // console.error("A/PI request failed", error);
       }
     };
@@ -482,16 +500,16 @@ const closeModal = () => {
               // console.log("allff-com", res?.data?.data);
               setComments(res?.data?.data);
             } else {
-              window.alert("Comments not fount due to some issue!");
+              toast.error("Comments not fount due to some issue!");
             }
           })
           .catch((error) => {
             // console.log("error", error);
-            // window.alert(error);
+            // toast.alert(error);
           });
         // setCampaigns(response.data); // Set the campaign data in state
       } catch (error) {
-        window.alert("API request failed", error);
+        toast.error("API request failed", error);
         // console.error("API request failed", error);
       }
     };
@@ -1109,7 +1127,7 @@ const closeModal = () => {
         ) : (
           <>
             <div className="modal-header">
-              <h5 className="modal-title">Choose a donation amount</h5>
+              <h5 className="modal-title">Enter Card </h5>
               <button
                 type="button"
                 className="btn-close"
@@ -1126,7 +1144,7 @@ const closeModal = () => {
                 </div>
               </div>
               <div className="col-lg-12">
-                <div className="form-group">
+                {/* <div className="form-group">
                   <label className="form-label" style={{marginBottom:"5px"}}>Amount</label>
                   <div className="input-group">
                     <input
@@ -1138,7 +1156,7 @@ const closeModal = () => {
                       onChange={(e) => setAmount(e.target.value)}
                     />
                   </div>
-                </div>
+                </div> */}
               </div>
               <div className="col-lg-12">
                 <div id="card-element"></div>
@@ -1504,13 +1522,12 @@ const closeModal = () => {
                       border: "2px solid #ccc",
                     }}
                     className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                  {/* Optionally, you can display the entered link */}
-                  {/* {socialMediaLink && <p>Entered Social Media Link: {socialMediaLink}</p>} */}
+                 
                 </label>
                 <Form.Check
-                  checked={followCampaign}  // Use 'checked' instead of 'value'
+                  checked={followCampaign} 
                   onChange={(e) => {
-                    setFollowCampaign(e.target.checked);  // Use 'e.target.checked' to get the checked state
+                    setFollowCampaign(e.target.checked);  
                   }}    
                   inline
                   label="Follow this campaign?"
@@ -1540,14 +1557,12 @@ const closeModal = () => {
                       border: "2px solid #ccc",
                     }}
                     className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                  {/* <small className="text-gray">* Campaign owners have the ability to delete derogatory comments</small> */}
-                  {/* Optionally, you can display the entered link */}
-                  {/* {socialMediaLink && <p>Entered Social Media Link: {socialMediaLink}</p>} */}
+                 
                 </label>
                 <Form.Check
-                  checked={nfuseAnnouncments}  // Use 'checked' instead of 'value'
+                  checked={nfuseAnnouncments}  
                   onChange={(e) => {
-                    setNfuseAnnouncments(e.target.checked);  // Use 'e.target.checked' to get the checked state
+                    setNfuseAnnouncments(e.target.checked);  
                   }}  
                   inline
                   label="Send me Nfuse announcments"
@@ -1566,7 +1581,7 @@ const closeModal = () => {
                 width: "100%",
                 borderRadius: '7px',
               }} onClick={saveDonateCampaign}>
-                Contiune
+                Continue
               </div>
               </div>
             </div>
@@ -1584,7 +1599,7 @@ const closeModal = () => {
             }}
           >
             <span>
-              By contiunuing, you agree to the Nfuse
+              By continuing, you agree to the Nfuse
               <Link
                 to="#"
                 className="btn-link collapsed mx-1"

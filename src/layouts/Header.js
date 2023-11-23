@@ -971,23 +971,40 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                   gap: "10px",
                 }}
               >
-                <label>
-                  Phone
-                  <input
-                    type="text"
-                    value={phone}
-                    placeholder='e.g: +1 XXX-XXX-XXXX'
-                    style={{
-                      width: "100%",
-                      padding: "2px",
-                      borderRadius: "5px",
-                      border: "2px solid #ccc",
-                    }}
-                    onChange={handlePhoneChange}
-                    required
-                  />
-                  {phoneError && <p style={{ color: "red" }}>{phoneError}</p>}
-                </label>
+               <label>Phone Number<span className="text-danger">*</span>
+                        <div style={{ display: "flex" }}>
+                            <div className="input-group-prepend">
+                                <div 
+                                    className="input-group-text text-white"
+                                    style={{
+                                    background: '#adadad',
+                                    borderTopLeftRadius: "5px",
+                                    borderBottomLeftRadius: "5px",
+                                    borderTopRightRadius: "0px",
+                                    borderBottomRightRadius: "0px",
+                                    padding: "9px 0px",
+                                    }}
+                                >&nbsp; &nbsp; +1&nbsp; &nbsp; </div>
+                            </div>
+                            <input
+                                type="tel"
+                                placeholder="111-222-3456"
+                                value={phone}
+                                onChange={handlePhoneChange}
+                                style={{
+                                    width: "100%",
+                                    padding: "6px 6px",
+                                    border: "2px solid #ccc",
+                                    borderTopLeftRadius: "0px",
+                                    borderBottomLeftRadius: "0px",
+                                    borderTopRightRadius: "5px",
+                                    borderBottomRightRadius: "5px",
+                                }}
+                                required
+                            />
+                        </div>
+                        </label>  
+  
               </div>
             </div>
 
