@@ -84,7 +84,7 @@ useEffect(() => {
       if (response.status === 200) {
         
         const categories = response.data.categories
-        console.log('categories',categories)
+        // console.log('categories',categories)
 
         setTitleOptions(categories);
       }
@@ -362,7 +362,7 @@ const handleCopyUrl = async (url) => {
 
         </ul>
       </div>
-      <div className="row">
+      {/* <div className="row">
         <div className="col-12 m-sm-t0 m-t30">
           <nav className="pagination-bx">
             <div className="page-item">
@@ -399,7 +399,7 @@ const handleCopyUrl = async (url) => {
             </div>
           </nav>
         </div>
-      </div>
+      </div> */}
 
       {/* <div className="row">
                 <div className="col-12 m-sm-t0 m-t30">		
