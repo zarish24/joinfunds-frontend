@@ -37,6 +37,7 @@ import {
   TwitterShareButton,
   LinkedinShareButton,
   WhatsappShareButton, 
+  TelegramShareButton,
  } from 'react-share';
  
  import {
@@ -44,6 +45,7 @@ import {
   TwitterIcon,
   LinkedinIcon,
   WhatsappIcon , // add this
+  TelegramIcon , // add this
  } from 'react-share';
  import { toast } from 'react-toastify';
  import 'react-toastify/dist/ReactToastify.css';
@@ -285,10 +287,10 @@ const handleCopyUrl = async (url) => {
                       <div className="mb-2">
                       {item.published ? (
           <button
-            onClick={() => {
-              toggleShareModal(item._id);
-              handleCopyUrl(`http://44.219.245.56/my-project/${item._id}`);
-            }}
+          onClick={() => {
+            toggleShareModal(item._id);
+            handleCopyUrl(`${process.env.REACT_APP_BACKEND_URL}/fundraiser-detail/${item._id}`);
+        }}        
             className="btn share-button float-right"
           >
             <i className="fas fa-share"></i>
@@ -318,18 +320,21 @@ const handleCopyUrl = async (url) => {
                     {isShareModalOpen && (
                         
                         <div className="share-modal">
-                          <FacebookShareButton url={`http://44.219.245.56/my-project/${shareItemId}`}>
-                            <FacebookIcon size={32} round />
+                          <FacebookShareButton url={`${process.env.REACT_APP_BACKEND_URL}/fundraiser-detail/${shareItemId}`}>
+                              <FacebookIcon size={32} round />
                           </FacebookShareButton>
-                          <TwitterShareButton url={`http://44.219.245.56/my-project/${shareItemId}`}>
+                          <TwitterShareButton url={`${process.env.REACT_APP_BACKEND_URL}/fundraiser-detail/${shareItemId}`}>
                             <TwitterIcon size={32} round />
                           </TwitterShareButton>
-                          <LinkedinShareButton url={`http://44.219.245.56/my-project/${shareItemId}`}>
+                          <LinkedinShareButton url={`${process.env.REACT_APP_BACKEND_URL}/fundraiser-detail/${shareItemId}`}>
                             <LinkedinIcon size={32} round />
                           </LinkedinShareButton>
-                          <WhatsappShareButton url={`http://44.219.245.56/my-project/${shareItemId}`} >
-                       <WhatsappIcon size={32} round />
-                      </WhatsappShareButton>
+                          <WhatsappShareButton url={`${process.env.REACT_APP_BACKEND_URL}/fundraiser-detail/${shareItemId}`}>
+                            <WhatsappIcon size={32} round />
+                          </WhatsappShareButton>
+                          <TelegramShareButton url={`${process.env.REACT_APP_BACKEND_URL}/fundraiser-detail/${shareItemId}`}>
+                            <TelegramIcon size={32} round />
+                          </TelegramShareButton>                          
                         </div>
                       )}
                     <div className="progress-bx style-1">

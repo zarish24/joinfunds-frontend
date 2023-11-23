@@ -140,16 +140,7 @@ const Home3 = () => {
         }
       };
     return (
-        <>
-            <div className="page-wraper page-wraper-sidebar">
-                <div className="page-sidebar">
-                    <ul className="dz-social">
-                        <li><a href="https://www.facebook.com/" target={'_blank'}>Facebook</a></li>
-                        <li><a href="https://twitter.com/" target={'_blank'}>Twitter</a></li>
-                        <li><a href="https://www.linkedin.com/" target={'_blank'}>Linkedin</a></li>
-                    </ul>
-                    <Link to={"#"} className="btn-bottom btn btn-primary light" data-bs-toggle="modal" data-bs-target="#modalDonate">Donate Now</Link>
-                </div>  
+        <> 
                 {isLoggedIn ? (
         <Header2 changeStyle="header-transparent" changeLogo={true} />
       ) : (
@@ -402,7 +393,6 @@ Helping others improve their lives physically, medically or financially feels wo
                 <ModalVideo channel='youtube'  isOpen={isOpen} videoId="bdBG5VO01e0" onClose={() => setOpen(false)} />
                 {/* <Link to={"#"} className={classChange} onClick={()=> setOpen(true)} ><i className="fa-solid fa-play" ></i></Link> */}
                 {/* <DonateModal /> */}
-            </div>
         </>
     );
 };

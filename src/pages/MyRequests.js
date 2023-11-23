@@ -170,7 +170,7 @@ const cellStyle = {
 };
 const cellStylethead = {
   border: '1px solid #ddd',
-  background: "rgb(243,111,99)",
+  background: "#bf0b32",
   color: '#fff',
   padding: '8px',
   textAlign: 'center',
