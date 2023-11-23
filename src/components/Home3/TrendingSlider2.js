@@ -79,8 +79,10 @@ const TrendingSlider2 = (props) => {
 					<SwiperSlide key={i}>	
                     {/* {console.log("value of d",d)} */}
                         <div className="dz-card style-5">
-                            <div className="dz-media">
-                                <Link to={`/fundraiser-detail/${d?._id}`}><img src={d?.campaign_images[0]?.url} alt="" /></Link>
+                            <div className="dz-media square-container bg-danger">
+                                <Link to={`/fundraiser-detail/${d?._id}`}>
+                                    <img src={d?.campaign_images[0]?.url} alt="" className="img1" />
+                                </Link>
                             </div>
                             <div className="dz-info">
                                 <ul className="dz-category">

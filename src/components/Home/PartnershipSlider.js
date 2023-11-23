@@ -12,7 +12,8 @@ import logo2 from './../../assets/images/clients-logo/logo2.png';
 import logo3 from './../../assets/images/clients-logo/logo3.png';
 import logo4 from './../../assets/images/clients-logo/logo4.png';
 import logo5 from './../../assets/images/clients-logo/logo5.png';
-
+import logo21 from './../../assets/images/clients-logo/logo21.png';
+import logo23 from './../../assets/images/clients-logo/logo23.PNG';
 
 
 
@@ -22,11 +23,8 @@ import { Autoplay } from "swiper";
 //SwiperCore.use([EffectCoverflow,Pagination]);
 
 const dataBlog = [
-	{image: logo1},
-	{image: logo2},
-	{image: logo3},
-	{image: logo4},
-	{image: logo5}
+	{image: logo21},
+	{image: logo23}
 ];
 
 const PartnershipSlider = () => {
@@ -36,7 +34,7 @@ const PartnershipSlider = () => {
             <Swiper className="clients-swiper"
 				speed= {1500}
 				//parallax= {true}
-				slidesPerView= {5}
+				slidesPerView= {2}
 				spaceBetween= {30}
 				loop={true}
 				autoplay= {{
@@ -45,18 +43,9 @@ const PartnershipSlider = () => {
 				modules={[ Autoplay ]}
 				breakpoints = {{
 					1191: {
-                        slidesPerView: 5,
-                    },
-                    992: {
-                        slidesPerView: 4,
-                    },
-                    768: {
-                        slidesPerView: 3,
-                    },
-                    575: {
                         slidesPerView: 2,
                     },
-                    320: {
+                    992: {
                         slidesPerView: 2,
                     },
 				}}

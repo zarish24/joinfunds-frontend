@@ -56,7 +56,7 @@ const Footer3 = () => {
                                             value={email}
                                             onChange={(e) => setEmail(e.target.value)}
                                             />
-                                            <button name="submit" value="Submit" type="submit" className="btn btn-primary">
+                                            <button name="submit" value="Submit" type="submit" className="btn btn-primary text-white">
                                                 <span>SUBSCRIBE</span>
                                                 <i className="fa-solid fa-paper-plane"></i>
                                             </button>
@@ -70,7 +70,7 @@ const Footer3 = () => {
                 <div className="footer-top">
                     <div className="container">
                         <div className="row">
-                           <FooterCommonData logoImage={IMAGES.logo3} iconStyle={true}/>
+                           <FooterCommonData logoImage={IMAGES.logoWhite3} iconStyle={true}/>
                         </div>
                     </div>
                 </div>

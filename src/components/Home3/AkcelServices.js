@@ -9,10 +9,10 @@ const servicesBlog = [
     {title:"Industry’s best fundraising success", icon:SVGICON.DoubleHeart },
     {title:"Supported By 55,00,000+ Donors" , icon:SVGICON.Ring},
     {title:"Easy-To-Manage Tools To Boost Results",icon:SVGICON.HeartWindow},
-    {title:"Akcel Get Expert Support 24/7",icon:SVGICON.HeartHelp},
+    {title:"Nfuse Get Expert Support 24/7",icon:SVGICON.HeartHelp},
     {title:"A Dedicated Smart-Dashboard",icon:SVGICON.DollerBox},
     {title:"Receive donations via all popular payment",icon:SVGICON.HeartHome},
-    {title:"nternational Payment Support",icon:SVGICON.ThumbDoller1},
+    {title:"International Payment Support",icon:SVGICON.ThumbDoller1},
     {title:"Withdraw Funds Without Hassle", icon:SVGICON.ThumbDoller2},
 ];
 
@@ -89,16 +89,16 @@ const AkcelServices = () => {
                     </div>
                 </div>
                 <div className="col-lg-4 col-md-6 m-t30 wow fadeInUp" data-wow-delay="0.4s">
-                    <div className="content-bx style-1 bg-secondary text-center">
+                    <div className="content-bx style-1 bg-primary text-center">
                         <div className="inner-content">
                             <div className="icon-lg m-b20">
                                 <Link to={"/project-categories"} className="icon-cell">
                                     {SVGICON.HelpHeart}
                                 </Link>
                             </div>
-                            <h3 className="title">Want To Help?</h3>
-                            <p className="m-b30">Your financial support is very important for our global projects.</p>
-                            <Link className="btn btn-primary" to={"/project"}>Donate Now</Link>
+                            <h3 className="title text-white">Want To Help?</h3>
+                            <p className="m-b30 text-white">Your financial support is very important for our global projects.</p>
+                            <Link className="btn btn-light" to={"/project"}>Donate Now</Link>
                         </div>
                     </div>
                 </div>

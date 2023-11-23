@@ -18,6 +18,7 @@ import PartnershipSlider from '../components/Home/PartnershipSlider';
 import Header2 from '../layouts/Header2';
 import Header from '../layouts/Header';
 import Footer3 from '../layouts/Footer3';
+import Footer from '../layouts/Footer';
 import { ThemeContext } from "../context/ThemeContext";
 import { IMAGES } from '../constant/theme';
 import { toast,  } from 'react-toastify';
@@ -226,7 +227,7 @@ Helping others improve their lives physically, medically or financially feels wo
                     >
                         <div className="container">
                             <div className="section-head text-center wow fadeInUp" data-wow-delay="0.2s">
-                                <h5 className="sub-title">Services</h5>
+                                <h5 className="sub-title text-white">Services</h5>
                                 <h2 className="title text-white">Why Nfuse</h2>
                             </div>
                                 <AkcelServices />
@@ -344,7 +345,7 @@ Helping others improve their lives physically, medically or financially feels wo
                                             <div className="col-md-4 col-sm-6">
                                                 <button 
                                                 name="submit" type="submit" value="Submit" 
-                                                className="btn btn-dark btn-block h-100">Submit Now</button>
+                                                className="btn btn-light btn-block h-100">Submit Now</button>
                                             </div>
                                         </div>
                                     </form>
@@ -391,7 +392,7 @@ Helping others improve their lives physically, medically or financially feels wo
                         </div>
                     </div>
                 </div>
-                <Footer3 />
+                <Footer />
                 <Modal className="modal fade modal-wrapper" id="read" centered show={readModal} onHide={setReadModal}> 
                     <div className="modal-body">
                         <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>

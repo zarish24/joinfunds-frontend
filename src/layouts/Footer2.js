@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 
 import baner from '../assets/images/main-slider/slider1/slider-bg1.jpg';
-import logowhite from '../assets/images/logo-white-2.png';
+import logowhite from '../assets/images/nfuse_copy-removebg.png';
 import shape4 from '../assets/images/side-images/shape4.png';
 import line4 from '../assets/images/side-images/shape-line4.png';
 import shape5 from '../assets/images/side-images/shape5.png';

@@ -8,9 +8,9 @@ const FooterCommonData = ({logoImage, iconStyle}) => {
                 <div className="widget widget_about">
                 <div className="footer-logo logo-white">
     <Link to={"/"}>
-        <img src={logoImage} alt="" style={{ height: '80px', width: '150px' }} />
+        <img src={logoImage} alt="" style={{ height: '105px', width: '150px' }} />
     </Link>
-                    <p>Nfuse is a Crowdfunding & Charity Website by DexignZone lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et</p>
+                    <p>Nfuse is a donation platform with a simple mission of supporting freedom-loving people and projects. We support freedom for everyone. </p>
 </div>
                     <div className="dz-social-icon style-1">
                         <ul>
@@ -45,7 +45,7 @@ const FooterCommonData = ({logoImage, iconStyle}) => {
                         <li><Link to={"/happy-clients"}>success stories</Link></li>
                         {/* <li><Link to={"/project"}>Project</Link></li> */}
                         {/* <li><Link to={"/contact-us"}>Contact Us</Link></li> */}
-                        <li><Link to={"/faq"}>Faq</Link></li>
+                        <li><Link to={"/faq"}>FAQ</Link></li>
                     </ul>
                 </div>
             </div>
