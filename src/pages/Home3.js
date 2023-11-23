@@ -227,7 +227,7 @@ Helping others improve their lives physically, medically or financially feels wo
                     >
                         <div className="container">
                             <div className="section-head text-center wow fadeInUp" data-wow-delay="0.2s">
-                                <h5 className="sub-title">Services</h5>
+                                <h5 className="sub-title text-white">Services</h5>
                                 <h2 className="title text-white">Why Nfuse</h2>
                             </div>
                                 <AkcelServices />
