@@ -116,8 +116,7 @@ We reserve the right to remove Campaigns and terminate User accounts for such ac
              Nfuse LLC
              ATTN: Terms of Use/Legal Department
              8 The Green, STE A
-             Dover, DE 19901 <strong><a className="text-dark gmail" target="_blank" rel="noreferrer" href="info@nfuse-me.com
-">dexignzones@gmail.com</a></strong></p>
+             Dover, DE 19901 <strong><a className="text-dark gmail" target="_blank" rel="noreferrer" href="#">info@nfuse-me.com</a></strong></p>
                                 </div>                                
                             </div>
                         </div>

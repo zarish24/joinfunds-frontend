@@ -82,7 +82,7 @@ const RecivedDonations = () => {
 
   return (
     <>
-      <PageBanner maintitle=" RecivedDonations" pagetitle="My Recived Donations" background={bg} />
+      <PageBanner maintitle=" Recived Donations" pagetitle="My Recived Donations" background={bg} />
       <div style={{ textAlign: 'center', marginTop: '20px', height: '100vh', marginBottom: '30px' }}>
         {dummyData.length > 0 ? (
           <table style={{ borderCollapse: 'collapse', width: '70%', margin: 'auto' }}>

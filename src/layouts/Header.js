@@ -115,12 +115,11 @@ console.log('selectedCity',selectedCity)
   };
 
   const handlePhoneChange = (e) => {
-    const value = e.target.value;
-
-    // Validate the phone number
-    // if (validatePhone(value)) {
+    const value = e.target.value.replace(/\D/g, '');
+    const phoneRegex = /^\d{10}$/;
+    if(value.length <= 10){
       setPhone(value);
-    // }
+    }
   };
 
 
@@ -890,7 +889,7 @@ console.log('selectedCity',selectedCity)
       >
         <Modal.Header
           className="d-flex justify-content-center align-items-center "
-          style={{ backgroundColor: "rgb(27, 130, 113)" }}
+          style={{ backgroundColor: "#002768" }}
         >
           <h4 className="text-center" style={{ color: "white" }}>
             Sign Up Your Account
@@ -1008,7 +1007,6 @@ console.log('selectedCity',selectedCity)
         }}
         required
       >
-        <option value="" disabled>Select a Country</option>
         <option value="United States" >USA</option>
       </select>
               </label>
@@ -1049,8 +1047,8 @@ console.log('selectedCity',selectedCity)
                                 onChange={handlePhoneChange}
                                 style={{
                                     width: "100%",
-                                    padding: "4px 6px",
-                                    height: "5.6vh",
+                                    padding: "0px 6px",
+                                    // height: "5.6vh",
                                     border: "2px solid #ccc",
                                     borderTopLeftRadius: "0px",
                                     borderBottomLeftRadius: "0px",

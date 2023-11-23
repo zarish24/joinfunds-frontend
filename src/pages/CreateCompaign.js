@@ -96,6 +96,7 @@ const CreateCompaign = () => {
     setImages(files);
   };
   const handleSubmit = async (e) => {
+    console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
     e.preventDefault();
     setLoading(true);
    
@@ -122,11 +123,13 @@ const CreateCompaign = () => {
       campaign_type: formData.campaign_type, 
       user_id: formData.user_id
     }
+    console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', option);
     const areFieldsFilled = Object.values(option).every(
       (value) => value !== undefined && value !== ''
     );
   // console.log('optionoption',option)
     if (!areFieldsFilled) {
+      console.log('areFieldsFilled');
       setLoading(false);
       toast.error('Please fill in all required fields.');
       return; // Stop further processing if fields are not filled
@@ -143,6 +146,7 @@ const CreateCompaign = () => {
       return diffDays;
     };
     if (!startDateIsValid || !endDateIsValid) {
+      console.log('startDateIsValid');
       setLoading(false);
     
       
