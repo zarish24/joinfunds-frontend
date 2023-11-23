@@ -19,7 +19,7 @@ const MyProjects = () => {
   const [searchText, setSearchText] = useState('');
   const [CategoryId, setCategoryId] = useState('');
   const [totalPages, setTotalPages] = useState(0);
-  console.log("all-campaigns-data", campaigns);
+
 
   useEffect(() => {
     const fetchData = async (user_id, token) => {
@@ -51,13 +51,12 @@ const MyProjects = () => {
             data,config
           )
           .then((res) => {
-            // console.log("all-totalPages-data", res);
+
             if (res.status === 200 || res.status === 201) {
 
               // console.log("all-comp-data", res?.data?.data?.data);
               setTotalPages(Math.ceil(res?.data?.count / RecordsPerPage));
 
-            // console.log("all-totalPages-data", res?.data?.data);
 
               setCampaigns(res?.data?.data);
               setLoading(false);
@@ -83,6 +82,7 @@ const MyProjects = () => {
     }
     // Call the async function
   }, [currentPage,page,campaignType,campaignStatus]);
+
 
 
   const fetchData = async () => {
