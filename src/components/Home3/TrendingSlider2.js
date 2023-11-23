@@ -77,7 +77,7 @@ const TrendingSlider2 = (props) => {
 			>	
 				{dataBlog?.map((d,i)=>(
 					<SwiperSlide key={i}>	
-                    {console.log("value of d",d)}
+                    {/* {console.log("value of d",d)} */}
                         <div className="dz-card style-5">
                             <div className="dz-media">
                                 <Link to={`/fundraiser-detail/${d?._id}`}><img src={d?.campaign_images[0]?.url} alt="" /></Link>

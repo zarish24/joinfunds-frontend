@@ -19,7 +19,7 @@ const MyProjects = () => {
   const [searchText, setSearchText] = useState('');
   const [CategoryId, setCategoryId] = useState('');
   const [totalPages, setTotalPages] = useState(0);
-  console.log("all-totalPages-data", totalPages);
+  console.log("all-campaigns-data", campaigns);
 
   useEffect(() => {
     const fetchData = async (user_id, token) => {
@@ -51,12 +51,13 @@ const MyProjects = () => {
             data,config
           )
           .then((res) => {
-            console.log("all-totalPages-data", res);
+            // console.log("all-totalPages-data", res);
             if (res.status === 200 || res.status === 201) {
 
               // console.log("all-comp-data", res?.data?.data?.data);
               setTotalPages(Math.ceil(res?.data?.count / RecordsPerPage));
 
+            // console.log("all-totalPages-data", res?.data?.data);
 
               setCampaigns(res?.data?.data);
               setLoading(false);
@@ -82,6 +83,63 @@ const MyProjects = () => {
     }
     // Call the async function
   }, [currentPage,page,campaignType,campaignStatus]);
+
+
+  const fetchData = async () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const token =user.token;
+    const id = user._id
+   
+    try {
+      // console.log("user_id", user_id);
+      const data = {
+        status: "",
+        category_id:CategoryId,
+        campaign_type: "",
+        user_id:id,
+        items_per_page: RecordsPerPage,
+        page:currentPage,
+      };
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
+        },
+      };
+      if (campaignType !== "Campaign Type") {
+        data.campaign_type = campaignType;
+      }
+
+      if (campaignStatus !== "Campaign Status") {
+        data.status = campaignStatus;
+      }
+      const response = await axios
+        .post(
+          `${process.env.REACT_APP_BACKEND_URL}/api/compaign/getMyCampaigns`,
+          data,config
+        )
+        .then((res) => {
+        
+          if (res.status === 200 || res.status === 201) {
+
+            setTotalPages(Math.ceil(res?.data?.count / RecordsPerPage));
+            setCampaigns(res?.data?.data);
+            setLoading(false);
+          } else {
+            setLoading(false);
+            toast.error("Compaigns not fount due to some issue!");
+          }
+        })
+        .catch((error) => {
+          setLoading(false);
+          setCampaigns([]);
+          toast.error(error);
+        });
+      // setCampaigns(response.data); // Set the campaign data in state
+    } catch (error) {
+      toast.error("API request failed", error);
+      // console.error("API request failed", error);
+    }
+  };
 
   const goToNextPage = () => {
     if (currentPage < totalPages) {
@@ -224,6 +282,7 @@ const MyProjects = () => {
           <div className="container">
             <ProjectMasonry
               campaigns = {campaigns}
+              fetchData={fetchData}
               setCategoryId={setCategoryId}
               page = {page}
               setPage = {setPage}
