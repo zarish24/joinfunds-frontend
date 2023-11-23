@@ -170,7 +170,7 @@ console.log('selectedCity',selectedCity)
         password: password,
         firstName: FirstN,
         lastName: LastN,
-        country: 'america',
+        country: country,
         city: City,
         zipcode: Zip,
         phoneNumber: phone,
@@ -812,7 +812,13 @@ console.log('selectedCity',selectedCity)
                   // }, 2500);
                 }}
               >
-                <img loading="lazy" src={Google} alt="google" />
+               <img
+                    loading="lazy"
+                    src={Google}
+                    alt="google"
+                    style={{ marginRight: "8px" }}
+                  />
+                  Sign up with Google
               </LoginSocialGoogle>
             ) : null}
           </Box>
@@ -910,7 +916,7 @@ console.log('selectedCity',selectedCity)
                 }}
               >
                 <label>
-                  First Name
+                  First Name<span className="text-danger">*</span>
                   <input
                     type="text"
                     value={FirstN}
@@ -933,7 +939,7 @@ console.log('selectedCity',selectedCity)
                 }}
               >
                 <label>
-                  Last Name
+                  Last Name<span className="text-danger">*</span>
                   <input
                     type="text"
                     value={LastN}
@@ -965,7 +971,7 @@ console.log('selectedCity',selectedCity)
                 }}
               >
                 <label>
-                  Email
+                  Email<span className="text-danger">*</span>
                   <input
                     type="email"
                     value={email}
@@ -987,25 +993,104 @@ console.log('selectedCity',selectedCity)
                   gap: "10px",
                 }}
               >
+
+<label>
+                Country<span className="text-danger">*</span>
+                <select
+        value={country}
+        // onChange={(e) => setCity(e.target.value)}
+        onChange={(e) => setCountry(e.target.value)}
+        style={{
+          width: "100%",
+          padding: "5px",
+          borderRadius: "5px",
+          border: "2px solid #ccc",
+        }}
+        required
+      >
+        <option value="" disabled>Select a Country</option>
+        <option value="United States" >USA</option>
+      </select>
+              </label>
+
+              
+  
+              </div>
+            </div>
+
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "10px",
+              }}
+            >
+              
+              <label>Phone Number<span className="text-danger">*</span>
+                        <div style={{ display: "flex" }}>
+                            <div className="input-group-prepend">
+                                <div 
+                                    className="input-group-text text-white"
+                                    style={{
+                                    background: '#adadad',
+                                    borderTopLeftRadius: "5px",
+                                    borderBottomLeftRadius: "5px",
+                                    borderTopRightRadius: "0px",
+                                    borderBottomRightRadius: "0px",
+                                    padding: "5px 0px",
+                                    }}
+                                >&nbsp; &nbsp; +1&nbsp; &nbsp; </div>
+                            </div>
+                            <input
+                                type="tel"
+                                placeholder="   111-222-3456"
+                                value={phone}
+                                onChange={handlePhoneChange}
+                                style={{
+                                    width: "100%",
+                                    padding: "4px 6px",
+                                    height: "5.6vh",
+                                    border: "2px solid #ccc",
+                                    borderTopLeftRadius: "0px",
+                                    borderBottomLeftRadius: "0px",
+                                    borderTopRightRadius: "5px",
+                                    borderBottomRightRadius: "5px",
+                                }}
+                                required
+                            />
+                        </div>
+                        </label>  
+              
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr ",
+                  gap: "10px",
+                }}
+              >
                 <label>
-                  Phone
+                  Social Media Profile Link<span className="text-danger">*</span>
                   <input
                     type="text"
-                    value={phone}
-                    placeholder='e.g: +1 XXX-XXX-XXXX'
+                    // placeholder="Enter your social media profile link"
+                    value={MediaLink}
+                    onChange={(e) => setMediaLink(e.target.value)}
+                    // onChange={handleSocialMediaLinkChange}
                     style={{
                       width: "100%",
                       padding: "2px",
                       borderRadius: "5px",
                       border: "2px solid #ccc",
                     }}
-                    onChange={handlePhoneChange}
-                    required
+               
                   />
-                  {phoneError && <p style={{ color: "red" }}>{phoneError}</p>}
+                  {/* Optionally, you can display the entered link */}
+                  {/* {socialMediaLink && <p>Entered Social Media Link: {socialMediaLink}</p>} */}
                 </label>
               </div>
             </div>
+
 
             <div
               style={{
@@ -1015,7 +1100,7 @@ console.log('selectedCity',selectedCity)
               }}
             >
               <label>
-                Password
+                Password<span className="text-danger">*</span>
                 {passwordError && <p style={{ color: 'red', fontSize: '12px', marginLeft: '8px', marginTop: '4px' }}>{passwordError}</p>}
                 <input
                 className='mb-0'
@@ -1052,7 +1137,7 @@ console.log('selectedCity',selectedCity)
               </label>
 
               <label>
-                City
+                City<span className="text-danger">*</span>
                 <select
         value={City}
         // onChange={(e) => setCity(e.target.value)}
@@ -1075,7 +1160,7 @@ console.log('selectedCity',selectedCity)
               </label>
 
               <label>
-                Zip Code
+                Zip Code<span className="text-danger">*</span>
                 <input
                   type="text"
                   value={selectedCityPostalCode}
@@ -1092,43 +1177,7 @@ console.log('selectedCity',selectedCity)
               </label>
             </div>
 
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "10px",
-              }}
-            >
-              
-
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr ",
-                  gap: "10px",
-                }}
-              >
-                <label>
-                  Social Media Profile Link
-                  <input
-                    type="text"
-                    // placeholder="Enter your social media profile link"
-                    value={MediaLink}
-                    onChange={(e) => setMediaLink(e.target.value)}
-                    // onChange={handleSocialMediaLinkChange}
-                    style={{
-                      width: "100%",
-                      padding: "2px",
-                      borderRadius: "5px",
-                      border: "2px solid #ccc",
-                    }}
-               
-                  />
-                  {/* Optionally, you can display the entered link */}
-                  {/* {socialMediaLink && <p>Entered Social Media Link: {socialMediaLink}</p>} */}
-                </label>
-              </div>
-            </div>
+          
 
             {/* <div
               style={{
@@ -1199,39 +1248,138 @@ console.log('selectedCity',selectedCity)
         <Modal.Footer
           style={{ display: "flex", justifyContent: "space-between" }}
         >
-          <Box className={styles.loginSocial}>
+              <Box className={styles.loginSocial}>
+            {/* ---Social-Login with Google */}
             {callOnClick ? (
               <LoginSocialGoogle
                 sx={{ pr: 1 }}
-                client_id="1085137082696-c6a9ta6uk6gn30vf7vmsg8c066vmhl7i.apps.googleusercontent.com"
+                client_id={
+                  "1085137082696-c6a9ta6uk6gn30vf7vmsg8c066vmhl7i.apps.googleusercontent.com"
+                }
                 scope="openid profile email"
                 discoveryDocs="claims_supported"
                 access_type="offline"
                 onResolve={async ({ data }) => {
-                  // ... your existing logic
+                  let checkUser = await axios
+                    .get(
+                      `${process.env.REACT_APP_BACKEND_URL}/api/user/getSocialAppUserData/${data.email}`
+                    )
+                    .then(async (res) => {
+                      if (res.status === 200 || res.status === 201) {
+                        //   console.log("social-data", res);
+                        localStorage.setItem(
+                          `${res.data.data.doc.role}`,
+                          JSON.stringify({
+                            _id: res.data.data.doc._id,
+                            firstName: res.data.data.doc.firstName,
+                            lastName: res.data.data.doc.lastName,
+                            email: res.data.data.doc.email,
+                            role: res.data.data.doc.role,
+                            socialLogin: "User is Login with Google",
+                            token: res.data.data.doc.token,
+                            profileImage: res.data.data.doc.profileImage
+                              ? res.data.data.doc.profileImage
+                              : "",
+                          })
+                        );
+                        // if (res.data.data.doc.role === 'admin') {
+                        //     navigate('/admin');
+                        // }
+                        //  else {
+                        //   console.log("resres", res);
+                        if (res.data.data.doc.role === "user") {
+                          localStorage.setItem("isLoggedIn", "true");
+                          setIsLoggedIn(true); // Update the state immediately.
+                          setloginModal(false);
+                          // Show the alert
+                          toast.success("Login Successful!");
+
+                          navigate("/");
+                        }
+                        // }
+                      }
+                    })
+                    .catch(async (e) => {
+                      if (e.response.data === "User Not found.") {
+                        const userName = data?.name.replace(/\s/g, "");
+                        const givenValues = {
+                          username: userName,
+                          email: data?.email,
+                          profileImage: data?.picture,
+                        };
+                        await axios
+                          .post(
+                            `${process.env.REACT_APP_BACKEND_URL}/api/user/registerSocialAppUser`,
+                            givenValues
+                          )
+                          .then((res) => {
+                            if (res.status === 200 || res.status === 201) {
+                              localStorage.setItem(
+                                "user",
+                                JSON.stringify({
+                                  _id: res.data.data.user._id,
+                                  firstName: res.data.data.user.firstName,
+                                  lastName: res.data.data.user.lastName,
+                                  email: res.data.data.user.email,
+                                  role: res.data.data.user.role,
+                                  socialLogin: "User is Login with Google",
+                                  token: res.data.data.token,
+                                  profileImage: res.data.data.user.profileImage
+                                    ? res.data.data.user.profileImage
+                                    : "",
+                                })
+                              );
+                              localStorage.setItem("isLoggedIn", "true");
+                              setIsLoggedIn(true); // Update the state immediately.
+                              setloginModal(false);
+                              // Show the alert
+                              toast.success("Login Successful!");
+                              navigate("/");
+                              // setLoading(false);
+                              // setAlert(true);
+                              // setTimeout(() => {
+                              //     navigate('/user');
+                              // }, 1000);
+                            }
+                          })
+                          .catch((e) => {
+                            toast.success("UserName or Email Already Exists");
+                            // setLoading(false);
+                            // setErrorMessage('UserName or Email Already Exists');
+                            // setErrorAlert(true);
+                            // setTimeout(() => {
+                            //     setErrorAlert(false);
+                            // }, 2500);
+                          });
+                      }
+                    });
                 }}
                 onReject={(err) => {
                   toast.success("Enter correct email to login");
+                  // setErrorMessage('Enter correct email to login');
+                  // setErrorAlert(true);
+                  // setTimeout(() => {
+                  //     setErrorAlert(false);
+                  // }, 2500);
                 }}
               >
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    cursor: "pointer",
-                  }}
-                >
-                  <img
+               <img
                     loading="lazy"
                     src={Google}
                     alt="google"
                     style={{ marginRight: "8px" }}
                   />
                   Sign up with Google
-                </div>
               </LoginSocialGoogle>
             ) : null}
           </Box>
+            {/* <img
+              loading="lazy"
+              src={Google}
+              alt="google"
+              style={{ marginRight: "8px" }}
+            />
+            Sign up with Google */}
 
           <div className="sign-text">
             <span>

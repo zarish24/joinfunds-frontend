@@ -61,7 +61,7 @@ const Home2 = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     useEffect(() => {
         const intervalId = setInterval(() => {
-          const storedValue = localStorage.getItem('user');
+          const storedValue = localStorage.getItem('isLoggedIn');
           const isUserLoggedIn = Boolean(storedValue);
           setIsLoggedIn(isUserLoggedIn);
     

@@ -14,6 +14,8 @@ import Select from 'react-select';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import countriesData from './CountryCode'
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -23,6 +25,7 @@ function TabPanel(props) {
                 <Box sx={{ p: 3 }}>
                     <Typography>{children}</Typography>
                 </Box>
+
             )}
         </div>
     );
@@ -114,17 +117,24 @@ const Setting = (props) => {
     const [legalPostal, setLegalPostal] = useState("");
     const [legalCountry, setLegalCountry] = useState("");      
     const [legalSecurityNumber, setLegalSecurityNumber] = useState("");      
-    const [legalDay, setLegalDay] = useState("");           
-    const [legalMonth, setLegalMonth] = useState("");                      
-    const [legalYear, setLegalYear] = useState("");
+    
     const [legalCheckingAccountNumber, setLegalCheckingAccountNumber] = useState("");    
     const [legalRoutingNumber, setLegalRoutingNumber] = useState("");
     const [legalConfirmCheckingAccountNumber, setLegalConfirmCheckingAccountNumber] = useState("");                                  
-
+    const [legalDay, setLegalDay] = useState(1);
+    const [legalMonth, setLegalMonth] = useState(1);
+    const [legalYear, setLegalYear] = useState(2023);
    
     //   console.log('CountryCode',countriesData);    
    
-   
+    useEffect(() => {
+        if (!legalDay || !legalMonth || !legalYear) {
+            const currentDate = new Date();
+            setLegalDay(currentDate.getDate());
+            setLegalMonth(currentDate.getMonth() + 1);
+            setLegalYear(currentDate.getFullYear());
+        }
+    }, [legalDay, legalMonth, legalYear]);
     
     const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
         initialValues: initialValues,
@@ -275,6 +285,69 @@ const config = {
         setUrlImage(url);
         setPic(file);
     };
+    const handleSecuritynumberChange = (e) => {
+        const input = e.target.value;
+        const numbers = input.replace(/[^0-9]/g, '');
+      
+        if (numbers.length === 9) {
+          // Format the SSN if it has exactly 9 digits
+          const formattedSSN = numbers.substr(0, 3) + '-' + numbers.substr(3, 2) + '-' + numbers.substr(5, 4);
+          setLegalSecurityNumber(formattedSSN);
+          setErrorMessage('');
+        } else {
+          // If not exactly 9 digits, set an error message
+          setLegalSecurityNumber(numbers); // Update state without formatting
+          setErrorMessage('Legal security number must be 9 digits.');
+        }
+      };
+    
+    useEffect(() => {
+        const items = JSON.parse(localStorage.getItem('user'));
+        const token = items?.token;  
+        const fetchData = async () => {
+            const config = {
+                headers: {
+                  Authorization: `Bearer ${token}`, 
+                },
+            };
+            try {
+                const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/bank-details/getBankAccountDetails`, config)
+                const Data= response.data;
+                setLegalIdentity(Data.identity)
+             
+                setLegalFirstName(Data.firstName);
+                setLegalLastName(Data.lastName);
+                setLegalEmail(Data.email);
+                setLegalPhoneNumber(Data.phoneNumber);
+                setLegalSocailMedia(Data.socailMediaLink);
+                setLegalAddress(Data.address);
+                setLegalCity(Data.city);
+                setLegalState(Data.state);
+                setLegalPostal(Data.postalCode);
+                setLegalCountry(Data.country);
+                setLegalSecurityNumber(Data.socialSecurityNumber);
+                setLegalCheckingAccountNumber(Data.accountNumber);
+                setLegalRoutingNumber(Data.routingNumber);
+                setLegalConfirmCheckingAccountNumber(Data.accountNumber);
+                const dateOfBirth = Data.dateOfBirth; 
+                const dateParts = dateOfBirth.split("-");
+                const day = parseInt(dateParts[2], 10);
+                const month = parseInt(dateParts[1], 10);
+                const year = parseInt(dateParts[0], 10);
+                setLegalDay(Data.day);
+                setLegalMonth(Data.month);
+                setLegalYear(Data.year);
+                setLoading(false);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                setLoading(false);
+            }
+        };
+
+        fetchData(); 
+
+    }, []);
+
 
     const saveRecipientDetails = async () => {
         const items = JSON.parse(localStorage.getItem('user'));
@@ -285,7 +358,6 @@ const config = {
               Authorization: `Bearer ${token}`, 
             },
         };
-
         const option = {
             identity: legalIdentity,
             firstName: legalFirstName,
@@ -302,31 +374,41 @@ const config = {
             dateOfBirth: `${legalDay} ${legalMonth} ${legalYear}`,
             accountNumber: legalCheckingAccountNumber,
             routingNumber: legalRoutingNumber
-        } 
-        // const option = {
-        //     identity: "MySelf",
-        //     firstName: "Bilal",
-        //     lastName: "Aslam",
-        //     email: "bilal.aslam@amcoitsystems.com",
-        //     phoneNumber: "+1234567890",
-        //     socialMediaLink: "http://localhost:3000/project",
-        //     address: "123 Main St",
-        //     city: "Anytown",
-        //     state: "CA",
-        //     postalCode: "12345",
-        //     country: "America",
-        //     socialSecurityNumber: "123-45-6789",
-        //     dateOfBirth: "1990-01-01",
-        //     accountNumber: "acct_1OBtGpPCrk1ywUjk",
-        //     routingNumber: "123456789"
-        // }
+        };
+        const requiredFields = [
+            'identity',
+            'firstName',
+            'lastName',
+            'email',
+            'phoneNumber',
+            'address',
+            'city',
+            'state',
+            'postalCode',
+            'country',
+            'socialSecurityNumber',
+            'dateOfBirth',
+            'accountNumber',
+            'routingNumber',
+        ];
+    
+        const emptyFields = requiredFields.filter(field => !option[field]);
+    
+        if (emptyFields.length > 0) {
+            toast.error(`Please fill in the following fields: ${emptyFields.join(', ')}`);
+            setLoading(false);
+            return;
+        }
+        // Convert the option object to JSON
+        const jsonData = JSON.stringify(option);
+     
         const formData = new FormData();
         for (var key in option) {
             formData.append(key, option[key]);
         }
         console.log("formData Recipent >>>>> ", formData);
         await axios
-            .post(`${process.env.REACT_APP_BACKEND_URL}/api/bank-details/createBankAccountDetails`, formData, config
+            .post(`${process.env.REACT_APP_BACKEND_URL}/api/bank-details/createBankAccountDetails`, jsonData, config
             )
             .then((res) => {
                 if ((res.status === 200 || res.status === 201)) {
@@ -466,6 +548,26 @@ const config = {
     const handleTabChange = (event, newValue) => {
         setValueTab(newValue);
     };
+    const validateAmericanPhoneNumber = (phoneNumber) => {
+        // Remove non-numeric characters
+        const numericValue = phoneNumber.replace(/\D/g, '');
+    
+        // Check if it matches the pattern ###-###-#### or ##########
+        return /^(\d{3}-\d{3}-\d{4}|\d{10})$/.test(numericValue);
+      };
+    
+      const handlePhoneNumberChange = (e) => {
+        const input = e.target.value;
+    
+        // Check validation after 7 digits have been entered
+        if (input.length >= 9 && !validateAmericanPhoneNumber(input)) {
+          toast.error('Please enter a valid American phone number.');
+          return;
+        }
+    
+        setLegalPhoneNumber(input);
+      };
+    
     return (
         <Box className={styles.mainProfile}>
             {alert ? (
@@ -862,12 +964,10 @@ const config = {
                                 >&nbsp; &nbsp; +1&nbsp; &nbsp; </div>
                             </div>
                             <input
-                                type="text"
+                                type="tel"
                                 placeholder="111-222-3456"
                                 value={legalPhoneNumber}
-                                onChange={(e) => {
-                                    setLegalPhoneNumber(e.target.value);
-                                }}
+                                onChange={handlePhoneNumberChange}
                                 style={{
                                     width: "100%",
                                     padding: "6px 6px",
@@ -919,25 +1019,29 @@ const config = {
                         style={{
                             display: "grid",
                             gridTemplateColumns: "1fr ",
-                            gap: "10px",
+                            // gap: "10px",
                         }}
                     >
-                        <label>Recipient's Address<span className="text-danger">*</span>
-                        <input
-                            type="text"
-                            value={legalAddress}
-                            onChange={(e) => {
-                                setLegalAddress(e.target.value);
-                            }}
-                            style={{
-                                width: "100%",
-                                padding: "6px 6px",
-                                borderRadius: "5px",
-                                border: "2px solid #ccc",
-                            }}
-                            required
-                        />
-                        </label>
+                   <label className="mb-0">Recipient's Country<span className="text-danger">*</span></label>
+                        <div style={{ height: '100%' }} className="input-group mb-2">
+                            <select
+                                className="form-control"
+                                name="chain_id" 
+                                value={legalCountry}
+                                onChange={(e) => {
+                                    setLegalCountry(e.target.value);
+                                }}                     
+                                style={{ 
+                                    height: "fit-content",
+                                    paddingTop: "3%",
+                                    border: "2px solid rgb(204, 204, 204)",
+                                    paddingBottom: "2%" 
+                                }}
+                            >
+                            <option value={0}>Select Country</option>
+                            <option value='usa'>USA</option>
+                            </select>
+                        </div>
                     </div>
                     <div
                         style={{
@@ -946,12 +1050,12 @@ const config = {
                             gap: "10px",
                         }}
                     >
-                        <label>Recipient's City/Town/Village<span className="text-danger">*</span>
+                            <label>State/Province<span className="text-danger">*</span>
                         <input
                             type="text"
-                            value={legalCity}
+                            value={legalState}
                             onChange={(e) => {
-                                setLegalCity(e.target.value);
+                                setLegalState(e.target.value);
                             }}
                             style={{
                                 width: "100%",
@@ -962,6 +1066,7 @@ const config = {
                             required
                         />
                         </label>
+                        
                     </div>
                 </div>
                 <div
@@ -979,12 +1084,12 @@ const config = {
                             gap: "10px",
                         }}
                     >
-                        <label>State/Province<span className="text-danger">*</span>
+                 <label>Recipient's City/Town/Village<span className="text-danger">*</span>
                         <input
                             type="text"
-                            value={legalState}
+                            value={legalCity}
                             onChange={(e) => {
-                                setLegalState(e.target.value);
+                                setLegalCity(e.target.value);
                             }}
                             style={{
                                 width: "100%",
@@ -1036,50 +1141,13 @@ const config = {
                             gap: "10px",
                         }}
                     >
-                        <label className="mb-0">Recipient's Country<span className="text-danger">*</span></label>
-                        <div style={{ height: '100%' }} className="input-group mb-2">
-                            <select
-                                className="form-control"
-                                name="chain_id" 
-                                value={legalCountry}
-                                onChange={(e) => {
-                                    setLegalCountry(e.target.value);
-                                }}                     
-                                style={{ 
-                                    height: "fit-content",
-                                    paddingTop: "3%",
-                                    border: "2px solid rgb(204, 204, 204)",
-                                    paddingBottom: "2%" 
-                                }}
-                            >
-                            <option value={0}>Select Country</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div
-                    style={{
-                        display: "grid",
-                        gridTemplateColumns: "1fr 1fr",
-                        gap: "10px",
-                        marginTop: "20px",
-                    }}
-                >
-                    <div
-                        style={{
-                            display: "grid",
-                            gridTemplateColumns: "1fr ",
-                            gap: "10px",
-                        }}
-                    >
-                        <label className="mb-1">Social Security number<span className="text-danger">*</span>
+                          <label>Recipient's Address<span className="text-danger">*</span>
                         <input
                             type="text"
-                            placeholder="123456789"
-                            value={legalSecurityNumber}
+                            value={legalAddress}
                             onChange={(e) => {
-                                setLegalSecurityNumber(e.target.value);
-                            }}   
+                                setLegalAddress(e.target.value);
+                            }}
                             style={{
                                 width: "100%",
                                 padding: "6px 6px",
@@ -1089,16 +1157,9 @@ const config = {
                             required
                         />
                         </label>
+                      
+
                     </div>
-                </div>
-                <label className="mt-3 mb-1">Recipient's  Date of Birth<span className="text-danger">*</span></label>
-                <div
-                    style={{
-                        display: "grid",
-                        gridTemplateColumns: "1fr 2fr 1fr",
-                        gap: "10px",
-                    }}
-                >
                     <div
                         style={{
                             display: "grid",
@@ -1106,87 +1167,95 @@ const config = {
                             gap: "10px",
                         }}
                     >
-                    <div style={{ height: '100%' }} className="input-group mb-2">
-                        <select
-                            className="form-control"
-                            name="chain_id" 
-                            value={legalDay}
-                            onChange={(e) => {
-                                setLegalDay(e.target.value);
-                            }}                       
-                            style={{ 
-                                height: "fit-content",
-                                paddingTop: "5%",
-                                border: "2px solid rgb(204, 204, 204)",
-                                paddingBottom: "5%" 
-                            }}
-                            >
-                                <option disabled>Day</option>
-                                <option value="01">01</option>
-                                <option value="02">02</option>
-                        </select>
+                        <label className="mb-1">Social Security number<span className="text-danger">*</span>
+                        <input
+                         
+    type="text"
+    placeholder="123-45-6789"
+    value={legalSecurityNumber}
+    onChange={handleSecuritynumberChange}
+    style={{
+        width: "100%",
+        padding: "6px 6px",
+        borderRadius: "5px",
+        border: "2px solid #ccc",
+    }}
+    required
+/>
+{errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+                        </label>
                     </div>
                 </div>
-                <div
-                    style={{
-                        display: "grid",
-                        gridTemplateColumns: "2fr ",
-                        gap: "10px",
-                    }}
-                >                         
-                <div style={{ height: '100%' }} className="input-group mb-2">
-                        <select
-                            className="form-control"
-                            name="chain_id"              
-                            value={legalMonth}
-                            onChange={(e) => {
-                                setLegalMonth(e.target.value);
-                            }}                       
-                            sty        
-                            style={{ 
-                                height: "fit-content",
-                                paddingTop: "3%",
-                                border: "2px solid rgb(204, 204, 204)",
-                                paddingBottom: "2%" }}
-                        >
-                            <option disabled>Month</option>
-                            <option value="Jan">Jan</option>
-                            <option value="Feb">Feb</option>
-                        </select>
-                    </div>
-                </div>
-                <div
-                    style={{
-                        display: "grid",
-                        gridTemplateColumns: "1fr ",
-                        gap: "10px",
-                    }}
-                >                     
-                    <div style={{ height: '100%' }} className="input-group mb-2">
-                        <select
-                            className="form-control"
-                            name="chain_id"         
-                            value={legalYear}
-                            onChange={(e) => {
-                                setLegalYear(e.target.value);
-                            }}                 
-                            style={{ 
-                                height: "fit-content",
-                                paddingTop: "5%",
-                                border: "2px solid rgb(204, 204, 204)",
-                                paddingBottom: "5%" }}
-                        >
-                            <option disabled>Year</option>
-                            <option value="2022">2022</option>
-                            <option value="2023">2023</option>
-                            <option value="2024">2024</option>
-                            <option value="2025">2025</option>
-                            <option value="2026">2026</option>
-                            <option value="2027">2027</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
+               
+                <label className="mt-3 mb-1">Recipient's  Date of Birth<span className="text-danger">*</span></label>
+           <div
+    style={{
+        display: "grid",
+        gridTemplateColumns: "1fr 2fr 1fr",
+        gap: "10px",
+    }}
+>
+    <div
+        style={{
+            display: "grid",
+            gridTemplateColumns: "1fr ",
+            gap: "10px",
+        }}
+    >
+        <div style={{ height: '100%' }} className="input-group mb-2">
+            <DatePicker
+                selected={new Date(`${legalMonth} ${legalDay} ${legalYear}`)}
+                onChange={(date) => {
+                    setLegalDay(date.getDate());
+                }}
+                dateFormat="dd"
+                placeholderText="Day"
+            />
+        </div>
+    </div>
+    <div
+        style={{
+            display: "grid",
+            gridTemplateColumns: "1fr ",
+            gap: "10px",
+        }}
+    >
+        <div style={{ height: '100%' }} className="input-group mb-2">
+            <DatePicker
+                selected={new Date(`${legalMonth} ${legalDay} ${legalYear}`)}
+                onChange={(date) => {
+                    setLegalMonth(date.getMonth() + 1); 
+                }}
+                dateFormat="MMMM"
+                placeholderText="Month"
+                showMonthYearPicker
+                
+            />
+        </div>
+    </div>
+    <div
+        style={{
+            display: "grid",
+            gridTemplateColumns: "1fr ",
+            gap: "10px",
+        }}
+    >
+        <div style={{ height: '100%' }} className="input-group mb-2">
+            <DatePicker
+                selected={new Date(`${legalMonth} ${legalDay} ${legalYear}`)}
+                onChange={(date) => {
+                    setLegalYear(date.getFullYear());
+                }}
+                dateFormat="yyyy"
+                placeholderText="Year"
+                showYearDropdown
+                yearDropdownItemNumber={10}
+                scrollableYearDropdown
+            />
+        </div>
+    </div>
+</div>
+
             <h5 className="mb-0 mt-3">Bank Account</h5>
             <div
               style={{

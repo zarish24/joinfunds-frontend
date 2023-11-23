@@ -6,6 +6,7 @@ import styles from "./styles.module.scss";
 import Box from "@mui/material/Box";
 import { ThreeDots } from "../../../node_modules/react-loader-spinner/dist/index";
 import { Tabs, Tab, Typography, Pagination } from "@mui/material";
+import { Switch as AntSwitch } from 'antd';
 //images
 import pic1 from "../../assets/images/project/pic1.jpg";
 import pic2 from "../../assets/images/project/pic2.jpg";
@@ -35,7 +36,7 @@ import {
   FacebookShareButton,
   TwitterShareButton,
   LinkedinShareButton,
-  WhatsappShareButton, // add this
+  WhatsappShareButton, 
  } from 'react-share';
  
  import {
@@ -56,6 +57,8 @@ const ProjectMasonry = (props) => {
   //  const { page, setPage } = props;
   const [loading, setLoading] = useState(false);
   const cardData = props.campaigns;
+console.log('categories cardData',cardData)
+
   const [dropbtn, setDropbtn] = useState("Newest");
   const [popular, setPopular] = useState([]);
   const [filtered, setFiltered] = useState([]);
@@ -68,8 +71,34 @@ const toggleShareModal = (itemId) => {
   setShareModalOpen(!isShareModalOpen);
 
 };
-console.log('categories titleOptions',titleOptions)
-
+// console.log('categories titleOptions',titleOptions)
+const handleSwitchToggle = async (campaignId, checked) => {
+  const user = JSON.parse(localStorage.getItem('user'));
+  const token= user?.token;
+  try {
+    
+    const response = await axios.put(`${process.env.REACT_APP_BACKEND_URL}/api/compaign/publish/${campaignId}`, {
+      
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`, 
+      },
+      
+    });
+    console.log('response',response)
+    if (response.data.status === "success") {
+     toast.success(`Campaign  Published successfully`)
+     props.fetchData();
+      console.log(`Campaign  Published successfully!`);
+    } else {
+      
+      console.error('Failed to update campaign:', response.statusText);
+    }
+  } catch (error) {
+    // Handle any unexpected errors
+    console.error('An unexpected error occurred:', error);
+  }
+};
 useEffect(() => {
   const user = JSON.parse(localStorage.getItem('user'));
  const token= user?.token;
@@ -81,6 +110,7 @@ useEffect(() => {
         },
       };
       const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/category/getCategories`,config);
+    
       if (response.status === 200) {
         
         const categories = response.data.categories
@@ -108,11 +138,11 @@ const handleCopyUrl = async (url) => {
 };
 
 
-  useEffect(() => {
-    // Initialize filtered with the data from props when the component mounts
-    setFiltered(cardData);
-    setPopular(cardData);
-  }, [cardData]);
+  // useEffect(() => {
+  //   // Initialize filtered with the data from props when the component mounts
+  //   setFiltered(cardData);
+  //   setPopular(cardData);
+  // }, [cardData]);
 
   useEffect(() => {
     if (activeGenre === "All") {
@@ -195,39 +225,32 @@ const handleCopyUrl = async (url) => {
           className="row"
           //transition={{ duration: 0.3 }}
         >
-          {console.log("fileterData", filtered)}
+          {/* {console.log("fileterData", filtered)} */}
           <AnimatePresence>
-  {loading ? (
-    <Box
-      className={styles.centeredBox}
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      height="20vh"
-    >
-      <ThreeDots color="#E6007C" width={50} height={50} />
-    </Box>
-  ) : (
-    (cardData &&
-      Array.isArray(cardData) &&
-      cardData.length === 0) ? (
+      {loading ? (
         <Box
-          className={styles.noDataFound}
+          className={styles.centeredBox}
           display="flex"
           justifyContent="center"
           alignItems="center"
+          height="20vh"
         >
-          <Typography variant="h4">
-            No Campaign Found. Go to Previous Page!
-          </Typography>
+          <ThreeDots color="#E6007C" width={50} height={50} />
         </Box>
       ) : (
-        Array.isArray(cardData) && cardData.length > 0 ? (
-          cardData.map((item, index) => {
-            const progressValue = parseInt(item.progres, 10);
-            console.log("progressValue", progressValue);
-            return (
-              <motion.li
+        <motion.ul
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+          className="row"
+        >
+          {Array.isArray(cardData) && cardData.length > 0 ? (
+            cardData.map((item, index) => {
+              const progressValue = parseInt(item.progres, 10);
+              console.log("progressValue", progressValue);
+              return (
+                <motion.li
                 layout
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
@@ -239,7 +262,7 @@ const handleCopyUrl = async (url) => {
                 <div className="dz-card style-2 overlay-skew">
                   <div className={`dz-media ${styles.cardImgWrapper}`}>
                     <Link to={`/fundraiser-detail/${item._id}`}>
-                      <img src={item?.campaign_images[0]?.url ? item?.campaign_images[0]?.url : avat3} alt="" />
+                      <img src={item?.campaign_images?.url ? item?.campaign_images?.url : avat3} alt="" />
                     </Link>
                   </div>
                   <div className="dz-info">
@@ -248,45 +271,67 @@ const handleCopyUrl = async (url) => {
                         <Link to={"#"}>{item.campaign_type}</Link>
                       </li>
                     </ul>
-                    {/* <div className="d-flex justify-content-end align-items-center"> */}
+                    <div className="d-flex justify-content-between align-items-end">
+                    <div>
                     <h5 className="dz-title">
                       <Link to={`/fundraiser-detail/${item._id}`}>
                         {item.title.length > 25
                           ? item.title.slice(0, 25) + "..."
                           : item.title}
                       </Link>
-                      
-  <button
-    onClick={() => {
-      toggleShareModal(item._id);
-      handleCopyUrl(`http://44.219.245.56/my-project/${item._id}`);
-    }}
-    className="btn  share-button float-right"
-  >
-    <i className="fas fa-share"></i> 
-  </button>
+                      </h5>
+                      </div>
 
+                      <div className="mb-2">
+                      {item.published ? (
+          <button
+            onClick={() => {
+              toggleShareModal(item._id);
+              handleCopyUrl(`http://44.219.245.56/my-project/${item._id}`);
+            }}
+            className="btn share-button float-right"
+          >
+            <i className="fas fa-share"></i>
+          </button>
+        ) : (
+         <>
+ <div className="d-grid ">
+      <label>
+        Publish </label>
+        <AntSwitch
+          checked={false}
+          className="ml-2" // Adjust margin as needed
+          onChange={(checked) => {
+            // Replace 'handleSwitchToggle' with your actual function
+            handleSwitchToggle(item._id, checked);
+          }}
+        />
+     
+    </div>
+</>
 
-                      {isShareModalOpen && (
+            )}
+</div>
+
+                    
+                    </div>
+                    {isShareModalOpen && (
                         
-  <div className="share-modal">
-    <FacebookShareButton url={`http://44.219.245.56/my-project/${shareItemId}`}>
-      <FacebookIcon size={32} round />
-    </FacebookShareButton>
-    <TwitterShareButton url={`http://44.219.245.56/my-project/${shareItemId}`}>
-      <TwitterIcon size={32} round />
-    </TwitterShareButton>
-    <LinkedinShareButton url={`http://44.219.245.56/my-project/${shareItemId}`}>
-      <LinkedinIcon size={32} round />
-    </LinkedinShareButton>
-    <WhatsappShareButton url={`http://44.219.245.56/my-project/${shareItemId}`} >
- <WhatsappIcon size={32} round />
-</WhatsappShareButton>
-  </div>
-)}
-                    </h5>
-                    {/* </div> */}
-      
+                        <div className="share-modal">
+                          <FacebookShareButton url={`http://44.219.245.56/my-project/${shareItemId}`}>
+                            <FacebookIcon size={32} round />
+                          </FacebookShareButton>
+                          <TwitterShareButton url={`http://44.219.245.56/my-project/${shareItemId}`}>
+                            <TwitterIcon size={32} round />
+                          </TwitterShareButton>
+                          <LinkedinShareButton url={`http://44.219.245.56/my-project/${shareItemId}`}>
+                            <LinkedinIcon size={32} round />
+                          </LinkedinShareButton>
+                          <WhatsappShareButton url={`http://44.219.245.56/my-project/${shareItemId}`} >
+                       <WhatsappIcon size={32} round />
+                      </WhatsappShareButton>
+                        </div>
+                      )}
                     <div className="progress-bx style-1">
                       <div className="progress">
                         <div
@@ -323,7 +368,7 @@ const handleCopyUrl = async (url) => {
                       <div className="author-content">
                         <div className="author-head">
                           <h6 className="author-name">{item.user_detail[0].firstName} {item.user_detail[0].lastName}</h6>
-                          <ul className="rating-list">
+                          {/* <ul className="rating-list">
                             <li>
                               <i className="fa fa-star"></i>
                             </li>{" "}
@@ -339,26 +384,27 @@ const handleCopyUrl = async (url) => {
                             <li>
                               <i className="fa fa-star gray-light"></i>
                             </li>
-                          </ul>
+                          </ul> */}
                         </div>
                         <ul className="author-meta">
-                          <li className="campaign">12 Campaign</li>
-                          <li className="location">New York, London</li>
+                          <li className="campaign">{item?.user_detail[0]?.publishedCampaignsCount} Campaign</li>
+                          <li className="location">{item?.user_detail[0]?.country},{item?.user_detail[0]?.city}</li>
                         </ul>
                       </div>
                     </div>
                   </div>
                 </div>
               </motion.li>
-            );
-          })
-        ) : (
-          // Add a fallback JSX if filtered is not an array or has length 0
-          <p>No Campaigns available</p>
-        )
-      )
-  )}
-</AnimatePresence>
+              );
+            })
+          ) : (
+            // Add a fallback JSX if cardData is not an array or has length 0
+            <p>No Campaigns available</p>
+          )}
+        </motion.ul>
+      )}
+    </AnimatePresence>
+
 
         </ul>
       </div>

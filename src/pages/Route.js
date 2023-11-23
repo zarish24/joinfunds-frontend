@@ -103,7 +103,7 @@ function MainLayout(){
    
     useEffect(() => {
         const intervalId = setInterval(() => {
-          const storedValue = localStorage.getItem('user');
+          const storedValue = localStorage.getItem('isLoggedIn');
           const isUserLoggedIn = Boolean(storedValue);
           setIsLoggedIn(isUserLoggedIn);
     

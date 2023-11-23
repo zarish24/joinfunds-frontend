@@ -1197,7 +1197,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                   alt="google"
                   style={{ marginRight: "8px" }}
                 />
-                Sign up with Google
+                Sign up with Googleeeee
               </div>
             </LoginSocialGoogle>
           ) : null}
