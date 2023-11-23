@@ -58,7 +58,7 @@ const UpdateBlog = () =>{
                                     onChange={(e) => setEmail(e.target.value)}
                                 />
                                 <div className="input-group-addon">
-                                    <button type="submit" value="submit" className="btn btn-secondary btn-rounded-lg">
+                                    <button type="submit" value="submit" className="btn btn-secondary btn-rounded-lg text-white">
                                         <span>SUBSCRIBE</span>
                                         <i className="fa-solid fa-paper-plane"></i>
                                     </button>

@@ -89,16 +89,16 @@ const AkcelServices = () => {
                     </div>
                 </div>
                 <div className="col-lg-4 col-md-6 m-t30 wow fadeInUp" data-wow-delay="0.4s">
-                    <div className="content-bx style-1 bg-secondary text-center">
+                    <div className="content-bx style-1 bg-primary text-center">
                         <div className="inner-content">
                             <div className="icon-lg m-b20">
                                 <Link to={"/project-categories"} className="icon-cell">
                                     {SVGICON.HelpHeart}
                                 </Link>
                             </div>
-                            <h3 className="title">Want To Help?</h3>
-                            <p className="m-b30">Your financial support is very important for our global projects.</p>
-                            <Link className="btn btn-primary" to={"/project"}>Donate Now</Link>
+                            <h3 className="title text-white">Want To Help?</h3>
+                            <p className="m-b30 text-white">Your financial support is very important for our global projects.</p>
+                            <Link className="btn btn-light" to={"/project"}>Donate Now</Link>
                         </div>
                     </div>
                 </div>

@@ -1,9 +1,9 @@
 [data-primary="color-skin-1"]{
 // .color-skin-1{
 	
-	--primary: #1B8271;
-	--secondary: #FF7468;
-	--secondary-hover: #f64f40;
+	--primary: #002768;
+	--secondary: #bf0b32;
+	--secondary-hover: #002768;
 	--primary-hover: #186f61;
 	--primary-dark: #ea4619;
 	--rgba-primary-1: rgba(27,130,113,0.1);
@@ -55,9 +55,9 @@
 
 [data-primary="color-skin-3"]{
 // .color-skin-3{
-	--primary: #01BFBD;
-	--secondary: #F2F2F2;
-	--primary-hover: #00a2a1;
+	--primary: #002768;
+	--secondary: #bf0b32;
+	--primary-hover: #bf0b32;
 	--primary-dark: #008584;
 	--dark: #141818;
 	--rgba-primary-1: rgba(1,191,189,0.1);
@@ -91,13 +91,13 @@
 		color: #050d36;
 	}
 	.progress-bx.style-1 .progress .progress-bar.progress-bar-secondary {
-		background-color: #1B8271;
+		background-color: #002768;
 	}
 	.testimonial-1,
 	.icon-bx-wraper.style-1:before,
 	.form-wizard .nav-wizard .nav-link.active, 
 	.form-wizard.dz-form-step .nav-wizard .nav-link.completed,
 	.dz-team.style-1 .team-social li a{
-		background-color : #FF7468;
+		background-color : #bf0b32;
 	}
 }

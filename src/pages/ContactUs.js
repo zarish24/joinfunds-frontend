@@ -191,7 +191,7 @@ const ContactUs = () => {
                     </div>
                 </div>
                 <div className="col-md-12">
-                    <button name="submit" type="submit" value="Submit" className="btn btn-secondary">
+                    <button name="submit" type="submit" value="Submit" className="btn btn-secondary text-white">
                         Submit Now
                     </button>
                 </div>

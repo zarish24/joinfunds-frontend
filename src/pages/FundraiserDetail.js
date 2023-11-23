@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Modal } from "react-bootstrap";
+import { Modal, Form } from "react-bootstrap";
 import styles from "./styles.module.scss";
 import PageBanner from "../layouts/PageBanner";
 import { CommentBlog } from "../components/BlogDetailsLeftBar";
@@ -100,6 +100,7 @@ const closeModal = () => {
 };
 
   const [modalDonate, setModalDonate] = useState(false);
+  const [modalDonate1, setModalDonate1] = useState(false);
   const [modalStripeDonate, setModalStripeDonate] = useState(false);
   const [referModal, setReferModal] = useState(false);
   const [campaign, setCampaign] = useState({});
@@ -112,6 +113,18 @@ const closeModal = () => {
   const [amount, setAmount] = useState(0);
   const [reply, setReply] = useState(false);
   const [user_id, setUser_id] = useState("");
+  const [amount1, setAmount1] = useState(0);   
+  const [donationTypes, setDonationTypes] = useState('singleDonation');
+  const [gift, setGift] = useState("");     
+  const [email, setEmail] = useState("");       
+  const [firstName, setFirstName] = useState("");         
+  const [lastName, setLastName] = useState("");          
+  const [donationName, setDonationName] = useState("");        
+  const [comment, setComment] = useState("");        
+  const [followCampaign, setFollowCampaign] = useState(false);              
+  const [nfuseAnnouncments, setNfuseAnnouncments] = useState(false);      
+  const [monthlySubscription, setMonthlySubscription] = useState(false);     
+  const [singleDonation, setSingleDonation] = useState(true);                
   const [selectedPercentage, setSelectedPercentage] = useState(0);
   const numDonorsPerPage = 4; // Number of donors displayed per group
   const maxSteps = Math.ceil(
@@ -157,7 +170,7 @@ const closeModal = () => {
     );
     card = new CardWidget(stripe);
     card.mount();
-    // console.log("card",card)
+    console.log("card",card);
   };
   const setHandleSymbol = (e) => {
     const selectedValue = e.target.value; // Keep it as a string
@@ -196,11 +209,20 @@ const closeModal = () => {
         if (token) {
           setLoading(true);
           const bodyData = {
-            systemSelectedPercentage: selectedPercentage,
-            amount,
+            // systemSelectedPercentage: selectedPercentage,
             user_id,
             campaign_id: id,
             stripeToken: token.id,
+            amount: amount1,
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            donationName: donationName,
+            donationType: donationTypes,
+            comment: comment,
+            follow_campaign: followCampaign,
+            nfuse_announcments: nfuseAnnouncments,
+            optional_gift: gift
           };
 
           // console.log("body-data", bodyData);
@@ -214,7 +236,18 @@ const closeModal = () => {
             // setLoading(false);
             setPaymentUpdate(true);
             setLoading(false);
-            setAmount(0)
+            setAmount(0);
+            setAmount1(0);
+            setGift("");
+            setEmail("");
+            setFirstName("");
+            setLastName("");
+            setDonationName("");
+            setComment("");
+            setFollowCampaign(false);
+            setNfuseAnnouncments(false);
+            setMonthlySubscription(false);
+            setSingleDonation(true);
             setModalStripeDonate(false);
             window.alert("Transaction has been completed successfully!");
           } else {
@@ -225,7 +258,18 @@ const closeModal = () => {
         .catch((error) => {
           // console.error("API request failed", error);
           setLoading(false);
-          setAmount(0)
+          setAmount(0);
+          setAmount1(0);
+          setGift("");
+          setEmail("");
+          setFirstName("");
+          setLastName("");
+          setDonationName("");
+          setComment("");
+          setFollowCampaign(false);
+          setNfuseAnnouncments(false);
+          setMonthlySubscription(false);
+          setSingleDonation(true);
           window.alert(
             error?.response?.data?.message
               ? error?.response?.data?.message
@@ -240,10 +284,15 @@ const closeModal = () => {
         // console.error("Error creating token:", error);
       }
     } else {
-      // console.log("Card widget is not initialized");
+      console.log("Card widget is not initialized");
     }
 
     // Other code...
+  };
+  const handleRadioChange = (name, checked) => {
+    if (checked) {
+      setDonationTypes(name);
+    }
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -301,6 +350,10 @@ const closeModal = () => {
     } catch (error) {
       window.alert("API request faile", error.response.data.Message);
     }
+  };    
+  const saveDonateCampaign = () => {
+    setModalDonate1(false);
+    setModalStripeDonate(true);
   };
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
@@ -463,7 +516,7 @@ const closeModal = () => {
                   <div className="swiper fundraiser-gallery-wrapper">
                     <GallerySlider campaignImages={campaign?.campaign_images} />
                   </div>
-                  // {console.log("titssle", campaign?.subtitle)}
+                  {/* // {console.log("titssle", campaign?.subtitle)} */}
                   <h2 className="title">{campaign?.subtitle}</h2>
                   <p>{campaign?.description}</p>
                   {/* <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."</p> */}
@@ -475,7 +528,7 @@ const closeModal = () => {
                     aliqua. Ut enim ad minim veniam, quis nostrud exercitation
                     ullamco laboris nisi ut aliquip ex ea commodo consequat."
                   </p>
-                  // {console.log("sdds", user_id, campaign)}
+                  {/* // {console.log("sdds", user_id, campaign)} */}
                   {user_id !== campaign?.user_id ? (
                     <>
                       <ul className="fundraiser-bottom">
@@ -750,7 +803,7 @@ const closeModal = () => {
                   {user_id !== campaign?.user_id ? (
                     <>
                       <div className="widget style-1 widget_donate">
-                        <Link
+                        {/* <Link
                           to={"#"}
                           className="btn btn-donate btn-primary w-100"
                           data-bs-toggle="modal"
@@ -758,8 +811,17 @@ const closeModal = () => {
                           onClick={() => setModalDonate(true)}
                         >
                           <i className="flaticon-like me-3"></i> Donate Now
-                        </Link>
+                        </Link> */}
                         <Link
+                          to={"#"}
+                          className="btn btn-donate btn-primary w-100"
+                          data-bs-toggle="modal"
+                          data-bs-target="#modalDonate"
+                          onClick={() => setModalDonate1(true)}
+                        >
+                          <i className="flaticon-like me-3"></i> Donate Now
+                        </Link>
+                        {/* <Link
                           to={"#"}
                           className="btn btn-donate btn-primary w-100"
                           data-bs-toggle="modal"
@@ -768,7 +830,7 @@ const closeModal = () => {
                         >
                           <i className="flaticon-like me-3"></i> Donate Now
                           Through Stripe
-                        </Link>
+                        </Link> */}
 
                         {/* <div className="tagcloud">
                       <Link
@@ -1063,7 +1125,7 @@ const closeModal = () => {
                   {/* Your other form elements here */}
                 </div>
               </div>
-              <div className="col-lg-12">
+              <div className="col-lg-12" hidden>
                 <div className="form-group">
                   <label className="form-label" style={{marginBottom:"5px"}}>Amount</label>
                   <div className="input-group">
@@ -1196,7 +1258,6 @@ const closeModal = () => {
                 <div className="form-group mb-0 text-center">
                   <button
                     name="submit"
-                    type="submit"
                     value="Submit"
                     className="btn btn-primary btn-block"
                     onClick={handleSubmit}
@@ -1208,6 +1269,342 @@ const closeModal = () => {
             </div>
           </>
         )}
+      </Modal>
+      <Modal
+        className="fade modal"
+        show={modalDonate1}
+        onHide={() => setModalDonate1(false)}
+        size="lg"
+        centered
+      >
+        <Modal.Header
+          className="d-flex justify-content-center align-items-center"
+          style={{ backgroundColor: "rgb(27, 130, 113)" }}
+        >
+          <h4 className="text-center" style={{ color: "white" }}>
+            Donation to Campaign
+          </h4>
+          <button
+                type="button"
+                className="btn-close"
+                onClick={() => setModalDonate1(false)}
+              >
+                <i className="flaticon-close"></i>
+              </button>
+        </Modal.Header>
+        <Modal.Body className="modal-body px-5 py-3">
+          <p>"Every man shall give as he is also, according to the blessing of the LORD your God which He has given you." Deut. 16:17</p>
+          <form
+            style={{ display: "grid", gap: "10px" }}
+          >
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "10px",
+              }}
+            >
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr ",
+                  gap: "10px",
+                }}
+              >
+                <label>
+                  Amount
+                  <input
+                    type="text"
+                    placeholder="Enter Amount"
+                    value={amount1}
+                    onChange={(e) => {
+                        setAmount1(e.target.value);
+                    }} 
+                    style={{
+                      width: "100%",
+                      padding: "2px 6px",
+                      borderRadius: "5px",
+                      border: "2px solid #ccc",
+                    }}
+                    required
+                  />
+                  <small className="text-danger">Please enter a minimum donation of USD $5</small>
+                </label>
+              </div>
+            </div>
+
+            <div
+              style={{
+                gridTemplateColumns: "1fr 1fr",
+                gap: "10px",
+              }}
+            >
+             <label>Please chooese donation type <span className="text-danger">*</span> </label>
+              <div
+                style={{
+                  display: "flex",
+                  gridTemplateColumns: "1fr ",
+                  gap: "10px",
+                }}
+              >
+            <Form.Check
+              checked={donationTypes === 'singleDonation'}
+              onChange={(e) => handleRadioChange('singleDonation', e.target.checked)}
+              inline
+              label="Single Donation"
+              name="group1"
+              type="radio"
+            />
+            <Form.Check
+              checked={donationTypes === 'monthlySubscription'}
+              onChange={(e) => handleRadioChange('monthlySubscription', e.target.checked)}
+              inline
+              label="Monthly Subscription"
+              name="group1"
+              type="radio"
+            />
+              </div>
+            </div>
+            <div
+              style={{
+                display: "block",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "10px",
+                background: '#d7d7d7',
+                padding: '15px',
+              }}
+            >
+
+              <h4>Help Keep Nfuse Free!</h4>
+              <p className="text-dark mb-2"> <b> Unlike other sides. Nfuse is FREE. We rely 100% on Givers like you to operate our site.</b></p>
+                 <label>Add an optional gift to Nfuse below</label>
+                  <div className="input-group mb-2 w-50">
+                    <select
+                      className="form-control"
+                      name="chain_id"
+                      value={gift}
+                      onChange={(e) => {
+                        setGift(e.target.value);
+                      }} 
+                      style={{
+                        border: "2px solid rgb(204, 204, 204)",
+                      }}
+                      // onChange={setChain}
+                    >
+                      <option disabled>Choose Amount</option>
+                      <option value="1">$ 1</option>
+                      <option value="2">$ 2</option>
+                      <option value="3">$ 3</option>
+                      <option value="4">$ 4</option>
+                      <option value="5">$ 5</option>
+                      <option value="6">$ 6</option>
+                      <option value="7">$ 7</option>
+                      <option value="8">$ 8</option>
+                      <option value="9">$ 9</option>
+                      <option value="10">$ 10</option>
+                    </select>
+                  </div>
+            <p className="text-dark"> <b> Total charges: USD $ </b></p>
+            </div>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "2fr 1fr 1fr",
+                gap: "10px",
+              }}
+            >
+              <label>
+                Email<span className="text-danger">*</span>
+                <input
+                  className='mb-0'
+                  placeholder= "Enter Email"   
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}                 
+                  style={{
+                    width: "calc(100% - 10px)",
+                    padding: "2px 6px",
+                    borderRadius: "5px",
+                    border: "2px solid #ccc",
+                    marginRight: "30px",
+                    marginBotttom: "0px",
+                    // boxShadow: "rgba(0, 0, 0, 0.4) 0px 2px 5px",
+                  }}
+                  required
+                />
+             
+              </label>
+
+              <label>
+                First Name<span className="text-danger">*</span>
+                <input
+                  type="text"
+                  placeholder= "Enter First Name"       
+                  value={firstName}
+                  onChange={(e) => {
+                    setFirstName(e.target.value);
+                  }}                     
+                  style={{
+                    width: "100%",
+                    padding: "2px 6px",
+                    borderRadius: "5px",
+                    border: "2px solid #ccc",
+                  }}
+                  required
+                />
+              </label>
+
+              <label>
+                Last Name<span className="text-danger">*</span>
+                <input
+                  type="text"
+                  value={lastName}
+                  onChange={(e) => {
+                    setLastName(e.target.value);
+                  }}    
+                  placeholder= "Enter Last Name"                    
+                  style={{
+                    width: "100%",
+                    padding: "2px 6px",
+                    borderRadius: "5px",
+                    border: "2px solid #ccc",
+                  }}
+                  required
+                />
+              </label>
+            </div>
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "10px",
+              }}
+            >
+              
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr ",
+                  gap: "10px",
+                }}
+              >
+                <label>
+                  Show donation name as
+                  <textarea 
+                    value={donationName}
+                    onChange={(e) => {
+                      setDonationName(e.target.value);
+                    }}    
+                     style={{
+                      width: "calc(100% - 10px)",
+                      padding: "2px 6px",
+                      borderRadius: "5px",
+                      border: "2px solid #ccc",
+                    }}
+                    className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                  {/* Optionally, you can display the entered link */}
+                  {/* {socialMediaLink && <p>Entered Social Media Link: {socialMediaLink}</p>} */}
+                </label>
+                <Form.Check
+                  checked={followCampaign}  // Use 'checked' instead of 'value'
+                  onChange={(e) => {
+                    setFollowCampaign(e.target.checked);  // Use 'e.target.checked' to get the checked state
+                  }}    
+                  inline
+                  label="Follow this campaign?"
+                  name="follow_campaign"
+                  type="checkbox"
+                />
+              </div>
+
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr ",
+                  gap: "10px",
+                }}
+              >
+                <label>
+                  Leave a Comment
+                  <textarea 
+                    value={comment}
+                    onChange={(e) => {
+                      setComment(e.target.value);
+                    }}  
+                     style={{
+                      width: "100%",
+                      padding: "2px 6px",
+                      borderRadius: "5px",
+                      border: "2px solid #ccc",
+                    }}
+                    className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                  {/* <small className="text-gray">* Campaign owners have the ability to delete derogatory comments</small> */}
+                  {/* Optionally, you can display the entered link */}
+                  {/* {socialMediaLink && <p>Entered Social Media Link: {socialMediaLink}</p>} */}
+                </label>
+                <Form.Check
+                  checked={nfuseAnnouncments}  // Use 'checked' instead of 'value'
+                  onChange={(e) => {
+                    setNfuseAnnouncments(e.target.checked);  // Use 'e.target.checked' to get the checked state
+                  }}  
+                  inline
+                  label="Send me Nfuse announcments"
+                  name="group1"
+                  type="checkbox"
+                />
+              </div>
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "2fr ",
+                  gap: "10px",
+                }}
+              >
+              <div className="py-2 bg-primary text-white text-center" style={{
+                width: "100%",
+                borderRadius: '7px',
+              }} onClick={saveDonateCampaign}>
+                Contiune
+              </div>
+              </div>
+            </div>
+          </form>
+        </Modal.Body>
+        <Modal.Footer
+          style={{ display: "flex", justifyContent: "space-between" }}
+        >
+
+          <div 
+            className="sign-text"
+            style={{
+              marginLeft: "auto",
+              marginRight: "auto",
+            }}
+          >
+            <span>
+              By contiunuing, you agree to the Nfuse
+              <Link
+                to="#"
+                className="btn-link collapsed mx-1"
+                data-bs-toggle="collapse"
+              >
+                 terms 
+              </Link>
+               and acknowledge receipt of our  
+               <Link
+                to="#"
+                className="btn-link collapsed mx-1"
+                data-bs-toggle="collapse"
+              >
+                 privacy policy
+              </Link>
+               {" "}
+              
+            </span>
+          </div>
+        </Modal.Footer>
       </Modal>
       <PayOutModal isOpen={isModalOpen} closeModal={closeModal} campaignId={CampaignId} />
 
