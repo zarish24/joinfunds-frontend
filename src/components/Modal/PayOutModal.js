@@ -19,20 +19,21 @@ const PayOutModal = ({ isOpen, closeModal ,campaignId}) => {
     e.preventDefault();
   
    
-   
+    
     const user = JSON.parse(localStorage.getItem("user"));
-const  setToken=user?.token;
-   
+    const  setToken=user?.token;
     const payload = {
-        email:email,
-      firstName:firstName,
-      lastName:lastName,
+      email:email,
+  firstName:firstName,
+  lastName:lastName,
       accountId:cardNumber,
       campaign_id:campaignId,
       amount:nameOnCard,
       postalCode: postalCode,
       country:country,
+      
     };
+    console.log('setToken',setToken)
   console.log('payload',payload )
     try {
       // if (!email || !firstName || !lastName || !cardNumber ||  !postalCode || !country) {
@@ -42,7 +43,7 @@ const  setToken=user?.token;
       const response = await fetch( `${process.env.REACT_APP_BACKEND_URL}/api/payments/makePayoutRequest`, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer${setToken}`,
+          Authorization:  ` Bearer ${setToken}`,
           
         },
         body: JSON.stringify(payload),
@@ -71,6 +72,15 @@ const  setToken=user?.token;
       
       closeModal();
     } catch (error) {
+      setEmail('');
+      setFirstName('');
+      setLastName('');
+      setCardNumber('');
+      setExpiryDate('');
+      setCvc('');
+      setNameOnCard('');
+      setPostalCode('');
+      setCountry('');
       console.error('Error making payout request:', error.message);
       
     }

@@ -20,7 +20,7 @@ import {
 } from "../../node_modules/@mui/material/index";
 import { ThreeDots } from "../../node_modules/react-loader-spinner/dist/index";
 import axios from "axios";
-
+import CitiesList from './CitiesList'
 const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
   const [loginModal, setloginModal] = useState(false);
   const [resetModal, setResetModal] = useState(false);
@@ -43,7 +43,21 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
   const [phoneError, setPhoneError] = useState("");
   const [passwordError, setPasswordError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [selectedCityPostalCode, setSelectedCityPostalCode] = useState('');
+console.log('selectedCityPostalCode',selectedCityPostalCode)
+console.log('setZip',Zip)
 
+  // Assuming you have the CitiesList object
+  // const cities = Object.keys(CitiesList);
+  const handleCityChange = (e) => {
+    const selectedCity = e.target.value;
+console.log('selectedCity',selectedCity)
+
+    setCity(selectedCity);
+    setZip(CitiesList[selectedCity]); 
+    
+    setSelectedCityPostalCode(CitiesList[selectedCity]); 
+  };
   const togglePasswordVisibility = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
@@ -131,7 +145,6 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
     if (apiEndpoint === "api/user/register") {
 
       const validateAmericanPhoneNumber = (phoneNumber) => {
-        console.log('phoneNumberphoneNumber',phoneNumber)
         // Remove non-numeric characters
         const numericValue = phoneNumber.replace(/\D/g, '');
       
@@ -140,6 +153,9 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
       };
     
       if (!validateAmericanPhoneNumber(phone)) {
+        console.log('phoneNumberphoneNumber',phone)
+        
+
         toast.error('Please enter a valid American phone number.');
         return;
       }
@@ -1054,26 +1070,33 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
 
               <label>
                 City
-                <input
-                  type="text"
-                  value={City}
-                  onChange={(e) => setCity(e.target.value)}
-                  style={{
-                    width: "100%",
-                    padding: "2px",
-                    borderRadius: "5px",
-                    border: "2px solid #ccc",
-                  }}
-                  required
-                />
+                <select
+        value={City}
+        // onChange={(e) => setCity(e.target.value)}
+        onChange={handleCityChange}
+        style={{
+          width: "100%",
+          padding: "5px",
+          borderRadius: "5px",
+          border: "2px solid #ccc",
+        }}
+        required
+      >
+        <option value="" disabled>Select a city</option>
+        {Object.keys(CitiesList).map((cityName) => (
+            <option key={cityName} value={cityName}>
+              {cityName}
+            </option>
+          ))}
+      </select>
               </label>
 
               <label>
                 Zip Code
                 <input
                   type="text"
-                  value={Zip}
-                  onChange={(e) => setZip(e.target.value)}
+                  value={selectedCityPostalCode}
+                  // onChange={(e) => setZip(e.target.value)}
                   style={{
                     width: "100%",
                     padding: "2px",
@@ -1081,6 +1104,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                     border: "2px solid #ccc",
                   }}
                   required
+                  disabled
                 />
               </label>
             </div>

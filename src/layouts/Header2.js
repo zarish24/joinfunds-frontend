@@ -993,7 +993,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
             }}
           >
             <label>
-              Passworddddd
+              Password
               {passwordError && <p style={{ color: 'red', fontSize: '12px', marginLeft: '8px', marginTop: '4px' }}>{passwordError}</p>}
               <input
               className='mb-0'

@@ -25,7 +25,7 @@ const RecivedDonations = () => {
       }
 
       try {
-        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/payments/getSentDonationDetails`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/payments/getRecievedTransactions`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -33,7 +33,7 @@ const RecivedDonations = () => {
             },
             body: JSON.stringify({
               page: currentPage,
-              items_per_page: RecordsPerPage,
+              limit: RecordsPerPage,
             }),
           });
 
@@ -43,7 +43,7 @@ const RecivedDonations = () => {
 
         const data = await response.json();
         setTotalPages(Math.ceil(data.totalCount / RecordsPerPage));
-        setDummyData(data.sentDonations);
+        setDummyData(data.transactions);
       } catch (error) {
         // console.error('Error fetching data/:', error);
       }
@@ -88,23 +88,30 @@ const RecivedDonations = () => {
           <table style={{ borderCollapse: 'collapse', width: '70%', margin: 'auto' }}>
             <thead>
               <tr>
-                <th style={cellStylethead}>Campaign</th>
                 <th style={cellStylethead}>Date</th>
-                <th style={cellStylethead}>Donation to Campaign</th>
-                <th style={cellStylethead}>Donation to Nfuse</th>
-                <th style={cellStylethead}>Donation Status</th>
+                <th style={cellStylethead}>Campaign</th>
+                <th style={cellStylethead}>Donation </th>
                 <th style={cellStylethead}>Donation Method</th>
+                <th style={cellStylethead}> Name</th>
+                {/* <th style={cellStylethead}> Email</th> */}
               </tr>
             </thead>
             <tbody>
               {dummyData.map(request => (
                 <tr key={request._id}>
-                  <td style={cellStyle}>{request.title}</td>
                   <td style={cellStyle}>{formattedDate(request.created_time)}</td>
+                  <td style={cellStyle}>{request.title}</td>
                   <td style={cellStyle}>{request.amount}</td>
-                  <td style={cellStyle}>{request.system_fees}</td>
-                  <td style={cellStyle}>{request.payment_status}</td>
                   <td style={cellStyle}>{request.payment_method}</td>
+                  <td style={cellStyle}>
+  {request.user_details.firstName && request.user_details.lastName
+    ? `${request.user_details.firstName} ${request.user_details.lastName}`
+    : 'Anonymous Donation'}
+
+</td>
+                  {/* <td style={cellStyle}>
+  {request.user_details.email ? request.user_details.email : 'Anonymous Email'}
+</td> */}
                 </tr>
               ))}
             </tbody>
