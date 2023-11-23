@@ -29,7 +29,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
   const [FirstN, setFirstN] = useState("");
   const [LastN, setLastN] = useState("");
   const [Zip, setZip] = useState("");
-  const [country, setCountry] = useState("");
+  const [country, setCountry] = useState("United States");
   const [MediaLink, setMediaLink] = useState("");
   const [City, setCity] = useState("");
   const [password, setPassword] = useState("");
