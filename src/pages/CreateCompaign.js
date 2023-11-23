@@ -28,7 +28,7 @@ const CreateCompaign = () => {
     created_by:'',
     donation_to_nfuse:'',
     campaign_url:'',
-    country:'',
+    country:'United States',
     campaign_status: 'pending',  
     campaign_type: 'funding',  
     user_id: ''
@@ -323,8 +323,7 @@ const CreateCompaign = () => {
                         className="form-control"
                         required
                       >
-                        <option value="america">America</option>
-                        <option value="USA">USA</option>
+                        <option value="United States">USA</option>
                  
                     
                       </select>
@@ -342,11 +341,11 @@ const CreateCompaign = () => {
                         className="form-control"
                         required
                       >
-                        <option value="1%">1%</option>
-                        <option value="2%">2%</option>
-                        <option value="3%">3%</option>
-                        <option value="4%">4%</option>
-                        <option value="5%">5%</option>
+                        <option value="1">1%</option>
+                        <option value="2">2%</option>
+                        <option value="3">3%</option>
+                        <option value="4">4%</option>
+                        <option value="5">5%</option>
                     
                       </select>
                 </div>
