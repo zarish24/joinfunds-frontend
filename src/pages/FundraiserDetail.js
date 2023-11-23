@@ -1125,7 +1125,7 @@ const closeModal = () => {
                   {/* Your other form elements here */}
                 </div>
               </div>
-              <div className="col-lg-12">
+              <div className="col-lg-12" hidden>
                 <div className="form-group">
                   <label className="form-label" style={{marginBottom:"5px"}}>Amount</label>
                   <div className="input-group">

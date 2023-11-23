@@ -82,7 +82,7 @@ const RecivedDonations = () => {
 
   return (
     <>
-      <PageBanner maintitle=" RecivedDonations" pagetitle="My RecivedDonations" background={bg} />
+      <PageBanner maintitle=" RecivedDonations" pagetitle="My Recived Donations" background={bg} />
       <div style={{ textAlign: 'center', marginTop: '20px', height: '100vh', marginBottom: '30px' }}>
         {dummyData.length > 0 ? (
           <table style={{ borderCollapse: 'collapse', width: '70%', margin: 'auto' }}>
@@ -157,7 +157,7 @@ const cellStyle = {
 };
 const cellStylethead = {
   border: '1px solid #ddd',
-  background: "rgb(243,111,99)",
+  background: "#bf0b32",
   color: '#fff',
   padding: '8px',
   textAlign: 'center',

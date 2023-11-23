@@ -27,6 +27,7 @@ import { ThemeContext } from "../context/ThemeContext";
 import Header2 from '../layouts/Header2';
 import Header from '../layouts/Header';
 import Footer2 from './../layouts/Footer2';
+import Footer from '../layouts/Footer';
 import { IMAGES } from '../constant/theme';
 //componenet
 import Mainslider2 from '../components/Home2/Mainslider2';
@@ -374,7 +375,7 @@ const Home2 = () => {
                     </div>
                 </div>
             </div>
-           <Footer2 />
+           <Footer />
             <Modal className="modal fade modal-wrapper" id="read" centered show={readModal} onHide={setReadModal}> 
                 <div className="modal-body">
                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>

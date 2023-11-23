@@ -22,7 +22,7 @@ const UnderMaintenance = () => {
                     
                     <svg className="shape-1 move-2" viewBox="0 0 187 559" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M158 245C71.6 224.2 -50.6667 146.333 -101 110V497C95.8 534.6 153.667 344.667 158 245Z" fill="#ffd22f"/>
-                        <path d="M-113 2C-12 190 292.675 -12.9435 143 241C54 392 93 529 -100 556" stroke="#ff7468" strokeWidth="6"/>
+                        <path d="M-113 2C-12 190 292.675 -12.9435 143 241C54 392 93 529 -100 556" stroke="#bf0b32" strokeWidth="6"/>
                     </svg>
                     
                     <svg className="shape-2 rotating" viewBox="0 0 114 114" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -44,7 +44,7 @@ const UnderMaintenance = () => {
                     </svg>
                     
                     <svg className="shape-3" viewBox="0 0 482 279" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M4 3C53.9035 88.8689 116.283 185.582 247.28 195.034C333.831 201.279 435.198 155.222 489 277" stroke="#ff7468" strokeWidth="8"/>
+                        <path d="M4 3C53.9035 88.8689 116.283 185.582 247.28 195.034C333.831 201.279 435.198 155.222 489 277" stroke="#bf0b32" strokeWidth="8"/>
                         <path d="M343.949 87.7759C238.291 82.6 232.707 40.9079 204 3H483V202C463.517 120.839 430.681 92.0248 343.949 87.7759Z" fill="#ffd22f"/>
                     </svg>
                     

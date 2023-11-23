@@ -49,25 +49,16 @@ const AboutUs = () => {
                   <h5 className="sub-title">Who We Are</h5>
                   <h2>NFUSE</h2>
                   <p className="m-t20">
-                    Nfuse is a donation platform supporting freedom loving
-                    people and projects. We support freedom for everyone.
-                    Freedom doesn’t pick a political side- everyone should have
-                    access to many forms of freedom. We have seven categories
-                    where you can help expand freedom for yourself and for
-                    others. Nfuse is here for ALL. By having a large reach of
-                    potential donors, large platform such as Nfuse can do so
-                    much more than an individual or small group of people .
-                    Initially, NFUSW will serve campaigns in the USA and Canada.
-                    Ultimately, we will offer Nfuse globally WHY CHOOSE NFUSE?
-                    We are certainly not the only donation platform. However, we
-                    are the platform with freedom at our core. It’s ingrained in
-                    everything we do here at Nfuse. We understand that Freedom
-                    is Macro meaning the Constitution, First Amendment, 2nd
-                    Amendment , etc... and we understand that Freedom is Micro-
-                    individualized and personal. We are here to support all
-                    kinds of freedom because we want the world to gain liberty
-                    and live in peace be it a personalized improvement or a
-                    bigger matter.{" "}
+                  Nfuse is a donation platform with a simple mission of supporting freedom-loving people and projects.  
+                  We support freedom for everyone. Freedom doesn’t pick a political side- everyone should have access to the 
+                  many forms of freedom.  We have a broad range of campaign  categories where you can help expand 
+                  freedom for yourself and for others.{" "}
+                  </p>
+                  <p>
+                  Nfuse is here for ALL.
+                  </p>
+                  <p>
+                  By having a large reach of potential donors, Nfuse can do so much more than an individual or small group of people can do.
                   </p>
                 </div>
 
@@ -143,23 +134,19 @@ const AboutUs = () => {
             </div>
           </div>
         </section>
-        <section hidden className="content-inner">
+        <section className="content-inner">
           <div className="container">
             <div className="section-head text-center">
-              <h5 className="sub-title">CATEGORIES</h5>
-              <h2 className="m-b20">Why choose Nfu$e</h2>
+              {/* <h5 className="sub-title">CATEGORIES</h5> */}
+              <h2 className="m-b20">Why choose Nfuse</h2>
               <p>
-                We are certainly not the only donation platform. However, we are
-                the platform with freedom at our core. It’s ingrained in
-                everything we do here at Nfuse. We understand that Freedom is
-                Macro meaning the Constitution, First Amendment, 2nd Amendment ,
-                etc... and we understand that Freedom is Micro- individualized
-                and personal. We are here to support all kinds of freedom
-                because we want the world to gain liberty and live in peace be
-                it a personalized improvement or a bigger matter.
+              We are certainly not the only donation platform.  However, we are the platform with freedom at our core.  It’s ingrained in everything we do here at Nfuse.  We understand that Freedom is Macro meaning the Constitution, First Amendment, 2nd Amendment , etc… and we understand that Freedom is also Micro- individualized and personal.  We are here to support all kinds of freedom because we want the world to gain liberty and to live in peace; be it a personalized improvement or a bigger matter.
+              </p>
+              <p>
+              FIND YOUR PURPOSE.  Get Nufsed.  Live free.
               </p>
             </div>
-            <div className="row">
+            <div className="row" hidden>
               {wrapperBlog.map((item, ind) => (
                 <div className="col-lg-6 col-md-12 col-sm-12" key={ind}>
                   <div className="icon-bx-wraper box-hover style-2 m-b30">
