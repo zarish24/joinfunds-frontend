@@ -9,10 +9,10 @@ const servicesBlog = [
     {title:"Industry’s best fundraising success", icon:SVGICON.DoubleHeart },
     {title:"Supported By 55,00,000+ Donors" , icon:SVGICON.Ring},
     {title:"Easy-To-Manage Tools To Boost Results",icon:SVGICON.HeartWindow},
-    {title:"Akcel Get Expert Support 24/7",icon:SVGICON.HeartHelp},
+    {title:"Nfuse Get Expert Support 24/7",icon:SVGICON.HeartHelp},
     {title:"A Dedicated Smart-Dashboard",icon:SVGICON.DollerBox},
     {title:"Receive donations via all popular payment",icon:SVGICON.HeartHome},
-    {title:"nternational Payment Support",icon:SVGICON.ThumbDoller1},
+    {title:"International Payment Support",icon:SVGICON.ThumbDoller1},
     {title:"Withdraw Funds Without Hassle", icon:SVGICON.ThumbDoller2},
 ];
 

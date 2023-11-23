@@ -21460,7 +21460,7 @@ ul a.rsswidget {
         -webkit-transition: all 0.7s;
         -ms-transition: all 0.7s;
         transition: all 0.7s;
-        max-width: 100%; }
+        max-width: 30%; }
       .clients-wrapper .swiper-wrapper .clients-logo .logo-main {
         opacity: 0.2; }
       .clients-wrapper .swiper-wrapper .clients-logo:hover .logo-main {
