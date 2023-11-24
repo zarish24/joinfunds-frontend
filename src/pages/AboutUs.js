@@ -77,9 +77,7 @@ const AboutUs = () => {
                         {data.title}
                       </h5>
                       <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua.{" "}
+                      Here at Nfuse we believe each person has a responsibility to help where he or she can.  We take that statement seriously and that is why we created this platform that provides a venue for helping others.{" "}
                       </p>
                     </div>
                   </div>

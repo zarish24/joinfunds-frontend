@@ -12,8 +12,8 @@ const PayOutModal = ({ isOpen, closeModal ,campaignId}) => {
   const [nameOnCard, setNameOnCard] = useState('');
   const [postalCode, setPostalCode] = useState('');
   const [country, setCountry] = useState('');
-  console.log('campaignId:', campaignId);
-  console.log('closeModal:', closeModal);
+  // console.log('campaignId:', campaignId);
+  // console.log('closeModal:', closeModal);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

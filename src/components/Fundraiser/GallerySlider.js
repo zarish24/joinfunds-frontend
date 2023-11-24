@@ -26,7 +26,7 @@ import { FreeMode, Navigation, Thumbs } from "swiper";
 // ];
 
 export default function GallerySlider(props) {
-  console.log("campaign_images",props.campaignImages)
+  // console.log("campaign_images",props.campaignImages)
  const swiperFirst = Array.isArray(props.campaignImages)
   ? props.campaignImages.map((image, index) => {
       return {
@@ -34,7 +34,7 @@ export default function GallerySlider(props) {
       };
     })
   : [];
-  console.log("swiperFirst", props.campaignImages);
+  // console.log("swiperFirst", props.campaignImages);
   const images = props.campaignImages
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
 

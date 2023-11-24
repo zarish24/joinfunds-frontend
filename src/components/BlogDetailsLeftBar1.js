@@ -170,26 +170,26 @@ const BlogDetailsLeftBar = () => {
                         </ul>
                     </div> */}
                     <div className="dz-post-text">
-                        <h1 className="dz-title">How You Can Make a Difference This December</h1>
-                        <p>Amidst the joyous festivities and gift-giving rituals of the holiday season, it's easy to get swept away in the whirl wind of preparations and lose sight of the true essence of this particular time. The holidays are not just about material possessions and external celebrations; they are a profound opportunity to reflect on our blessings, express gratitude, and extend kindness to those in need.</p>
+                        <h1 className="dz-title">A Grateful Harvest: Giving Back on Thanksgiving</h1>
+                        <p>As the aroma of roasting turkey and the warmth of family gatherings fill the air, Thanksgiving serves as a poignant reminder to express gratitude and extend a helping hand to those in need. In the spirit of this season, let's explore the joy of giving back and the profound impact it can have on our communities.</p>
                         <ul className="wp-block-gallery columns-3">
                             <li className="blocks-gallery-item"><img alt="" src={blog2} /></li>
                             <li className="blocks-gallery-item"><img alt="" src={blog1} /></li>
                         </ul>
-                        <p>This year, let us make a conscious effort to revert our focus to the core values that underpin the holiday spirit – giving, donating, crowdfunding, safeguarding freedom of speech, and upholding the sound of freedom. By extending our generosity and compassion, not only we can bring joy and relief to others but also enrich our own lives and contribute to a more just and compassionate world.</p>
+                        <p>Thanksgiving is more than just a feast; it's a time to reflect on the blessings we've received and share them with others. Consider starting your day by acknowledging the simple joys in life – family, health, and the support of friends. Embrace gratitude as the driving force behind your desire to make a positive impact</p>
                         <blockquote hidden className="block-quote style-1">
                             <p>“You can make anything look good. Only a quarter of young adults are financially literate. You don’t want to overwhelm them with terrible advice.”</p>
                             <cite> Akcel </cite>
                         </blockquote>
                         <p hidden>Aliquam in laoreet dui. Aliquam blandit nisl lacus, sed suscipit massa pulvinar vitae. Proin non dui eros. Mauris lobortis arcu a quam tincidunt, at consectetur urna dapibus. Curabitur sagittis nisl vel dolor porta, eu fringilla est accumsan. Donec eleifend dignissim risus a tempor. Sed suscipit ultrices viverra.</p>
                         <ul>
-                            <li>Donate to the Cause You Care About</li>
-                            <li>Volunteer Your Time and Talents.</li>
-                            <li>Compassionate connection with Homeless.</li>
-                            <li>Spread Kindness in Your Neighborhood</li>
-                            <li>Support Local Businesses</li>
+                            <li>Gratitude in Action</li>
+                            <li>Highlighting Local Heroes</li>
+                            <li>The Power of Volunteering</li>
+                            <li>Charities Making a Difference</li>
+                            <li>Expressing Thanks Through Donations</li>
                         </ul>
-                        <p>This holiday season, from donations to volunteering for needy, homeless, and low-income people, Nfuse has made it easy to spread joy and compassion to those around you. Nfuse can help to fundraise campaigns so we can all work together to make the future brighter and more hopeful. Sign up for a cause that matters to bring a difference in the community this holiday season. Remember, even the slightest acts of kindness can give birth to a ripple effect and create a more positive world.</p>
+                        <p>As we gather around the table to share a bountiful Thanksgiving meal, let's also gather our collective strength to make a positive impact on the world around us. By embracing gratitude and giving back, we can turn the spirit of Thanksgiving into a year-round celebration of compassion, kindness, and generosity. Together, let's sow the seeds of positive change and cultivate a harvest of hope for all. Happy Thanksgiving!.</p>
                     </div>
                 </div>
                 <div className="dz-share-post" hidden>

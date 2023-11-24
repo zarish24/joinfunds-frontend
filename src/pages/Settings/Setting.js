@@ -2,9 +2,9 @@ import { React, useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Typography, Grid, Button, Tabs, Tab } from '../../../node_modules/@mui/material/index';
 import styles from './styles.module.scss';
+import styled from 'styled-components';
 import editIcon from '../../assets/images/editIcon.svg';
 import HeaderUser from '../../assets/images/header_user.svg';
-import styled from 'styled-components';
 import axios from '../../../node_modules/axios/index';
 import { ThreeDots } from '../../../node_modules/react-loader-spinner/dist/index';
 import { useFormik } from 'formik';
@@ -108,7 +108,7 @@ const Setting = (props) => {
     const [loading, setLoading] = useState(false);
     const [passwordTypeConfirm, setPasswordTypeConfirm] = useState('password');
 
-    const [legalIdentity, setLegalIdentity] = useState("");   
+    const [legalIdentity, setLegalIdentity] = useState("myselft");   
     const [legalFirstName, setLegalFirstName] = useState("");   
     const [legalLastName, setLegalLastName] = useState("");      
     const [legalEmail, setLegalEmail] = useState("");       
@@ -118,7 +118,7 @@ const Setting = (props) => {
     const [legalCity, setLegalCity] = useState("");             
     const [legalState, setLegalState] = useState("");          
     const [legalPostal, setLegalPostal] = useState("");
-    const [legalCountry, setLegalCountry] = useState("");      
+    const [legalCountry, setLegalCountry] = useState("United States");      
     const [legalSecurityNumber, setLegalSecurityNumber] = useState("");      
     
     const [legalCheckingAccountNumber, setLegalCheckingAccountNumber] = useState("");    
@@ -127,6 +127,22 @@ const Setting = (props) => {
     const [legalDay, setLegalDay] = useState(1);
     const [legalMonth, setLegalMonth] = useState(1);
     const [legalYear, setLegalYear] = useState(2023);
+    const [legalFirstNameError, setLegalFirstNameError] = useState(false);
+    const [legalLastNameError, setLegalLastNameError] = useState(false);
+    const [legalLastEmailError, setLegalLastEmailError] = useState(false);
+    const [legalLastPhoneNumberError, setLegalLastPhoneNumberError] = useState(false);
+    const [legalSocailMediaError, setLegalSocailMediaError] = useState(false);
+    const [legalStateError, setLegalStateError] = useState(false);
+    const [legalCityError, setLegalCityError] = useState(false);
+    const [legalPostalError, setLegalPostalError] = useState(false);
+
+    const [legalAddressError, setLegalAddressError] = useState(false);
+    const [legalSecurityNumberError, setLegalSecurityNumberError] = useState(false);
+    const [legalCheckingAccountNumberError, setLegalCheckingAccountNumberError] = useState(false);
+    const [legalRoutingNumberError, setLegalRoutingNumberError] = useState(false);
+    const [legalConfirmCheckingAccountNumberError, setLegalConfirmCheckingAccountNumberError] = useState(false);
+    const [legalIdentityError, setLegalIdentityError] = useState(false);
+
     const [phoneError1, setPhoneError1] = useState(false);
       console.log('link',link);    
    
@@ -311,7 +327,9 @@ const config = {
     const handleSecuritynumberChange = (e) => {
         const input = e.target.value;
         const numbers = input.replace(/[^0-9]/g, '');
-      
+        if(input.length > 0){
+            setLegalLastPhoneNumberError(false);
+        }
         if (numbers.length === 9) {
           // Format the SSN if it has exactly 9 digits
           const formattedSSN = numbers.substr(0, 3) + '-' + numbers.substr(3, 2) + '-' + numbers.substr(5, 4);
@@ -336,6 +354,7 @@ const config = {
             try {
                 const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/bank-details/getBankAccountDetails`, config)
                 const Data= response.data;
+                console.log("Data >>>>>>>>>>>>>>>>>>>>>>>>>>> ", Data);
                 setLegalIdentity(Data.identity)
              
                 setLegalFirstName(Data.firstName);
@@ -380,90 +399,152 @@ const config = {
         
       };
     const saveRecipientDetails = async () => {
-        const items = JSON.parse(localStorage.getItem('user'));
-        const token = items?.token;       
-        setLoading(true);
-        const config = {
-            headers: {
-              Authorization: `Bearer ${token}`, 
-            },
-        };
-        const option = {
-            identity: legalIdentity,
-            firstName: legalFirstName,
-            lastName: legalLastName,
-            email: legalEmail,
-            phoneNumber: legalPhoneNumber,
-            socialMediaLink: legalSocailMedia,
-            address: legalAddress,
-            city: legalCity,
-            state: legalState,
-            postalCode: legalPostal,
-            country: legalCountry,
-            socialSecurityNumber: legalSecurityNumber,
-            dateOfBirth: `${legalDay} ${legalMonth} ${legalYear}`,
-            accountNumber: legalCheckingAccountNumber,
-            routingNumber: legalRoutingNumber
-        };
-        const requiredFields = [
-            'identity',
-            'firstName',
-            'lastName',
-            'email',
-            'phoneNumber',
-            'address',
-            'city',
-            'state',
-            'postalCode',
-            'country',
-            'socialSecurityNumber',
-            'dateOfBirth',
-            'accountNumber',
-            'routingNumber',
-        ];
-    
-        const emptyFields = requiredFields.filter(field => !option[field]);
-    
-        if (emptyFields.length > 0) {
-            toast.error(`Please fill in the following fields: ${emptyFields.join(', ')}`);
-            setLoading(false);
-            return;
+        if(legalFirstName.length === 0){
+            setLegalFirstNameError(true);
         }
-        // Convert the option object to JSON
-        const jsonData = JSON.stringify(option);
-     
-        const formData = new FormData();
-        for (var key in option) {
-            formData.append(key, option[key]);
+        if(legalLastName.length === 0){
+            setLegalLastNameError(true);
         }
-        console.log("formData Recipent >>>>> ", formData);
-        await axios
-            .post(`${process.env.REACT_APP_BACKEND_URL}/api/bank-details/createBankAccountDetails`, jsonData, config
-            )
-            .then((res) => {
-                if ((res.status === 200 || res.status === 201)) {
-                    localStorage.removeItem('user');
-                    localStorage.setItem(
-                        'user',
-                        JSON.stringify({
-                            token: token,
-                        })
-                    );
-                    fetchProfileDetails();
-                    setLoading(false);
-                    toast.success(
-                        "Bank Account Details successfully Stored"
-                      );
-                } else {
+        if(legalEmail.length === 0){
+            setLegalLastEmailError(true);
+        }
+        if(legalPhoneNumber.length === 0){
+            setLegalLastPhoneNumberError(true);
+        }
+        if(legalSocailMedia.length === 0){
+            setLegalSocailMediaError(true);
+        }       
+        if(legalState.length === 0){
+            setLegalStateError(true);
+        }       
+        if(legalCity.length === 0){
+            setLegalCityError(true);
+        }        
+        if(legalPostal.length === 0){
+            setLegalPostalError(true);
+        }        
+        if(legalCheckingAccountNumber.length === 0){
+            setLegalCheckingAccountNumberError(true);
+        }            
+        if(legalAddress.length === 0){
+            setLegalAddressError(true);
+        }       
+        if(legalRoutingNumber.length === 0){
+            setLegalRoutingNumberError(true);
+        }        
+        if(legalConfirmCheckingAccountNumber.length === 0){
+            setLegalConfirmCheckingAccountNumberError(true);
+        }  
+        if(legalSecurityNumber.length === 0){
+            setLegalSecurityNumberError(true);
+        } 
+        if(legalIdentity.length === 0){
+            setLegalIdentityError(true);
+        }         
+        else {
+            console.log('Elseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', legalSecurityNumber.length);
+            const items = JSON.parse(localStorage.getItem('user'));
+            const token = items?.token;       
+            setLoading(true);
+            const config = {
+                headers: {
+                  Authorization: `Bearer ${token}`, 
+                },
+            };
+            const option = {
+                identity: legalIdentity,
+                firstName: legalFirstName,
+                lastName: legalLastName,
+                email: legalEmail,
+                phoneNumber: legalPhoneNumber,
+                socialMediaLink: legalSocailMedia,
+                address: legalAddress,
+                city: legalCity,
+                state: legalState,
+                postalCode: legalPostal,
+                country: legalCountry,
+                socialSecurityNumber: legalSecurityNumber,
+                dateOfBirth: `${legalDay} ${legalMonth} ${legalYear}`,
+                accountNumber: legalCheckingAccountNumber,
+                routingNumber: legalRoutingNumber
+            };
+            const requiredFields = [
+                'identity',
+                'firstName',
+                'lastName',
+                'email',
+                'phoneNumber',
+                'address',
+                'city',
+                'state',
+                'postalCode',
+                'country',
+                'socialSecurityNumber',
+                'dateOfBirth',
+                'accountNumber',
+                'routingNumber',
+            ];
+        
+            const emptyFields = requiredFields.filter(field => !option[field]);
+        
+            // if (emptyFields.length > 0) {
+            //     toast.error(`Please fill in the following fields: ${emptyFields.join(', ')}`);
+            //     setLoading(false);
+            //     return;
+            // }
+            // Convert the option object to JSON
+            const jsonData = JSON.stringify(option);
+         
+            const formData = new FormData();
+            for (var key in option) {
+                formData.append(key, option[key]);
+            }
+            console.log("formData Recipent >>>>> ", formData);
+            await axios
+                .post(`${process.env.REACT_APP_BACKEND_URL}/api/bank-details/createBankAccountDetails`, option, config
+                )
+                .then((res) => {
+                    if ((res.status === 200 || res.status === 201)) {
+                        localStorage.removeItem('user');
+                        localStorage.setItem(
+                            'user',
+                            JSON.stringify({
+                                token: token,
+                            })
+                        );
+                        fetchProfileDetails();
+                        setLoading(false);
+                        setLegalFirstName("");
+                        setLegalLastName("");
+                        setLegalEmail("");
+                        setLegalPhoneNumber("");
+                        setLegalSocailMedia("");
+                        setLegalAddress("");
+                        setLegalCity("");
+                        setLegalState("");
+                        setLegalPostal("");
+                        setLegalCountry("");
+                        setLegalSecurityNumber("");
+                        setLegalCheckingAccountNumber("");
+                        setLegalRoutingNumber("");
+                        setLegalConfirmCheckingAccountNumber("");
+                        toast.success(
+                            "Bank Account Details successfully Stored"
+                          );
+                    } else {
+                        setLoading(false);
+                        toast.error(
+                            "Something went wrong!"
+                          );
+                    }
+                })
+                .catch((e) => {
                     setLoading(false);
                     toast.error(
-                        "Something went wrong!"
-                      );
-                }
-            })
-            .catch((e) => {
-                setLoading(false);
-            });
+                        e.response.data.message
+                    );
+                });
+        }            
     };
     const updateProfile = async () => {
         const items = JSON.parse(localStorage.getItem('user'));
@@ -567,11 +648,11 @@ const config = {
         const input = e.target.value;
     
         // Check validation after 7 digits have been entered
-        if (input.length >= 9 && !validateAmericanPhoneNumber(input)) {
-          toast.error('Please enter a valid American phone number.');
-          return;
+        if (input.length >= 15 && !validateAmericanPhoneNumber(input)) {
+            // toast.error('Please enter a valid American phone number.');
+            return;
         }
-    
+        setLegalLastPhoneNumberError(false);
         setLegalPhoneNumber(input);
       };
     
@@ -901,6 +982,7 @@ const config = {
                                                     value={legalIdentity}
                                                     onChange={(e) => {
                                                         setLegalIdentity(e.target.value);
+                                                        setLegalIdentityError(false);
                                                     }}           
                                                     style={{ 
                                                         height: "fit-content",
@@ -911,6 +993,9 @@ const config = {
                                                     >
                                                     <option value="myselft">Myself</option>
                                                 </select>
+                                                {legalIdentityError && (
+                                                    <Error className="input feedback">Identity is required</Error>
+                                                )}
                                             </div>
                                         </div>
                                         <div
@@ -926,6 +1011,9 @@ const config = {
                                             value={legalFirstName}
                                             onChange={(e) => {
                                                 setLegalFirstName(e.target.value);
+                                                if(e.target.value.length > 0){
+                                                    setLegalFirstNameError(false);
+                                                }
                                             }}
                                             style={{
                                                 width: "100%",
@@ -933,8 +1021,10 @@ const config = {
                                                 borderRadius: "5px",
                                                 border: "2px solid #ccc",
                                             }}
-                                            required
                                         />
+                                        {legalFirstNameError && (
+                                            <Error className="input feedback">Legal First Name is required</Error>
+                                        )}
                                         </label>
                                     </div>
                                 </div>
@@ -959,6 +1049,9 @@ const config = {
                                         value={legalLastName}
                                         onChange={(e) => {
                                             setLegalLastName(e.target.value);
+                                            if(e.target.value.length > 0){
+                                                setLegalLastNameError(false);
+                                            }
                                         }}
                                         style={{
                                             width: "100%",
@@ -966,8 +1059,10 @@ const config = {
                                             borderRadius: "5px",
                                             border: "2px solid #ccc",
                                         }}
-                                        required
                                     />
+                                    {legalLastNameError && (
+                                        <Error className="input feedback">Legal Last Name is required</Error>
+                                    )}
                                     </label>
                                 </div>
                                 <div
@@ -983,6 +1078,9 @@ const config = {
                                     value={legalEmail}
                                     onChange={(e) => {
                                         setLegalEmail(e.target.value);
+                                        if(e.target.value.length > 0){
+                                            setLegalLastEmailError(false);
+                                        }
                                     }}
                                     style={{
                                         width: "100%",
@@ -990,8 +1088,10 @@ const config = {
                                         borderRadius: "5px",
                                         border: "2px solid #ccc",
                                     }}
-                                    required
                                 />
+                                {legalLastEmailError && (
+                                    <Error className="input feedback">Email is required</Error>
+                                )}
                                 </label>
                             </div>
                         </div>
@@ -1039,9 +1139,11 @@ const config = {
                                     borderTopRightRadius: "5px",
                                     borderBottomRightRadius: "5px",
                                 }}
-                                required
                             />
                         </div>
+                        {legalLastPhoneNumberError && (
+                            <Error className="input feedback">Please enter a valid American Phone number</Error>
+                        )}
                         </label>
                     </div>
                     <div
@@ -1057,6 +1159,9 @@ const config = {
                             value={legalSocailMedia}
                             onChange={(e) => {
                                 setLegalSocailMedia(e.target.value);
+                                if(e.target.value.length > 0){
+                                    setLegalSocailMediaError(false);
+                                }
                             }}
                             style={{
                                 width: "100%",
@@ -1064,8 +1169,10 @@ const config = {
                                 borderRadius: "5px",
                                 border: "2px solid #ccc",
                             }}
-                            required
                         />
+                        {legalSocailMediaError && (
+                            <Error className="input feedback">Social Media Profile Link is required</Error>
+                        )}
                         </label>
                     </div>
                 </div>
@@ -1100,8 +1207,7 @@ const config = {
                                     paddingBottom: "2%" 
                                 }}
                             >
-                            <option value={0}>Select Country</option>
-                            <option value='usa'>USA</option>
+                                <option value='United States'>USA</option>
                             </select>
                         </div>
                     </div>
@@ -1118,6 +1224,9 @@ const config = {
                             value={legalState}
                             onChange={(e) => {
                                 setLegalState(e.target.value);
+                                if(e.target.value.length > 0){
+                                    setLegalStateError(false);
+                                }
                             }}
                             style={{
                                 width: "100%",
@@ -1125,8 +1234,10 @@ const config = {
                                 borderRadius: "5px",
                                 border: "2px solid #ccc",
                             }}
-                            required
-                        />
+                        />                            
+                        {legalStateError && (
+                            <Error className="input feedback">State is required</Error>
+                        )}
                         </label>
                         
                     </div>
@@ -1152,6 +1263,9 @@ const config = {
                             value={legalCity}
                             onChange={(e) => {
                                 setLegalCity(e.target.value);
+                                if(e.target.value.length > 0){
+                                    setLegalCityError(false);
+                                }
                             }}
                             style={{
                                 width: "100%",
@@ -1159,8 +1273,10 @@ const config = {
                                 borderRadius: "5px",
                                 border: "2px solid #ccc",
                             }}
-                            required
                         />
+                        {legalCityError && (
+                            <Error className="input feedback">Recipient's City is required</Error>
+                        )}
                         </label>
                     </div>
                     <div
@@ -1176,6 +1292,9 @@ const config = {
                             value={legalPostal}
                             onChange={(e) => {
                                 setLegalPostal(e.target.value);
+                                if(e.target.value.length > 0){
+                                    setLegalPostalError(false);
+                                }
                             }}
                             style={{
                                 width: "100%",
@@ -1183,8 +1302,10 @@ const config = {
                                 borderRadius: "5px",
                                 border: "2px solid #ccc",
                             }}
-                            required
                         />
+                        {legalPostalError && (
+                            <Error className="input feedback">Recipient's City is required</Error>
+                        )}
                         </label>
                     </div>
                 </div>
@@ -1209,6 +1330,9 @@ const config = {
                             value={legalAddress}
                             onChange={(e) => {
                                 setLegalAddress(e.target.value);
+                                if(e.target.value.length > 0){
+                                    setLegalAddressError(false);
+                                }
                             }}
                             style={{
                                 width: "100%",
@@ -1216,8 +1340,10 @@ const config = {
                                 borderRadius: "5px",
                                 border: "2px solid #ccc",
                             }}
-                            required
                         />
+                        {legalAddressError && (
+                            <Error className="input feedback">Recipient's Address is required</Error>
+                        )}
                         </label>
                       
 
@@ -1242,9 +1368,13 @@ const config = {
         borderRadius: "5px",
         border: "2px solid #ccc",
     }}
-    required
 />
-{errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+    {legalSecurityNumberError && (
+        <Error className="input feedback">Social Security number is required</Error>
+    )}
+    {errorMessage && 
+        <Error className="input feedback">{errorMessage}</Error>
+    }
                         </label>
                     </div>
                 </div>
@@ -1339,6 +1469,9 @@ const config = {
                         value={legalCheckingAccountNumber}
                         onChange={(e) => {
                             setLegalCheckingAccountNumber(e.target.value);
+                            if(e.target.value.length > 0){
+                                setLegalCheckingAccountNumberError(false);
+                            }
                         }}     
                         style={{
                             width: "100%",
@@ -1346,8 +1479,10 @@ const config = {
                             borderRadius: "5px",
                             border: "2px solid #ccc",
                         }}
-                        required
                     />
+                    {legalCheckingAccountNumberError && (
+                        <Error className="input feedback">Checking Number is required</Error>
+                    )}
                     </label>
                 </div>
                 <div
@@ -1363,6 +1498,9 @@ const config = {
                     value={legalRoutingNumber}
                     onChange={(e) => {
                         setLegalRoutingNumber(e.target.value);
+                        if(e.target.value.length > 0){
+                            setLegalRoutingNumberError(false);
+                        }
                     }}     
                     style={{
                         width: "100%",
@@ -1370,8 +1508,10 @@ const config = {
                         borderRadius: "5px",
                         border: "2px solid #ccc",
                     }}
-                    required
-                  />
+                />
+                {legalRoutingNumberError && (
+                    <Error className="input feedback">Routing number is required</Error>
+                )}
                 </label>
             </div>
             <div
@@ -1387,6 +1527,9 @@ const config = {
                     value={legalConfirmCheckingAccountNumber}
                     onChange={(e) => {
                         setLegalConfirmCheckingAccountNumber(e.target.value);
+                        if(e.target.value.length > 0){
+                            setLegalConfirmCheckingAccountNumberError(false);
+                        }
                     }}   
                     style={{
                         width: "100%",
@@ -1394,8 +1537,10 @@ const config = {
                         borderRadius: "5px",
                         border: "2px solid #ccc",
                     }}
-                    required
-                  />
+                />
+                {legalConfirmCheckingAccountNumberError && (
+                    <Error className="input feedback">Confirm Checking Account is required</Error>
+                )}
                 </label>
             </div>
             </div>
@@ -1414,13 +1559,12 @@ const config = {
                         gap: "10px",
                     }}
                 >
-                    <button
-                        type="submit"
+                    <div
                         className="btn btn-primary btn-block p-2 mx-auto mb-0"
                         onClick={saveRecipientDetails}
                     >
                         Save Recipient Details
-                    </button>
+                    </div>
                 </div>
             </div>
           </form>
@@ -1530,6 +1674,7 @@ const config = {
 };
 
 export default Setting;
+
 const Error = styled.div`
  
 color: #e66e6e;
