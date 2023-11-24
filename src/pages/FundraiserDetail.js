@@ -104,6 +104,7 @@ const closeModal = () => {
 
   const [modalDonate, setModalDonate] = useState(false);
   const [modalDonate1, setModalDonate1] = useState(false);
+  const [modalDonate2, setModalDonate2] = useState(false);
   const [modalStripeDonate, setModalStripeDonate] = useState(false);
   const [referModal, setReferModal] = useState(false);
   const [campaign, setCampaign] = useState({});
@@ -177,7 +178,7 @@ const closeModal = () => {
     );
     card = new CardWidget(stripe);
     card.mount();
-    console.log("card",card);
+    // console.log("card",card);
   };
   const setHandleSymbol = (e) => {
     const selectedValue = e.target.value; // Keep it as a string
@@ -291,7 +292,8 @@ const closeModal = () => {
         // console.error("Error creating token:", error);
       }
     } else {
-      console.log("Card widget is not initialized");
+      setLoading(false);
+      toast.error("Card widget is not initialized");
     }
 
     // Other code...
@@ -425,6 +427,50 @@ const closeModal = () => {
         });
       // setCampaigns(response.data); // Set the campaign data in state
     } catch (error) {
+      toast.error("Please Login First");
+      // console.error("API request failed", error.message);
+    }
+  };
+  const checkBankAccountDetails = async (e) => {
+    const token = JSON.parse(localStorage.getItem("user"));
+    if (!token) {
+      toast.error("Please Login First");
+      return;
+    }
+    try {
+      setLoading(true);
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token?.token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
+        },
+      };
+      const response = await axios
+        .get(
+          `${process.env.REACT_APP_BACKEND_URL}/api/bank-details/getBankAccountDetails`,
+          config
+        )
+        .then((res) => {
+          setLoading(false);
+          if (res.status === 200 || res.status === 201) {
+            setComment_message("");
+            toast.success("Success-Success-Success-Success-Success");
+            setModalDonate1(true);
+          } else {
+            toast.error(res.message);
+          }
+        })
+        .catch((error) => {
+          setLoading(false);
+          if (error.response.request.status === 404){
+            setModalDonate2(true);
+          } else {
+            toast.error(error?.response?.data?.message);
+          }
+          // console.error("API request failed", error);
+        });
+      // setCampaigns(response.data); // Set the campaign data in state
+    } catch (error) {
+      setLoading(false);
       toast.error("Please Login First");
       // console.error("API request failed", error.message);
     }
@@ -651,7 +697,7 @@ const closeModal = () => {
                               p: 3,
                             }}
                           >
-                            // {console.log("donners", donners)}
+                            {/* {console.log("donners", donners)} */}
                             {donners
                               ?.slice(
                                 step * numDonorsPerPage,
@@ -741,7 +787,7 @@ const closeModal = () => {
                     <div className="widget-title style-1">
                       <h4 className="title">Comments</h4>
                     </div>
-                    {console.log("comments", comments)}
+                    {/* {console.log("comments", comments)} */}
                     <div className="clearfix">
                       <ol className="comment-list">
                         {comments.map((comment, index) => (
@@ -852,10 +898,17 @@ const closeModal = () => {
                         </Link>
                         <Link
                           to={"#"}
-                          className="btn btn-donate btn-primary w-100"
+                          className="btn btn-donate btn-primary w-100 d-none"
                           data-bs-toggle="modal"
                           data-bs-target="#modalDonate"
                           onClick={() => setModalDonate1(true)}
+                        >
+                          <i className="flaticon-like me-3"></i> Donate Now Stripe
+                        </Link>
+                        <Link
+                          to={"#"}
+                          className="btn btn-donate btn-primary w-100"
+                          onClick={() => checkBankAccountDetails()}
                         >
                           <i className="flaticon-like me-3"></i> Donate Now Stripe
                         </Link>
@@ -1302,6 +1355,43 @@ const closeModal = () => {
                   >
                     Pay Now
                   </button>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+      </Modal>
+      <Modal
+        className="modal fade modal-wrapper"
+        id="modalDonate"
+        show={modalDonate2}
+        onHide={() => setModalDonate2(false)}
+      >
+        {loading ? (
+          <Box className={styles.bars}>
+            <ThreeDots color="#E6007C" width={50} height={50} />
+          </Box>
+        ) : (
+          <>
+            <div className="modal-header">
+              <h5 className="modal-title">Enter Bank Account Details</h5>
+              <button
+                type="button"
+                className="btn-close"
+                onClick={() => setModalDonate2(false)}
+              >
+                <i className="flaticon-close"></i>
+              </button>
+            </div>
+            <div className="modal-body">
+              <div className="col-lg-12 text-center">
+                <h5>Please Add your Bank Account first in your Profile Settings</h5>
+              </div>
+              <div className="col-lg-12">
+                <div className="form-group mb-0 text-center">
+                  <a href={`${process.env.REACT_APP_BACKEND_URL}/profile-setting`} className="btn btn-primary btn-block">
+                    Click here to add details
+                  </a>
                 </div>
               </div>
             </div>

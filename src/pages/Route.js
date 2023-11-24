@@ -34,6 +34,7 @@ import Blog from './Blog';
 import BlogGrid from './BlogGrid';
 import BlogList from './BlogList';
 import BlogDetails from './BlogDetails';
+import BlogDetails1 from './BlogDetails1';
 import ContactUs from './ContactUs';
 import ForgotPassword from './ForgotPassword';
 import Header2 from '../layouts/Header2';
@@ -89,6 +90,7 @@ function Index(){
 					<Route path='/my-balance' exact element={<MyBalance />} />
 					<Route path='/blog-list' exact element={<BlogList />} />
 					<Route path='/blog-details' exact element={<BlogDetails />} />
+					<Route path='/blog-details1' exact element={<BlogDetails1 />} />
 					<Route path='/contact-us' exact element={<ContactUs />} />
 				</Route>
 			</Routes>	

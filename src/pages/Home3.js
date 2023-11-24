@@ -354,7 +354,7 @@ Helping others improve their lives physically, medically or financially feels wo
                                         <h2 className="title">Latest News Feed</h2>
                                     </div>
                                 </div>
-                                <div className="col-lg-4 col-md-12 m-b30 text-end d-none d-lg-block wow fadeInUp" data-wow-delay="0.4s">
+                                <div hidden className="col-lg-4 col-md-12 m-b30 text-end d-none d-lg-block wow fadeInUp" data-wow-delay="0.4s">
                                     <Link to={"/blog-grid"} className="btn btn-primary">All Blogs</Link>
                                 </div>
                             </div>
