@@ -389,7 +389,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
               {changeLogo ? (
                 <>
                   <div className="logo-header mostion logo-dark">
-                    <Link to={"/index-3"}>
+                    <Link to={"/"}>
                       <img
                         src={IMAGES.logo3}
                         alt=""
@@ -398,7 +398,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                     </Link>
                   </div>
                   <div className="logo-header mostion logo-light">
-                    <Link to={"/index-3"}>
+                    <Link to={"/"}>
                       <img
                         src={IMAGES.logo3}
                         style={{ height: "60px", width: "112px" }}
