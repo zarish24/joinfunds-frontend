@@ -170,10 +170,10 @@ const PasswordResetPageHeader = ({onShowDonate, changeStyle, changeLogo}) => {
                             {changeLogo ? 
                                 <>
                                     <div className="logo-header mostion logo-dark">
-                                        <Link to={"/index-3"}><img src={IMAGES.logo3} alt="" /></Link>
+                                        <Link to={"/"}><img src={IMAGES.logo3} alt="" /></Link>
                                     </div>
                                     <div className="logo-header mostion logo-light">
-                                        <Link to={"/index-3"}><img src={IMAGES.logoWhite3} alt="" /></Link>
+                                        <Link to={"/"}><img src={IMAGES.logoWhite3} alt="" /></Link>
                                     </div>
                                 </>
                                 :
