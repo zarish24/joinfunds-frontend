@@ -887,7 +887,7 @@ const closeModal = () => {
                   {user_id !== campaign?.user_id ? (
                     <>
                       <div className="widget style-1 widget_donate">
-                        <Link
+                        {/* <Link
                           to={"#"}
                           className="btn btn-donate btn-primary w-100"
                           data-bs-toggle="modal"
@@ -895,7 +895,7 @@ const closeModal = () => {
                           onClick={() => setModalDonate(true)}
                         >
                           <i className="flaticon-like me-3"></i> Donate Now Crypto
-                        </Link>
+                        </Link> */}
                         <Link
                           to={"#"}
                           className="btn btn-donate btn-primary w-100 d-none"
@@ -903,7 +903,7 @@ const closeModal = () => {
                           data-bs-target="#modalDonate"
                           onClick={() => setModalDonate1(true)}
                         >
-                          <i className="flaticon-like me-3"></i> Donate Now Stripe
+                          <i className="flaticon-like me-3"></i> Donate Now
                         </Link>
                         <Link
                           to={"#"}
