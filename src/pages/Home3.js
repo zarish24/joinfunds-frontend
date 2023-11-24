@@ -158,7 +158,7 @@ const Home3 = () => {
                                     <h2>Trending Fundraisers</h2>
                                 </div>
                                 <div class="col-lg-4 col-md-12 text-end d-none d-lg-block wow fadeInUp" data-wow-delay="0.4s">
-                                    <Link to={"/browse-fundraiser"} class="btn btn-primary">View All Causes</Link>
+                                    <Link to={"/Campaigns"} class="btn btn-primary">View All Causes</Link>
                                 </div>
                             </div>
                         </div>

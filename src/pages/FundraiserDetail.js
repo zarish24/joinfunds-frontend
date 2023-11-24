@@ -1775,6 +1775,7 @@ const closeModal = () => {
               By continuing, you agree to the Nfuse
               <Link
                 to={pdfFile}
+                target="_blank"
                 className="btn-link collapsed mx-1"
                 data-bs-toggle="collapse"
               >

@@ -126,7 +126,7 @@ const Header2 = ({onShowDonate}) => {
                                     {/* <Link to={"/"}><img src={logo} alt="" /></Link> */}
                                 </div>
                                 <ul className="nav navbar-nav navbar navbar-left">
-                                    <li><Link to={"/index-3"}>Home</Link></li>
+                                    <li><Link to={"/"}>Home</Link></li>
                                     {MenuListArray2.map((data, index)=>{
                                         let menuClass = data.classChange;
                                         if(menuClass !== "sub-menu-down"){
