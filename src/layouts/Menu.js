@@ -92,7 +92,7 @@ export const MenuListArray2 = [
         content : [
             {
                 title:"My Campaigns",
-                to:"/my-project"
+                to:"/my-Campaigns"
             },
             {
                 title:"Create Campaign",
@@ -101,7 +101,7 @@ export const MenuListArray2 = [
            
             {
                 title:"Campaigns",
-                to:"/project"
+                to:"/Campaigns"
             },
             // {
             //     title:"Campaign Categories",
@@ -166,11 +166,11 @@ export const MenuListArray2 = [
             // },
             {
                 title:" Send Donations",
-                to:"/my-donations"
+                to:"/donations"
             },
             {
                 title:"Received Donations ",
-                to:"/my-reciveddonations"
+                to:"/receiveddonations"
             },
             {
                 title:"My Payout Requests",
@@ -289,7 +289,7 @@ export const MenuListArray3 = [
            
             {
                 title:"Campaigns",
-                to:"/project"
+                to:"/Campaigns"
             },
             // {
             //     title:"Campaign Categories",
@@ -354,7 +354,7 @@ export const MenuListArray3 = [
             // },
             {
                 title:" Send Donations",
-                to:"/my-donations"
+                to:"/donations"
             },
          
             {
