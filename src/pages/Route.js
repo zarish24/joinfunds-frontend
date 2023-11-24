@@ -74,9 +74,9 @@ function Index(){
 					<Route path='/fundraiser-detail/:id' element={<FundraiserDetail />} />
 					<Route path='/create-compaign' exact element={<CreateCompaign />} />
 					<Route path='/Edit-compaign/:id' exact element={<EditCampaign />} />
-					<Route path='/project' exact element={<Project />} />
+					<Route path='/Campaigns' exact element={<Project />} />
 					<Route path='/project-categories' exact element={<ProjectCategories />} />
-					<Route path='/my-project' exact element={<MyProjects />} />
+					<Route path='/my-Campaigns' exact element={<MyProjects />} />
 					<Route path='/project-sidebar' exact element={<ProjectSidebar />} />
 					<Route path='/project-story' exact element={<ProjectStory />} />
 					<Route path='/blog' exact element={<Blog />} />
@@ -85,8 +85,8 @@ function Index(){
 					<Route path='/blog-grid' exact element={<BlogGrid />} />
 					<Route path='/wallet-address' exact element={<WalletAddress />} />
 					<Route path='/my-requests' exact element={<MyRequests />} />
-					<Route path='/my-donations' exact element={<MyDonations />} />
-					<Route path='/my-reciveddonations' exact element={<RecivedDonations />} />
+					<Route path='/donations' exact element={<MyDonations />} />
+					<Route path='/receiveddonations' exact element={<RecivedDonations />} />
 					<Route path='/my-balance' exact element={<MyBalance />} />
 					<Route path='/blog-list' exact element={<BlogList />} />
 					<Route path='/blog-details' exact element={<BlogDetails />} />

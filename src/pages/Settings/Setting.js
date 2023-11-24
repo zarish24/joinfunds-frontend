@@ -17,6 +17,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import countriesData from './CountryCode'
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import CitiesList from '../../layouts/CitiesList'
+import validUrl from 'valid-url';
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -141,6 +143,9 @@ const Setting = (props) => {
     const [legalConfirmCheckingAccountNumberError, setLegalConfirmCheckingAccountNumberError] = useState(false);
     const [legalIdentityError, setLegalIdentityError] = useState(false);
 
+    const [phoneError1, setPhoneError1] = useState(false);
+      console.log('link',link);    
+   
     useEffect(() => {
         if (!legalDay || !legalMonth || !legalYear) {
             const currentDate = new Date();
@@ -214,7 +219,17 @@ const Setting = (props) => {
         }
     });
     
-  
+    const isValidUrl = (url) => {
+        console.log('url url',url)
+        return validUrl.isUri(url);
+      };
+      const handleInputlinkChange = (e) => {
+        const inputValue = e.target.value;
+        setlink(inputValue);
+    
+      
+      };
+    
        useEffect(() => {
         const items = JSON.parse(localStorage.getItem('user'));
         const token = items?.token;
@@ -287,7 +302,17 @@ const config = {
           }
                 };
         
-
+                const handlePhoneChange = (e) => {
+                    const value = e.target.value.replace(/\D/g, '');
+                    const phoneRegex = /^\d{10}$/;
+                    if(value.length <= 10){
+                      setphone(value);
+                      setPhoneError1(false);
+                    }
+                    if(e.target.value.length > 0){
+                      setPhoneError1(false);
+                    }
+                  };
 
     const hiddenFileInput = useRef(null);
     const handleClick = (event) => {
@@ -365,7 +390,14 @@ const config = {
 
     }, []);
 
-
+    const handleCityChange = (e) => {
+        const selectedCity = e.target.value;
+    
+        setcity(selectedCity);
+        setzip(CitiesList[selectedCity]); 
+        
+        
+      };
     const saveRecipientDetails = async () => {
         if(legalFirstName.length === 0){
             setLegalFirstNameError(true);
@@ -514,94 +546,71 @@ const config = {
                 });
         }            
     };
-    
     const updateProfile = async () => {
         const items = JSON.parse(localStorage.getItem('user'));
         const token = items?.token;
         const userId = items?._id;
-       
+    
         setLoading(true);
-        //   console.log("formData",pic)
+    
         const config = {
             headers: {
-              Authorization: `Bearer ${token}`, 
+                Authorization: `Bearer ${token}`,
             },
-          };
+        };
+    
         const option = {
-            firstName:firstName,
-            lastName:lastName,
+            firstName: firstName,
+            lastName: lastName,
             email: email,
-            country:country,
-            city:city,
-            zipcode:zip,
-            phoneNumber: `${countryCode} ${phone}`,
-            socialMediaProfile:link,
+            country: country,
+            city: city,
+            zipcode: zip,
+            phoneNumber: phone,
+            socialMediaProfile: link,
             profileImage: pic,
             bio: 'sada'
+        };
+    
+        const validateAmericanPhoneNumber = (phoneNumber) => {
+            const numericValue = phoneNumber.replace(/\D/g, '');
+            return /^(\d{3}-\d{3}-\d{4}|\d{10})$/.test(numericValue);
+        };
+    
+        if (!validateAmericanPhoneNumber(phone)) {
+            setPhoneError1(true);
+            toast.error('Please enter a valid American phone number.');
+            setLoading(false);
+            return;
         }
+    
         const formData = new FormData();
         for (var key in option) {
             formData.append(key, option[key]);
         }
-        //   console.log("formDaxxxta",formData)
-        await axios
-            .put(`${process.env.REACT_APP_BACKEND_URL}/api/user`, formData, config
-            )
-            .then((res) => {
-               if ((res.status === 200 || res.status === 201)) {
-                    localStorage.removeItem('user');
-                    localStorage.setItem(
-                        'user',
-                        JSON.stringify({
-                            token: token,
-                            // firstName: res.data.data.doc.firstName,
-                            // lastName: res.data.data.doc.lastName,
-                            // city: res.data.data.doc.city,
-                            // country: res.data.data.doc.country,
-                            // phone: res.data.data.doc.phoneNumber,
-                            // link: res.data.user.doc.socialMediaProfile,
-                            // zip: res.data.data.doc.zipcode,
-                            // role: res.data.data.doc.role,
-                            // email: res.data.data.doc.email,
-                            // bio: res.data.data.doc.bio,
-                            // profileImage: res.data.data.doc.profileImage
-                        })
-                    );
-                    setUrlImage(res.data.data.doc.profileImage);
-                    fetchProfileDetails();
-                    setLoading(false);
-                    toast.success(
-                        "Profile updated successfully! "
-                      );
-                    // setAlert(true);
-                    // setTimeout(() => {
-                    //     setAlert(false);
-                    // }, 2500);
-                    // setUserHeaderProfileImage(urlImage);
-                } else {
-                    setLoading(false);
-                    toast.error(
-                        "Something went wrong! "
-                      );
-                    
-                    // setErrorMessage('Something went wrong');
-                    // setErrorAlert(true);
-                    // setTimeout(() => {
-                    //     setErrorAlert(false);
-                    // }, 5000);
-                }
-            })
-            .catch((e) => {
+    
+        try {
+            const res = await axios.put(`${process.env.REACT_APP_BACKEND_URL}/api/user`, formData, config);
+   
+            if (res.status === 200 || res.status === 201) {
+
+                // localStorage.removeItem('user');
+                // localStorage.setItem('user', JSON.stringify({
+                //     token: token,
+                //     // ... Update other user details if needed
+                // }));
+                setUrlImage(res.data.data.doc.profileImage);
+                fetchProfileDetails();
                 setLoading(false);
-                // toast.error(
-                //     e.response.data.message || e.response.data
-                //   );
-                // setErrorMessage(e.response.data.message || e.response.data);
-                // setErrorAlert(true);
-                // setTimeout(() => {
-                //     setErrorAlert(false);
-                // }, 5000);
-            });
+                toast.success('Profile updated successfully!');
+            } else {
+                setLoading(false);
+                toast.error('Something went wrong!');
+            }
+        } catch (error) {
+            setLoading(false);
+            toast.error(error.response?.data.message || 'An error occurred.');
+        }
     };
     const togglePassword = () => {
         if (passwordType === 'password') {
@@ -707,7 +716,7 @@ const config = {
                                                     </Box>
                                                 ) : (
                                                     <Box className={styles.RoundedAvatar}>
-                                                        {/* <img loading="lazy" src={HeaderUser} alt="Profile" /> */}
+                                                     <img loading="lazy" src="https://via.placeholder.com/150" alt="Profile" />
                                                     </Box>
                                                 )}
                                                 <Box onClick={handleClick}>
@@ -742,6 +751,7 @@ const config = {
                                                         onChange={(e) => {
                                                             setFirstName(e.target.value);
                                                         }}
+                                                        required
                                                     />
                                                 </form>
                                             </Grid>
@@ -758,6 +768,7 @@ const config = {
                                                         onChange={(e) => {
                                                             setLastName(e.target.value);
                                                         }}
+                                                        required
                                                     />
                                                 </form>
                                             </Grid>
@@ -774,70 +785,73 @@ const config = {
                                                         onChange={(e) => {
                                                             setEmail(e.target.value);
                                                         }}
+                                                        required
                                                     />
                                                 </form>
                                             </Grid>
                                             <Grid item xs={6}>
                                                 <form>
+                      
                                                     <label className="mb-1" htmlFor="phone" style={{ marginLeft: '5px' }}>Phone</label>
-                                                        <div style={{ display: 'flex', alignItems: 'center' }}>                                                                
+                                                        <div style={{ display: 'flex', alignItems: 'center' }}>  
+                                                        <div className="input-group-prepend">
+                                <div 
+                                    className="input-group-text text-white"
+                                    style={{
+                                    background: '#adadad',
+                                    borderTopLeftRadius: "5px",
+                                    borderBottomLeftRadius: "5px",
+                                    borderTopRightRadius: "0px",
+                                    borderBottomRightRadius: "0px",
+                                    padding: "5px 0px",
+                                    }}
+                                >&nbsp; &nbsp; +1&nbsp; &nbsp; </div>
+                            </div>                                                              
                                                         <input
                                                             type="text"
+                                                            placeholder="   111-222-3456"
                                                             name="phone"
                                                             className="form-control"
-                                                            placeholder='e.g:+920342366456'
+                                                      
                                                             id="phone"
                                                             value={phone}
-                                                            onChange={(e) => {
+                                                            onChange={handlePhoneChange}
+                                                            // onChange={(e) => {
                                                             // if (e.target.value.length <= 14) {
-                                                                setphone(e.target.value);
+                                                            //     setphone(e.target.value);
                                                             // }
-                                                            }}
+                                                            // }}
+                                                            required
                                                         />
                                                         </div>
-                                                    {/* {phone.length < 13 && (
-                                                        <small style={{ color: 'red' }}>
-                                                        Phone number must be at least 13 digits long.
-                                                        </small>
-                                                    )} */}
+                                                        {phoneError1 && (
+                            <Error className="input feedback">Please enter a valid American Phone Number</Error>
+                          )}
                                                 </form>
                                             </Grid>
+                                            
+                                           
                                             <Grid item xs={6}>
                                                 <form>
-                                                    <label className="mb-1" htmlFor="zip">Zip Code</label>
-                                                    <br />
-                                                    <input
-                                                        type="text"
-                                                        name="zip"
-                                                        className="form-control"
-                                                        id="zip"
-                                                        value={zip}
-                                                        onChange={(e) => {
-                                                            setzip(e.target.value);
-                                                        }}
-                                                    />
-                                                </form>
-                                            </Grid>
-                                            <Grid item xs={6}>
-                                                <form>
-                                                    <label className="mb-1" htmlFor="city">City</label>
-                                                    <br />
-                                                    <input
-                                                        type="text"
-                                                        name="city"
-                                                        id="city"
-                                                        className="form-control"
-                                                        value={city}
-                                                        onChange={(e) => {
-                                                            setcity(e.target.value);
-                                                        }}
-                                                    />
-                                                </form>
-                                            </Grid>
-                                            <Grid item xs={6}>
-                                                <form>
-                                                    <label className="mb-1" htmlFor="country">Country</label>
-                                                    <br />
+                                                  
+                                                    
+                <label> Country    </label>
+                <br />
+                <select
+        value={country}
+        // onChange={(e) => setCity(e.target.value)}
+        onChange={(e) => setcountry(e.target.value)}
+        style={{
+          width: "100%",
+          padding: "8px",
+          borderRadius: "5px",
+          border: "2px solid #ccc",
+        }}
+      >
+        <option value="United States" >USA</option>
+      </select>
+          
+                                                    {/* <label className="mb-1" htmlFor="country">Country</label>
                                                     <input
                                                         type="text"
                                                         name="country"
@@ -847,7 +861,8 @@ const config = {
                                                         onChange={(e) => {
                                                             setcountry(e.target.value);
                                                         }}
-                                                    />
+
+                                                    /> */}
                                                 </form>
                                             </Grid>
                                             <Grid item xs={6}>
@@ -860,10 +875,59 @@ const config = {
                                                         id="link"
                                                         className="form-control"
                                                         value={link}
-                                                        onChange={(e) => {
-                                                            setlink(e.target.value);
-                                                        }}
+                                                        onChange={handleInputlinkChange}
                                                     />
+                                                </form>
+                                                {link.trim() !== "" && !isValidUrl(link) && (
+                <p style={{ color: "red" }}>Please enter a valid Social Media Profile Link</p>
+            )}
+
+                                            </Grid>
+                                            <Grid item xs={6}>
+                                                <form>
+                                               
+  <label> City </label>
+                <select
+        value={city}
+        // onChange={(e) => setCity(e.target.value)}
+        onChange={handleCityChange}
+        style={{
+          width: "100%",
+          padding: "8px",
+          borderRadius: "5px",
+          border: "2px solid #ccc",
+        }}
+      >
+        <option value="" disabled>Select a city</option>
+        {Object.keys(CitiesList).map((cityName) => (
+            <option key={cityName} value={cityName}>
+              {cityName}
+            </option>
+          ))}
+      </select>  
+              
+           
+                                                 
+                                                </form>
+                                            </Grid>
+                                            <Grid item xs={6}>
+                                                <form>
+                                             
+
+<label>Zip Code   </label>
+                <input
+                  type="text"
+                  value={zip}
+                  // onChange={(e) => setZip(e.target.value)}
+                  style={{
+                    width: "100%",
+                    padding: "2px",
+                    borderRadius: "5px",
+                    border: "2px solid #ccc",
+                  }}
+                  disabled
+                />
+         
                                                 </form>
                                             </Grid>
                                         </Grid>

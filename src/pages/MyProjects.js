@@ -19,7 +19,7 @@ const MyProjects = () => {
   const [searchText, setSearchText] = useState('');
   const [CategoryId, setCategoryId] = useState('');
   const [totalPages, setTotalPages] = useState(0);
-
+console.log('searchText',searchText)
 
   useEffect(() => {
     const fetchData = async (user_id, token) => {
@@ -29,6 +29,7 @@ const MyProjects = () => {
           status: "",
           category_id:CategoryId,
           campaign_type: "",
+          title_search: searchText,
           user_id,
           items_per_page: RecordsPerPage,
           page:currentPage,
@@ -81,7 +82,7 @@ const MyProjects = () => {
       fetchData(user._id,user.token);
     }
     // Call the async function
-  }, [currentPage,page,campaignType,campaignStatus]);
+  }, [currentPage,page,campaignType,campaignStatus,searchText]);
 
 
 
@@ -96,6 +97,7 @@ const MyProjects = () => {
         status: "",
         category_id:CategoryId,
         campaign_type: "",
+        title_search: searchText,
         user_id:id,
         items_per_page: RecordsPerPage,
         page:currentPage,
@@ -227,11 +229,11 @@ const MyProjects = () => {
                           >
                             pending
                           </Dropdown.Item>
-                          <Dropdown.Item
+                          {/* <Dropdown.Item
                             onClick={() => setCampaignStatus("reject")}
                           >
                             reject
-                          </Dropdown.Item>
+                          </Dropdown.Item> */}
                         </Dropdown.Menu>
                       </Dropdown>
                     {/* </div>
@@ -269,13 +271,13 @@ const MyProjects = () => {
                 </div>
               </form>
             </div>
-            <div className="tag-list">
+            {/* <div className="tag-list">
               <span className="title text-black">Popular Search:</span>
               <Link to={"#"}>Education,</Link>
               <Link to={"#"}>Business,</Link>
               <Link to={"#"}>Creative,</Link>
               <Link to={"#"}>Medical</Link>
-            </div>
+            </div> */}
           </div>
         </div>
         <section className="content-inner-2">

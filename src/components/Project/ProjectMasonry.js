@@ -247,9 +247,9 @@ const handleCopyUrl = async (url) => {
           transition={{ duration: 0.2 }}
           className="row"
         >
-          {Array.isArray(cardData) && cardData.length > 0 ? (
+        {Array.isArray(cardData) && cardData.length > 0 ? (
             cardData.map((item, index) => {
-              const progressValue = parseInt(item.progres, 10);
+              const progressValue = parseInt(item.progress, 10);
               console.log("progressValue", progressValue);
               return (
                 <motion.li
@@ -368,11 +368,11 @@ const handleCopyUrl = async (url) => {
       
                     <div className="author-wrappper">
                       <div className="author-media">
-                        <img src={item.user_detail[0].profileImage} alt="" />
+                        <img src={item?.user_detail?.profileImage} alt="" />
                       </div>
                       <div className="author-content">
                         <div className="author-head">
-                          <h6 className="author-name">{item.user_detail[0].firstName} {item.user_detail[0].lastName}</h6>
+                          <h6 className="author-name">{item?.user_detail?.firstName} {item?.user_detail?.lastName}</h6>
                           {/* <ul className="rating-list">
                             <li>
                               <i className="fa fa-star"></i>
@@ -392,8 +392,8 @@ const handleCopyUrl = async (url) => {
                           </ul> */}
                         </div>
                         <ul className="author-meta">
-                          <li className="campaign">{item?.user_detail[0]?.publishedCampaignsCount} Campaign</li>
-                          <li className="location">{item?.user_detail[0]?.country},{item?.user_detail[0]?.city}</li>
+                          <li className="campaign">{item?.user_detail?.publishedCampaignsCount} Campaign</li>
+                          <li className="location">{item?.user_detail?.country},{item?.user_detail?.city}</li>
                         </ul>
                       </div>
                     </div>
