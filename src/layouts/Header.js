@@ -112,18 +112,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
   };
 
  
-  const validatePhone = (value) => {
-    const numericValue = value.replace(/\D/g, ''); // Remove non-numeric characters
-  
-    if (!/^\+?1?[-.\s]?\(?(\d{3})\)?[-.\s]?(\d{3})[-.\s]?(\d{4})$/.test(value)) {
-      setPhoneError('Please enter a valid American phone number');
-      return false;
-    } else {
-      setPhoneError('');
-      return true;
-    }
-  };
-
+ 
   const handlePhoneChange = (e) => {
     const value = e.target.value.replace(/\D/g, '');
     const phoneRegex = /^\d{10}$/;
@@ -150,28 +139,8 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
     console.log('City', City.length);
     e.preventDefault();
     
-    if (email.length === 0) {
-      setEmailError(true);
-    } 
-    if (FirstN.length === 0) {
-      setFirstNameError(true);
-    } 
-    if (LastN.length === 0) {
-      setLastNameError(true);
-    } 
-    if (phone.length === 0) {
-      setPhoneError1(true);
-    }
-    if (MediaLink.length === 0) {
-      setMediaLinkError(true);
-    }    
-    if (password.length === 0) {
-      setPasswordError1(true);
-    }
-    if (City.length === 0) {
-      setCityError(true);
-    }        
-    else {
+   
+ 
       let data = {
         email: email,
         password: password,
@@ -183,8 +152,44 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
         phoneNumber: phone,
         socialMediaProfile: MediaLink,
       };
-      if (apiEndpoint === "api/user/register") {
-  
+     
+        if (apiEndpoint === "api/user/register") {
+          // Validation for registration
+          if (email.length === 0) {
+            setEmailError(true);
+            return;
+          } 
+        
+          if (FirstN.length === 0) {
+            setFirstNameError(true);
+            return;
+          } 
+        
+          if (LastN.length === 0) {
+            setLastNameError(true);
+            return;
+          } 
+        
+          if (phone.length === 0 || !validateAmericanPhoneNumber(phone)) {
+            setPhoneError1(true);
+            return;
+          }
+        
+          if (MediaLink.length === 0) {
+            setMediaLinkError(true);
+            return;
+          }    
+        
+          if (password.length === 0 || !validatePassword(password)) {
+            setPasswordError1(true);
+            return;
+          }
+        
+          if (City.length === 0) {
+            setCityError(true);
+            return;
+          }
+        
         const validateAmericanPhoneNumber = (phoneNumber) => {
         const numericValue = phoneNumber.replace(/\D/g, '');
         
@@ -227,6 +232,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
         data.email = email;
         data.password = password;
       }
+    
       const response = await axios
         .post(`${process.env.REACT_APP_BACKEND_URL}/${apiEndpoint}`, data)
         .then((res) => {
@@ -270,7 +276,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
           );
         });
     }   
-  };
+  
 
   /* for sticky header */
   const [headerFix, setheaderFix] = useState(false);
@@ -1425,7 +1431,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                     alt="google"
                     style={{ marginRight: "8px" }}
                   />
-                  Sign up with Google
+                  Login with Google
               </LoginSocialGoogle>
             ) : null}
           </Box>
