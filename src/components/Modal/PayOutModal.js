@@ -99,23 +99,23 @@ const PayOutModal = ({ isOpen, closeModal ,campaignId}) => {
       centered
     >
        <div className="modal-content">
-       <Modal.Header  closeButton>
-  <div className="row">
+       <Modal.Header style={{ backgroundColor: "#002768" }}  closeButton>
+  <div className="row w-100">
     <div className="col-lg-12 d-flex">
-      <h5 className="">Add account Details</h5>
-      <button type="button" className="btn-close" onClick={closeModal}>
-        <i className="flaticon-close" style={{ color: 'black' }}></i>
+      <h5 className="text-white">Add account Details</h5>
+      <button type="button" className="btn-close float-right" onClick={closeModal}>
+        <i className="flaticon-close" style={{ color: 'white' }}></i>
       </button>
     </div>
     <div className="col-auto">
-  <p className="m-0">
-    INTL PMT support needs to reflect US and Canadian bank accounts are the only accounts that can receive funds at this time
-  </p>
 </div>
   </div>
  
 </Modal.Header>
                 <Modal.Body className="modal-body">
+                <p className="mb-2">
+    INTL PMT support needs to reflect US and Canadian bank accounts are the only accounts that can receive funds at this time
+  </p>
                 <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '10px' }}>
   <div style={{ display: 'grid', gridTemplateColumns: '1fr ', gap: '10px' }}>
     <label>
@@ -276,7 +276,7 @@ const PayOutModal = ({ isOpen, closeModal ,campaignId}) => {
     
   </div>
 
-  <button class="btn btn-info" type="submit" style={{ marginTop: '10px' }}>
+  <button class="btn btn-primary" type="submit" style={{ marginTop: '10px' }}>
   Submit 
 </button>
 </form>

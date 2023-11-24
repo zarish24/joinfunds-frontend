@@ -2,6 +2,7 @@ import React, { useState, useEffect, useReducer, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Modal } from "react-bootstrap";
 import styles from "./styles.module.scss";
+import styled from 'styled-components';
 import Google from "../assets/icons/social-login/google.svg";
 import Collapse from "react-bootstrap/Collapse";
 import { MenuListArray3 } from "./Menu";
@@ -22,6 +23,14 @@ import { ThreeDots } from "../../node_modules/react-loader-spinner/dist/index";
 import axios from "axios";
 import CitiesList from './CitiesList'
 const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
+  const [emailError, setEmailError] = useState(false);
+  const [firstNameError, setFirstNameError] = useState(false);
+  const [lastNameError, setLastNameError] = useState(false);
+  const [phoneError1, setPhoneError1] = useState(false);
+  const [mediaLinkError, setMediaLinkError] = useState(false);
+  const [passwordError1, setPasswordError1] = useState(false);
+  const [passwordError2, setPasswordError2] = useState(false);
+  const [cityError, setCityError] = useState(false);
   const [loginModal, setloginModal] = useState(false);
   const [resetModal, setResetModal] = useState(false);
   const [signupModal, setSignupModal] = useState(false);
@@ -44,19 +53,17 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
   const [passwordError, setPasswordError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [selectedCityPostalCode, setSelectedCityPostalCode] = useState('');
-console.log('selectedCityPostalCode',selectedCityPostalCode)
-console.log('setZip',Zip)
 
   // Assuming you have the CitiesList object
   // const cities = Object.keys(CitiesList);
   const handleCityChange = (e) => {
     const selectedCity = e.target.value;
-console.log('selectedCity',selectedCity)
 
     setCity(selectedCity);
     setZip(CitiesList[selectedCity]); 
     
     setSelectedCityPostalCode(CitiesList[selectedCity]); 
+    setCityError(false);
   };
   const togglePasswordVisibility = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
@@ -97,8 +104,11 @@ console.log('selectedCity',selectedCity)
   const handlePasswordChange = (e) => {
     const newPassword = e.target.value;
     setPassword(newPassword);
-    setPasswordError('')
-    
+    setPasswordError('');
+    if(e.target.value.length > 0){
+      setPasswordError1(false);
+      setPasswordError2(false);
+    }
   };
 
  
@@ -119,6 +129,10 @@ console.log('selectedCity',selectedCity)
     const phoneRegex = /^\d{10}$/;
     if(value.length <= 10){
       setPhone(value);
+      setPhoneError1(false);
+    }
+    if(e.target.value.length > 0){
+      setPhoneError1(false);
     }
   };
 
@@ -127,44 +141,38 @@ console.log('selectedCity',selectedCity)
 
   const nav = useNavigate();
   const formSubmit = async (e, apiEndpoint) => {
+    console.log('formSubmitformSubmitformSubmitformSubmitformSubmitformSubmitformSubmit');
+    console.log('Email', email.length);
+    console.log('FirstN', FirstN.length);
+    console.log('LastN', LastN.length);
+    console.log('MediaLink', MediaLink.length);
+    console.log('password', password.length);
+    console.log('City', City.length);
     e.preventDefault();
     
- 
-    let data = {
-      email: email,
-      password: password,
-      firstName: FirstN,
-      lastName: LastN,
-      country: country,
-      city: City,
-      zipcode: Zip,
-      phoneNumber: phone,
-      socialMediaProfile: MediaLink,
-    };
-    if (apiEndpoint === "api/user/register") {
-
-      const validateAmericanPhoneNumber = (phoneNumber) => {
-        // Remove non-numeric characters
-        const numericValue = phoneNumber.replace(/\D/g, '');
-      
-        // Check if it matches the pattern ###-###-#### or ##########
-        return /^(\d{3}-\d{3}-\d{4}|\d{10})$/.test(numericValue);
-      };
-    
-      if (!validateAmericanPhoneNumber(phone)) {
-        console.log('phoneNumberphoneNumber',phone)
-        
-
-        toast.error('Please enter a valid American phone number.');
-        return;
-      }
-    
-      // Validate the password
-      if (!validatePassword(password)) {
-        toast.error('Password must be 8 characters long and include a capital letter, a special character, and a number.');
-        return;
-      }
-      data = {
+    if (email.length === 0) {
+      setEmailError(true);
+    } 
+    if (FirstN.length === 0) {
+      setFirstNameError(true);
+    } 
+    if (LastN.length === 0) {
+      setLastNameError(true);
+    } 
+    if (phone.length === 0) {
+      setPhoneError1(true);
+    }
+    if (MediaLink.length === 0) {
+      setMediaLinkError(true);
+    }    
+    if (password.length === 0) {
+      setPasswordError1(true);
+    }
+    if (City.length === 0) {
+      setCityError(true);
+    }        
+    else {
+      let data = {
         email: email,
         password: password,
         firstName: FirstN,
@@ -175,79 +183,93 @@ console.log('selectedCity',selectedCity)
         phoneNumber: phone,
         socialMediaProfile: MediaLink,
       };
-    }
-    if (apiEndpoint === "api/user/login") {
-      data = {
-        email: email,
-        password: password,
-      };
-    }
-    if (apiEndpoint === "api/user/sendForgetEmail") {
-      data.email = email;
-    } else {
-      data.email = email;
-      data.password = password;
-    }
-    const response = await axios
-      .post(`${process.env.REACT_APP_BACKEND_URL}/${apiEndpoint}`, data)
-      .then((res) => {
-        if (res.status === 200 || res.status === 201) {
-          setEmail("");
-          setPassword("");
-          setSignupModal(false);
-          //   console.log("res rsgister", res);
-          //   console.log("res res.data.message", res.data);
-          toast.success(
-            res?.data?.data?.message
-              ? res?.data?.data?.message
-              : res?.data?.message
-          );
-          // Store user information in local storage
-          localStorage.setItem(
-            "user",
-            JSON.stringify({
-              _id: res?.data?.user?._id,
-              // city: res?.data?.user?.city,
-              // country: res?.data?.user?.country,
-              // phone: res?.data?.user?.phoneNumber,
-              // link: res?.data?.user?.socialMediaProfile,
-              // zip: res?.data?.user?.zipcode,
-              // firstName: res?.data?.user?.firstName,
-              // lastName: res?.data?.user?.lastName,
-              // email: res?.data?.user?.email,
-              // role: res?.data?.user?.role,
-              // profileImage: res?.data?.user?.profileImage,
-              token: res?.data?.token,
-            })
-          );
-          if (loginModal === true) {
-            localStorage.setItem("isLoggedIn", "true");
-            setIsLoggedIn(true);
-            setSignupModal(false);
-            // toast.success(
-            //   res?.data?.data?.message
-            //     ? res?.data?.data?.message
-            //     : res?.data?.message
-            // );
-            //   console.log("function-called", true);
-            setloginModal(false);
-            setSignupModal(false);
-            navigate("/");
-          } else {
-            //   console.log("function-called", false);
-            setloginModal(true);
-          }
-        } else {
-          toast.error("Authentication failed. Please check your credentials.");
+      if (apiEndpoint === "api/user/register") {
+  
+        const validateAmericanPhoneNumber = (phoneNumber) => {
+        const numericValue = phoneNumber.replace(/\D/g, '');
+        
+          return /^(\d{3}-\d{3}-\d{4}|\d{10})$/.test(numericValue);
+        };
+      
+        if (!validateAmericanPhoneNumber(phone)) {
+          // toast.error('Please enter a valid American phone number.');
+          setPhoneError1(true);
+          return;
         }
-      })
-      .catch((e) => {
-        toast.error(
-          e?.response?.data?.message
-            ? e?.response?.data?.message
-            : e?.response?.data
-        );
-      });
+      
+        // Validate the password
+        if (!validatePassword(password)) {
+          // toast.error('Password must be 8 characters long and include a capital letter, a special character, and a number.');
+          setPasswordError2(true);
+          return;
+        }
+        data = {
+          email: email,
+          password: password,
+          firstName: FirstN,
+          lastName: LastN,
+          country: country,
+          city: City,
+          zipcode: Zip,
+          phoneNumber: phone,
+          socialMediaProfile: MediaLink,
+        };
+      }
+      if (apiEndpoint === "api/user/login") {
+        data = {
+          email: email,
+          password: password,
+        };
+      }
+      if (apiEndpoint === "api/user/sendForgetEmail") {
+        data.email = email;
+      } else {
+        data.email = email;
+        data.password = password;
+      }
+      const response = await axios
+        .post(`${process.env.REACT_APP_BACKEND_URL}/${apiEndpoint}`, data)
+        .then((res) => {
+          if (res.status === 200 || res.status === 201) {
+            setEmail("");
+            setPassword("");
+            setSignupModal(false);
+            toast.success(
+              res?.data?.data?.message
+                ? res?.data?.data?.message
+                : res?.data?.message
+            );
+            // Store user information in local storage
+            localStorage.setItem(
+              "user",
+              JSON.stringify({
+                _id: res?.data?.user?._id,
+                token: res?.data?.token,
+              })
+            );
+            if (loginModal === true) {
+              localStorage.setItem("isLoggedIn", "true");
+              setIsLoggedIn(true);
+              setSignupModal(false);
+              setloginModal(false);
+              setSignupModal(false);
+              navigate("/");
+            } else {
+              //   console.log("function-called", false);
+              setloginModal(true);
+            }
+          } else {
+            toast.error("Authentication failed. Please check your credentials.");
+          }
+        })
+        .catch((e) => {
+          toast.error(
+            e?.response?.data?.message
+              ? e?.response?.data?.message
+              : e?.response?.data
+          );
+        });
+    }   
   };
 
   /* for sticky header */
@@ -892,7 +914,7 @@ console.log('selectedCity',selectedCity)
           style={{ backgroundColor: "#002768" }}
         >
           <h4 className="text-center" style={{ color: "white" }}>
-            Sign Up Your Account
+            Sign Up Your Account 232323
           </h4>
         </Modal.Header>
         <Modal.Body className="modal-body">
@@ -925,9 +947,17 @@ console.log('selectedCity',selectedCity)
                       borderRadius: "5px",
                       border: "2px solid #ccc",
                     }}
-                    onChange={(e) => setFirstN(e.target.value)}
-                    required
+                    onChange={(e) => {
+                      setFirstN(e.target.value);
+                      if(e.target.value.length > 0){
+                        setFirstNameError(false);
+                      }
+                    }}
+                    
                   />
+                  {firstNameError && (
+                    <Error className="input feedback">First Name is required</Error>
+                  )}
                 </label>
               </div>
               <div
@@ -948,9 +978,16 @@ console.log('selectedCity',selectedCity)
                       borderRadius: "5px",
                       border: "2px solid #ccc",
                     }}
-                    onChange={(e) => setLastN(e.target.value)}
-                    required
+                    onChange={(e) => {
+                      setLastN(e.target.value);
+                      if(e.target.value.length > 0){
+                        setLastNameError(false);
+                      }
+                    }}
                   />
+                  {lastNameError && (
+                    <Error className="input feedback">Last Name is required</Error>
+                  )}
                 </label>
               </div>
             </div>
@@ -980,9 +1017,16 @@ console.log('selectedCity',selectedCity)
                       borderRadius: "5px",
                       border: "2px solid #ccc",
                     }}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      if(e.target.value.length > 0){
+                        setEmailError(false);
+                      }
+                    }}
                   />
+                  {emailError && (
+                    <Error className="input feedback">Email is required</Error>
+                  )}
                 </label>
               </div>
               <div
@@ -1005,7 +1049,6 @@ console.log('selectedCity',selectedCity)
           borderRadius: "5px",
           border: "2px solid #ccc",
         }}
-        required
       >
         <option value="United States" >USA</option>
       </select>
@@ -1055,9 +1098,11 @@ console.log('selectedCity',selectedCity)
                                     borderTopRightRadius: "5px",
                                     borderBottomRightRadius: "5px",
                                 }}
-                                required
                             />
                         </div>
+                        {phoneError1 && (
+                            <Error className="input feedback">Please enter a valid American Phone Number</Error>
+                          )}
                         </label>  
               
               <div
@@ -1073,7 +1118,12 @@ console.log('selectedCity',selectedCity)
                     type="text"
                     // placeholder="Enter your social media profile link"
                     value={MediaLink}
-                    onChange={(e) => setMediaLink(e.target.value)}
+                    onChange={(e) => {
+                      setMediaLink(e.target.value);
+                      if(e.target.value.length > 0){
+                        setMediaLinkError(false);
+                      }
+                    }}
                     // onChange={handleSocialMediaLinkChange}
                     style={{
                       width: "100%",
@@ -1083,6 +1133,9 @@ console.log('selectedCity',selectedCity)
                     }}
                
                   />
+                  {mediaLinkError && (
+                    <Error className="input feedback">Social Media Link is required</Error>
+                  )}
                   {/* Optionally, you can display the entered link */}
                   {/* {socialMediaLink && <p>Entered Social Media Link: {socialMediaLink}</p>} */}
                 </label>
@@ -1114,8 +1167,13 @@ console.log('selectedCity',selectedCity)
                     marginBotttom: "0px",
                     // boxShadow: "rgba(0, 0, 0, 0.4) 0px 2px 5px",
                   }}
-                  required
                 />
+                  {passwordError1 && (
+                    <Error className="input feedback">Password is required</Error>
+                  )}
+                  {passwordError2 && (
+                    <Error className="input feedback">Password must be 8 characters long and include a capital letter, a special character, and a number</Error>
+                  )}
                 <button
                   type="button"
                   onClick={togglePasswordVisibility}
@@ -1131,9 +1189,7 @@ console.log('selectedCity',selectedCity)
                 >
                   {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </button>
-             
               </label>
-
               <label>
                 City<span className="text-danger">*</span>
                 <select
@@ -1146,7 +1202,6 @@ console.log('selectedCity',selectedCity)
           borderRadius: "5px",
           border: "2px solid #ccc",
         }}
-        required
       >
         <option value="" disabled>Select a city</option>
         {Object.keys(CitiesList).map((cityName) => (
@@ -1154,7 +1209,11 @@ console.log('selectedCity',selectedCity)
               {cityName}
             </option>
           ))}
-      </select>
+      </select>  
+                  {cityError && (
+                    <Error className="input feedback">City is required</Error>
+                  )}
+
               </label>
 
               <label>
@@ -1169,7 +1228,6 @@ console.log('selectedCity',selectedCity)
                     borderRadius: "5px",
                     border: "2px solid #ccc",
                   }}
-                  required
                   disabled
                 />
               </label>
@@ -1401,3 +1459,11 @@ console.log('selectedCity',selectedCity)
 };
 
 export default Header;
+
+const Error = styled.div`
+ 
+color: #e66e6e;
+padding: 2px 0px;
+font-size: 12px;
+cursor:none;
+`;
