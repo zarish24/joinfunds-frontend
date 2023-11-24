@@ -24,13 +24,17 @@ const payload ={
   page:currentPage,
 }
         const response = await fetch(
-          `${process.env.REACT_APP_BACKEND_URL}/api/payments/getUserPayoutRequests`,payload,
+          `${process.env.REACT_APP_BACKEND_URL}/api/payments/getUserPayoutRequests`,
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTczYWM0MzE4ZTM2NDM3NDZhZGFlNSIsImlhdCI6MTcwMDIxNTUzMSwiZXhwIjoxNzAyODA3NTMxfQ.4N0OXe3zpYFaNpHEmbGQwhWjaM6T1ety45fPWNS-PeA`,
+              Authorization: `Bearer ${token}`,
             },
+            body: JSON.stringify({
+              page: currentPage,
+              items_per_page: RecordsPerPage,
+            }),
           }
         );
 
@@ -42,8 +46,8 @@ const payload ={
         setTotalPages(Math.ceil(data.totalRecords / RecordsPerPage));
         setDummyData(data.data);
       } catch (error) {
-        console.error("Error fetching data:", error);
-        toast.error("Error fetching data");
+        // console.error("Error fetching data:", error);
+        toast.error("Payout requests not found for the user.");
       } finally {
         setLoading(false);
       }
