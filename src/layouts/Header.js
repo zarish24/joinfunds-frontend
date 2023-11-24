@@ -130,13 +130,13 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
 
   const nav = useNavigate();
   const formSubmit = async (e, apiEndpoint) => {
-    console.log('formSubmitformSubmitformSubmitformSubmitformSubmitformSubmitformSubmit');
-    console.log('Email', email.length);
-    console.log('FirstN', FirstN.length);
-    console.log('LastN', LastN.length);
-    console.log('MediaLink', MediaLink.length);
-    console.log('password', password.length);
-    console.log('City', City.length);
+    // console.log('formSubmitformSubmitformSubmitformSubmitformSubmitformSubmitformSubmit');
+    // console.log('Email', email.length);
+    // console.log('FirstN', FirstN.length);
+    // console.log('LastN', LastN.length);
+    // console.log('MediaLink', MediaLink.length);
+    // console.log('password', password.length);
+    // console.log('City', City.length);
     e.preventDefault();
     
    
@@ -155,6 +155,17 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
      
         if (apiEndpoint === "api/user/register") {
           // Validation for registration
+          const validateAmericanPhoneNumber = (phoneNumber) => {
+            const numericValue = phoneNumber.replace(/\D/g, '');
+            
+              return /^(\d{3}-\d{3}-\d{4}|\d{10})$/.test(numericValue);
+            };
+          
+            if (!validateAmericanPhoneNumber(phone)) {
+              // toast.error('Please enter a valid American phone number.');
+              setPhoneError1(true);
+              return;
+            }
           if (email.length === 0) {
             setEmailError(true);
             return;
@@ -190,21 +201,10 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
             return;
           }
         
-        const validateAmericanPhoneNumber = (phoneNumber) => {
-        const numericValue = phoneNumber.replace(/\D/g, '');
-        
-          return /^(\d{3}-\d{3}-\d{4}|\d{10})$/.test(numericValue);
-        };
-      
-        if (!validateAmericanPhoneNumber(phone)) {
-          // toast.error('Please enter a valid American phone number.');
-          setPhoneError1(true);
-          return;
-        }
+       
       
         // Validate the password
         if (!validatePassword(password)) {
-          // toast.error('Password must be 8 characters long and include a capital letter, a special character, and a number.');
           setPasswordError2(true);
           return;
         }
@@ -219,6 +219,59 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
           phoneNumber: phone,
           socialMediaProfile: MediaLink,
         };
+      }else{
+        const response = await axios
+        .post(`${process.env.REACT_APP_BACKEND_URL}/${apiEndpoint}`, data)
+        .then((res) => {
+
+          if (res.status === 200 || res.status === 201) {
+            setEmail("");
+            setPassword("");
+            setEmail("");
+            setFirstN("");
+            setLastN("");
+            setZip("");
+            setCountry("United States");
+            setMediaLink("");
+            setCity("");
+            setPassword("");
+            setPhone("");
+            setSignupModal(false);
+            toast.success(
+              res?.data?.data?.message
+                ? res?.data?.data?.message
+                : res?.data?.message
+            );
+            // Store user information in local storage
+            localStorage.setItem(
+              "user",
+              JSON.stringify({
+                _id: res?.data?.user?._id,
+                token: res?.data?.token,
+              })
+            );
+            // if (loginModal === true) {
+            //   localStorage.setItem("isLoggedIn", "true");
+            //   setIsLoggedIn(true);
+            //   setSignupModal(false);
+            //   setloginModal(false);
+            //   setSignupModal(false);
+            //   navigate("/");
+            // } else {
+            //   //   console.log("function-called", false);
+            //   setloginModal(true);
+            // }
+          } else {
+            toast.error("Authentication failed. Please check your credentials.");
+          }
+        })
+        .catch((e) => {
+          toast.error(
+            e?.response?.data?.message
+              ? e?.response?.data?.message
+              : e?.response?.data
+          );
+        });
       }
       if (apiEndpoint === "api/user/login") {
         data = {
@@ -845,7 +898,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                     alt="google"
                     style={{ marginRight: "8px" }}
                   />
-                  Sign up with Google
+                Login with Google
               </LoginSocialGoogle>
             ) : null}
           </Box>
@@ -1431,7 +1484,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                     alt="google"
                     style={{ marginRight: "8px" }}
                   />
-                  Login with Google
+                  Sign Up with Google
               </LoginSocialGoogle>
             ) : null}
           </Box>
