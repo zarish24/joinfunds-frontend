@@ -914,7 +914,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
           style={{ backgroundColor: "#002768" }}
         >
           <h4 className="text-center" style={{ color: "white" }}>
-            Sign Up Your Account 232323
+            Sign Up Your Account
           </h4>
         </Modal.Header>
         <Modal.Body className="modal-body">
