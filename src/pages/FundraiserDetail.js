@@ -456,7 +456,7 @@ const closeModal = () => {
           setLoading(false);
           if (res.status === 200 || res.status === 201) {
             setComment_message("");
-            setModalDonate1(true);
+            toast.success('Your Payout Request Created Successfully')
           } else {
             toast.error(res.message);
           }
@@ -464,7 +464,7 @@ const closeModal = () => {
         .catch((error) => {
           setLoading(false);
           if (error.response.request.status === 404){
-            setModalDonate2(true);
+            // setModalDonate2(true);
           } else {
             toast.error(error?.response?.data?.message);
           }
@@ -1775,6 +1775,7 @@ const closeModal = () => {
               By continuing, you agree to the Nfuse
               <Link
                 to={pdfFile}
+                
                 className="btn-link collapsed mx-1"
                 data-bs-toggle="collapse"
               >
