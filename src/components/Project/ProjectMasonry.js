@@ -391,10 +391,10 @@ const handleCopyUrl = async (url) => {
                             </li>
                           </ul> */}
                         </div>
-                        <ul className="author-meta">
-                          <li className="campaign">{item?.user_detail?.publishedCampaignsCount} Campaign</li>
-                          <li className="location">{item?.user_detail?.country},{item?.user_detail?.city}</li>
-                        </ul>
+                        {/* <ul className="author-meta">
+                          <li className="campaign">{item?.user_detail[0]?.publishedCampaignsCount} Campaign</li>
+                          <li className="location">{item?.user_detail[0]?.country},{item?.user_detail[0]?.city}</li>
+                        </ul> */}
                       </div>
                     </div>
                   </div>

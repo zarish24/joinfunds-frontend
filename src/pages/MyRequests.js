@@ -19,9 +19,12 @@ const MyRequests = () => {
 
         const user = JSON.parse(localStorage.getItem("user"));
         const token = user?.token;
-
+const payload ={
+  items_per_page: RecordsPerPage,
+  page:currentPage,
+}
         const response = await fetch(
-          `${process.env.REACT_APP_BACKEND_URL}/api/payments/getUserPayoutRequests?page=${currentPage}&items_per_page=${RecordsPerPage}`,
+          `${process.env.REACT_APP_BACKEND_URL}/api/payments/getUserPayoutRequests`,payload,
           {
             method: "POST",
             headers: {
@@ -72,7 +75,7 @@ const MyRequests = () => {
   return (
     <>
       <PageBanner
-        maintitle=" My Payout Requests"
+        maintitle=" Home"
         pagetitle="My Payout Requests"
         background={bg}
       />
