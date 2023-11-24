@@ -15,6 +15,7 @@ import avat4 from "../assets/images/avatar/avatar4.jpg";
 import avat5 from "../assets/images/avatar/avatar5.jpg";
 import blog1 from "../assets/images/blog/recent-blog/pic1.jpg";
 import blog2 from "../assets/images/blog/recent-blog/pic2.jpg";
+import pdfFile from "../assets/Terms_Service.pdf";
 import UpdateBlog from "../components/Home/UpdateBlog";
 import GallerySlider from "../components/Fundraiser/GallerySlider";
 import { useParams } from "react-router-dom";
@@ -431,6 +432,52 @@ const closeModal = () => {
       // console.error("API request failed", error.message);
     }
   };
+
+  const openModalNew = async (e) => {
+    const value = e.target.value;
+    const token = JSON.parse(localStorage.getItem("user"));
+    if (!token) {
+      toast.error("Please Login First");
+      return;
+    }
+    try {
+      setLoading(true);
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token?.token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
+        },
+      };
+      const response = await axios
+      .get(
+        `${process.env.REACT_APP_BACKEND_URL}/api/payments/makePayoutRequest/${value}`,
+        config
+      )      
+        .then((res) => {
+          setLoading(false);
+          if (res.status === 200 || res.status === 201) {
+            setComment_message("");
+            setModalDonate1(true);
+          } else {
+            toast.error(res.message);
+          }
+        })
+        .catch((error) => {
+          setLoading(false);
+          if (error.response.request.status === 404){
+            setModalDonate2(true);
+          } else {
+            toast.error(error?.response?.data?.message);
+          }
+          // console.error("API request failed", error);
+        });
+      // setCampaigns(response.data); // Set the campaign data in state
+    } catch (error) {
+      setLoading(false);
+      toast.error("Please Login First");
+      // console.error("API request failed", error.message);
+    }
+  };
+
   const checkBankAccountDetails = async (e) => {
     const token = JSON.parse(localStorage.getItem("user"));
     if (!token) {
@@ -453,7 +500,6 @@ const closeModal = () => {
           setLoading(false);
           if (res.status === 200 || res.status === 201) {
             setComment_message("");
-            toast.success("Success-Success-Success-Success-Success");
             setModalDonate1(true);
           } else {
             toast.error(res.message);
@@ -601,17 +647,12 @@ const closeModal = () => {
                     <GallerySlider campaignImages={campaign?.campaign_images} />
                   </div>
                   {/* // {console.log("titssle", campaign?.subtitle)} */}
-                  <h2 className="title">{campaign?.subtitle}</h2>
-                  <p>{campaign?.description}</p>
                   {/* <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."</p> */}
 
-                  <h5>About the Fundraiser</h5>
-                  <p>
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat."
-                  </p>
+                  <h5>Description</h5>
+                  <h2 className="title">{campaign?.subtitle}</h2>
+                  <p>{campaign?.description}</p>
+
                   {/* // {console.log("sdds", user_id, campaign)} */}
                   {user_id !== campaign?.user_id ? (
                     <>
@@ -765,7 +806,7 @@ const closeModal = () => {
                   </Box>
                 )}
 
-                <div className="widget style-1 widget_refer">
+                <div className="widget style-1 widget_refer" hidden>
                   <div className="widget-title">
                     <h4 className="title">Refer a Friend</h4>
                   </div>
@@ -976,9 +1017,9 @@ const closeModal = () => {
                        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
                        transition: "background-color 0.3s",
                      }}
-                     onClick={() => openModal(campaign._id)}
+                     onClick={() => openModalNew(campaign._id)}
                    >
-                     QUICK payouT OF FuNDS
+                     Quick Payout of Funds
                       
                    </button>
                    </>
@@ -999,7 +1040,7 @@ const closeModal = () => {
                         ></div>
                       </div>
                     </div>
-                    <ul className="detail">
+                    <ul className="detail" hidden>
                       <li className="d-flex">
                         <h5>2422</h5>
                         <span className="ms-2">supporters</span>
@@ -1013,7 +1054,7 @@ const closeModal = () => {
                   </div>
 
                   {/* <!-- Fundraiser Post --> */}
-                  <div className="widget style-1 recent-posts-entry">
+                  <div className="widget style-1 recent-posts-entry" hidden>
                     <div className="widget-title">
                       <h5 className="title">Fundraiser Post</h5>
                     </div>
@@ -1042,7 +1083,7 @@ const closeModal = () => {
                   </div>
 
                   {/* <!-- Fundraising Team --> */}
-                  <div className="widget style-1 widget_avatar">
+                  <div className="widget style-1 widget_avatar" hidden>
                     <div className="widget-title">
                       <h5 className="title">Fundraising Team</h5>
                     </div>
@@ -1733,7 +1774,7 @@ const closeModal = () => {
             <span>
               By continuing, you agree to the Nfuse
               <Link
-                to="#"
+                to={pdfFile}
                 className="btn-link collapsed mx-1"
                 data-bs-toggle="collapse"
               >

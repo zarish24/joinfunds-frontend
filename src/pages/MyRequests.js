@@ -72,7 +72,7 @@ const MyRequests = () => {
   return (
     <>
       <PageBanner
-        maintitle=" My Payout Requests"
+        maintitle=" Home"
         pagetitle="My Payout Requests"
         background={bg}
       />
