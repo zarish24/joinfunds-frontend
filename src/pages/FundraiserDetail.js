@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Modal, Form } from "react-bootstrap";
 import styles from "./styles.module.scss";
+import styled from 'styled-components';
 import PageBanner from "../layouts/PageBanner";
 import { CommentBlog } from "../components/BlogDetailsLeftBar";
 import { ThreeDots } from "../../node_modules/react-loader-spinner/dist/index";
@@ -128,6 +129,10 @@ const closeModal = () => {
   const [monthlySubscription, setMonthlySubscription] = useState(false);     
   const [singleDonation, setSingleDonation] = useState(true);                
   const [selectedPercentage, setSelectedPercentage] = useState(0);
+  const [amountError, setAmountError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [firstNameError, setFirstNameError] = useState(false);
+  const [lastNameError, setLastNameError] = useState(false);
   const numDonorsPerPage = 4; // Number of donors displayed per group
   const maxSteps = Math.ceil(
     donners?.length ? donners?.length / numDonorsPerPage : 0
@@ -331,7 +336,7 @@ const closeModal = () => {
             setModalDonate(false);
           } else {
             setLoading(false);
-            toast.success(res.message);
+            toast.error(res.message);
           }
         })
         .catch((error) => {
@@ -354,18 +359,33 @@ const closeModal = () => {
     }
   };    
   const saveDonateCampaign = () => {
-    if (
-      amount1 === 0 ||
-      email.trim() === "" ||
-      firstName.trim() === "" ||
-      lastName.trim() === ""
-      // Add more conditions as needed for other fields
-    ) {
-      toast.error("Please fill in all required fields.");
-      return;
+    // if (
+    //   amount1 === 0 ||
+    //   email.trim() === "" ||
+    //   firstName.trim() === "" ||
+    //   lastName.trim() === ""
+    //   // Add more conditions as needed for other fields
+    // ) {
+    //   toast.error("Please fill in all required fields.");
+    //   return;
+    // }
+  
+    if (amount1 === 0 || amount1.length === 0) {
+      setAmountError(true);
+    }  
+    if (email.length === 0) {
+      setEmailError(true);
+    } 
+    if (firstName.length === 0) {
+      setFirstNameError(true);
+    } 
+    if (lastName.length === 0) {
+      setLastNameError(true);
+    }    
+    else {
+      setModalDonate1(false);
+      setModalStripeDonate(true);
     }
-    setModalDonate1(false);
-    setModalStripeDonate(true);
   };
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
@@ -821,15 +841,15 @@ const closeModal = () => {
                   {user_id !== campaign?.user_id ? (
                     <>
                       <div className="widget style-1 widget_donate">
-                        {/* <Link
+                        <Link
                           to={"#"}
                           className="btn btn-donate btn-primary w-100"
                           data-bs-toggle="modal"
                           data-bs-target="#modalDonate"
                           onClick={() => setModalDonate(true)}
                         >
-                          <i className="flaticon-like me-3"></i> Donate Now
-                        </Link> */}
+                          <i className="flaticon-like me-3"></i> Donate Now Crypto
+                        </Link>
                         <Link
                           to={"#"}
                           className="btn btn-donate btn-primary w-100"
@@ -837,7 +857,7 @@ const closeModal = () => {
                           data-bs-target="#modalDonate"
                           onClick={() => setModalDonate1(true)}
                         >
-                          <i className="flaticon-like me-3"></i> Donate Now
+                          <i className="flaticon-like me-3"></i> Donate Now Stripe
                         </Link>
                         {/* <Link
                           to={"#"}
@@ -1297,7 +1317,7 @@ const closeModal = () => {
       >
         <Modal.Header
           className="d-flex justify-content-center align-items-center"
-          style={{ backgroundColor: "rgb(27, 130, 113)" }}
+          style={{ backgroundColor: "#002768" }}
         >
           <h4 className="text-center" style={{ color: "white" }}>
             Donation to Campaign
@@ -1336,6 +1356,9 @@ const closeModal = () => {
                     placeholder="Enter Amount"
                     value={amount1}
                     onChange={(e) => {
+                      if(e.target.value > 0){
+                        setAmountError(false);
+                      }
                         setAmount1(e.target.value);
                     }} 
                     style={{
@@ -1346,7 +1369,10 @@ const closeModal = () => {
                     }}
                     required
                   />
-                  <small className="text-danger">Please enter a minimum donation of USD $5</small>
+                    {amountError && (
+                      <Error className="input feedback">Amount is required</Error>
+                    )}
+                  {/* <small className="text-danger">Please enter a minimum donation of USD $5</small> */}
                 </label>
               </div>
             </div>
@@ -1438,6 +1464,9 @@ const closeModal = () => {
                   placeholder= "Enter Email"   
                   value={email}
                   onChange={(e) => {
+                    if(e.target.value.length > 0){
+                      setEmailError(false);
+                    }
                     setEmail(e.target.value);
                   }}                 
                   style={{
@@ -1449,8 +1478,10 @@ const closeModal = () => {
                     marginBotttom: "0px",
                     // boxShadow: "rgba(0, 0, 0, 0.4) 0px 2px 5px",
                   }}
-                  required
                 />
+                  {emailError && (
+                    <Error className="input feedback">Email is required</Error>
+                  )}
              
               </label>
 
@@ -1462,6 +1493,9 @@ const closeModal = () => {
                   value={firstName}
                   onChange={(e) => {
                     setFirstName(e.target.value);
+                    if(e.target.value.length > 0){
+                      setFirstNameError(false);
+                    }
                   }}                     
                   style={{
                     width: "100%",
@@ -1469,8 +1503,10 @@ const closeModal = () => {
                     borderRadius: "5px",
                     border: "2px solid #ccc",
                   }}
-                  required
                 />
+                  {firstNameError && (
+                    <Error className="input feedback">First Name is required</Error>
+                  )}
               </label>
 
               <label>
@@ -1480,6 +1516,9 @@ const closeModal = () => {
                   value={lastName}
                   onChange={(e) => {
                     setLastName(e.target.value);
+                    if(e.target.value.length > 0){
+                      setLastNameError(false);
+                    }
                   }}    
                   placeholder= "Enter Last Name"                    
                   style={{
@@ -1488,8 +1527,10 @@ const closeModal = () => {
                     borderRadius: "5px",
                     border: "2px solid #ccc",
                   }}
-                  required
                 />
+                  {lastNameError && (
+                    <Error className="input feedback">Last Name is required</Error>
+                  )}
               </label>
             </div>
 
@@ -1580,6 +1621,7 @@ const closeModal = () => {
               <div className="py-2 bg-primary text-white text-center" style={{
                 width: "100%",
                 borderRadius: '7px',
+                cursor: 'pointer',
               }} onClick={saveDonateCampaign}>
                 Continue
               </div>
@@ -1629,3 +1671,11 @@ const closeModal = () => {
 };
 
 export default FundraiserDetail;
+
+const Error = styled.div`
+ 
+color: #e66e6e;
+padding: 2px 0px;
+font-size: 12px;
+cursor:none;
+`;
