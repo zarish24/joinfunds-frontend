@@ -34,7 +34,7 @@ const CreateCompaign = () => {
     maximum_amount: 0,
     start_date: '',
     end_date: '',
-    goal_type:'monthly',
+    goal_type:'',
     created_by:'',
     donation_to_nfuse:'1',
     campaign_url:'',
@@ -81,35 +81,52 @@ const CreateCompaign = () => {
   const navigate = useNavigate();
   const handleChange = (e) => {
     const { name, value } = e.target;
-    // console.log('name',name)
-    // console.log('value',value)
-   
-    //   console.log('name',name);
-    //   console.log('value',value);
-    if(name === 'total_funding' && value > 0){
-      setDesiredAmountError(false);
-    }
-    if(name === 'category_id' && value !== ''){
-      setCategoryError(false);
-    }
-    if(name === 'title' && value !== ''){
-      setTitleError(false);
-    }
-    if(name === 'description' && value !== ''){
-      setDescriptionError(false);
-    }
-    if(name === 'created_by' && value !== ''){
-      setCreatedByError(false);
-    }
-    if(name === 'start_date' && value !== ''){
-      setStartDateError(false);
-    }
-    if(name === 'end_date' && value !== ''){
-      setEndDateError(false);
-    }
-    // if(name === 'campaign_url' && value !== ''){
-    //   setUrlError(false);
-    // }
+    switch (name) {
+      case 'total_funding':
+          if (value > 0) {
+              setDesiredAmountError(false);
+          }
+          break;
+      case 'category_id':
+          if (value !== '') {
+              setCategoryError(false);
+          }
+          break;
+      case 'title':
+          if (value !== '') {
+              setTitleError(false);
+          }
+          break;
+      case 'description':
+          if (value !== '') {
+              setDescriptionError(false);
+          }
+          break;
+      case 'created_by':
+          if (value !== '') {
+              setCreatedByError(false);
+          }
+          break;
+      case 'start_date':
+          if (value !== '') {
+              setStartDateError(false);
+          }
+          break;
+      case 'end_date':
+          if (value !== '') {
+              setEndDateError(false);
+          }
+          break;
+      // Add cases for other fields as needed
+      // case 'campaign_url':
+      //   if (value !== '') {
+      //     setUrlError(false);
+      //   }
+      //   break;
+      default:
+          break;
+  }
+
     setFormData({
       ...formData,
       [name]: value,
@@ -130,130 +147,145 @@ const CreateCompaign = () => {
     setImageError(false);
     setImages(files);
   };
+
+
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    if (!formData.total_funding){
-      setDesiredAmountError(true);
-    } 
-    if (!formData.category_id){
+    if (!formData.category_id) {
       setCategoryError(true);
-    } 
-    if (!formData.title){
+      setLoading(false);
+      return;
+  }
+
+    if (!formData.title) {
       setTitleError(true);
-    } 
-    if (!formData.description){
-      setDescriptionError(true);
-    } 
-    if (!formData.created_by){
-      setCreatedByError(true);
-    }
-    if (!formData.start_date){
-      setStartDateError(true);
-    }
-    if (!formData.end_date){
-      setEndDateError(true);
-    } 
-    // if (!formData.campaign_url){
-    //   setUrlError(true);
-    // } 
-    if (images.length === 0){
-      setImageError(true);
-    }
-    else {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
-        },
-      };
-      const option = { 
-        category_id:   formData.category_id,
-        title: formData.title,
-        total_funding: formData.total_funding,
-        description: formData.description,
-        minimum_amount: formData.minimum_amount,
-        maximum_amount: formData.maximum_amount,
-        goal_type:formData.goal_type,
-        created_by:formData.created_by,
-        donation_to_nfuse:formData.donation_to_nfuse,
-        campaign_url:formData.campaign_url,
-        country:formData.country,
-        start_date: formData.start_date,
-        end_date: formData.end_date,
-        campaign_status: formData.campaign_status,
-        campaign_type: formData.campaign_type, 
-        user_id: formData.user_id
-      }
-      // const areFieldsFilled = Object.values(option).every(
-      //   (value) => value !== undefined && value !== ''
-      // );
-   
-      // if (!areFieldsFilled) {
-      //   setLoading(false);
-      //   toast.error('Please fill in all required fields.');
-      //   return; 
-      // } 
-      
-      const startDateIsValid = isStartDateValid(option.start_date, option.end_date);
-      const endDateIsValid = isEndDateValid(option.start_date, option.end_date);
-      const getDaysDifference = (startDate, endDate) => {
-        const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
-        const start = new Date(option.start_date);
-        const end = new Date(option.end_date);
-        const diffDays = Math.round(Math.abs((start - end) / oneDay));
-        return diffDays;
-      };
-      if (!startDateIsValid || !endDateIsValid) {
+      setLoading(false);
+      return;
+  }
+  if (!formData.description) {
+    setDescriptionError(true);
+    setLoading(false);
+    return;
+}
+    if (!formData.total_funding) {
+        setDesiredAmountError(true);
         setLoading(false);
-      
-        
-        if (option.start_date === option.end_date) {
-          toast.error('Start and end date cannot be the same.');
-        } else if (startDateIsValid && endDateIsValid) {
-          toast.error('Start and end date must be present or future.');
-        } else if (getDaysDifference(option.start_date, option.end_date) > 90) {
-          toast.error('Campaign Can only be valid for 90 days select a date between them  ');
-        }
-      
-        return; 
-      }
-  
-  
-      
-      const bodyData = new FormData();
-    // console.log('optionoption /bodyData',bodyData)
-  
-          for (var key in option) {
-            bodyData.append(key, option[key]);
-          }
-          for (let i = 0; i < images.length; i++) {
-            bodyData.append("images", images[i]);
-          }
-      const response = await axios
-        .post(`${process.env.REACT_APP_BACKEND_URL}/api/compaign/createCompaign`, bodyData, config,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data", 
-          },
-        }
-          )
-        .then((res) => {
-          if (res.status === 200 || res.status === 201) {
-            setLoading(false);
-              toast.success(
-                res?.data?.message
-              );
-              navigate("/my-Campaigns");
-          } else {
-            toast.error("Failed to create a campaign.");
-          }
-        })
-        .catch((error) => {
-          setLoading(false);
-          toast.error(error?.response?.data?.message || error);
-        });
+        return;
     }
+
+   
+  
+
+ 
+
+    if (!formData.created_by) {
+        setCreatedByError(true);
+        setLoading(false);
+        return;
+    }
+
+    if (!formData.start_date) {
+        setStartDateError(true);
+        setLoading(false);
+        return;
+    }
+
+    if (!formData.end_date) {
+        setEndDateError(true);
+        setLoading(false);
+        return;
+    }
+
+    if (images.length === 0) {
+        setImageError(true);
+        setLoading(false);
+        return;
+    }
+
+    const startDateIsValid = isStartDateValid(formData.start_date, formData.end_date);
+    const endDateIsValid = isEndDateValid(formData.start_date, formData.end_date);
+    const getDaysDifference = (startDate, endDate) => {
+      const oneDay = 24 * 60 * 60 * 1000; 
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      const diffDays = Math.round(Math.abs((start - end) / oneDay));
+      return diffDays;
   };
+    if (!startDateIsValid || !endDateIsValid) {
+        setLoading(false);
+
+        if (formData.start_date === formData.end_date) {
+            toast.error('Start and end date cannot be the same.');
+        } else if (startDateIsValid && endDateIsValid) {
+            toast.error('Start and end date must be present or future.');
+        } else if (getDaysDifference(formData.start_date, formData.end_date) > 90) {
+            toast.error('Campaign can only be valid for 90 days. Select a date between them.');
+        }
+
+        return;
+    }
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    };
+
+    const option = {
+      category_id:   formData.category_id,
+      title: formData.title,
+      total_funding: formData.total_funding,
+      description: formData.description,
+      minimum_amount: formData.minimum_amount,
+      maximum_amount: formData.maximum_amount,
+      goal_type:formData.goal_type,
+      created_by:formData.created_by,
+      donation_to_nfuse:formData.donation_to_nfuse,
+      campaign_url:formData.campaign_url,
+      country:formData.country,
+      start_date: formData.start_date,
+      end_date: formData.end_date,
+      campaign_status: formData.campaign_status,
+      campaign_type: formData.campaign_type, 
+      user_id: formData.user_id
+    };
+
+    const bodyData = new FormData();
+    for (var key in option) {
+        bodyData.append(key, option[key]);
+    }
+    for (let i = 0; i < images.length; i++) {
+        bodyData.append("images", images[i]);
+    }
+
+    try {
+        const response = await axios.post(
+            `${process.env.REACT_APP_BACKEND_URL}/api/compaign/createCompaign`,
+            bodyData,
+            config,
+            {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            }
+        );
+
+        if (response.status === 200 || response.status === 201) {
+            setLoading(false);
+            toast.success(response?.data?.message);
+            navigate("/my-Campaigns");
+        } else {
+            setLoading(false);
+            toast.error("Failed to create a campaign.");
+        }
+    } catch (error) {
+        setLoading(false);
+        toast.error(error?.response?.data?.message || error);
+    }
+};
+
   return (
     <>
       <div className="page-content bg-white">
@@ -280,6 +312,9 @@ const CreateCompaign = () => {
                           value={formData.category_id}
                           onChange={handleChange}
                           className="form-control"
+                          style={{
+                            border: `2px solid ${categoryError ? 'red' : '#ccc'}`, 
+                          }}
                         >
                             <option value="" disabled>
     Select Campaign Category
@@ -300,6 +335,9 @@ const CreateCompaign = () => {
                           type="text"
                           name="title"
                           value={formData.subtitle}
+                          style={{
+                            border: `2px solid ${titleError ? 'red' : '#ccc'}`, 
+                          }}
                           onChange={handleChange}
                           className="form-control"
                         />
@@ -316,6 +354,9 @@ const CreateCompaign = () => {
                       name="description"
                       value={formData.description}
                       onChange={handleChange}
+                      style={{
+                        border: `2px solid ${descriptionError ? 'red' : '#ccc'}`, 
+                      }}
                       className="form-control"
                     />
                     {descriptionError && (
@@ -328,6 +369,9 @@ const CreateCompaign = () => {
                           type="number"
                           name="total_funding"
                           value={formData.total_funding}
+                          style={{
+                            border: `2px solid ${desiredAmountError ? 'red' : '#ccc'}`, 
+                          }}
                           onChange={handleChange}
                           className="form-control"
                           step="1"
@@ -374,6 +418,9 @@ const CreateCompaign = () => {
                           name="created_by"
                           value={formData.created_by}
                           onChange={handleChange}
+                          style={{
+                            border: `2px solid ${createdByError ? 'red' : '#ccc'}`, 
+                          }}
                           className="form-control"
                         />
                         {createdByError && (
@@ -414,7 +461,18 @@ const CreateCompaign = () => {
                     
                       </select>
                 </div>
-                <div className="col-md-6">
+                <div className="col-6">
+                        <div className="form-group">
+                            <label>Select Campaign Images</label>
+                            <input type="file" onChange={(e) => MultipleFileChange(e)} className="form-control"  style={{
+                            border: `2px solid ${imageError ? 'red' : '#ccc'}`, 
+                          }} multiple />
+                            {imageError && (
+                              <Error className="input feedback">Campaign Images is required</Error>
+                            )}
+                        </div>
+                       </div>
+                {/* <div className="col-md-6">
                   <label>Choose Goal Type</label>
                   <select
                     name="goal_type"
@@ -426,7 +484,7 @@ const CreateCompaign = () => {
                     <option value="weekly">Weekly</option>
                     <option value="daily">Daily</option>
                   </select>
-                </div>
+                </div> */}
               </div>
                 {/* {formData.campaign_type==='funding' ? (<>
                   <div className="row">
@@ -490,16 +548,8 @@ const CreateCompaign = () => {
                     </div>
                   </div>
                   <div className="row">
-                  <div className="col-6">
-                        <div className="form-group">
-                            <label>Select Compaign Images</label>
-                            <input type="file" onChange={(e) => MultipleFileChange(e)} className="form-control" multiple />
-                            {imageError && (
-                              <Error className="input feedback">Compaign Images is required</Error>
-                            )}
-                        </div>
-                       </div>
-                       <div className="col-6">
+              
+                       {/* <div className="col-6">
                         <div className="form-group">
                             <label>Campagin Url</label>
                             <input
@@ -509,11 +559,9 @@ const CreateCompaign = () => {
                           onChange={handleChange}
                           className="form-control"
                         />
-                        {/* {urlError && (
-                          <Error className="input feedback">Campagin Url is required</Error>
-                        )} */}
+                 
                         </div>
-                       </div>
+                       </div> */}
                        </div>
                    
                   <button type="submit" className="btn btn-primary mb-5">
