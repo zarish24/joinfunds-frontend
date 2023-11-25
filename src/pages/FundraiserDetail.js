@@ -151,8 +151,8 @@ const closeModal = () => {
   });
   // console.log("current-amount", amount);
   const setChain = async (e) => {
-    const selectedValue = parseInt(e.target.value, 10); // Parse the selected value to an integer
-    setFormData({ ...formData, chain_id: selectedValue }); // Update the formData state
+    const selectedValue = parseInt(e.target.value, 10); 
+    setFormData({ ...formData, chain_id: selectedValue });
     if (selectedValue) {
       const bodyData = {
         chain_id: selectedValue,
@@ -184,10 +184,10 @@ const closeModal = () => {
   const setHandleSymbol = (e) => {
     const selectedValue = e.target.value; // Keep it as a string
     setFormData({ ...formData, symbol: selectedValue }); // Update the formData state
-    // console.log("formdata", formData); // Move the console.log inside this function if needed
+   
   };
 
-  // console.log("formdatas", formData);
+  
   const handleStepChange = (step) => {
     setActiveStep(step);
   };
@@ -208,41 +208,58 @@ const closeModal = () => {
     });
   };
   const handleStripeChange = async (e) => {
-    e.preventDefault()
-    // console.log("iii", card);
-    if (card) {
-      try {
-        // Access 'card' and create a token
-        const token = await card.createToken();
-        // console.log("Card token:", token);
-        if (token) {
-          setLoading(true);
-          const bodyData = {
-            // systemSelectedPercentage: selectedPercentage,
-            user_id,
-            campaign_id: id,
-            stripeToken: token.id,
-            amount: amount1,
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-            donationName: donationName,
-            donationType: donationTypes,
-            comment: comment,
-            follow_campaign: followCampaign,
-            nfuse_announcments: nfuseAnnouncments,
-            optional_gift: gift
-          };
-
-          // console.log("body-data", bodyData);
-          const response = await axios
-        .post(
-          `${process.env.REACT_APP_BACKEND_URL}/api/payments/makeStripePayment`,
-          bodyData
-        )
-        .then((res) => {
-          if (res.status === 200 || res.status === 201) {
-            // setLoading(false);
+    e.preventDefault();
+    const items = JSON.parse(localStorage.getItem('user'));
+    const token = items?.token;
+    
+    try {
+      const config = {
+        headers: {},
+      };
+  
+      
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+  
+      const stripeToken = await card.createToken();
+  
+      if (stripeToken) {
+        setLoading(true);
+        const bodyData = {
+          user_id,
+          campaign_id: id,
+          stripeToken: stripeToken.id,
+          amount: amount1,
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          donationName: donationName,
+          donationType: donationTypes,
+          comment: comment,
+          follow_campaign: followCampaign,
+          nfuse_announcments: nfuseAnnouncments,
+          optional_gift: gift,
+        };
+  
+        try {
+          let response;
+  
+          // Make API call based on the presence of token
+          if (token) {
+            response = await axios.post(
+              `${process.env.REACT_APP_BACKEND_URL}/api/payments/makeStripePayment`,
+              bodyData,
+              config
+            );
+          } else {
+            response = await axios.post(
+              `${process.env.REACT_APP_BACKEND_URL}/api/payments/makeStripeAnonymousPayment`,
+              bodyData
+            );
+          }
+  
+          if (response.status === 200 || response.status === 201) {
             setPaymentUpdate(true);
             setLoading(false);
             setAmount(0);
@@ -261,11 +278,9 @@ const closeModal = () => {
             toast.success("Transaction has been completed successfully!");
           } else {
             setLoading(false);
-            toast.error(res.message);
+            toast.error(response.data.message);
           }
-        })
-        .catch((error) => {
-          // console.error("API request failed", error);
+        } catch (error) {
           setLoading(false);
           setAmount(0);
           setAmount1(0);
@@ -285,20 +300,18 @@ const closeModal = () => {
               : error.response.data.Message
           );
           setModalStripeDonate(false);
-        });
         }
-        // console.log("body-data",bodyData)
-        // You can handle the token or further actions here.
-      } catch (error) {
-        // console.error("Error creating token:", error);
       }
-    } else {
+    } catch (error) {
+      // ... handle error
+    }
+    // If card widget is not initialized
+    if (!card) {
       setLoading(false);
       toast.error("Card widget is not initialized");
     }
-
-    // Other code...
   };
+  
   const handleRadioChange = (name, checked) => {
     if (checked) {
       setDonationTypes(name);
