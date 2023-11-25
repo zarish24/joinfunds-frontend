@@ -31,6 +31,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
   const [passwordError1, setPasswordError1] = useState(false);
   const [passwordError2, setPasswordError2] = useState(false);
   const [cityError, setCityError] = useState(false);
+  const [zipError, setZipError] = useState(false);
   const [loginModal, setloginModal] = useState(false);
   const [resetModal, setResetModal] = useState(false);
   const [signupModal, setSignupModal] = useState(false);
@@ -60,9 +61,9 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
     const selectedCity = e.target.value;
 
     setCity(selectedCity);
-    setZip(CitiesList[selectedCity]); 
+    // setZip(CitiesList[selectedCity]); 
     
-    setSelectedCityPostalCode(CitiesList[selectedCity]); 
+    // setSelectedCityPostalCode(CitiesList[selectedCity]); 
     setCityError(false);
   };
   const togglePasswordVisibility = () => {
@@ -192,6 +193,10 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
           }    
         
           if (password.length === 0 || !validatePassword(password)) {
+            setPasswordError1(true);
+            return;
+          }
+          if (zip.setZipError === 0)  {
             setPasswordError1(true);
             return;
           }
@@ -1250,7 +1255,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                 </button>
               </label>
               <label>
-                City<span className="text-danger">*</span>
+                State<span className="text-danger">*</span>
                 <select
         value={City}
         // onChange={(e) => setCity(e.target.value)}
@@ -1262,7 +1267,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
           border: "2px solid #ccc",
         }}
       >
-        <option value="" disabled>Select a city</option>
+        <option value="" disabled>Select a State</option>
         {Object.keys(CitiesList).map((cityName) => (
             <option key={cityName} value={cityName}>
               {cityName}
@@ -1270,7 +1275,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
           ))}
       </select>  
                   {cityError && (
-                    <Error className="input feedback">City is required</Error>
+                    <Error className="input feedback">State is required</Error>
                   )}
 
               </label>
@@ -1278,16 +1283,18 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
               <label>
                 Zip Code<span className="text-danger">*</span>
                 <input
-                  type="text"
+                  type="tel"
                   value={selectedCityPostalCode}
-                  // onChange={(e) => setZip(e.target.value)}
+                  onChange={(e) => setZip(e.target.value)}
                   style={{
                     width: "100%",
                     padding: "2px",
                     borderRadius: "5px",
                     border: "2px solid #ccc",
                   }}
-                  disabled
+                  {zipError && (
+                    <Error className="input feedback">Postal is required</Error>
+                  )}
                 />
               </label>
             </div>

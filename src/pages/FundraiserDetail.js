@@ -444,7 +444,7 @@ const closeModal = () => {
       setLoading(true);
       const config = {
         headers: {
-          Authorization: `Bearer ${token?.token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
+          Authorization: `Bearer ${token?.token}`, 
         },
       };
       const response = await axios
@@ -464,7 +464,7 @@ const closeModal = () => {
         .catch((error) => {
           setLoading(false);
           if (error.response.request.status === 404){
-            // setModalDonate2(true);
+            setModalDonate2(true);
           } else {
             toast.error(error?.response?.data?.message);
           }
@@ -478,7 +478,7 @@ const closeModal = () => {
     }
   };
 
-  const checkBankAccountDetails = async (e) => {
+  const checkBankAccountDetails = async (id) => {
     const token = JSON.parse(localStorage.getItem("user"));
     if (!token) {
       toast.error("Please Login First");
@@ -500,7 +500,8 @@ const closeModal = () => {
           setLoading(false);
           if (res.status === 200 || res.status === 201) {
             setComment_message("");
-            setModalDonate1(true);
+            openModalNew(id)
+            // setModalDonate1(true);
           } else {
             toast.error(res.message);
           }
@@ -949,7 +950,7 @@ const closeModal = () => {
                         <Link
                           to={"#"}
                           className="btn btn-donate btn-primary w-100"
-                          onClick={() => checkBankAccountDetails()}
+                          onClick={() =>  setModalDonate1(true)}
                         >
                           <i className="flaticon-like me-3"></i> Donate Now Stripe
                         </Link>
@@ -1017,7 +1018,8 @@ const closeModal = () => {
                        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
                        transition: "background-color 0.3s",
                      }}
-                     onClick={() => openModalNew(campaign._id)}
+                     onClick={() => checkBankAccountDetails(campaign._id)}
+                    //  onClick={() => openModalNew(campaign._id)}
                    >
                      Quick Payout of Funds
                       

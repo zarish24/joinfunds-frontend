@@ -107,9 +107,9 @@ const CreateCompaign = () => {
     if(name === 'end_date' && value !== ''){
       setEndDateError(false);
     }
-    if(name === 'campaign_url' && value !== ''){
-      setUrlError(false);
-    }
+    // if(name === 'campaign_url' && value !== ''){
+    //   setUrlError(false);
+    // }
     setFormData({
       ...formData,
       [name]: value,
@@ -154,9 +154,9 @@ const CreateCompaign = () => {
     if (!formData.end_date){
       setEndDateError(true);
     } 
-    if (!formData.campaign_url){
-      setUrlError(true);
-    } 
+    // if (!formData.campaign_url){
+    //   setUrlError(true);
+    // } 
     if (images.length === 0){
       setImageError(true);
     }
@@ -184,15 +184,15 @@ const CreateCompaign = () => {
         campaign_type: formData.campaign_type, 
         user_id: formData.user_id
       }
-      const areFieldsFilled = Object.values(option).every(
-        (value) => value !== undefined && value !== ''
-      );
-    // console.log('optionoption',option)
-      if (!areFieldsFilled) {
-        setLoading(false);
-        toast.error('Please fill in all required fields.');
-        return; // Stop further processing if fields are not filled
-      } 
+      // const areFieldsFilled = Object.values(option).every(
+      //   (value) => value !== undefined && value !== ''
+      // );
+   
+      // if (!areFieldsFilled) {
+      //   setLoading(false);
+      //   toast.error('Please fill in all required fields.');
+      //   return; 
+      // } 
       
       const startDateIsValid = isStartDateValid(option.start_date, option.end_date);
       const endDateIsValid = isEndDateValid(option.start_date, option.end_date);
@@ -243,7 +243,7 @@ const CreateCompaign = () => {
               toast.success(
                 res?.data?.message
               );
-              navigate("/my-project");
+              navigate("/my-Campaigns");
           } else {
             toast.error("Failed to create a campaign.");
           }
@@ -509,9 +509,9 @@ const CreateCompaign = () => {
                           onChange={handleChange}
                           className="form-control"
                         />
-                        {urlError && (
+                        {/* {urlError && (
                           <Error className="input feedback">Campagin Url is required</Error>
-                        )}
+                        )} */}
                         </div>
                        </div>
                        </div>
