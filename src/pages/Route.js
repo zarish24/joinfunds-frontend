@@ -74,9 +74,9 @@ function Index(){
 					<Route path='/fundraiser-detail/:id' element={<FundraiserDetail />} />
 					<Route path='/create-compaign' exact element={<CreateCompaign />} />
 					<Route path='/Edit-compaign/:id' exact element={<EditCampaign />} />
-					<Route path='/Campaigns' exact element={<Project />} />
+					<Route path='/campaigns' exact element={<Project />} />
 					<Route path='/project-categories' exact element={<ProjectCategories />} />
-					<Route path='/my-Campaigns' exact element={<MyProjects />} />
+					<Route path='/my-campaigns' exact element={<MyProjects />} />
 					<Route path='/project-sidebar' exact element={<ProjectSidebar />} />
 					<Route path='/project-story' exact element={<ProjectStory />} />
 					<Route path='/blog' exact element={<Blog />} />

@@ -92,7 +92,7 @@ export const MenuListArray2 = [
         content : [
             {
                 title:"My Campaigns",
-                to:"/my-Campaigns"
+                to:"/my-campaigns"
             },
             {
                 title:"Create Campaign",
@@ -101,7 +101,7 @@ export const MenuListArray2 = [
            
             {
                 title:"Campaigns",
-                to:"/Campaigns"
+                to:"/campaigns"
             },
             // {
             //     title:"Campaign Categories",
@@ -289,7 +289,7 @@ export const MenuListArray3 = [
            
             {
                 title:"Campaigns",
-                to:"/Campaigns"
+                to:"/campaigns"
             },
             // {
             //     title:"Campaign Categories",

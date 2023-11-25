@@ -52,37 +52,6 @@ const initialValues = {
     confirmPassword: '',
     newPassword: ''
 };
-// const CountrySelect = ({ value, onChange }) => {
-//     const options = countriesData.map(country => ({
-//       label: ` ${country.name}`,
-//       value: country.dial_code,
-//     }));
-  
-//     return (
-//       <Select
-//         value={options.find(option => option.value === value)}
-//         onChange={(selectedOption) => onChange(selectedOption.value)}
-//         options={options}
-//         styles={{
-//           control: (provided, state) => ({
-//             ...provided,
-//             width: '100px', // Adjust the width as needed
-//             height: '35px',
-//             borderRadius: '5px', // Add rounded corners
-//             border: state.isFocused ? '1px solid #297EFF' : '1px solid #CED4DA', // Add focus border
-//             boxShadow: state.isFocused ? '0 0 5px rgba(41, 126, 255, 0.5)' : 'none', // Add focus shadow
-//           }),
-//           option: (provided, state) => ({
-//             ...provided,
-//             backgroundColor: state.isFocused ? '#297EFF' : 'white', // Highlight focused option
-//             color: state.isFocused ? 'white' : 'black', // Set text color for focused option
-//           }),
-//         }}
-//         isSearchable
-//       />
-//     );
-//   };
-  
 const Setting = (props) => {
     const navigate = useNavigate();
     const [item, setItems] = useState([]);
@@ -144,6 +113,16 @@ const Setting = (props) => {
     const [legalIdentityError, setLegalIdentityError] = useState(false);
 
     const [phoneError1, setPhoneError1] = useState(false);
+    const [firstNameError, setFirstNameError] = useState(false);
+    const [lastNameError, setLastNameError] = useState(false);
+  
+    const [mediaLinkError, setMediaLinkError] = useState(false);
+    const [passwordError1, setPasswordError1] = useState(false);
+    const [passwordError2, setPasswordError2] = useState(false);
+    const [cityError, setCityError] = useState(false);
+    const [zipError, setZipError] = useState(false);
+    const [zipErrorLength, setZipErrorLength] = useState(false);
+    const [emailError, setEmailError] = useState(false);
       console.log('link',link);    
    
     useEffect(() => {
@@ -170,7 +149,7 @@ const Setting = (props) => {
             const userId = items?._id;
             const config = {
                 headers: {
-                  Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
+                  Authorization: `Bearer ${token}`, 
                 },
               };
 
@@ -394,52 +373,82 @@ const config = {
         const selectedCity = e.target.value;
     
         setcity(selectedCity);
-        setzip(CitiesList[selectedCity]); 
+        // setzip(CitiesList[selectedCity]); 
         
         
       };
     const saveRecipientDetails = async () => {
+        setLoading(true);
         if(legalFirstName.length === 0){
             setLegalFirstNameError(true);
+            setLoading(false);
+            return;
         }
         if(legalLastName.length === 0){
             setLegalLastNameError(true);
+            setLoading(false);
+            return;
         }
         if(legalEmail.length === 0){
             setLegalLastEmailError(true);
+            setLoading(false);
+            return;
         }
         if(legalPhoneNumber.length === 0){
             setLegalLastPhoneNumberError(true);
+            setLoading(false);
+            return;
         }
         if(legalSocailMedia.length === 0){
             setLegalSocailMediaError(true);
+            setLoading(false);
+            return;
         }       
         if(legalState.length === 0){
             setLegalStateError(true);
+            setLoading(false);
+            return;
         }       
         if(legalCity.length === 0){
             setLegalCityError(true);
+            setLoading(false);
+            return;
         }        
         if(legalPostal.length === 0){
             setLegalPostalError(true);
+            setLoading(false);
+            return;
         }        
         if(legalCheckingAccountNumber.length === 0){
             setLegalCheckingAccountNumberError(true);
+            setLoading(false);
+            return;
         }            
         if(legalAddress.length === 0){
             setLegalAddressError(true);
+            setLoading(false);
+            return;
         }       
         if(legalRoutingNumber.length === 0){
             setLegalRoutingNumberError(true);
+            setLoading(false);
+            return;
         }        
         if(legalConfirmCheckingAccountNumber.length === 0){
             setLegalConfirmCheckingAccountNumberError(true);
+
+            setLoading(false);
+            return;
         }  
         if(legalSecurityNumber.length === 0){
             setLegalSecurityNumberError(true);
+            setLoading(false);
+            return;
         } 
         if(legalIdentity.length === 0){
             setLegalIdentityError(true);
+            setLoading(false);
+            return;
         }         
         else {
             console.log('Elseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', legalSecurityNumber.length);
@@ -468,31 +477,8 @@ const config = {
                 accountNumber: legalCheckingAccountNumber,
                 routingNumber: legalRoutingNumber
             };
-            const requiredFields = [
-                'identity',
-                'firstName',
-                'lastName',
-                'email',
-                'phoneNumber',
-                'address',
-                'city',
-                'state',
-                'postalCode',
-                'country',
-                'socialSecurityNumber',
-                'dateOfBirth',
-                'accountNumber',
-                'routingNumber',
-            ];
+           
         
-            const emptyFields = requiredFields.filter(field => !option[field]);
-        
-            // if (emptyFields.length > 0) {
-            //     toast.error(`Please fill in the following fields: ${emptyFields.join(', ')}`);
-            //     setLoading(false);
-            //     return;
-            // }
-            // Convert the option object to JSON
             const jsonData = JSON.stringify(option);
          
             const formData = new FormData();
@@ -547,18 +533,62 @@ const config = {
         }            
     };
     const updateProfile = async () => {
+        // Retrieve user data from localStorage
         const items = JSON.parse(localStorage.getItem('user'));
         const token = items?.token;
         const userId = items?._id;
     
+        // Set loading state to true
         setLoading(true);
     
-        const config = {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
+        // Validate first name
+        if (firstName.length === 0) {
+            setFirstNameError(true);
+            setLoading(false);
+            return;
+        }
+    
+        // Validate last name
+        if (lastName.length === 0) {
+            setLastNameError(true);
+            setLoading(false);
+            return;
+        }
+    
+        // Validate email
+        if (email.length === 0) {
+            setEmailError(true);
+            setLoading(false);
+            return;
+        }
+    
+        // Validate phone number
+        const validateAmericanPhoneNumber = (phoneNumber) => {
+            const numericValue = phoneNumber.replace(/\D/g, '');
+            return /^(\d{3}-\d{3}-\d{4}|\d{10})$/.test(numericValue);
         };
     
+        if (!validateAmericanPhoneNumber(phone)) {
+            setPhoneError1(true);
+            setLoading(false);
+            return;
+        }
+    
+        // Validate zip code
+        if (zip.length !== 6) {
+            setZipErrorLength(true);
+            setLoading(false);
+            return;
+        }
+    
+        // Validate city
+        if (city.length === 0) {
+            setCityError(true);
+            setLoading(false);
+            return;
+        }
+    
+        // Construct option object with user data
         const option = {
             firstName: firstName,
             lastName: lastName,
@@ -572,33 +602,21 @@ const config = {
             bio: 'sada'
         };
     
-        const validateAmericanPhoneNumber = (phoneNumber) => {
-            const numericValue = phoneNumber.replace(/\D/g, '');
-            return /^(\d{3}-\d{3}-\d{4}|\d{10})$/.test(numericValue);
-        };
-    
-        if (!validateAmericanPhoneNumber(phone)) {
-            setPhoneError1(true);
-            toast.error('Please enter a valid American phone number.');
-            setLoading(false);
-            return;
-        }
-    
+        // Create FormData for the API call
         const formData = new FormData();
         for (var key in option) {
             formData.append(key, option[key]);
         }
-    
+        const config = {
+            headers: {
+              Authorization: `Bearer ${token}`, 
+            },
+          };
         try {
+         
             const res = await axios.put(`${process.env.REACT_APP_BACKEND_URL}/api/user`, formData, config);
-   
+    
             if (res.status === 200 || res.status === 201) {
-
-                // localStorage.removeItem('user');
-                // localStorage.setItem('user', JSON.stringify({
-                //     token: token,
-                //     // ... Update other user details if needed
-                // }));
                 setUrlImage(res.data.data.doc.profileImage);
                 fetchProfileDetails();
                 setLoading(false);
@@ -609,9 +627,10 @@ const config = {
             }
         } catch (error) {
             setLoading(false);
-            toast.error(error.response?.data.message || 'An error occurred.');
+            toast.error(error.response?.data.message);
         }
     };
+    
     const togglePassword = () => {
         if (passwordType === 'password') {
             setPasswordType('text');
@@ -746,6 +765,11 @@ const config = {
                                                         type="text"
                                                         name="firstName"
                                                         className="form-control"
+                                                        style={{
+                                                     
+                                                            border: `2px solid ${firstNameError ? 'red' : '#ccc'}`, 
+                                      
+                                                          }}
                                                         id="fname"
                                                         value={firstName}
                                                         onChange={(e) => {
@@ -753,6 +777,9 @@ const config = {
                                                         }}
                                                         required
                                                     />
+                                                     {firstNameError && (
+                    <Error className="input feedback">First Name is required</Error>
+                  )}
                                                 </form>
                                             </Grid>
                                             <Grid item xs={6}>
@@ -765,11 +792,17 @@ const config = {
                                                         className="form-control"
                                                         id="lname"
                                                         value={lastName}
+                                                        style={{
+                                                            border: `2px solid ${lastNameError ? 'red' : '#ccc'}`, 
+                                                          }}
                                                         onChange={(e) => {
                                                             setLastName(e.target.value);
                                                         }}
                                                         required
                                                     />
+                                                     {lastNameError && (
+                    <Error className="input feedback">Last Name is required</Error>
+                  )}
                                                 </form>
                                             </Grid>
                                             <Grid item xs={6}>
@@ -782,11 +815,17 @@ const config = {
                                                         className="form-control"
                                                         id="email"
                                                         value={email}
+                                                        style={{
+                                                            border: `2px solid ${emailError ? 'red' : '#ccc'}`, 
+                                                          }}
                                                         onChange={(e) => {
                                                             setEmail(e.target.value);
                                                         }}
                                                         required
                                                     />
+                                                    {emailError && (
+                    <Error className="input feedback">Last Name is required</Error>
+                  )}
                                                 </form>
                                             </Grid>
                                             <Grid item xs={6}>
@@ -803,6 +842,7 @@ const config = {
                                     borderBottomLeftRadius: "5px",
                                     borderTopRightRadius: "0px",
                                     borderBottomRightRadius: "0px",
+                                    border: `2px solid ${phoneError1 ? 'red' : '#ccc'}`, 
                                     padding: "5px 0px",
                                     }}
                                 >&nbsp; &nbsp; +1&nbsp; &nbsp; </div>
@@ -816,11 +856,9 @@ const config = {
                                                             id="phone"
                                                             value={phone}
                                                             onChange={handlePhoneChange}
-                                                            // onChange={(e) => {
-                                                            // if (e.target.value.length <= 14) {
-                                                            //     setphone(e.target.value);
-                                                            // }
-                                                            // }}
+                                                            style={{
+                                                                border: `2px solid ${phoneError1 ? 'red' : '#ccc'}`, 
+                                                              }}
                                                             required
                                                         />
                                                         </div>
@@ -870,7 +908,7 @@ const config = {
                                                     <label className="mb-1" htmlFor="link">Social Media Link</label>
                                                     <br />
                                                     <input
-                                                        type="text"
+                                                        type="url"
                                                         name="link"
                                                         id="link"
                                                         className="form-control"
@@ -886,7 +924,7 @@ const config = {
                                             <Grid item xs={6}>
                                                 <form>
                                                
-  <label> City </label>
+  <label> State </label>
                 <select
         value={city}
         // onChange={(e) => setCity(e.target.value)}
@@ -895,7 +933,7 @@ const config = {
           width: "100%",
           padding: "8px",
           borderRadius: "5px",
-          border: "2px solid #ccc",
+          border: `2px solid ${cityError ? 'red' : '#ccc'}`, 
         }}
       >
         <option value="" disabled>Select a city</option>
@@ -906,7 +944,9 @@ const config = {
           ))}
       </select>  
               
-           
+      {cityError && (
+                    <Error className="input feedback">State is required</Error>
+                  )}
                                                  
                                                 </form>
                                             </Grid>
@@ -914,19 +954,22 @@ const config = {
                                                 <form>
                                              
 
-<label>Zip Code   </label>
+<label>Postal Code   </label>
                 <input
-                  type="text"
+                  type="number"
                   value={zip}
-                  // onChange={(e) => setZip(e.target.value)}
+                  onChange={(e) => setzip(e.target.value)}
                   style={{
                     width: "100%",
                     padding: "2px",
                     borderRadius: "5px",
-                    border: "2px solid #ccc",
+                    border: `2px solid ${zipError ? 'red' : '#ccc'}`, 
                   }}
-                  disabled
+               
                 />
+                {zipErrorLength && (
+                    <Error className="input feedback">Postal Code Must be 6 Digits </Error>
+                  )}
          
                                                 </form>
                                             </Grid>
@@ -1019,7 +1062,7 @@ const config = {
                                                 width: "100%",
                                                 padding: "6px 6px",
                                                 borderRadius: "5px",
-                                                border: "2px solid #ccc",
+                                                border: `2px solid ${legalFirstNameError ? 'red' : '#ccc'}`, 
                                             }}
                                         />
                                         {legalFirstNameError && (
@@ -1057,7 +1100,8 @@ const config = {
                                             width: "100%",
                                             padding: "6px 6px",
                                             borderRadius: "5px",
-                                            border: "2px solid #ccc",
+                                            border: `2px solid ${legalLastNameError ? 'red' : '#ccc'}`, 
+
                                         }}
                                     />
                                     {legalLastNameError && (
@@ -1086,7 +1130,8 @@ const config = {
                                         width: "100%",
                                         padding: "6px 6px",
                                         borderRadius: "5px",
-                                        border: "2px solid #ccc",
+                                        border: `2px solid ${legalLastEmailError ? 'red' : '#ccc'}`, 
+
                                     }}
                                 />
                                 {legalLastEmailError && (
@@ -1133,7 +1178,7 @@ const config = {
                                 style={{
                                     width: "100%",
                                     padding: "6px 6px",
-                                    border: "2px solid #ccc",
+                                    border: `2px solid ${legalLastPhoneNumberError ? 'red' : '#ccc'}`, 
                                     borderTopLeftRadius: "0px",
                                     borderBottomLeftRadius: "0px",
                                     borderTopRightRadius: "5px",
@@ -1167,7 +1212,8 @@ const config = {
                                 width: "100%",
                                 padding: "6px 6px",
                                 borderRadius: "5px",
-                                border: "2px solid #ccc",
+                                border: `2px solid ${legalSocailMediaError ? 'red' : '#ccc'}`, 
+
                             }}
                         />
                         {legalSocailMediaError && (
@@ -1232,10 +1278,11 @@ const config = {
                                 width: "100%",
                                 padding: "6px 6px",
                                 borderRadius: "5px",
-                                border: "2px solid #ccc",
+                                border: `2px solid ${legalSocailMediaError ? 'red' : '#ccc'}`, 
+
                             }}
                         />                            
-                        {legalStateError && (
+                        {legalSocailMediaError && (
                             <Error className="input feedback">State is required</Error>
                         )}
                         </label>
@@ -1271,7 +1318,8 @@ const config = {
                                 width: "100%",
                                 padding: "6px 6px",
                                 borderRadius: "5px",
-                                border: "2px solid #ccc",
+                                border: `2px solid ${legalCityError ? 'red' : '#ccc'}`, 
+
                             }}
                         />
                         {legalCityError && (
@@ -1300,7 +1348,8 @@ const config = {
                                 width: "100%",
                                 padding: "6px 6px",
                                 borderRadius: "5px",
-                                border: "2px solid #ccc",
+                                border: `2px solid ${legalPostalError ? 'red' : '#ccc'}`, 
+
                             }}
                         />
                         {legalPostalError && (
@@ -1338,7 +1387,8 @@ const config = {
                                 width: "100%",
                                 padding: "6px 6px",
                                 borderRadius: "5px",
-                                border: "2px solid #ccc",
+                                border: `2px solid ${legalAddressError ? 'red' : '#ccc'}`, 
+
                             }}
                         />
                         {legalAddressError && (
@@ -1366,7 +1416,7 @@ const config = {
         width: "100%",
         padding: "6px 6px",
         borderRadius: "5px",
-        border: "2px solid #ccc",
+        border: `2px solid ${legalSecurityNumberError || errorMessage ? 'red' : '#ccc'}`, 
     }}
 />
     {legalSecurityNumberError && (
@@ -1477,7 +1527,8 @@ const config = {
                             width: "100%",
                             padding: "6px 6px",
                             borderRadius: "5px",
-                            border: "2px solid #ccc",
+                            border: `2px solid ${legalCheckingAccountNumberError ? 'red' : '#ccc'}`, 
+
                         }}
                     />
                     {legalCheckingAccountNumberError && (
@@ -1506,7 +1557,8 @@ const config = {
                         width: "100%",
                         padding: "6px 6px",
                         borderRadius: "5px",
-                        border: "2px solid #ccc",
+                        border: `2px solid ${legalRoutingNumberError ? 'red' : '#ccc'}`, 
+
                     }}
                 />
                 {legalRoutingNumberError && (
@@ -1535,7 +1587,7 @@ const config = {
                         width: "100%",
                         padding: "6px 6px",
                         borderRadius: "5px",
-                        border: "2px solid #ccc",
+                        border: `2px solid ${legalConfirmCheckingAccountNumberError ? 'red' : '#ccc'}`, 
                     }}
                 />
                 {legalConfirmCheckingAccountNumberError && (

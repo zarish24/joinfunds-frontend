@@ -31,6 +31,8 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
   const [passwordError1, setPasswordError1] = useState(false);
   const [passwordError2, setPasswordError2] = useState(false);
   const [cityError, setCityError] = useState(false);
+  const [zipError, setZipError] = useState(false);
+  const [zipErrorLength, setZipErrorLength] = useState(false);
   const [loginModal, setloginModal] = useState(false);
   const [resetModal, setResetModal] = useState(false);
   const [signupModal, setSignupModal] = useState(false);
@@ -60,9 +62,9 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
     const selectedCity = e.target.value;
 
     setCity(selectedCity);
-    setZip(CitiesList[selectedCity]); 
+    // setZip(CitiesList[selectedCity]); 
     
-    setSelectedCityPostalCode(CitiesList[selectedCity]); 
+    // setSelectedCityPostalCode(CitiesList[selectedCity]); 
     setCityError(false);
   };
   const togglePasswordVisibility = () => {
@@ -155,6 +157,19 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
      
         if (apiEndpoint === "api/user/register") {
           // Validation for registration
+          if (FirstN.length === 0) {
+            setFirstNameError(true);
+            return;
+          } 
+        
+          if (LastN.length === 0) {
+            setLastNameError(true);
+            return;
+          } 
+          if (email.length === 0) {
+            setEmailError(true);
+            return;
+          } 
           const validateAmericanPhoneNumber = (phoneNumber) => {
             const numericValue = phoneNumber.replace(/\D/g, '');
             
@@ -166,33 +181,22 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
               setPhoneError1(true);
               return;
             }
-          if (email.length === 0) {
-            setEmailError(true);
-            return;
-          } 
+    
         
-          if (FirstN.length === 0) {
-            setFirstNameError(true);
-            return;
-          } 
-        
-          if (LastN.length === 0) {
-            setLastNameError(true);
-            return;
-          } 
+          
         
           if (phone.length === 0 || !validateAmericanPhoneNumber(phone)) {
             setPhoneError1(true);
             return;
           }
-        
-          if (MediaLink.length === 0) {
-            setMediaLinkError(true);
-            return;
-          }    
+   
         
           if (password.length === 0 || !validatePassword(password)) {
             setPasswordError1(true);
+            return;
+          }
+          if (Zip.length !== 6) {
+            setZipErrorLength(true);
             return;
           }
         
@@ -225,6 +229,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
         .then((res) => {
 
           if (res.status === 200 || res.status === 201) {
+            setSignupModal(false);
             setEmail("");
             setPassword("");
             setEmail("");
@@ -236,7 +241,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
             setCity("");
             setPassword("");
             setPhone("");
-            setSignupModal(false);
+            
             toast.success(
               res?.data?.data?.message
                 ? res?.data?.data?.message
@@ -261,16 +266,22 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
             //   //   console.log("function-called", false);
             //   setloginModal(true);
             // }
-          } else {
-            toast.error("Authentication failed. Please check your credentials.");
-          }
+          } 
+          // else {
+          //   toast.error("Authentication failed. Please check your credentials.");
+          // }
         })
         .catch((e) => {
+         
           toast.error(
             e?.response?.data?.message
               ? e?.response?.data?.message
-              : e?.response?.data
+              : e?.response?.data,{
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 3000, // Close the toast after 3000 milliseconds (3 seconds)
+              }
           );
+         
         });
       }
       if (apiEndpoint === "api/user/login") {
@@ -290,9 +301,18 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
         .post(`${process.env.REACT_APP_BACKEND_URL}/${apiEndpoint}`, data)
         .then((res) => {
           if (res.status === 200 || res.status === 201) {
+            setSignupModal(false);
             setEmail("");
             setPassword("");
-            setSignupModal(false);
+            setEmail("");
+            setFirstN("");
+            setLastN("");
+            setZip("");
+            setCountry("United States");
+            setMediaLink("");
+            setCity("");
+            setPassword("");
+            setPhone("");
             toast.success(
               res?.data?.data?.message
                 ? res?.data?.data?.message
@@ -313,15 +333,18 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
               setloginModal(false);
               setSignupModal(false);
               navigate("/");
-            } else {
+            } 
+            else {
               //   console.log("function-called", false);
               setloginModal(true);
             }
-          } else {
-            toast.error("Authentication failed. Please check your credentials.");
-          }
+          } 
+          // else {
+          //   toast.error("Authentication failed. Please check your credentials.");
+          // }
         })
         .catch((e) => {
+         
           toast.error(
             e?.response?.data?.message
               ? e?.response?.data?.message
@@ -766,17 +789,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
               Login
             </button>
           </div>
-          {/* <div className="form-group">
-            <Link to={"#"} className="btn facebook btn-block">
-              <i className="fa-brands fa-facebook-f m-r10"></i>Log in with
-              Facebook
-            </Link>
-          </div> */}
-          {/* <div className="form-group">
-            <Link to={"#"} className="btn google-plus btn-block">
-              <i className="fa-brands fa-google m-r10"></i>Log in with Google
-            </Link>
-          </div> */}
+  
           <Box className={styles.loginSocial}>
             {/* ---Social-Login with Google */}
             {callOnClick ? (
@@ -973,7 +986,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
           style={{ backgroundColor: "#002768" }}
         >
           <h4 className="text-center" style={{ color: "white" }}>
-            Sign Up Your Account
+            Sign Up 
           </h4>
         </Modal.Header>
         <Modal.Body className="modal-body">
@@ -1004,7 +1017,8 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                       width: "100%",
                       padding: "2px",
                       borderRadius: "5px",
-                      border: "2px solid #ccc",
+                      border: `2px solid ${firstNameError ? 'red' : '#ccc'}`, 
+
                     }}
                     onChange={(e) => {
                       setFirstN(e.target.value);
@@ -1035,7 +1049,8 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                       width: "100%",
                       padding: "2px",
                       borderRadius: "5px",
-                      border: "2px solid #ccc",
+                      border: `2px solid ${lastNameError ? 'red' : '#ccc'}`, 
+
                     }}
                     onChange={(e) => {
                       setLastN(e.target.value);
@@ -1074,7 +1089,8 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                       width: "100%",
                       padding: "2px",
                       borderRadius: "5px",
-                      border: "2px solid #ccc",
+                      border: `2px solid ${emailError ? 'red' : '#ccc'}`, 
+
                     }}
                     onChange={(e) => {
                       setEmail(e.target.value);
@@ -1138,6 +1154,8 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                                     borderBottomLeftRadius: "5px",
                                     borderTopRightRadius: "0px",
                                     borderBottomRightRadius: "0px",
+          border: `2px solid ${phoneError1 ? 'red' : '#ccc'}`, 
+
                                     padding: "5px 0px",
                                     }}
                                 >&nbsp; &nbsp; +1&nbsp; &nbsp; </div>
@@ -1156,6 +1174,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                                     borderBottomLeftRadius: "0px",
                                     borderTopRightRadius: "5px",
                                     borderBottomRightRadius: "5px",
+                                    border: `2px solid ${phoneError1 ? 'red' : '#ccc'}`, 
                                 }}
                             />
                         </div>
@@ -1172,7 +1191,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                 }}
               >
                 <label>
-                  Social Media Profile Link<span className="text-danger">*</span>
+                  Social Media Profile Link
                   <input
                     type="text"
                     // placeholder="Enter your social media profile link"
@@ -1192,9 +1211,9 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                     }}
                
                   />
-                  {mediaLinkError && (
+                  {/* {mediaLinkError && (
                     <Error className="input feedback">Social Media Link is required</Error>
-                  )}
+                  )} */}
                   {/* Optionally, you can display the entered link */}
                   {/* {socialMediaLink && <p>Entered Social Media Link: {socialMediaLink}</p>} */}
                 </label>
@@ -1211,7 +1230,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
             >
               <label>
                 Password<span className="text-danger">*</span>
-                {passwordError && <p style={{ color: 'red', fontSize: '12px', marginLeft: '8px', marginTop: '4px' }}>{passwordError}</p>}
+               
                 <input
                 className='mb-0'
                   type={showPassword ? "text" : "password"}
@@ -1221,7 +1240,8 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                     width: "calc(100% - 10px)",
                     padding: "2px",
                     borderRadius: "5px",
-                    border: "2px solid #ccc",
+                    border: `2px solid ${passwordError1 ||passwordError2  ? 'red' : '#ccc'}`, 
+
                     marginRight: "30px",
                     marginBotttom: "0px",
                     // boxShadow: "rgba(0, 0, 0, 0.4) 0px 2px 5px",
@@ -1239,7 +1259,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                   style={{
                     position: "relative",
                     right: "8px",
-                    top: passwordError ? "-60%" : "-36%",
+                    top: passwordError1 ? "-50%" : "-36%",
                     left: "91%",
                     border: "none",
                     background: "transparent",
@@ -1250,7 +1270,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                 </button>
               </label>
               <label>
-                City<span className="text-danger">*</span>
+                State<span className="text-danger">*</span>
                 <select
         value={City}
         // onChange={(e) => setCity(e.target.value)}
@@ -1259,10 +1279,10 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
           width: "100%",
           padding: "5px",
           borderRadius: "5px",
-          border: "2px solid #ccc",
+          border: `2px solid ${cityError ? 'red' : '#ccc'}`, 
         }}
       >
-        <option value="" disabled>Select a city</option>
+        <option value="" disabled>Select a State</option>
         {Object.keys(CitiesList).map((cityName) => (
             <option key={cityName} value={cityName}>
               {cityName}
@@ -1270,84 +1290,42 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
           ))}
       </select>  
                   {cityError && (
-                    <Error className="input feedback">City is required</Error>
+                    <Error className="input feedback">State is required</Error>
                   )}
 
               </label>
 
               <label>
-                Zip Code<span className="text-danger">*</span>
+                Postal Code<span className="text-danger">*</span>
                 <input
-                  type="text"
-                  value={selectedCityPostalCode}
-                  // onChange={(e) => setZip(e.target.value)}
-                  style={{
-                    width: "100%",
-                    padding: "2px",
-                    borderRadius: "5px",
-                    border: "2px solid #ccc",
-                  }}
-                  disabled
-                />
+  type="number"
+  value={Zip}
+  onChange={(e) => {
+    const enteredValue = e.target.value;
+
+    if (/^\d*$/.test(enteredValue) && enteredValue.length <= 6) {
+      setZip(enteredValue);
+      setZipError(false);
+    } else {
+      setZipErrorLength(false);
+    }
+  }}
+  style={{
+    width: "100%",
+    padding: "2px",
+    borderRadius: "5px",
+    border: `2px solid ${zipError ? 'red' : '#ccc'}`, 
+  }}
+/>  {zipErrorLength && (
+                    <Error className="input feedback">Postal Code Must be 6 Digits </Error>
+                  )}
+                  {zipError && (
+                    <Error className="input feedback">Postal Code is required</Error>
+                  )}
               </label>
             </div>
 
-          
-
-            {/* <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "10px",
-              }}
-            >
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr ",
-                  gap: "10px",
-                }}
-              >
-                <label>
-                  City
-                  <input
-                    type="text"
-                    // value={email}
-                    style={{
-                      width: "100%",
-                      padding: "2px",
-                      borderRadius: "5px",
-                      border: "2px solid #ccc",
-                    }}
-                    // onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                </label>
-              </div>
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr ",
-                  gap: "10px",
-                }}
-              >
-                <label>
-                  Zip Code
-                  <input
-                    type="number"
-                    // value={email}
-                    style={{
-                      width: "100%",
-                      padding: "2px",
-                      borderRadius: "5px",
-                      border: "2px solid #ccc",
-                    }}
-                    // onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                </label>
-              </div>
-            </div> */}
+      
             <div className="d-flex justify-content-center">
               <div className="w-50">
                 <button
