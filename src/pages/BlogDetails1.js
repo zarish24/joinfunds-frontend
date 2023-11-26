@@ -8,6 +8,7 @@ import {Link} from 'react-router-dom';
 import NewsSlider from '../components/Home/NewsSlider';
 import UpdateBlog from '../components/Home/UpdateBlog';
 import BlogDetailsLeftBar from '../components/BlogDetailsLeftBar';
+import BlogDetailsLeftBar1 from '../components/BlogDetailsLeftBar1';
 import { IMAGES } from '../constant/theme';
 
 const widgetBlog = [
@@ -27,7 +28,7 @@ const tagData = [
     { title:"Workers"},
     { title:"Modern"},
 ];
-const BlogDetails = () => {
+const BlogDetails1 = () => {
     
     return (
         <>
@@ -36,7 +37,7 @@ const BlogDetails = () => {
                     <div className="container">			
                         <div className="row ">
                             <div className="col-xl-12 col-lg-12 m-b30">
-                                <BlogDetailsLeftBar />
+                                <BlogDetailsLeftBar1 />
                             </div>
                             <div className="col-xl-4 col-lg-4" hidden>
                                 <aside className="side-bar sticky-top">
@@ -127,4 +128,4 @@ const BlogDetails = () => {
     );
 };
 
-export default BlogDetails;
+export default BlogDetails1;

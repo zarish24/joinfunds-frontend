@@ -17,18 +17,20 @@ const Footer = () => {
                     <div className="container">
                         <div className="row">
                             {/* <FooterCommonData logoImage={logo} /> */}
-                            <FooterCommonData logoImage={IMAGES.logo3} style={{ height: '60px', width: '112px' }} iconStyle={true}/>
+                            <FooterCommonData logoImage={IMAGES.logoWhite3} style={{ height: '90px', width: '112px' }} iconStyle={true}/>
                         </div>
                     </div>
-                    <img src={shape7} className="shape-1 move-2" alt="shape" />
-                    <img src={shape8} className="shape-2 move-2" alt="shape" />
-                    <img src={shape9} className="shape-3 move-2" alt="shape" />
+                    <img hidden src={shape7} className="shape-1 move-2" alt="shape" />
+                    <img hidden src={shape8} className="shape-2 move-2" alt="shape" />
+                    <img hidden src={shape9} className="shape-3 move-2" alt="shape" />
                     
                 </div>               
                 <div className="footer-bottom">
                     <div className="container">
                         <div className="text-center"> 
-                            <span className="copyright-text">Copyright © 2023 <a href="https://dexignzone.com/" target="_blank"  rel="noreferrer">DexignZone</a>. All rights reserved.</span> 
+                            <span className="copyright-text" style={{
+                               color: 'rgba(255, 255, 255, 0.5)' 
+                            }}>Copyright © 2023 <a href="/" target="_blank" rel="noreferrer">Nfuse</a>. All rights reserved.</span> 
                         </div>
                     </div>
                 </div>

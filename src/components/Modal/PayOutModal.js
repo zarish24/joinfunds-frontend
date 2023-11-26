@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
+import { toast } from 'react-toastify';
 
 const PayOutModal = ({ isOpen, closeModal ,campaignId}) => {
   const [email, setEmail] = useState('');
@@ -11,44 +12,47 @@ const PayOutModal = ({ isOpen, closeModal ,campaignId}) => {
   const [nameOnCard, setNameOnCard] = useState('');
   const [postalCode, setPostalCode] = useState('');
   const [country, setCountry] = useState('');
-  console.log('campaignId:', campaignId);
-  console.log('closeModal:', closeModal);
+  // console.log('campaignId:', campaignId);
+  // console.log('closeModal:', closeModal);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
   
    
-    if (!email || !firstName || !lastName || !cardNumber || !expiryDate || !cvc || !nameOnCard || !postalCode || !country) {
-      alert('Please fill in all required fields.');
-      return;
-    }
+    
     const user = JSON.parse(localStorage.getItem("user"));
-const  setToken=user?.token;
-   
+    const  setToken=user?.token;
     const payload = {
-        email:email,
-      firstName:firstName,
-      lastName:lastName,
+      email:email,
+  firstName:firstName,
+  lastName:lastName,
       accountId:cardNumber,
       campaign_id:campaignId,
       amount:nameOnCard,
       postalCode: postalCode,
       country:country,
+      
     };
-  
+    console.log('setToken',setToken)
+  console.log('payload',payload )
     try {
-     
-      const response = await fetch('http://44.219.245.56/api/payments/makePayoutRequest', {
+      // if (!email || !firstName || !lastName || !cardNumber ||  !postalCode || !country) {
+      //   alert('Please fill in all required fields.');
+      //   return;
+      // }
+      const response = await fetch( `${process.env.REACT_APP_BACKEND_URL}/api/payments/makePayoutRequest`, {
         method: 'POST',
         headers: {
-          'Content-Type': setToken,
+          Authorization:  ` Bearer ${setToken}`,
           
         },
         body: JSON.stringify(payload),
       });
-  
+      if (response.ok) {
+        toast.success('Payout Request Created Successfully');
+      }
       if (!response.ok) {
-        throw new Error('Failed to make payout request');
+        toast.error('Failed to make payout request');
       }
   
       
@@ -68,6 +72,15 @@ const  setToken=user?.token;
       
       closeModal();
     } catch (error) {
+      setEmail('');
+      setFirstName('');
+      setLastName('');
+      setCardNumber('');
+      setExpiryDate('');
+      setCvc('');
+      setNameOnCard('');
+      setPostalCode('');
+      setCountry('');
       console.error('Error making payout request:', error.message);
       
     }
@@ -86,23 +99,23 @@ const  setToken=user?.token;
       centered
     >
        <div className="modal-content">
-       <Modal.Header  closeButton>
-  <div className="row">
+       <Modal.Header style={{ backgroundColor: "#002768" }}  closeButton>
+  <div className="row w-100">
     <div className="col-lg-12 d-flex">
-      <h5 className="">Add account Details</h5>
-      <button type="button" className="btn-close" onClick={closeModal}>
-        <i className="flaticon-close" style={{ color: 'black' }}></i>
+      <h5 className="text-white">Add account Details</h5>
+      <button type="button" className="btn-close float-right" onClick={closeModal}>
+        <i className="flaticon-close" style={{ color: 'white' }}></i>
       </button>
     </div>
     <div className="col-auto">
-  <p className="m-0">
-    INTL PMT support needs to reflect US and Canadian bank accounts are the only accounts that can receive funds at this time
-  </p>
 </div>
   </div>
  
 </Modal.Header>
                 <Modal.Body className="modal-body">
+                <p className="mb-2">
+    INTL PMT support needs to reflect US and Canadian bank accounts are the only accounts that can receive funds at this time
+  </p>
                 <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '10px' }}>
   <div style={{ display: 'grid', gridTemplateColumns: '1fr ', gap: '10px' }}>
     <label>
@@ -263,7 +276,7 @@ const  setToken=user?.token;
     
   </div>
 
-  <button class="btn btn-info" type="submit" style={{ marginTop: '10px' }}>
+  <button class="btn btn-primary" type="submit" style={{ marginTop: '10px' }}>
   Submit 
 </button>
 </form>

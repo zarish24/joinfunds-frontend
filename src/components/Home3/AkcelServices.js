@@ -1,20 +1,49 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 import {Link} from 'react-router-dom';
-
+import { toast,  } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { SVGICON } from '../../constant/theme';
 
 const servicesBlog = [
     {title:"Industry’s best fundraising success", icon:SVGICON.DoubleHeart },
     {title:"Supported By 55,00,000+ Donors" , icon:SVGICON.Ring},
     {title:"Easy-To-Manage Tools To Boost Results",icon:SVGICON.HeartWindow},
-    {title:"Akcel Get Expert Support 24/7",icon:SVGICON.HeartHelp},
+    {title:"Nfuse Get Expert Support 24/7",icon:SVGICON.HeartHelp},
     {title:"A Dedicated Smart-Dashboard",icon:SVGICON.DollerBox},
     {title:"Receive donations via all popular payment",icon:SVGICON.HeartHome},
-    {title:"nternational Payment Support",icon:SVGICON.ThumbDoller1},
+    {title:"International Payment Support",icon:SVGICON.ThumbDoller1},
     {title:"Withdraw Funds Without Hassle", icon:SVGICON.ThumbDoller2},
 ];
 
 const AkcelServices = () => {
+    const [email, setEmail] = useState('');
+    const [subscribeMsg, setSubscribeMsg] = useState('');
+  
+    const handleSubscribe = async (e) => {
+      e.preventDefault();
+  const payload = {
+    email:email
+  }
+      try {
+        const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/subscribe/subscribeForm`,  payload );
+       
+       
+        console.log('Subscription successful:', response.data);
+  toast.success('Subscription successful')
+       
+        setSubscribeMsg('Subscription successful');
+  
+        setEmail('');
+  
+      } catch (error) {
+       
+        console.error('Error subscribing:', error);
+        toast.error("Email is already subscribed")
+       
+        setSubscribeMsg('Error subscribing. Please try again.');
+      }
+    };
     return (
         <>
             <div className="row justify-content-center">
@@ -40,25 +69,36 @@ const AkcelServices = () => {
                         <div className="inner-content">
                             <h2 className="title text-white">Newsletter</h2>
                             <p className="text-white">Sign up for our monthly newsletter to get the latest news, volunteer opportunities.</p>
-                            <form className="dzSubscribe">
+                            <form className="dzSubscribe" onSubmit={handleSubscribe}>
                                 <div className="dzSubscribeMsg text-white"></div>
-                                <input name="dzEmail" required="required" type="email" className="form-control transparent m-b15" placeholder="Enter your email address" />
-                                <button name="submit" value="Submit" type="submit" className="btn btn-light btn-rounded btn-block">Subscribe Now</button>
+                                <input
+        name="dzEmail"
+        required="required"
+        type="email"
+        className="form-control transparent m-b15"
+        placeholder="Enter your email address"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+                <button name="submit" value="Submit" type="submit" className="btn btn-light btn-rounded btn-block">
+        Subscribe Now
+      </button>
+
                             </form>
                         </div>
                     </div>
                 </div>
                 <div className="col-lg-4 col-md-6 m-t30 wow fadeInUp" data-wow-delay="0.4s">
-                    <div className="content-bx style-1 bg-secondary text-center">
+                    <div className="content-bx style-1 bg-primary text-center">
                         <div className="inner-content">
                             <div className="icon-lg m-b20">
                                 <Link to={"/project-categories"} className="icon-cell">
                                     {SVGICON.HelpHeart}
                                 </Link>
                             </div>
-                            <h3 className="title">Want To Help?</h3>
-                            <p className="m-b30">Your financial support is very important for our global projects.</p>
-                            <Link className="btn btn-primary" to={"/project"}>Donate Now</Link>
+                            <h3 className="title text-white">Want To Help?</h3>
+                            <p className="m-b30 text-white">Your financial support is very important for our global projects.</p>
+                            <Link className="btn btn-light" to={"/project"}>Donate Now</Link>
                         </div>
                     </div>
                 </div>

@@ -40,7 +40,8 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
   );
   const [callOnClick, setCallOnClick] = useState(true);
   const [loading, setLoading] = useState(false);
-
+  const [phoneError, setPhoneError] = useState("");
+  const [passwordError, setPasswordError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -51,7 +52,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
 
   useEffect(() => {
     const handleStorageChange = () => {
-      console.log("Storage changed");
+      //   console.log("Storage changed");
       setIsLoggedIn(localStorage.getItem("isLoggedIn") === "true");
     };
 
@@ -61,11 +62,56 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
       window.removeEventListener("storage", handleStorageChange);
     };
   }, []);
+  const validatePassword = (password) => {
+   
+   
+    const hasMinimumLength = password.length >= 8;
 
+    
+    const hasCapitalLetter = /[A-Z]/.test(password);
+
+  
+    const hasSpecialCharacter = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+    
+    const hasNumber = /\d/.test(password);
+
+    return hasMinimumLength && hasCapitalLetter && hasSpecialCharacter && hasNumber;
+  };
+
+  const handlePasswordChange = (e) => {
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+    setPasswordError('')
+    
+  };
+
+ 
+  const validatePhone = (value) => {
+    const numericValue = value.replace(/\D/g, ''); // Remove non-numeric characters
+  
+    if (!/^\+?1?[-.\s]?\(?(\d{3})\)?[-.\s]?(\d{3})[-.\s]?(\d{4})$/.test(value)) {
+      setPhoneError('Please enter a valid American phone number');
+      return false;
+    } else {
+      setPhoneError('');
+      return true;
+    }
+  };
+
+  const handlePhoneChange = (e) => {
+    const value = e.target.value;
+
+    // Validate the phone number
+    // if (validatePhone(value)) {
+      setPhone(value);
+    // }
+  };
   const nav = useNavigate();
   const formSubmit = async (e, apiEndpoint) => {
     e.preventDefault();
-    console.log("urllllllllllllllllllllll",e);
+    
+ 
     let data = {
       email: email,
       password: password,
@@ -74,12 +120,41 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
       country: country,
       city: City,
       zipcode: Zip,
-      phoneNumber: `+${phone}`,
+      phoneNumber: phone,
       socialMediaProfile: MediaLink,
     };
+    if (apiEndpoint === "api/user/register") {
+
+      const validateAmericanPhoneNumber = (phoneNumber) => {
+      
+        const numericValue = phoneNumber.replace(/\D/g, '');
+      
+        return /^1?\d{10}$/.test(numericValue);
+      };
     
+      if (!validateAmericanPhoneNumber(phone)) {
+        toast.error('Please enter a valid American phone number.');
+        return;
+      }
+    
+      // Validate the password
+      if (!validatePassword(password)) {
+        toast.error('Password must be 8 characters long and include a capital letter, a special character, and a number.');
+        return;
+      }
+      data = {
+        email: email,
+        password: password,
+        firstName: FirstN,
+        lastName: LastN,
+        country: 'america',
+        city: City,
+        zipcode: Zip,
+        phoneNumber: phone,
+        socialMediaProfile: MediaLink,
+      };
+    }
     if (apiEndpoint === "api/user/login") {
-      // If the endpoint is "api/user/login", only include the email and password fields
       data = {
         email: email,
         password: password,
@@ -98,8 +173,8 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
           setEmail("");
           setPassword("");
           setSignupModal(false);
-          console.log("res rsgister", res);
-          console.log("res res.data.message", res.data);
+          //   console.log("res rsgister", res);
+          //   console.log("res res.data.message", res.data);
           toast.success(
             res?.data?.data?.message
               ? res?.data?.data?.message
@@ -110,29 +185,34 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
             "user",
             JSON.stringify({
               _id: res?.data?.user?._id,
-              firstName: res?.data?.user?.firstName,
-              lastName: res?.data?.user?.lastName,
-              email: res?.data?.user?.email,
-              role: res?.data?.user?.role,
-              profileImage: res?.data?.user?.profileImage,
+              // city: res?.data?.user?.city,
+              // country: res?.data?.user?.country,
+              // phone: res?.data?.user?.phoneNumber,
+              // link: res?.data?.user?.socialMediaProfile,
+              // zip: res?.data?.user?.zipcode,
+              // firstName: res?.data?.user?.firstName,
+              // lastName: res?.data?.user?.lastName,
+              // email: res?.data?.user?.email,
+              // role: res?.data?.user?.role,
+              // profileImage: res?.data?.user?.profileImage,
               token: res?.data?.token,
             })
           );
           if (loginModal === true) {
             localStorage.setItem("isLoggedIn", "true");
-            setIsLoggedIn(true); 
+            setIsLoggedIn(true);
             setSignupModal(false);
             // toast.success(
             //   res?.data?.data?.message
             //     ? res?.data?.data?.message
             //     : res?.data?.message
             // );
-            console.log("function-called", true);
+            //   console.log("function-called", true);
             setloginModal(false);
             setSignupModal(false);
             navigate("/");
           } else {
-            console.log("function-called", false);
+            //   console.log("function-called", false);
             setloginModal(true);
           }
         } else {
@@ -200,16 +280,14 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
     <>
       <header className={`site-header mo-left header style-2 ${changeStyle}`}>
         <div
-          className={`sticky-header main-bar-wraper navbar-expand-lg ${
-            headerFix ? "is-fixed" : ""
-          }`}
+          className="sticky-header main-bar-wraper navbar-expand-lg is-fixed"
         >
           <div className="main-bar clearfix ">
             <div className="container-fluid clearfix">
               {changeLogo ? (
                 <>
                   <div className="logo-header mostion logo-dark">
-                    <Link to={"/index-3"}>
+                    <Link to={"/"}>
                       <img
                         src={IMAGES.logo3}
                         alt=""
@@ -218,7 +296,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                     </Link>
                   </div>
                   <div className="logo-header mostion logo-light">
-                    <Link to={"/index-3"}>
+                    <Link to={"/"}>
                       <img
                         src={IMAGES.logo3}
                         style={{ height: "60px", width: "112px" }}
@@ -392,7 +470,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                       );
                     }
                   })}
-                  {console.log("log", isLoggedIn)}
+                  {/* {//   console.log("log", isLoggedIn)} */}
                   {!isLoggedIn && (
                     <>
                       {/* <li>
@@ -615,7 +693,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                     )
                     .then(async (res) => {
                       if (res.status === 200 || res.status === 201) {
-                        console.log("social-data", res);
+                        //   console.log("social-data", res);
                         localStorage.setItem(
                           `${res.data.data.doc.role}`,
                           JSON.stringify({
@@ -635,7 +713,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                         //     navigate('/admin');
                         // }
                         //  else {
-                        console.log("resres", res);
+                        //   console.log("resres", res);
                         if (res.data.data.doc.role === "user") {
                           localStorage.setItem("isLoggedIn", "true");
                           setIsLoggedIn(true); // Update the state immediately.
@@ -776,393 +854,370 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
         </div>
       </Modal>
       <Modal
-        className="fade modal   "
-        show={signupModal}
-        onHide={setSignupModal}
-        size="lg"
-        centered
-      >
-      
-        <Modal.Header
-          className="d-flex justify-content-center align-items-center "
-          style={{ backgroundColor: "rgb(27, 130, 113)" }}
-        >
-          <h4 className=" text-center " style={{ Color: "#fff" }}>Sign Up Your Account</h4>
-        </Modal.Header>
-        <Modal.Body className="modal-body">
-          <form onSubmit={(e) => formSubmit(e, "api/user/register")} style={{ display: "grid", gap: "10px" }}>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "10px",
-              }}
-            >
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr ",
-                  gap: "10px",
-                }}
-              >
-                <label>
-                  First Name
-                  <input
-                    type="text"
-                    value={FirstN}
-                    style={{
-                      width: "100%",
-                      padding: "2px",
-                      borderRadius: "5px",
-                      border: "2px solid #ccc",
-                    }}
-                    onChange={(e) => setFirstN(e.target.value)}
-                    required
-                  />
-                </label>
-              </div>
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr ",
-                  gap: "10px",
-                }}
-              >
-                <label>
-                  Last Name
-                  <input
-                    type="text"
-                    value={LastN}
-                    style={{
-                      width: "100%",
-                      padding: "2px",
-                      borderRadius: "5px",
-                      border: "2px solid #ccc",
-                    }}
-                    onChange={(e) => setLastN(e.target.value)}
-                    required
-                  />
-                </label>
-              </div>
-            </div>
-
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "10px",
-              }}
-            >
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr ",
-                  gap: "10px",
-                }}
-              >
-                <label>
-                  Email
-                  <input
-                    type="email"
-                    value={email}
-                    style={{
-                      width: "100%",
-                      padding: "2px",
-                      borderRadius: "5px",
-                      border: "2px solid #ccc",
-                    }}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                </label>
-              </div>
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr ",
-                  gap: "10px",
-                }}
-              >
-                <label>
-                  Phone
-                  <input
-                    type="text"
-                    value={phone}
-                    style={{
-                      width: "100%",
-                      padding: "2px",
-                      borderRadius: "5px",
-                      border: "2px solid #ccc",
-                    }}
-                    onChange={(e) => setPhone(e.target.value)}
-                    required
-                  />
-                </label>
-              </div>
-            </div>
-
-            <div
-  style={{
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr 1fr", 
-    gap: "10px",
-  }}
->
-  <label>
-    Password
- 
-    <input
-  
-      type={showPassword ? 'text' : 'password'}
-      value={password}
-      onChange={(e) => setPassword(e.target.value)}
-      style={{
-        width: 'calc(100% - 30px)',
-        padding: '2px',
-        borderRadius: '5px',
-        border: '2px solid #ccc',
-        marginRight: '30px',
-      }}
-      required
-    />
-     <button
-        type="button"
-        onClick={togglePasswordVisibility}
-        style={{
-          position: 'relative',
-    right: '8px',
-    top: '-37%',
-    left: '75%',
-    /* transform: translateY(-2%), */
-    border: 'none',
-    background: 'transparent',
-    cursor: 'pointer',
-        }}
-      >
-        {showPassword ? <FaEyeSlash /> : <FaEye />}
-      </button>
-  </label>
-  
-  <label>
-    City
-    <input
-      type="text"
-      value={City}
-      onChange={(e) => setCity(e.target.value)}
-      style={{
-        width: "100%",
-        padding: "2px",
-        borderRadius: "5px",
-        border: "2px solid #ccc",
-      }}
-      required
-    />
-  </label>
-  
-  <label>
-  Zip Code
-    <input
-      type="text"
-      value={Zip}
-      onChange={(e) => setZip(e.target.value)}
-      style={{
-        width: "100%",
-        padding: "2px",
-        borderRadius: "5px",
-        border: "2px solid #ccc",
-      }}
-      required
-    />
-  </label>
-</div>
-
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "10px",
-              }}
-            >
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr",
-                  gap: "10px",
-                }}
-              >
-                <label>
-                  Country:
-                  <div style={{ display: "flex", flexDirection: "column" }}>
-                    <select
-                      value={country}
-                      style={{
-                        padding: "2px",
-                        borderRadius: "5px",
-                        border: "2px solid #ccc",
-                      }}
-                      onChange={(e) => setCountry(e.target.value)}
-                      required
-                    >
-                      <option value="" disabled>
-                        Select a country
-                      </option>
-                      <option value="USA">United States</option>
-                      <option value="CAN">Canada</option>
-                      {/* Add more country options as needed */}
-                    </select>
-                  </div>
-                </label>
-              </div>
-
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr ",
-                  gap: "10px",
-                }}
-              >
-                <label>
-                  Social Media Profile Link
-                  <input
-                    type="text"
-                    // placeholder="Enter your social media profile link"
-                    value={MediaLink}
-                    onChange={(e) => setMediaLink(e.target.value)}
-                    // onChange={handleSocialMediaLinkChange}
-                    style={{
-                      width: "100%",
-                      padding: "2px",
-                      borderRadius: "5px",
-                      border: "2px solid #ccc",
-                    }}
-                    required
-                  />
-                  {/* Optionally, you can display the entered link */}
-                  {/* {socialMediaLink && <p>Entered Social Media Link: {socialMediaLink}</p>} */}
-                </label>
-              </div>
-            </div>
-
-            {/* <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "10px",
-              }}
-            >
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr ",
-                  gap: "10px",
-                }}
-              >
-                <label>
-                  City
-                  <input
-                    type="text"
-                    // value={email}
-                    style={{
-                      width: "100%",
-                      padding: "2px",
-                      borderRadius: "5px",
-                      border: "2px solid #ccc",
-                    }}
-                    // onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                </label>
-              </div>
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr ",
-                  gap: "10px",
-                }}
-              >
-                <label>
-                  Zip Code
-                  <input
-                    type="number"
-                    // value={email}
-                    style={{
-                      width: "100%",
-                      padding: "2px",
-                      borderRadius: "5px",
-                      border: "2px solid #ccc",
-                    }}
-                    // onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                </label>
-              </div>
-            </div> */}
-<div className='d-flex justify-content-center'>
-  
-  <div className="w-50">
-    <button
-      type="submit"
-      className="btn btn-outline-primary btn-block p-2 mx-auto mb-0"
-   
+      className="fade modal   "
+      show={signupModal}
+      onHide={setSignupModal}
+      size="lg"
+      centered
     >
-      Signup
-    </button>
-  </div>
-</div>
-          </form>
-        </Modal.Body>
-        <Modal.Footer
-          style={{ display: "flex", justifyContent: "space-between" }}
+      <Modal.Header
+        className="d-flex justify-content-center align-items-center "
+        style={{ backgroundColor: "rgb(27, 130, 113)" }}
+      >
+        <h4 className="text-center" style={{ color: "white" }}>
+          Sign Up Your Account
+        </h4>
+      </Modal.Header>
+      <Modal.Body className="modal-body">
+        <form
+          onSubmit={(e) => formSubmit(e, "api/user/register")}
+          style={{ display: "grid", gap: "10px" }}
         >
-          <Box className={styles.loginSocial}>
-            {callOnClick ? (
-              <LoginSocialGoogle
-                sx={{ pr: 1 }}
-                client_id="1085137082696-c6a9ta6uk6gn30vf7vmsg8c066vmhl7i.apps.googleusercontent.com"
-                scope="openid profile email"
-                discoveryDocs="claims_supported"
-                access_type="offline"
-                onResolve={async ({ data }) => {
-                  // ... your existing logic
-                }}
-                onReject={(err) => {
-                  toast.success("Enter correct email to login");
-                }}
-              >
-                <div
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "10px",
+            }}
+          >
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr ",
+                gap: "10px",
+              }}
+            >
+              <label>
+                First Name
+                <input
+                  type="text"
+                  value={FirstN}
                   style={{
-                    display: "flex",
-                    alignItems: "center",
-                    cursor: "pointer",
+                    width: "100%",
+                    padding: "2px",
+                    borderRadius: "5px",
+                    border: "2px solid #ccc",
                   }}
-                >
-                  <img
-                    loading="lazy"
-                    src={Google}
-                    alt="google"
-                    style={{ marginRight: "8px" }}
-                  />
-                  Sign up with Google
-                </div>
-              </LoginSocialGoogle>
-            ) : null}
-          </Box>
-
-          <div className="sign-text">
-            <span>
-              Already have a Crowdfunding account?{" "}
-              <Link
-                to="#"
-                className="btn-link collapsed"
-                data-bs-toggle="collapse"
-                onClick={() => (setSignupModal(false), setloginModal(true))}
-              >
-                Login
-              </Link>
-            </span>
+                  onChange={(e) => setFirstN(e.target.value)}
+                  required
+                />
+              </label>
+            </div>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr ",
+                gap: "10px",
+              }}
+            >
+              <label>
+                Last Name
+                <input
+                  type="text"
+                  value={LastN}
+                  style={{
+                    width: "100%",
+                    padding: "2px",
+                    borderRadius: "5px",
+                    border: "2px solid #ccc",
+                  }}
+                  onChange={(e) => setLastN(e.target.value)}
+                  required
+                />
+              </label>
+            </div>
           </div>
-        </Modal.Footer>
-      </Modal>
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "10px",
+            }}
+          >
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr ",
+                gap: "10px",
+              }}
+            >
+              <label>
+                Email
+                <input
+                  type="email"
+                  value={email}
+                  style={{
+                    width: "100%",
+                    padding: "2px",
+                    borderRadius: "5px",
+                    border: "2px solid #ccc",
+                  }}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </label>
+            </div>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr ",
+                gap: "10px",
+              }}
+            >
+              <label>
+                Phone
+                <input
+                  type="tel"
+                  value={phone}
+                  placeholder='e.g: +1 XXX-XXX-XXXX'
+                  style={{
+                    width: "100%",
+                    padding: "2px",
+                    borderRadius: "5px",
+                    border: "2px solid #ccc",
+                  }}
+                  onChange={handlePhoneChange}
+                  required
+                />
+                {phoneError && <p style={{ color: "red" }}>{phoneError}</p>}
+              </label>
+            </div>
+          </div>
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "2fr 1fr 1fr",
+              gap: "10px",
+            }}
+          >
+            <label>
+              Password
+              {passwordError && <p style={{ color: 'red', fontSize: '12px', marginLeft: '8px', marginTop: '4px' }}>{passwordError}</p>}
+              <input
+              className='mb-0'
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={handlePasswordChange}
+                style={{
+                  width: "calc(100% - 50px)",
+                  padding: "2px",
+                  borderRadius: "5px",
+                  border: "2px solid #ccc",
+                  marginRight: "30px",
+                  marginBotttom: "0px",
+              
+                }}
+                required
+              />
+              <button
+                type="button"
+                onClick={togglePasswordVisibility}
+                style={{
+                  position: "relative",
+                  right: "8px",
+                  top: passwordError ? "-60%" : "-36%",
+                  left: "85%",
+                  border: "none",
+                  background: "transparent",
+                  cursor: "pointer",
+                }}
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
+           
+            </label>
+
+            <label>
+              City
+              <input
+                type="text"
+                value={City}
+                onChange={(e) => setCity(e.target.value)}
+                style={{
+                  width: "100%",
+                  padding: "2px",
+                  borderRadius: "5px",
+                  border: "2px solid #ccc",
+                }}
+                required
+              />
+            </label>
+
+            <label>
+              Zip Code
+              <input
+                type="text"
+                value={Zip}
+                onChange={(e) => setZip(e.target.value)}
+                style={{
+                  width: "100%",
+                  padding: "2px",
+                  borderRadius: "5px",
+                  border: "2px solid #ccc",
+                }}
+                required
+              />
+            </label>
+          </div>
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "10px",
+            }}
+          >
+            
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr ",
+                gap: "10px",
+              }}
+            >
+              <label>
+                Social Media Profile Link
+                <input
+                  type="text"
+                  // placeholder="Enter your social media profile link"
+                  value={MediaLink}
+                  onChange={(e) => setMediaLink(e.target.value)}
+                  // onChange={handleSocialMediaLinkChange}
+                  style={{
+                    width: "100%",
+                    padding: "2px",
+                    borderRadius: "5px",
+                    border: "2px solid #ccc",
+                  }}
+             
+                />
+                {/* Optionally, you can display the entered link */}
+                {/* {socialMediaLink && <p>Entered Social Media Link: {socialMediaLink}</p>} */}
+              </label>
+            </div>
+          </div>
+
+          {/* <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "10px",
+            }}
+          >
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr ",
+                gap: "10px",
+              }}
+            >
+              <label>
+                City
+                <input
+                  type="text"
+                  // value={email}
+                  style={{
+                    width: "100%",
+                    padding: "2px",
+                    borderRadius: "5px",
+                    border: "2px solid #ccc",
+                  }}
+                  // onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </label>
+            </div>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr ",
+                gap: "10px",
+              }}
+            >
+              <label>
+                Zip Code
+                <input
+                  type="number"
+                  // value={email}
+                  style={{
+                    width: "100%",
+                    padding: "2px",
+                    borderRadius: "5px",
+                    border: "2px solid #ccc",
+                  }}
+                  // onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </label>
+            </div>
+          </div> */}
+          <div className="d-flex justify-content-center">
+            <div className="w-50">
+              <button
+                type="submit"
+                className="btn btn-outline-primary btn-block p-2 mx-auto mb-0"
+              >
+                Signup
+              </button>
+            </div>
+          </div>
+        </form>
+      </Modal.Body>
+      <Modal.Footer
+        style={{ display: "flex", justifyContent: "space-between" }}
+      >
+        <Box className={styles.loginSocial}>
+          {callOnClick ? (
+            <LoginSocialGoogle
+              sx={{ pr: 1 }}
+              client_id="1085137082696-c6a9ta6uk6gn30vf7vmsg8c066vmhl7i.apps.googleusercontent.com"
+              scope="openid profile email"
+              discoveryDocs="claims_supported"
+              access_type="offline"
+              onResolve={async ({ data }) => {
+                // ... your existing logic
+              }}
+              onReject={(err) => {
+                toast.success("Enter correct email to login");
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  cursor: "pointer",
+                }}
+              >
+                <img
+                  loading="lazy"
+                  src={Google}
+                  alt="google"
+                  style={{ marginRight: "8px" }}
+                />
+                Sign up with Googleeeee
+              </div>
+            </LoginSocialGoogle>
+          ) : null}
+        </Box>
+
+        <div className="sign-text">
+          <span>
+            Already have a Crowdfunding account?{" "}
+            <Link
+              to="#"
+              className="btn-link collapsed"
+              data-bs-toggle="collapse"
+              onClick={() => (setSignupModal(false), setloginModal(true))}
+            >
+              Login
+            </Link>
+          </span>
+        </div>
+      </Modal.Footer>
+    </Modal>
 
       <DonateModal ref={modalRef} />
     </>

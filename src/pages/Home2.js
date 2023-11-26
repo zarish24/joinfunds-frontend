@@ -25,7 +25,9 @@ import grid2 from '../assets/images/blog/blog-grid/pic2.jpg';
 //Layouts
 import { ThemeContext } from "../context/ThemeContext";
 import Header2 from '../layouts/Header2';
+import Header from '../layouts/Header';
 import Footer2 from './../layouts/Footer2';
+import Footer from '../layouts/Footer';
 import { IMAGES } from '../constant/theme';
 //componenet
 import Mainslider2 from '../components/Home2/Mainslider2';
@@ -56,7 +58,22 @@ const Home2 = () => {
 		changeBackground({ value: "data-typography-1", label: "data-typography-1" });
 		changePrimaryColor("color-skin-2");
 	}, []);
-
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+          const storedValue = localStorage.getItem('isLoggedIn');
+          const isUserLoggedIn = Boolean(storedValue);
+          setIsLoggedIn(isUserLoggedIn);
+    
+          
+          if (isUserLoggedIn) {
+            clearInterval(intervalId);
+          }
+        }, 1000); 
+    
+      
+        return () => clearInterval(intervalId);
+      }, []);
     const [donateValue, setDonateValue] = useState(priceBlog[0].price);
     function changeValue(price){
         setDonateValue(price);
@@ -72,7 +89,12 @@ const Home2 = () => {
     const [readModal, setReadModal] = useState(false);
     return (
         <>
-            <Header2  logoStyle={IMAGES.logo2}/>
+      {isLoggedIn ? (
+  <Header2 logoStyle={IMAGES.logo2} />
+) : (
+  <Header logoStyle={IMAGES.logo2} />
+)};          
+            {/* <Header2  logoStyle={IMAGES.logo2}/> */}
             <div className="page-content bg-white">	
                 <div className="main-bnr-one">
                     <Mainslider2 />
@@ -166,7 +188,7 @@ const Home2 = () => {
                             <div className="container">
                                 <div className="section-head text-center wow fadeInUp" data-wow-delay="0.2s">
                                     <h5 className="sub-title">Services</h5>
-                                    <h2 className="title">Why Nfu$e</h2>
+                                    <h2 className="title">Why Nfuse</h2>
                                 </div>
                                 <div className="row justify-content-center">
                                     <ServiceBlog />
@@ -353,7 +375,7 @@ const Home2 = () => {
                     </div>
                 </div>
             </div>
-           <Footer2 />
+           <Footer />
             <Modal className="modal fade modal-wrapper" id="read" centered show={readModal} onHide={setReadModal}> 
                 <div className="modal-body">
                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>

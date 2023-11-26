@@ -18,8 +18,13 @@ const EditCampaign = () => {
         maximum_amount: 0,
         start_date: '',
         end_date: '',
-        campaign_status: 'pending',  // Default value for campaign status
-        campaign_type: 'funding',  // Default value for campaign type
+        goal_type:'',
+        created_by:'',
+        donation_to_nfuse:'',
+        campagin_url:'',
+        country:'',
+        campaign_status: 'pending',  
+        campaign_type: 'funding',  
     });
     const [titleOptions, setTitleOptions] = useState([]);
   
@@ -134,6 +139,11 @@ const EditCampaign = () => {
       description: formData.description,
       minimum_amount: formData.minimum_amount,
       maximum_amount: formData.maximum_amount,
+      goal_type:formData.goal_type,
+      created_by:formData.created_by,
+      donation_to_nfuse:formData.donation_to_nfuse,
+      campagin_url:formData.campagin_url,
+      country:formData.country,
       start_date: formData.start_date,
       end_date: formData.end_date,
       campaign_status: formData.campaign_status,
@@ -244,6 +254,31 @@ const EditCampaign = () => {
                     </div>
                     <div className="col-md-6">
                     <label>Campaign Type:</label>
+                    <select
+                        name="campaign_type"
+                        value={formData.campaign_type}
+                        onChange={handleChange}
+                        className="form-control"
+                    >
+                        <option value="funding">Funding</option>
+                        <option value="donation">Donation</option>
+                    </select>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-6">
+                    <label>Campaign Statussss:</label>
+                    <select
+                        name="campaign_status disabled"
+                        value={formData.campaign_status}
+                        onChange={handleChange}
+                        className="form-control"
+                    >
+                        <option value="pending">Pending</option>
+                    </select>
+                    </div>
+                    <div className="col-md-6">
+                    <label>Campaign Typeeee:</label>
                     <select
                         name="campaign_type"
                         value={formData.campaign_type}

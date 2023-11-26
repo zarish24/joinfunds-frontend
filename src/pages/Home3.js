@@ -1,4 +1,4 @@
-import React,{useState,useContext, useEffect} from 'react';
+import React,{useState,useContext, useEffect,useRef} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import {Modal} from 'react-bootstrap';
 import CountUp from 'react-countup';
@@ -18,9 +18,11 @@ import PartnershipSlider from '../components/Home/PartnershipSlider';
 import Header2 from '../layouts/Header2';
 import Header from '../layouts/Header';
 import Footer3 from '../layouts/Footer3';
+import Footer from '../layouts/Footer';
 import { ThemeContext } from "../context/ThemeContext";
 import { IMAGES } from '../constant/theme';
-
+import { toast,  } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // const counterBlog = [
 //     {title: "Completed Projects", number:"1854", },
 //     {title: "Countries Served", number:"35", symbal:"+"},
@@ -30,12 +32,22 @@ import { IMAGES } from '../constant/theme';
 
 const Home3 = () => {    
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+    const form = useRef(null);
     useEffect(() => {
-     
-      const storedValue = localStorage.getItem('isLoggedIn');
-      setIsLoggedIn(storedValue === 'true');
-    }, [isLoggedIn]); 
+        const intervalId = setInterval(() => {
+          const storedValue = localStorage.getItem('isLoggedIn');
+          const isUserLoggedIn = Boolean(storedValue);
+          setIsLoggedIn(isUserLoggedIn);
+    
+          
+          if (isUserLoggedIn) {
+            clearInterval(intervalId);
+          }
+        }, 1000); 
+    
+      
+        return () => clearInterval(intervalId);
+      }, []);
   
     const { changeBackground, changePrimaryColor } = useContext(ThemeContext);
 	useEffect(() => {
@@ -45,6 +57,13 @@ const Home3 = () => {
     const [campaigns, setCampaigns] = useState([]);
     const [readModal,setReadModal] = useState(false);
     const [isOpen, setOpen] = useState(false);
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phoneNumber: '',
+        message: '',
+      });
     const nav = useNavigate();
     const FormSubmit = (e) => {
         e.preventDefault();
@@ -64,7 +83,7 @@ const Home3 = () => {
               )
               .then((res) => {
                 if (res.status === 200 || res.status === 201) {
-                  console.log("all-comp-data", res?.data);
+                  //   console.log("all-comp-data", res?.data);
                   setCampaigns(res?.data);
                 } else {
                   window.alert("Compaigns not fount due to some issue!");
@@ -76,7 +95,7 @@ const Home3 = () => {
             // setCampaigns(response.data); // Set the campaign data in state
           } catch (error) {
             window.alert("API request failed", error);
-            console.error("API request failed", error);
+            //   console.error("API request failed", error);
           }
         };
         // const user = JSON.parse(localStorage.getItem("user"));
@@ -86,17 +105,42 @@ const Home3 = () => {
         
         // Call the async function
       }, []);
+
+      const sendEmail = async (e) => {
+        e.preventDefault();
+    
+        // Validation
+        const { firstName, lastName, email, phoneNumber, message } = formData;
+        console.log('formDatattt',formData);
+        if (!firstName.trim() || !lastName.trim() || !email.trim() || !phoneNumber.trim() || !message.trim()) {
+          toast.error("All fields are required");
+        } else {
+          try {
+            const response = await axios.post(
+              `${process.env.REACT_APP_BACKEND_URL}/api/contactUs/submitForm`,
+              formData
+            );
+    
+            if (response.status === 200) {
+              toast.success("Message Sent successfully");
+              // Clear form fields
+              setFormData({
+                firstName: '',
+                lastName: '',
+                email: '',
+                phoneNumber: '',
+                message: '',
+              });
+            } else {
+              toast.error("Error submitting form");
+            }
+          } catch (error) {
+            toast.error("Error submitting form. Please try again.");
+          }
+        }
+      };
     return (
-        <>
-            <div className="page-wraper page-wraper-sidebar">
-                <div className="page-sidebar">
-                    <ul className="dz-social">
-                        <li><a href="https://www.facebook.com/" target={'_blank'}>Facebook</a></li>
-                        <li><a href="https://twitter.com/" target={'_blank'}>Twitter</a></li>
-                        <li><a href="https://www.linkedin.com/" target={'_blank'}>Linkedin</a></li>
-                    </ul>
-                    <Link to={"#"} className="btn-bottom btn btn-primary light" data-bs-toggle="modal" data-bs-target="#modalDonate">Donate Now</Link>
-                </div>  
+        <> 
                 {isLoggedIn ? (
         <Header2 changeStyle="header-transparent" changeLogo={true} />
       ) : (
@@ -114,11 +158,11 @@ const Home3 = () => {
                                     <h2>Trending Fundraisers</h2>
                                 </div>
                                 <div class="col-lg-4 col-md-12 text-end d-none d-lg-block wow fadeInUp" data-wow-delay="0.4s">
-                                    <Link to={"/browse-fundraiser"} class="btn btn-primary">View All Causes</Link>
+                                    <Link to={"/Campaigns"} class="btn btn-primary">View All Causes</Link>
                                 </div>
                             </div>
                         </div>
-                        {console.log("campaigns",campaigns)}
+                        {/* {//   console.log("campaigns",campaigns)} */}
                         <div class="resize-wrapper">
                             <TrendingSlider2 campaigns = {campaigns} />
                         </div>
@@ -174,8 +218,8 @@ Helping others improve their lives physically, medically or financially feels wo
                     >
                         <div className="container">
                             <div className="section-head text-center wow fadeInUp" data-wow-delay="0.2s">
-                                <h5 className="sub-title">Services</h5>
-                                <h2 className="title text-white">Why Nfu$e</h2>
+                                <h5 className="sub-title text-white">Services</h5>
+                                <h2 className="title text-white">Why Nfuse</h2>
                             </div>
                                 <AkcelServices />
                         </div>                     
@@ -194,7 +238,6 @@ Helping others improve their lives physically, medically or financially feels wo
                                     <div className="inner-content">
                                         <div className="section-head">
                                             <h2 className="title">Save The<br/> Planet For Better Future</h2>
-                                            <p className="max-w400">Lorem ipsum dolor sit amet, consectetur adipiscing elit Suspendisse.</p>
                                         </div>
                                         <Link to={"/project-story"} className="btn btn-primary">Project Story</Link>
                                     </div>
@@ -232,29 +275,68 @@ Helping others improve their lives physically, medically or financially feels wo
                                     </div>
                                 </div>
                                 <div className="col-lg-9">
-                                    <form className="dzForm" onSubmit={(e)=>FormSubmit(e)}>
+                                    <form className="dzForm"  onSubmit={sendEmail}>
                                         <div className="dzFormMsg"></div>
                                         <input type="hidden" className="form-control" name="dzToDo" value="Contact" />
                                         <input type="hidden" className="form-control" name="reCaptchaEnable" value="0" />
                                         
                                         <div className="row g-4">
                                             <div className="col-md-4 col-sm-6">
-                                                <input name="dzFirstName" required="" type="text" className="form-control" placeholder="First Name" />
+                                                <input 
+                                                 name="firstName"
+                                                 required
+                                                 type="text"
+                                                 className="form-control"
+                                                 placeholder="firstName"
+                                                 value={formData.firstName}
+                                                 onChange={(e) => setFormData({ ...formData, firstName: e.target.value })} />
                                             </div>
                                             <div className="col-md-4 col-sm-6">
-                                                <input name="dzLastName" required="" type="text" className="form-control" placeholder="Last Name" />
+                                                <input 
+                                            name="lastName"
+                                            required
+                                            type="text"
+                                            className="form-control"
+                                            placeholder="lastName"
+                                            value={formData.lastName}
+                                            onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                                                />
                                             </div>
                                             <div className="col-md-4 col-sm-6">
-                                                <input name="dzEmail" required="" type="text" className="form-control" placeholder="Email Address" />
+                                                <input 
+                                            name="email"
+                                            required
+                                            type="text"
+                                            className="form-control"
+                                            placeholder="email@example.com"
+                                            value={formData.email}
+                                            onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
                                             </div>
                                             <div className="col-md-4 col-sm-6">
-                                                <input name="dzPhoneNumber" required="" type="text" className="form-control" placeholder="Phone Number" />
+                                                <input 
+                                               name="phoneNumber"
+                                               required
+                                               type="tel"
+                                               className="form-control"
+                                               placeholder="+1 987 654 321"
+                                               pattern="[0-9]+"
+                                               value={formData.phoneNumber}
+                                               onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })} />
                                             </div>
                                             <div className="col-md-4 col-sm-6">
-                                                <input name="dzMessage" required="" type="text" className="form-control" placeholder="Your Message" />
+                                                <input 
+                                                name="message"
+                                                rows="7"
+                                                required
+                                                className="form-control"
+                                                placeholder="message"
+                                                value={formData.message}
+                                                onChange={(e) => setFormData({ ...formData, message: e.target.value })} />
                                             </div>
                                             <div className="col-md-4 col-sm-6">
-                                                <button name="submit" type="submit" value="Submit" className="btn btn-dark btn-block h-100">Submit Now</button>
+                                                <button 
+                                                name="submit" type="submit" value="Submit" 
+                                                className="btn btn-light btn-block h-100">Submit Now</button>
                                             </div>
                                         </div>
                                     </form>
@@ -272,7 +354,7 @@ Helping others improve their lives physically, medically or financially feels wo
                                         <h2 className="title">Latest News Feed</h2>
                                     </div>
                                 </div>
-                                <div className="col-lg-4 col-md-12 m-b30 text-end d-none d-lg-block wow fadeInUp" data-wow-delay="0.4s">
+                                <div hidden className="col-lg-4 col-md-12 m-b30 text-end d-none d-lg-block wow fadeInUp" data-wow-delay="0.4s">
                                     <Link to={"/blog-grid"} className="btn btn-primary">All Blogs</Link>
                                 </div>
                             </div>
@@ -301,7 +383,7 @@ Helping others improve their lives physically, medically or financially feels wo
                         </div>
                     </div>
                 </div>
-                <Footer3 />
+                <Footer />
                 <Modal className="modal fade modal-wrapper" id="read" centered show={readModal} onHide={setReadModal}> 
                     <div className="modal-body">
                         <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
@@ -311,7 +393,6 @@ Helping others improve their lives physically, medically or financially feels wo
                 <ModalVideo channel='youtube'  isOpen={isOpen} videoId="bdBG5VO01e0" onClose={() => setOpen(false)} />
                 {/* <Link to={"#"} className={classChange} onClick={()=> setOpen(true)} ><i className="fa-solid fa-play" ></i></Link> */}
                 {/* <DonateModal /> */}
-            </div>
         </>
     );
 };

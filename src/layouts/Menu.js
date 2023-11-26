@@ -92,7 +92,7 @@ export const MenuListArray2 = [
         content : [
             {
                 title:"My Campaigns",
-                to:"/my-project"
+                to:"/my-campaigns"
             },
             {
                 title:"Create Campaign",
@@ -101,13 +101,13 @@ export const MenuListArray2 = [
            
             {
                 title:"Campaigns",
-                to:"/project"
+                to:"/campaigns"
             },
-            {
-                title:"Campaign Categories",
-                // to:"/project-categories"
-                to:"/project-sidebar"
-            },
+            // {
+            //     title:"Campaign Categories",
+            //     // to:"/project-categories"
+            //     to:"/project-sidebar"
+            // },
             // {
             //     title:"Project Sidebar",
             //     to:"/project-sidebar"
@@ -118,28 +118,28 @@ export const MenuListArray2 = [
             // },
         ],
     },
-    {
-        title:"Blog",
-        classChange:"sub-menu-down",
-        content:[
-            {
-                title:"Blog",
-                to:"/blog"
-            },
-            {
-                title:"Blog Grid",
-                to:"/blog-grid"
-            },
-            {
-                title:"Blog List",
-                to:"/blog-list"
-            },
-            {
-                title:"Blog Details",
-                to:"/blog-details"
-            },
-        ],
-    },
+    // {
+    //     title:"Blog",
+    //     classChange:"sub-menu-down",
+    //     content:[
+    //         {
+    //             title:"Blog",
+    //             to:"/blog"
+    //         },
+    //         {
+    //             title:"Blog Grid",
+    //             to:"/blog-grid"
+    //         },
+    //         {
+    //             title:"Blog List",
+    //             to:"/blog-list"
+    //         },
+    //         {
+    //             title:"Blog Details",
+    //             to:"/blog-details"
+    //         },
+    //     ],
+    // },
     {
         title:"About Us",
         to : "/about-us"
@@ -160,16 +160,20 @@ export const MenuListArray2 = [
             //     title:"Balance",
             //     to:"/my-balance"
             // },
+            // {
+            //     title:"Wallet",
+            //     to:"/wallet-address"
+            // },
             {
-                title:"Wallet",
-                to:"/wallet-address"
+                title:" Sent Donations",
+                to:"/donations"
             },
             {
-                title:"My Donations",
-                to:"/my-donations"
+                title:"Received Donations ",
+                to:"/receiveddonations"
             },
             {
-                title:"My Requests",
+                title:"My Payout Requests",
                 to:"/my-requests"
             },
             {
@@ -285,13 +289,13 @@ export const MenuListArray3 = [
            
             {
                 title:"Campaigns",
-                to:"/project"
+                to:"/campaigns"
             },
-            {
-                title:"Campaign Categories",
-                // to:"/project-categories"
-                to:"/project-sidebar"
-            },
+            // {
+            //     title:"Campaign Categories",
+            //     // to:"/project-categories"
+            //     to:"/project-sidebar"
+            // },
             // {
             //     title:"Project Sidebar",
             //     to:"/project-sidebar"
@@ -302,28 +306,28 @@ export const MenuListArray3 = [
             // },
         ],
     },
-    {
-        title:"Blog",
-        classChange:"sub-menu-down",
-        content:[
-            {
-                title:"Blog",
-                to:"/blog"
-            },
-            {
-                title:"Blog Grid",
-                to:"/blog-grid"
-            },
-            {
-                title:"Blog List",
-                to:"/blog-list"
-            },
-            {
-                title:"Blog Details",
-                to:"/blog-details"
-            },
-        ],
-    },
+    // {
+    //     title:"Blog",
+    //     classChange:"sub-menu-down",
+    //     content:[
+    //         {
+    //             title:"Blog",
+    //             to:"/blog"
+    //         },
+    //         {
+    //             title:"Blog Grid",
+    //             to:"/blog-grid"
+    //         },
+    //         {
+    //             title:"Blog List",
+    //             to:"/blog-list"
+    //         },
+    //         {
+    //             title:"Blog Details",
+    //             to:"/blog-details"
+    //         },
+    //     ],
+    // },
     {
         title:"About Us",
         to : "/about-us"
@@ -344,14 +348,15 @@ export const MenuListArray3 = [
             //     title:"Balance",
             //     to:"/my-balance"
             // },
+            // {
+            //     title:"Wallet",
+            //     to:"/wallet-address"
+            // },
             {
-                title:"Wallet",
-                to:"/wallet-address"
+                title:" Sent Donations",
+                to:"/donations"
             },
-            {
-                title:"My Donations",
-                to:"/my-donations"
-            },
+         
             {
                 title:"My Requests",
                 to:"/my-requests"

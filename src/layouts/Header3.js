@@ -71,7 +71,7 @@ const Header2 = ({onShowDonate}) => {
     return (
         <>
             <header className="site-header mo-left header style-2">                
-                <div className={`sticky-header main-bar-wraper navbar-expand-lg ${headerFix ? "is-fixed" : ""}`}>
+                <div className="sticky-header main-bar-wraper navbar-expand-lg is-fixed">
                     <div className="main-bar clearfix ">
                         <div className="container-fluid clearfix">                
                             <div className="logo-header mostion logo-dark">
@@ -126,7 +126,7 @@ const Header2 = ({onShowDonate}) => {
                                     {/* <Link to={"/"}><img src={logo} alt="" /></Link> */}
                                 </div>
                                 <ul className="nav navbar-nav navbar navbar-left">
-                                    <li><Link to={"/index-3"}>Home</Link></li>
+                                    <li><Link to={"/"}>Home</Link></li>
                                     {MenuListArray2.map((data, index)=>{
                                         let menuClass = data.classChange;
                                         if(menuClass !== "sub-menu-down"){
@@ -317,7 +317,7 @@ const Header2 = ({onShowDonate}) => {
                 </div>  
             </Modal>
             <Modal className="modal fade modal-wrapper auth-modal"  show={signupModal} onHide={setSignupModal} centered>               
-                <h2 className="title">Sign Up Your Account</h2>
+                <h2 className="title">Sign Up Your Accountgggg</h2>
                 <form onSubmit={(e)=>formSubmit(e)}>
                     <div className="form-group">
                         <input type="email" className="form-control" placeholder="Email Address" />

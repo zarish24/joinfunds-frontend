@@ -38,7 +38,7 @@ const HowItWorks = () => {
                         <div className="row align-items-center flex-column-reverse flex-lg-row">
                             <div className="col-lg-6 align-self-center">
                                 <div className="section-head m-b30">
-                                    <h2 className="title">What Is Nfu$e ?</h2>
+                                    <h2 className="title">What Is Nfuse ?</h2>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                                 </div>
                                 <Accordion className="accordion dz-accordion accordion-sm" id="accordionFaq1">

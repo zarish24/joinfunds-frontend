@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 
 import baner from '../assets/images/main-slider/slider1/slider-bg1.jpg';
-import logowhite from '../assets/images/logo-white-2.png';
+import logowhite from '../assets/images/nfuse_copy-removebg.png';
 import shape4 from '../assets/images/side-images/shape4.png';
 import line4 from '../assets/images/side-images/shape-line4.png';
 import shape5 from '../assets/images/side-images/shape5.png';
@@ -23,7 +23,7 @@ const Footer2 = () => {
                                         <Link to={"/"}><img src={logowhite} alt="" /></Link> 
                                         
                                     </div>
-                                    <p>Nfu$e is a Crowdfunding & Charity Website by DexignZone lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et</p>
+                                    <p>Nfuse is a Crowdfunding & Charity Website by DexignZone lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et</p>
                                     <div className="dz-social-icon style-3">
                                         <ul>
                                             <li><a target="_blank" className="fab fa-facebook-f"  rel="noreferrer" href="https://www.facebook.com/"></a></li>
@@ -90,7 +90,7 @@ const Footer2 = () => {
                 
                 <div className="footer-bottom text-center">
                     <div className="container">
-                        <span className="copyright-text">Nfu$e Crowdfunding & Charity Website - © 2023 by <a href="https://dexignzone.com/"  rel="noreferrer" target="_blank">DexignZone</a></span>
+                        <span className="copyright-text">Nfuse Crowdfunding & Charity Website - © 2023 by <a href="https://dexignzone.com/"  rel="noreferrer" target="_blank">DexignZone</a></span>
                     </div>
                 </div>
             </footer>

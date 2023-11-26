@@ -3,8 +3,8 @@ $enable-deprecation-messages: false;
 $ignore-warning             : true;
 
 // Color
-$primary   : #1B8271;
-$secondary : #FF7468 !default;
+$primary   : #002768;
+$secondary : #bf0b32 !default;
 $success   : #13c24d !default;
 $info      : #00aeff !default;
 $warning   : #fea500 !default;
@@ -83,8 +83,8 @@ $border-radius-sm: .75rem !default;
 	--primary: #{$primary};
 	--secondary: #{$secondary};
 	--gray: #{$gray};
-	--primary-hover: #186f61;
-	--secondary-hover: #f64f40;
+	--primary-hover: #bf0b32;
+	--secondary-hover: #002768;
 	--primary-dark: #ea4619;
 	--rgba-secondary-1: #{rgba($secondary, 0.1)};
 	--rgba-primary-1: #{rgba($primary, 0.1)};

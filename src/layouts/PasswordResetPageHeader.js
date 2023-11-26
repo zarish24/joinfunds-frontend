@@ -170,10 +170,10 @@ const PasswordResetPageHeader = ({onShowDonate, changeStyle, changeLogo}) => {
                             {changeLogo ? 
                                 <>
                                     <div className="logo-header mostion logo-dark">
-                                        <Link to={"/index-3"}><img src={IMAGES.logo3} alt="" /></Link>
+                                        <Link to={"/"}><img src={IMAGES.logo3} alt="" /></Link>
                                     </div>
                                     <div className="logo-header mostion logo-light">
-                                        <Link to={"/index-3"}><img src={IMAGES.logoWhite3} alt="" /></Link>
+                                        <Link to={"/"}><img src={IMAGES.logoWhite3} alt="" /></Link>
                                     </div>
                                 </>
                                 :
@@ -471,7 +471,7 @@ const PasswordResetPageHeader = ({onShowDonate, changeStyle, changeLogo}) => {
                 </div>  
             </Modal>
             <Modal className="modal fade modal-wrapper auth-modal"  show={signupModal} onHide={setSignupModal} centered>               
-                <h2 className="title">Sign Up Your Account</h2>
+                <h2 className="title">Sign Up Your Accountfff</h2>
                 <form onSubmit={(e)=>formSubmit(e,'api/user/register')}>
                     <div className="form-group">
                     <input type="email" className="form-control" placeholder="Email Address" value={email} onChange={(e) => setEmail(e.target.value)} />

@@ -6,6 +6,7 @@ import styles from "./styles.module.scss";
 import Box from "@mui/material/Box";
 import { ThreeDots } from "../../../node_modules/react-loader-spinner/dist/index";
 import { Tabs, Tab, Typography, Pagination } from "@mui/material";
+import { Switch as AntSwitch } from 'antd';
 //images
 import pic1 from "../../assets/images/project/pic1.jpg";
 import pic2 from "../../assets/images/project/pic2.jpg";
@@ -30,11 +31,13 @@ import avat7 from "../../assets/images/avatar/avatar7.jpg";
 import avat8 from "../../assets/images/avatar/avatar8.jpg";
 import avat9 from "../../assets/images/avatar/avatar9.jpg";
 import clipboardCopy from 'clipboard-copy';
+import axios from "axios";
 import {
   FacebookShareButton,
   TwitterShareButton,
   LinkedinShareButton,
-  WhatsappShareButton, // add this
+  WhatsappShareButton, 
+  TelegramShareButton,
  } from 'react-share';
  
  import {
@@ -42,6 +45,7 @@ import {
   TwitterIcon,
   LinkedinIcon,
   WhatsappIcon , // add this
+  TelegramIcon , // add this
  } from 'react-share';
  import { toast } from 'react-toastify';
  import 'react-toastify/dist/ReactToastify.css';
@@ -55,19 +59,74 @@ const ProjectMasonry = (props) => {
   //  const { page, setPage } = props;
   const [loading, setLoading] = useState(false);
   const cardData = props.campaigns;
+console.log('categories cardData',cardData)
+
   const [dropbtn, setDropbtn] = useState("Newest");
   const [popular, setPopular] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [activeGenre, setActiveGenre] = useState("All");
 const [isShareModalOpen, setShareModalOpen] = useState(false);
 const [shareItemId, setShareItemId] = useState(null);
-
+const [titleOptions, setTitleOptions] = useState([]);
 const toggleShareModal = (itemId) => {
   setShareItemId(itemId);
   setShareModalOpen(!isShareModalOpen);
 
 };
+// console.log('categories titleOptions',titleOptions)
+const handleSwitchToggle = async (campaignId, checked) => {
+  const user = JSON.parse(localStorage.getItem('user'));
+  const token= user?.token;
+  try {
+    
+    const response = await axios.put(`${process.env.REACT_APP_BACKEND_URL}/api/compaign/publish/${campaignId}`, {
+      
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`, 
+      },
+      
+    });
+    console.log('response',response)
+    if (response.data.status === "success") {
+     toast.success(`Campaign  Published successfully`)
+     props.fetchData();
+      console.log(`Campaign  Published successfully!`);
+    } else {
+      
+      console.error('Failed to update campaign:', response.statusText);
+    }
+  } catch (error) {
+    // Handle any unexpected errors
+    console.error('An unexpected error occurred:', error);
+  }
+};
+useEffect(() => {
+  const user = JSON.parse(localStorage.getItem('user'));
+ const token= user?.token;
+  const fetchCategories = async () => {
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`, 
+        },
+      };
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/category/getCategories`,config);
+    
+      if (response.status === 200) {
+        
+        const categories = response.data.categories
+        // console.log('categories',categories)
 
+        setTitleOptions(categories);
+      }
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    }
+  };
+
+  fetchCategories();
+}, []);
 
 
 const handleCopyUrl = async (url) => {
@@ -81,11 +140,11 @@ const handleCopyUrl = async (url) => {
 };
 
 
-  useEffect(() => {
-    // Initialize filtered with the data from props when the component mounts
-    setFiltered(cardData);
-    setPopular(cardData);
-  }, [cardData]);
+  // useEffect(() => {
+  //   // Initialize filtered with the data from props when the component mounts
+  //   setFiltered(cardData);
+  //   setPopular(cardData);
+  // }, [cardData]);
 
   useEffect(() => {
     if (activeGenre === "All") {
@@ -131,170 +190,21 @@ const handleCopyUrl = async (url) => {
       <div className="row m-b30">
         <div className="col-xl-10 col-lg-9">
           <div className="site-filters style-1 clearfix">
-            <ul
-              className="filters justify-content-between"
-              data-bs-toggle="buttons"
-            >
-              <li className={`btn ${activeGenre === "All" ? "active" : ""}`}>
-                <Link to={"#"} onClick={() => setActiveGenre("All")}>
-                  All Projects
-                </Link>
-              </li>
-              <li
-                data-filter=".Technology"
-                className={`btn ${activeGenre === "Medical" ? "active" : ""}`}
-              >
-                <Link to={"#"} onClick={() => setActiveGenre("Medical")}>
-                  Medical
-                </Link>
-              </li>
-              <li
-                data-filter=".Medical"
-                className={`btn ${activeGenre === "Memorial" ? "active" : ""}`}
-              >
-                <Link to={"#"} onClick={() => setActiveGenre("Memorial")}>
-                  Memorial
-                </Link>
-              </li>
-              <li
-                data-filter=".Business"
-                className={`btn ${activeGenre === "Emergency" ? "active" : ""}`}
-              >
-                <Link to={"#"} onClick={() => setActiveGenre("Emergency")}>
-                  Emergency
-                </Link>
-              </li>
-              <li
-                data-filter=".Fashion"
-                className={`btn ${activeGenre === "Nonprofit" ? "active" : ""}`}
-              >
-                <Link to={"#"} onClick={() => setActiveGenre("Nonprofit")}>
-                  Nonprofit
-                </Link>
-              </li>
-              <li
-                data-filter=".Technology"
-                className={`btn ${activeGenre === "Education" ? "active" : ""}`}
-              >
-                <Link to={"#"} onClick={() => setActiveGenre("Education")}>
-                  Education
-                </Link>
-              </li>
-              <li
-                data-filter=".Medical"
-                className={`btn ${activeGenre === "Animals" ? "active" : ""}`}
-              >
-                <Link to={"#"} onClick={() => setActiveGenre("Animals")}>
-                  Animals
-                </Link>
-              </li>
-              <li
-                data-filter=".Business"
-                className={`btn ${activeGenre === "Business" ? "active" : ""}`}
-              >
-                <Link to={"#"} onClick={() => setActiveGenre("Business")}>
-                  Business
-                </Link>
-              </li>
-              <li
-                data-filter=".Fashion"
-                className={`btn ${activeGenre === "Community" ? "active" : ""}`}
-              >
-                <Link to={"#"} onClick={() => setActiveGenre("Community")}>
-                  Community
-                </Link>
-              </li>
-              <li
-                data-filter=".Technology"
-                className={`btn ${activeGenre === "Creative" ? "active" : ""}`}
-              >
-                <Link to={"#"} onClick={() => setActiveGenre("Creative")}>
-                  Creative
-                </Link>
-              </li>
-              <li
-                data-filter=".Medical"
-                className={`btn ${
-                  activeGenre === "Current Events" ? "active" : ""
-                }`}
-              >
-                <Link to={"#"} onClick={() => setActiveGenre("Current Events")}>
-                  Current Events
-                </Link>
-              </li>
-              <li
-                data-filter=".Business"
-                className={`btn ${activeGenre === "Event" ? "active" : ""}`}
-              >
-                <Link to={"#"} onClick={() => setActiveGenre("Event")}>
-                  Event
-                </Link>
-              </li>
-              <li
-                data-filter=".Fashion"
-                className={`btn ${activeGenre === "Faith" ? "active" : ""}`}
-              >
-                <Link to={"#"} onClick={() => setActiveGenre("Faith")}>
-                  Faith
-                </Link>
-              </li>
-              <li
-                data-filter=".Technology"
-                className={`btn ${activeGenre === "Family" ? "active" : ""}`}
-              >
-                <Link to={"#"} onClick={() => setActiveGenre("Family")}>
-                  Family
-                </Link>
-              </li>
-              <li
-                data-filter=".Medical"
-                className={`btn ${activeGenre === "Sport" ? "active" : ""}`}
-              >
-                <Link to={"#"} onClick={() => setActiveGenre("Sport")}>
-                  Sport
-                </Link>
-              </li>
-              <li
-                data-filter=".Business"
-                className={`btn ${activeGenre === "Travel" ? "active" : ""}`}
-              >
-                <Link to={"#"} onClick={() => setActiveGenre("Travel")}>
-                  Travel
-                </Link>
-              </li>
-              <li
-                data-filter=".Fashion"
-                className={`btn ${activeGenre === "Veteran" ? "active" : ""}`}
-              >
-                <Link to={"#"} onClick={() => setActiveGenre("Veteran")}>
-                  Veteran
-                </Link>
-              </li>
-              <li
-                data-filter=".Medical"
-                className={`btn ${activeGenre === "Legal" ? "active" : ""}`}
-              >
-                <Link to={"#"} onClick={() => setActiveGenre("Legal")}>
-                  Legal
-                </Link>
-              </li>
-              <li
-                data-filter=".Business"
-                className={`btn ${activeGenre === "General" ? "active" : ""}`}
-              >
-                <Link to={"#"} onClick={() => setActiveGenre("General")}>
-                  General
-                </Link>
-              </li>
-              <li
-                data-filter=".Fashion"
-                className={`btn ${activeGenre === "Mission" ? "active" : ""}`}
-              >
-                <Link to={"#"} onClick={() => setActiveGenre("Mission")}>
-                  Mission
-                </Link>
-              </li>
-            </ul>
+          <ul className="filters justify-content-between" data-bs-toggle="buttons">
+          <li className={`btn ${activeGenre === 'All' ? "active" : ""}`}>
+  <Link to={"#"} onClick={() => { setActiveGenre('All'); props.setCategoryId(''); }}>
+    All
+  </Link>
+</li>
+  {titleOptions.map((option) => (
+    <li key={option._id} className={`btn ${activeGenre === option.name ? "active" : ""}`}>
+      <Link to={"#"} onClick={() => { setActiveGenre(option.name); props.setCategoryId(option._id); }}>
+        {option.name}
+      </Link>
+    </li>
+  ))} 
+
+</ul>
           </div>
         </div>
         {/* <div className="col-xl-2 col-lg-3 text-start text-lg-end m-b20">
@@ -317,39 +227,33 @@ const handleCopyUrl = async (url) => {
           className="row"
           //transition={{ duration: 0.3 }}
         >
-          {console.log("fileterData", filtered)}
+          {/* {console.log("fileterData", filtered)} */}
           <AnimatePresence>
-  {loading ? (
-    <Box
-      className={styles.centeredBox}
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      height="20vh"
-    >
-      <ThreeDots color="#E6007C" width={50} height={50} />
-    </Box>
-  ) : (
-    (filtered &&
-      Array.isArray(filtered) &&
-      filtered.length === 0) ? (
+      {loading ? (
         <Box
-          className={styles.noDataFound}
+          className={styles.centeredBox}
           display="flex"
           justifyContent="center"
           alignItems="center"
+          height="20vh"
         >
-          <Typography variant="h4">
-            No Campaign Found. Go to Previous Page!
-          </Typography>
+          <ThreeDots color="#E6007C" width={50} height={50} />
         </Box>
       ) : (
-        Array.isArray(filtered) && filtered.length > 0 ? (
-          filtered.map((item, index) => {
-            const progressValue = parseInt(item.progres, 10);
-            console.log("progressValue", progressValue);
-            return (
-              <motion.li
+        <motion.ul
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+          className="row"
+        >
+        {Array.isArray(cardData) && cardData.length > 0 ? (
+            cardData.map((item, index) => {
+              console.log('item item',item)
+              const progressValue = parseInt(item.progress, 10);
+              console.log("progressValue", progressValue);
+              return (
+                <motion.li
                 layout
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
@@ -361,7 +265,7 @@ const handleCopyUrl = async (url) => {
                 <div className="dz-card style-2 overlay-skew">
                   <div className={`dz-media ${styles.cardImgWrapper}`}>
                     <Link to={`/fundraiser-detail/${item._id}`}>
-                      <img src={item?.campaign_images[0]?.url ? item?.campaign_images[0]?.url : avat3} alt="" />
+                    <img src={item?.campaign_images[0]?.url ? item?.campaign_images[0]?.url : avat3} alt="" />
                     </Link>
                   </div>
                   <div className="dz-info">
@@ -370,45 +274,70 @@ const handleCopyUrl = async (url) => {
                         <Link to={"#"}>{item.campaign_type}</Link>
                       </li>
                     </ul>
-                    {/* <div className="d-flex justify-content-end align-items-center"> */}
+                    <div className="d-flex justify-content-between align-items-end">
+                    <div>
                     <h5 className="dz-title">
                       <Link to={`/fundraiser-detail/${item._id}`}>
                         {item.title.length > 25
                           ? item.title.slice(0, 25) + "..."
                           : item.title}
                       </Link>
-                      
-  <button
-    onClick={() => {
-      toggleShareModal(item._id);
-      handleCopyUrl(`http://44.219.245.56/my-project/${item._id}`);
-    }}
-    className="btn  share-button float-right"
-  >
-    <i className="fas fa-share"></i> 
-  </button>
+                      </h5>
+                      </div>
 
+                      <div className="mb-2">
+                      {item.published ? (
+          <button
+          onClick={() => {
+            toggleShareModal(item._id);
+            handleCopyUrl(`${process.env.REACT_APP_BACKEND_URL}/fundraiser-detail/${item._id}`);
+        }}        
+            className="btn share-button float-right"
+          >
+            <i className="fas fa-share"></i>
+          </button>
+        ) : (
+         <>
+ <div className="d-grid ">
+      <label>
+        Publish </label>
+        <AntSwitch
+          checked={false}
+          className="ml-2" // Adjust margin as needed
+          onChange={(checked) => {
+            // Replace 'handleSwitchToggle' with your actual function
+            handleSwitchToggle(item._id, checked);
+          }}
+        />
+     
+    </div>
+</>
 
-                      {isShareModalOpen && (
+            )}
+</div>
+
+                    
+                    </div>
+                    {isShareModalOpen && (
                         
-  <div className="share-modal">
-    <FacebookShareButton url={`http://44.219.245.56/my-project/${shareItemId}`}>
-      <FacebookIcon size={32} round />
-    </FacebookShareButton>
-    <TwitterShareButton url={`http://44.219.245.56/my-project/${shareItemId}`}>
-      <TwitterIcon size={32} round />
-    </TwitterShareButton>
-    <LinkedinShareButton url={`http://44.219.245.56/my-project/${shareItemId}`}>
-      <LinkedinIcon size={32} round />
-    </LinkedinShareButton>
-    <WhatsappShareButton url={`http://44.219.245.56/my-project/${shareItemId}`} >
- <WhatsappIcon size={32} round />
-</WhatsappShareButton>
-  </div>
-)}
-                    </h5>
-                    {/* </div> */}
-      
+                        <div className="share-modal">
+                          <FacebookShareButton url={`${process.env.REACT_APP_BACKEND_URL}/fundraiser-detail/${shareItemId}`}>
+                              <FacebookIcon size={32} round />
+                          </FacebookShareButton>
+                          <TwitterShareButton url={`${process.env.REACT_APP_BACKEND_URL}/fundraiser-detail/${shareItemId}`}>
+                            <TwitterIcon size={32} round />
+                          </TwitterShareButton>
+                          <LinkedinShareButton url={`${process.env.REACT_APP_BACKEND_URL}/fundraiser-detail/${shareItemId}`}>
+                            <LinkedinIcon size={32} round />
+                          </LinkedinShareButton>
+                          <WhatsappShareButton url={`${process.env.REACT_APP_BACKEND_URL}/fundraiser-detail/${shareItemId}`}>
+                            <WhatsappIcon size={32} round />
+                          </WhatsappShareButton>
+                          <TelegramShareButton url={`${process.env.REACT_APP_BACKEND_URL}/fundraiser-detail/${shareItemId}`}>
+                            <TelegramIcon size={32} round />
+                          </TelegramShareButton>                          
+                        </div>
+                      )}
                     <div className="progress-bx style-1">
                       <div className="progress">
                         <div
@@ -440,12 +369,12 @@ const handleCopyUrl = async (url) => {
       
                     <div className="author-wrappper">
                       <div className="author-media">
-                        <img src={item.user_detail[0].profileImage} alt="" />
+                        <img src={item?.user_detail?.profileImage} alt="" />
                       </div>
                       <div className="author-content">
                         <div className="author-head">
-                          <h6 className="author-name">{item.user_detail[0].firstName} {item.user_detail[0].lastName}</h6>
-                          <ul className="rating-list">
+                          <h6 className="author-name">{item?.user_detail?.firstName} {item?.user_detail?.lastName}</h6>
+                          {/* <ul className="rating-list">
                             <li>
                               <i className="fa fa-star"></i>
                             </li>{" "}
@@ -461,30 +390,31 @@ const handleCopyUrl = async (url) => {
                             <li>
                               <i className="fa fa-star gray-light"></i>
                             </li>
-                          </ul>
+                          </ul> */}
                         </div>
-                        <ul className="author-meta">
-                          <li className="campaign">12 Campaign</li>
-                          <li className="location">New York, London</li>
-                        </ul>
+                        {/* <ul className="author-meta">
+                          <li className="campaign">{item?.user_detail[0]?.publishedCampaignsCount} Campaign</li>
+                          <li className="location">{item?.user_detail[0]?.country},{item?.user_detail[0]?.city}</li>
+                        </ul> */}
                       </div>
                     </div>
                   </div>
                 </div>
               </motion.li>
-            );
-          })
-        ) : (
-          // Add a fallback JSX if filtered is not an array or has length 0
-          <p>No data available</p>
-        )
-      )
-  )}
-</AnimatePresence>
+              );
+            })
+          ) : (
+            // Add a fallback JSX if cardData is not an array or has length 0
+            <p>No Campaigns available</p>
+          )}
+        </motion.ul>
+      )}
+    </AnimatePresence>
+
 
         </ul>
       </div>
-      <div className="row">
+      {/* <div className="row">
         <div className="col-12 m-sm-t0 m-t30">
           <nav className="pagination-bx">
             <div className="page-item">
@@ -521,7 +451,7 @@ const handleCopyUrl = async (url) => {
             </div>
           </nav>
         </div>
-      </div>
+      </div> */}
 
       {/* <div className="row">
                 <div className="col-12 m-sm-t0 m-t30">		

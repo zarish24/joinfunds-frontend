@@ -24,7 +24,7 @@ const ProjectStory = () => {
         const spliBox = document.querySelectorAll(elem);        
         spliBox.forEach(myFunction);
         function myFunction(item, index) {
-            console.log('splitbox',item);
+            // console.log('splitbox',item);
             const docViewTop = window.scrollY;
             const docViewBottom = docViewTop + window.innerHeight;
             let elemTop = item.getBoundingClientRect().top + docViewTop;

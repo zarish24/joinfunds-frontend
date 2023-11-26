@@ -59,10 +59,10 @@ const MainSliderIndex3 = ({ onShowDonate }) => {
                   <div className="col-xl-6 col-md-7">
                     <div className="banner-content">
                       <div className="top-content">
-                        <h5 className="sub-title text-primary">{d.title}</h5>
+                        <h5 className="sub-title text-light">{d.title}</h5>
                         <h1 className="title">{d.title2}</h1>
                         <p>
-                        START A CAMPAIGN-both for an individual and for a business Show this language " Get Enthused, Get NFUSED"
+                        Did you know you can create a campaign for individuals or for businesses?   Take a look at our categories!   get Enthused, Get Nfused!
                         </p>
                         <div className="d-flex align-items-center">
                           {/* <Link

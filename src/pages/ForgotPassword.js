@@ -16,6 +16,7 @@ import PartnershipSlider from '../components/Home/PartnershipSlider';
 //layouts
 import Header2 from '../layouts/Header2';
 import Footer3 from '../layouts/Footer3';
+import Footer from '../layouts/Footer';
 import { ThemeContext } from "../context/ThemeContext";
 import PasswordResetPageHeader from '../layouts/PasswordResetPageHeader';
 import { IMAGES } from '../constant/theme';
@@ -55,7 +56,7 @@ const ForgotPassword = () => {
               )
               .then((res) => {
                 if (res.status === 200 || res.status === 201) {
-                  console.log("all-comp-data", res?.data);
+                  //   console.log("all-comp-data", res?.data);
                   setCampaigns(res?.data);
                 } else {
                   window.alert("Compaigns not fount due to some issue!");
@@ -67,7 +68,7 @@ const ForgotPassword = () => {
             // setCampaigns(response.data); // Set the campaign data in state
           } catch (error) {
             window.alert("API request failed", error);
-            console.error("API request failed", error);
+            //   console.error("API request failed", error);
           }
         };
         const user = JSON.parse(localStorage.getItem("user"));
@@ -286,7 +287,7 @@ const ForgotPassword = () => {
                         </div>
                     </div>
                 </div>
-                <Footer3 />
+                <Footer />
                 <Modal className="modal fade modal-wrapper" id="read" centered show={readModal} onHide={setReadModal}> 
                     <div className="modal-body">
                         <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>

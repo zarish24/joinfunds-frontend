@@ -44,7 +44,7 @@ const certificateBlog = [
 
 const Certificates = () => {
     const onInit = () => {
-      //  console.log('lightGallery has been initialized');
+      //  //   console.log('lightGallery has been initialized');
     };
     return (
         <>

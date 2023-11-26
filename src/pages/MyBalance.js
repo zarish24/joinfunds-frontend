@@ -57,7 +57,7 @@ const MyBalance = () => {
 
       } catch (error) {
         window.alert("API request failed", error);
-        console.error("API request failed", error);
+        // console.error("API request failed", error);
       }
     };
     const user = JSON.parse(localStorage.getItem("user"));

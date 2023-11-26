@@ -8,7 +8,7 @@ import styles from "./styles.module.scss";
 
 const RecordsPerPage = 10;
 
-const MyDonations = () => {
+const RecivedDonations = () => {
   const [dummyData, setDummyData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -23,8 +23,9 @@ const MyDonations = () => {
         // console.error('User token not found in local storage');
         return;
       }
+
       try {
-        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/payments/getSentDonationDetails`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/payments/getRecievedTransactions`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -32,7 +33,7 @@ const MyDonations = () => {
             },
             body: JSON.stringify({
               page: currentPage,
-              items_per_page: RecordsPerPage,
+              limit: RecordsPerPage,
             }),
           });
 
@@ -42,9 +43,8 @@ const MyDonations = () => {
 
         const data = await response.json();
         setTotalPages(Math.ceil(data.totalCount / RecordsPerPage));
-        setDummyData(data.sentDonations);
-      }
-      catch (error) {
+        setDummyData(data.transactions);
+      } catch (error) {
         // console.error('Error fetching data/:', error);
       }
     };
@@ -66,7 +66,7 @@ const MyDonations = () => {
       setTimeout(() => {
         setCurrentPage(currentPage + 1);
         setLoading(false);
-      }, 1000); // Simulate loading for 1 second (adjust as needed)
+      }, 1000);
     }
   };
 
@@ -76,13 +76,13 @@ const MyDonations = () => {
       setTimeout(() => {
         setCurrentPage(currentPage - 1);
         setLoading(false);
-      }, 1000); // Simulate loading for 1 second (adjust as needed)
+      }, 1000); 
     }
   };
 
   return (
     <>
-      <PageBanner pagetitle="Sent Donations" background={bg} />
+      <PageBanner maintitle=" Donations" pagetitle="My Received Donations" background={bg} />
       <div style={{ textAlign: 'center', marginTop: '20px', height: '100vh', marginBottom: '30px' }}>
         {dummyData.length > 0 ? (
           <table style={{ borderCollapse: 'collapse', width: '70%', margin: 'auto' }}>
@@ -90,10 +90,10 @@ const MyDonations = () => {
               <tr>
                 <th style={cellStylethead}>Date</th>
                 <th style={cellStylethead}>Campaign</th>
-                <th style={cellStylethead}>Donation to Campaign</th>
-                <th style={cellStylethead}>Donation to Nfuse</th>
-                <th style={cellStylethead}>Donation Status</th>
+                <th style={cellStylethead}>Donation </th>
                 <th style={cellStylethead}>Donation Method</th>
+                <th style={cellStylethead}> Name</th>
+                {/* <th style={cellStylethead}> Email</th> */}
               </tr>
             </thead>
             <tbody>
@@ -102,9 +102,16 @@ const MyDonations = () => {
                   <td style={cellStyle}>{formattedDate(request.created_time)}</td>
                   <td style={cellStyle}>{request.title}</td>
                   <td style={cellStyle}>{request.amount}</td>
-                  <td style={cellStyle}>{request.system_fees}</td>
-                  <td style={cellStyle}>{request.payment_status}</td>
                   <td style={cellStyle}>{request.payment_method}</td>
+                  <td style={cellStyle}>
+  {request.user_details.firstName && request.user_details.lastName
+    ? `${request.user_details.firstName} ${request.user_details.lastName}`
+    : 'Anonymous Donation'}
+
+</td>
+                  {/* <td style={cellStyle}>
+  {request.user_details.email ? request.user_details.email : 'Anonymous Email'}
+</td> */}
                 </tr>
               ))}
             </tbody>
@@ -163,4 +170,4 @@ const cellStylethead = {
   textAlign: 'center',
 };
 
-export default MyDonations;
+export default RecivedDonations;

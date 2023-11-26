@@ -35,13 +35,13 @@ const LatestNewSlider = () => {
       pagination: { clickable: true },
       breakpoints: {
         1200: {
-          slidesPerView: 3,
+          slidesPerView: 2,
         },
         768: {
           slidesPerView: 2,
         },
         320: {
-          slidesPerView: 1,
+          slidesPerView: 2,
         },
       },
     });
@@ -51,33 +51,56 @@ const LatestNewSlider = () => {
     <>
       <div className="resize-wrapper">
         <Swiper className="recent-blog1">
-          {dataBlog.map((d, i) => (
-            <SwiperSlide key={i}>
-              <div className="dz-card style-4 " style={{ backgroundImage: 'url(' + d.image + ')' }}>
+            <SwiperSlide>
+              <div className="dz-card style-4 " style={{ backgroundImage: 'url(' + IMAGES.BlogGrid2 + ')' }}>
                 <div className="dz-info">
                   <div className="dz-meta">
                     <ul>
                       <li className="post-author">
-                        <img src={d.image2} alt="" /> By Jone Doe
+                        <img src={IMAGES.Avatar2} alt="" /> 
                       </li>
-                      <li className="post-comments">20 Comments</li>
+                      {/* <li className="post-comments">5 Comments</li> */}
                       <li className="post-date">
-                        <span className="day">20</span>
-                        <span className="month">January</span>
+                        <span className="day">24</span>
+                        <span className="month">November</span>
                       </li>
                     </ul>
                   </div>
                   <h5 className="dz-title">
-                    <Link to="/blog-details">How to keep your Body.</Link>
+                    <Link to="/blog-details">How You Can Make a Difference This December</Link>
                   </h5>
-                  <p>A wonderful serenity has taken of my entire soul, like these.</p>
+                  <p>Amidst the joyous festivities and gift-giving rituals of the holiday season, it's easy to get swept away in the whirl wind of preparations</p>
                   <Link to="/blog-details" className="btn btn-primary">
                     Read More
                   </Link>
                 </div>
               </div>
             </SwiperSlide>
-          ))}
+            <SwiperSlide>
+              <div className="dz-card style-4 " style={{ backgroundImage: 'url(' + IMAGES.BlogGrid1 + ')' }}>
+                <div className="dz-info">
+                  <div className="dz-meta">
+                    <ul>
+                      <li className="post-author">
+                        <img src={IMAGES.Avatar1} alt="" />
+                      </li>
+                      {/* <li className="post-comments">5 Comments</li> */}
+                      <li className="post-date">
+                        <span className="day">22</span>
+                        <span className="month">November</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <h5 className="dz-title">
+                    <Link to="/blog-details1">A Grateful Harvest: Giving Back on Thanksgiving</Link>
+                  </h5>
+                  <p>As the aroma of roasting turkey and the warmth of family gatherings fill the air, Thanksgiving serves as a poignant reminder to express gratitude</p>
+                  <Link to="/blog-details1" className="btn btn-primary">
+                    Read More
+                  </Link>
+                </div>
+              </div>
+            </SwiperSlide>
         </Swiper>
         <div className="swiper-btn swiper-btn-center-lr">
           <div className="swiper-button-prev btn-prev style-2" ref={navigationPrevRef}>

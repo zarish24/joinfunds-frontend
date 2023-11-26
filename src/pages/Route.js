@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState, useEffect,} from 'react';
 import {  Route, Routes, Outlet  } from 'react-router-dom';
 
 import ScrollToTop from './../layouts/ScrollToTop';
@@ -8,6 +8,7 @@ import Home from './Home';
 import Home2 from './Home2';
 import MyRequests from './MyRequests';
 import MyDonations from './MyDonations';
+import RecivedDonations from './RecivedDonations';
 import Home3 from './Home3';
 import AboutUs from './AboutUs';
 import Volunteer from './Volunteer';
@@ -33,6 +34,7 @@ import Blog from './Blog';
 import BlogGrid from './BlogGrid';
 import BlogList from './BlogList';
 import BlogDetails from './BlogDetails';
+import BlogDetails1 from './BlogDetails1';
 import ContactUs from './ContactUs';
 import ForgotPassword from './ForgotPassword';
 import Header2 from '../layouts/Header2';
@@ -72,9 +74,9 @@ function Index(){
 					<Route path='/fundraiser-detail/:id' element={<FundraiserDetail />} />
 					<Route path='/create-compaign' exact element={<CreateCompaign />} />
 					<Route path='/Edit-compaign/:id' exact element={<EditCampaign />} />
-					<Route path='/project' exact element={<Project />} />
+					<Route path='/campaigns' exact element={<Project />} />
 					<Route path='/project-categories' exact element={<ProjectCategories />} />
-					<Route path='/my-project' exact element={<MyProjects />} />
+					<Route path='/my-campaigns' exact element={<MyProjects />} />
 					<Route path='/project-sidebar' exact element={<ProjectSidebar />} />
 					<Route path='/project-story' exact element={<ProjectStory />} />
 					<Route path='/blog' exact element={<Blog />} />
@@ -83,10 +85,12 @@ function Index(){
 					<Route path='/blog-grid' exact element={<BlogGrid />} />
 					<Route path='/wallet-address' exact element={<WalletAddress />} />
 					<Route path='/my-requests' exact element={<MyRequests />} />
-					<Route path='/my-donations' exact element={<MyDonations />} />
+					<Route path='/donations' exact element={<MyDonations />} />
+					<Route path='/receiveddonations' exact element={<RecivedDonations />} />
 					<Route path='/my-balance' exact element={<MyBalance />} />
 					<Route path='/blog-list' exact element={<BlogList />} />
 					<Route path='/blog-details' exact element={<BlogDetails />} />
+					<Route path='/blog-details1' exact element={<BlogDetails1 />} />
 					<Route path='/contact-us' exact element={<ContactUs />} />
 				</Route>
 			</Routes>	
@@ -97,10 +101,30 @@ function Index(){
 } 
 
 function MainLayout(){
-	
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
+   
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+          const storedValue = localStorage.getItem('isLoggedIn');
+          const isUserLoggedIn = Boolean(storedValue);
+          setIsLoggedIn(isUserLoggedIn);
+    
+          
+          if (isUserLoggedIn) {
+            clearInterval(intervalId);
+          }
+        }, 1000); 
+    
+      
+        return () => clearInterval(intervalId);
+      }, []);
 	return (
 		<div className="page-wraper">
-			<Header2 />
+		      {isLoggedIn ? (
+        <Header2 changeStyle="header-transparent" changeLogo={true} />
+      ) : (
+        <Header changeStyle="header-transparent" changeLogo={true} />
+      )}  
 			<Outlet /> 
 			<Footer />
 		</div>

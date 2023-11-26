@@ -2,6 +2,7 @@ import React, { useState, useEffect, useReducer, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Modal } from "react-bootstrap";
 import styles from "./styles.module.scss";
+import styled from 'styled-components';
 import Google from "../assets/icons/social-login/google.svg";
 import Collapse from "react-bootstrap/Collapse";
 import { MenuListArray3 } from "./Menu";
@@ -10,7 +11,7 @@ import DonateModal from "../components/Modal/DonateModal";
 import { LoginSocialGoogle } from "reactjs-social-login";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import {
   Box,
   Typography,
@@ -20,8 +21,18 @@ import {
 } from "../../node_modules/@mui/material/index";
 import { ThreeDots } from "../../node_modules/react-loader-spinner/dist/index";
 import axios from "axios";
-
+import CitiesList from './CitiesList'
 const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
+  const [emailError, setEmailError] = useState(false);
+  const [firstNameError, setFirstNameError] = useState(false);
+  const [lastNameError, setLastNameError] = useState(false);
+  const [phoneError1, setPhoneError1] = useState(false);
+  const [mediaLinkError, setMediaLinkError] = useState(false);
+  const [passwordError1, setPasswordError1] = useState(false);
+  const [passwordError2, setPasswordError2] = useState(false);
+  const [cityError, setCityError] = useState(false);
+  const [zipError, setZipError] = useState(false);
+  const [zipErrorLength, setZipErrorLength] = useState(false);
   const [loginModal, setloginModal] = useState(false);
   const [resetModal, setResetModal] = useState(false);
   const [signupModal, setSignupModal] = useState(false);
@@ -29,8 +40,8 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
   const [FirstN, setFirstN] = useState("");
   const [LastN, setLastN] = useState("");
   const [Zip, setZip] = useState("");
-  const [country, setCountry] = useState('');
-  const [MediaLink, setMediaLink] = useState('');
+  const [country, setCountry] = useState("United States");
+  const [MediaLink, setMediaLink] = useState("");
   const [City, setCity] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
@@ -40,18 +51,31 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
   );
   const [callOnClick, setCallOnClick] = useState(true);
   const [loading, setLoading] = useState(false);
-
+  const [phoneError, setPhoneError] = useState("");
+  const [passwordError, setPasswordError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [selectedCityPostalCode, setSelectedCityPostalCode] = useState('');
 
+  // Assuming you have the CitiesList object
+  // const cities = Object.keys(CitiesList);
+  const handleCityChange = (e) => {
+    const selectedCity = e.target.value;
+
+    setCity(selectedCity);
+    // setZip(CitiesList[selectedCity]); 
+    
+    // setSelectedCityPostalCode(CitiesList[selectedCity]); 
+    setCityError(false);
+  };
   const togglePasswordVisibility = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
- 
+
   const url = process.env.REACT_APP_BACKEND_URL;
 
   useEffect(() => {
     const handleStorageChange = () => {
-      console.log("Storage changed");
+      //   console.log("Storage changed");
       setIsLoggedIn(localStorage.getItem("isLoggedIn") === "true");
     };
 
@@ -62,95 +86,273 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
     };
   }, []);
 
+  const validatePassword = (password) => {
+   
+   
+    const hasMinimumLength = password.length >= 8;
+
+    
+    const hasCapitalLetter = /[A-Z]/.test(password);
+
+  
+    const hasSpecialCharacter = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+    
+    const hasNumber = /\d/.test(password);
+
+    return hasMinimumLength && hasCapitalLetter && hasSpecialCharacter && hasNumber;
+  };
+
+  const handlePasswordChange = (e) => {
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+    setPasswordError('');
+    if(e.target.value.length > 0){
+      setPasswordError1(false);
+      setPasswordError2(false);
+    }
+  };
+
+ 
+ 
+  const handlePhoneChange = (e) => {
+    const value = e.target.value.replace(/\D/g, '');
+    const phoneRegex = /^\d{10}$/;
+    if(value.length <= 10){
+      setPhone(value);
+      setPhoneError1(false);
+    }
+    if(e.target.value.length > 0){
+      setPhoneError1(false);
+    }
+  };
+
+
+
+
   const nav = useNavigate();
   const formSubmit = async (e, apiEndpoint) => {
+    // console.log('formSubmitformSubmitformSubmitformSubmitformSubmitformSubmitformSubmit');
+    // console.log('Email', email.length);
+    // console.log('FirstN', FirstN.length);
+    // console.log('LastN', LastN.length);
+    // console.log('MediaLink', MediaLink.length);
+    // console.log('password', password.length);
+    // console.log('City', City.length);
     e.preventDefault();
-    console.log("urllllllllllllllllllllll",e);
-    let data = {
-      email: email,
-      password: password,
-      firstName: FirstN,
-      lastName: LastN,
-      country: country,
-      city: City,
-      zipcode: Zip,
-      phoneNumber: `+${phone}`,
-      socialMediaProfile: MediaLink,
-    };
     
-    if (apiEndpoint === "api/user/login") {
-      data = {
+   
+ 
+      let data = {
         email: email,
         password: password,
+        firstName: FirstN,
+        lastName: LastN,
+        country: country,
+        city: City,
+        zipcode: Zip,
+        phoneNumber: phone,
+        socialMediaProfile: MediaLink,
       };
-    }
-    if (apiEndpoint === "api/user/sendForgetEmail") {
-      data.email = email;
-    } else {
-      data.email = email;
-      data.password = password;
-    }
-    const response = await axios
-      .post(`${process.env.REACT_APP_BACKEND_URL}/${apiEndpoint}`, data)
-      .then((res) => {
-        if (res.status === 200 || res.status === 201) {
-          setEmail("");
-          setPassword("");
-          setSignupModal(false);
-          console.log("res rsgister", res);
-          console.log("res res.data.message", res.data);
-          toast.success(
-            res?.data?.data?.message
-              ? res?.data?.data?.message
-              : res?.data?.message
-          );
-          // Store user information in local storage
-          localStorage.setItem(
-            "user",
-            JSON.stringify({
-              _id: res?.data?.user?._id,
-              // city: res?.data?.user?.city,
-              // country: res?.data?.user?.country,
-              // phone: res?.data?.user?.phoneNumber,
-              // link: res?.data?.user?.socialMediaProfile,
-              // zip: res?.data?.user?.zipcode,
-              // firstName: res?.data?.user?.firstName,
-              // lastName: res?.data?.user?.lastName,
-              // email: res?.data?.user?.email,
-              // role: res?.data?.user?.role,
-              // profileImage: res?.data?.user?.profileImage,
-              token: res?.data?.token,
-            })
-          );
-          if (loginModal === true) {
-            localStorage.setItem("isLoggedIn", "true");
-            setIsLoggedIn(true); 
-            setSignupModal(false);
-            // toast.success(
-            //   res?.data?.data?.message
-            //     ? res?.data?.data?.message
-            //     : res?.data?.message
-            // );
-            console.log("function-called", true);
-            setloginModal(false);
-            setSignupModal(false);
-            navigate("/");
-          } else {
-            console.log("function-called", false);
-            setloginModal(true);
+     
+        if (apiEndpoint === "api/user/register") {
+          // Validation for registration
+          if (FirstN.length === 0) {
+            setFirstNameError(true);
+            return;
+          } 
+        
+          if (LastN.length === 0) {
+            setLastNameError(true);
+            return;
+          } 
+          if (email.length === 0) {
+            setEmailError(true);
+            return;
+          } 
+          const validateAmericanPhoneNumber = (phoneNumber) => {
+            const numericValue = phoneNumber.replace(/\D/g, '');
+            
+              return /^(\d{3}-\d{3}-\d{4}|\d{10})$/.test(numericValue);
+            };
+          
+            if (!validateAmericanPhoneNumber(phone)) {
+              // toast.error('Please enter a valid American phone number.');
+              setPhoneError1(true);
+              return;
+            }
+    
+        
+          
+        
+          if (phone.length === 0 || !validateAmericanPhoneNumber(phone)) {
+            setPhoneError1(true);
+            return;
           }
-        } else {
-          toast.error("Authentication failed. Please check your credentials.");
+   
+        
+          if (password.length === 0 || !validatePassword(password)) {
+            setPasswordError1(true);
+            return;
+          }
+          if (Zip.length !== 6) {
+            setZipErrorLength(true);
+            return;
+          }
+        
+          if (City.length === 0) {
+            setCityError(true);
+            return;
+          }
+        
+       
+      
+        // Validate the password
+        if (!validatePassword(password)) {
+          setPasswordError2(true);
+          return;
         }
-      })
-      .catch((e) => {
-        toast.error(
-          e?.response?.data?.message
-            ? e?.response?.data?.message
-            : e?.response?.data
-        );
-      });
-  };
+        data = {
+          email: email,
+          password: password,
+          firstName: FirstN,
+          lastName: LastN,
+          country: country,
+          city: City,
+          zipcode: Zip,
+          phoneNumber: phone,
+          socialMediaProfile: MediaLink,
+        };
+      }else{
+        const response = await axios
+        .post(`${process.env.REACT_APP_BACKEND_URL}/${apiEndpoint}`, data)
+        .then((res) => {
+
+          if (res.status === 200 || res.status === 201) {
+            setSignupModal(false);
+            setEmail("");
+            setPassword("");
+            setEmail("");
+            setFirstN("");
+            setLastN("");
+            setZip("");
+            setCountry("United States");
+            setMediaLink("");
+            setCity("");
+            setPassword("");
+            setPhone("");
+            
+            toast.success(
+              res?.data?.data?.message
+                ? res?.data?.data?.message
+                : res?.data?.message
+            );
+            // Store user information in local storage
+            localStorage.setItem(
+              "user",
+              JSON.stringify({
+                _id: res?.data?.user?._id,
+                token: res?.data?.token,
+              })
+            );
+            // if (loginModal === true) {
+            //   localStorage.setItem("isLoggedIn", "true");
+            //   setIsLoggedIn(true);
+            //   setSignupModal(false);
+            //   setloginModal(false);
+            //   setSignupModal(false);
+            //   navigate("/");
+            // } else {
+            //   //   console.log("function-called", false);
+            //   setloginModal(true);
+            // }
+          } 
+          // else {
+          //   toast.error("Authentication failed. Please check your credentials.");
+          // }
+        })
+        .catch((e) => {
+         
+          toast.error(
+            e?.response?.data?.message
+              ? e?.response?.data?.message
+              : e?.response?.data,{
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 3000, // Close the toast after 3000 milliseconds (3 seconds)
+              }
+          );
+         
+        });
+      }
+      if (apiEndpoint === "api/user/login") {
+        data = {
+          email: email,
+          password: password,
+        };
+      }
+      if (apiEndpoint === "api/user/sendForgetEmail") {
+        data.email = email;
+      } else {
+        data.email = email;
+        data.password = password;
+      }
+    
+      const response = await axios
+        .post(`${process.env.REACT_APP_BACKEND_URL}/${apiEndpoint}`, data)
+        .then((res) => {
+          if (res.status === 200 || res.status === 201) {
+            setSignupModal(false);
+            setEmail("");
+            setPassword("");
+            setEmail("");
+            setFirstN("");
+            setLastN("");
+            setZip("");
+            setCountry("United States");
+            setMediaLink("");
+            setCity("");
+            setPassword("");
+            setPhone("");
+            toast.success(
+              res?.data?.data?.message
+                ? res?.data?.data?.message
+                : res?.data?.message
+            );
+            // Store user information in local storage
+            localStorage.setItem(
+              "user",
+              JSON.stringify({
+                _id: res?.data?.user?._id,
+                token: res?.data?.token,
+              })
+            );
+            if (loginModal === true) {
+              localStorage.setItem("isLoggedIn", "true");
+              setIsLoggedIn(true);
+              setSignupModal(false);
+              setloginModal(false);
+              setSignupModal(false);
+              navigate("/");
+            } 
+            else {
+              //   console.log("function-called", false);
+              setloginModal(true);
+            }
+          } 
+          // else {
+          //   toast.error("Authentication failed. Please check your credentials.");
+          // }
+        })
+        .catch((e) => {
+         
+          toast.error(
+            e?.response?.data?.message
+              ? e?.response?.data?.message
+              : e?.response?.data
+          );
+        });
+    }   
+  
 
   /* for sticky header */
   const [headerFix, setheaderFix] = useState(false);
@@ -204,16 +406,13 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
     <>
       <header className={`site-header mo-left header style-2 ${changeStyle}`}>
         <div
-          className={`sticky-header main-bar-wraper navbar-expand-lg ${
-            headerFix ? "is-fixed" : ""
-          }`}
-        >
+          className="sticky-header main-bar-wraper navbar-expand-lg is-fixed">
           <div className="main-bar clearfix ">
             <div className="container-fluid clearfix">
               {changeLogo ? (
                 <>
                   <div className="logo-header mostion logo-dark">
-                    <Link to={"/index-3"}>
+                    <Link to={"/"}>
                       <img
                         src={IMAGES.logo3}
                         alt=""
@@ -222,7 +421,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                     </Link>
                   </div>
                   <div className="logo-header mostion logo-light">
-                    <Link to={"/index-3"}>
+                    <Link to={"/"}>
                       <img
                         src={IMAGES.logo3}
                         style={{ height: "60px", width: "112px" }}
@@ -396,7 +595,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                       );
                     }
                   })}
-                  {console.log("log", isLoggedIn)}
+                  {/* {//   console.log("log", isLoggedIn)} */}
                   {!isLoggedIn && (
                     <>
                       {/* <li>
@@ -590,17 +789,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
               Login
             </button>
           </div>
-          {/* <div className="form-group">
-            <Link to={"#"} className="btn facebook btn-block">
-              <i className="fa-brands fa-facebook-f m-r10"></i>Log in with
-              Facebook
-            </Link>
-          </div> */}
-          {/* <div className="form-group">
-            <Link to={"#"} className="btn google-plus btn-block">
-              <i className="fa-brands fa-google m-r10"></i>Log in with Google
-            </Link>
-          </div> */}
+  
           <Box className={styles.loginSocial}>
             {/* ---Social-Login with Google */}
             {callOnClick ? (
@@ -619,7 +808,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                     )
                     .then(async (res) => {
                       if (res.status === 200 || res.status === 201) {
-                        console.log("social-data", res);
+                        //   console.log("social-data", res);
                         localStorage.setItem(
                           `${res.data.data.doc.role}`,
                           JSON.stringify({
@@ -639,7 +828,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                         //     navigate('/admin');
                         // }
                         //  else {
-                        console.log("resres", res);
+                        //   console.log("resres", res);
                         if (res.data.data.doc.role === "user") {
                           localStorage.setItem("isLoggedIn", "true");
                           setIsLoggedIn(true); // Update the state immediately.
@@ -716,13 +905,19 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                   // }, 2500);
                 }}
               >
-                <img loading="lazy" src={Google} alt="google" />
+               <img
+                    loading="lazy"
+                    src={Google}
+                    alt="google"
+                    style={{ marginRight: "8px" }}
+                  />
+                Login with Google
               </LoginSocialGoogle>
             ) : null}
           </Box>
           <div className="sign-text">
-            <span>Sign Up
-              Don't have a Crowdfunding account?
+            <span>
+              Sign Up Don't have a Crowdfunding account?
               <Link
                 to={"#"}
                 className="btn-link collapsed"
@@ -786,15 +981,19 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
         size="lg"
         centered
       >
-      
         <Modal.Header
           className="d-flex justify-content-center align-items-center "
-          style={{ backgroundColor: "rgb(27, 130, 113)" }}
+          style={{ backgroundColor: "#002768" }}
         >
-          <h4 className=" text-center " style={{ Color: "#fff" }}>Sign Up Your Account</h4>
+          <h4 className="text-center" style={{ color: "white" }}>
+            Sign Up 
+          </h4>
         </Modal.Header>
         <Modal.Body className="modal-body">
-          <form onSubmit={(e) => formSubmit(e, "api/user/register")} style={{ display: "grid", gap: "10px" }}>
+          <form
+            onSubmit={(e) => formSubmit(e, "api/user/register")}
+            style={{ display: "grid", gap: "10px" }}
+          >
             <div
               style={{
                 display: "grid",
@@ -810,7 +1009,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                 }}
               >
                 <label>
-                  First Name
+                  First Name<span className="text-danger">*</span>
                   <input
                     type="text"
                     value={FirstN}
@@ -818,11 +1017,20 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                       width: "100%",
                       padding: "2px",
                       borderRadius: "5px",
-                      border: "2px solid #ccc",
+                      border: `2px solid ${firstNameError ? 'red' : '#ccc'}`, 
+
                     }}
-                    onChange={(e) => setFirstN(e.target.value)}
-                    required
+                    onChange={(e) => {
+                      setFirstN(e.target.value);
+                      if(e.target.value.length > 0){
+                        setFirstNameError(false);
+                      }
+                    }}
+                    
                   />
+                  {firstNameError && (
+                    <Error className="input feedback">First Name is required</Error>
+                  )}
                 </label>
               </div>
               <div
@@ -833,7 +1041,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                 }}
               >
                 <label>
-                  Last Name
+                  Last Name<span className="text-danger">*</span>
                   <input
                     type="text"
                     value={LastN}
@@ -841,11 +1049,19 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                       width: "100%",
                       padding: "2px",
                       borderRadius: "5px",
-                      border: "2px solid #ccc",
+                      border: `2px solid ${lastNameError ? 'red' : '#ccc'}`, 
+
                     }}
-                    onChange={(e) => setLastN(e.target.value)}
-                    required
+                    onChange={(e) => {
+                      setLastN(e.target.value);
+                      if(e.target.value.length > 0){
+                        setLastNameError(false);
+                      }
+                    }}
                   />
+                  {lastNameError && (
+                    <Error className="input feedback">Last Name is required</Error>
+                  )}
                 </label>
               </div>
             </div>
@@ -865,7 +1081,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                 }}
               >
                 <label>
-                  Email
+                  Email<span className="text-danger">*</span>
                   <input
                     type="email"
                     value={email}
@@ -873,11 +1089,19 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                       width: "100%",
                       padding: "2px",
                       borderRadius: "5px",
-                      border: "2px solid #ccc",
+                      border: `2px solid ${emailError ? 'red' : '#ccc'}`, 
+
                     }}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      if(e.target.value.length > 0){
+                        setEmailError(false);
+                      }
+                    }}
                   />
+                  {emailError && (
+                    <Error className="input feedback">Email is required</Error>
+                  )}
                 </label>
               </div>
               <div
@@ -887,98 +1111,29 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                   gap: "10px",
                 }}
               >
-                <label>
-                  Phone
-                  <input
-                    type="text"
-                    value={phone}
-                    style={{
-                      width: "100%",
-                      padding: "2px",
-                      borderRadius: "5px",
-                      border: "2px solid #ccc",
-                    }}
-                    onChange={(e) => setPhone(e.target.value)}
-                    required
-                  />
-                </label>
+
+<label>
+                Country<span className="text-danger">*</span>
+                <select
+        value={country}
+        // onChange={(e) => setCity(e.target.value)}
+        onChange={(e) => setCountry(e.target.value)}
+        style={{
+          width: "100%",
+          padding: "5px",
+          borderRadius: "5px",
+          border: "2px solid #ccc",
+        }}
+      >
+        <option value="United States" >USA</option>
+      </select>
+              </label>
+
+              
+  
               </div>
             </div>
 
-            <div
-  style={{
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr 1fr", 
-    gap: "10px",
-  }}
->
-  <label>
-    Password
- 
-    <input
-  
-      type={showPassword ? 'text' : 'password'}
-      value={password}
-      onChange={(e) => setPassword(e.target.value)}
-      style={{
-        width: 'calc(100% - 30px)',
-        padding: '2px',
-        borderRadius: '5px',
-        border: '2px solid #ccc',
-        marginRight: '30px',
-      }}
-      required
-    />
-     <button
-        type="button"
-        onClick={togglePasswordVisibility}
-        style={{
-          position: 'relative',
-    right: '8px',
-    top: '-37%',
-    left: '75%',
-    /* transform: translateY(-2%), */
-    border: 'none',
-    background: 'transparent',
-    cursor: 'pointer',
-        }}
-      >
-        {showPassword ? <FaEyeSlash /> : <FaEye />}
-      </button>
-  </label>
-  
-  <label>
-    City
-    <input
-      type="text"
-      value={City}
-      onChange={(e) => setCity(e.target.value)}
-      style={{
-        width: "100%",
-        padding: "2px",
-        borderRadius: "5px",
-        border: "2px solid #ccc",
-      }}
-      required
-    />
-  </label>
-  
-  <label>
-  Zip Code
-    <input
-      type="text"
-      value={Zip}
-      onChange={(e) => setZip(e.target.value)}
-      style={{
-        width: "100%",
-        padding: "2px",
-        borderRadius: "5px",
-        border: "2px solid #ccc",
-      }}
-      required
-    />
-  </label>
-</div>
 
             <div
               style={{
@@ -987,37 +1142,47 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                 gap: "10px",
               }}
             >
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr",
-                  gap: "10px",
-                }}
-              >
-                <label>
-                  Country:
-                  <div style={{ display: "flex", flexDirection: "column" }}>
-                    <select
-                      value={country}
-                      style={{
-                        padding: "2px",
-                        borderRadius: "5px",
-                        border: "2px solid #ccc",
-                      }}
-                      onChange={(e) => setCountry(e.target.value)}
-                      required
-                    >
-                      <option value="" disabled>
-                        Select a country
-                      </option>
-                      <option value="USA">United States</option>
-                      <option value="CAN">Canada</option>
-                      {/* Add more country options as needed */}
-                    </select>
-                  </div>
-                </label>
-              </div>
+              
+              <label>Phone Number<span className="text-danger">*</span>
+                        <div style={{ display: "flex" }}>
+                            <div className="input-group-prepend">
+                                <div 
+                                    className="input-group-text text-white"
+                                    style={{
+                                    background: '#adadad',
+                                    borderTopLeftRadius: "5px",
+                                    borderBottomLeftRadius: "5px",
+                                    borderTopRightRadius: "0px",
+                                    borderBottomRightRadius: "0px",
+          border: `2px solid ${phoneError1 ? 'red' : '#ccc'}`, 
 
+                                    padding: "5px 0px",
+                                    }}
+                                >&nbsp; &nbsp; +1&nbsp; &nbsp; </div>
+                            </div>
+                            <input
+                                type="tel"
+                                placeholder="   111-222-3456"
+                                value={phone}
+                                onChange={handlePhoneChange}
+                                style={{
+                                    width: "100%",
+                                    padding: "0px 6px",
+                                    // height: "5.6vh",
+                                    border: "2px solid #ccc",
+                                    borderTopLeftRadius: "0px",
+                                    borderBottomLeftRadius: "0px",
+                                    borderTopRightRadius: "5px",
+                                    borderBottomRightRadius: "5px",
+                                    border: `2px solid ${phoneError1 ? 'red' : '#ccc'}`, 
+                                }}
+                            />
+                        </div>
+                        {phoneError1 && (
+                            <Error className="input feedback">Please enter a valid American Phone Number</Error>
+                          )}
+                        </label>  
+              
               <div
                 style={{
                   display: "grid",
@@ -1031,7 +1196,12 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                     type="text"
                     // placeholder="Enter your social media profile link"
                     value={MediaLink}
-                    onChange={(e) => setMediaLink(e.target.value)}
+                    onChange={(e) => {
+                      setMediaLink(e.target.value);
+                      if(e.target.value.length > 0){
+                        setMediaLinkError(false);
+                      }
+                    }}
                     // onChange={handleSocialMediaLinkChange}
                     style={{
                       width: "100%",
@@ -1039,118 +1209,270 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                       borderRadius: "5px",
                       border: "2px solid #ccc",
                     }}
-                    required
+               
                   />
+                  {/* {mediaLinkError && (
+                    <Error className="input feedback">Social Media Link is required</Error>
+                  )} */}
                   {/* Optionally, you can display the entered link */}
                   {/* {socialMediaLink && <p>Entered Social Media Link: {socialMediaLink}</p>} */}
                 </label>
               </div>
             </div>
 
-            {/* <div
+
+            <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "1fr 1fr",
+                gridTemplateColumns: "2fr 1fr 1fr",
                 gap: "10px",
               }}
             >
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr ",
-                  gap: "10px",
-                }}
-              >
-                <label>
-                  City
-                  <input
-                    type="text"
-                    // value={email}
-                    style={{
-                      width: "100%",
-                      padding: "2px",
-                      borderRadius: "5px",
-                      border: "2px solid #ccc",
-                    }}
-                    // onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                </label>
+              <label>
+                Password<span className="text-danger">*</span>
+               
+                <input
+                className='mb-0'
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={handlePasswordChange}
+                  style={{
+                    width: "calc(100% - 10px)",
+                    padding: "2px",
+                    borderRadius: "5px",
+                    border: `2px solid ${passwordError1 ||passwordError2  ? 'red' : '#ccc'}`, 
+
+                    marginRight: "30px",
+                    marginBotttom: "0px",
+                    // boxShadow: "rgba(0, 0, 0, 0.4) 0px 2px 5px",
+                  }}
+                />
+                  {passwordError1 && (
+                    <Error className="input feedback">Password is required</Error>
+                  )}
+                  {passwordError2 && (
+                    <Error className="input feedback">Password must be 8 characters long and include a capital letter, a special character, and a number</Error>
+                  )}
+                <button
+                  type="button"
+                  onClick={togglePasswordVisibility}
+                  style={{
+                    position: "relative",
+                    right: "8px",
+                    top: passwordError1 ? "-50%" : "-36%",
+                    left: "91%",
+                    border: "none",
+                    background: "transparent",
+                    cursor: "pointer",
+                  }}
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </button>
+              </label>
+              <label>
+                State<span className="text-danger">*</span>
+                <select
+        value={City}
+        // onChange={(e) => setCity(e.target.value)}
+        onChange={handleCityChange}
+        style={{
+          width: "100%",
+          padding: "5px",
+          borderRadius: "5px",
+          border: `2px solid ${cityError ? 'red' : '#ccc'}`, 
+        }}
+      >
+        <option value="" disabled>Select a State</option>
+        {Object.keys(CitiesList).map((cityName) => (
+            <option key={cityName} value={cityName}>
+              {cityName}
+            </option>
+          ))}
+      </select>  
+                  {cityError && (
+                    <Error className="input feedback">State is required</Error>
+                  )}
+
+              </label>
+
+              <label>
+                Postal Code<span className="text-danger">*</span>
+                <input
+  type="number"
+  value={Zip}
+  onChange={(e) => {
+    const enteredValue = e.target.value;
+
+    if (/^\d*$/.test(enteredValue) && enteredValue.length <= 6) {
+      setZip(enteredValue);
+      setZipError(false);
+    } else {
+      setZipErrorLength(false);
+    }
+  }}
+  style={{
+    width: "100%",
+    padding: "2px",
+    borderRadius: "5px",
+    border: `2px solid ${zipError ? 'red' : '#ccc'}`, 
+  }}
+/>  {zipErrorLength && (
+                    <Error className="input feedback">Postal Code Must be 6 Digits </Error>
+                  )}
+                  {zipError && (
+                    <Error className="input feedback">Postal Code is required</Error>
+                  )}
+              </label>
+            </div>
+
+      
+            <div className="d-flex justify-content-center">
+              <div className="w-50">
+                <button
+                  type="submit"
+                  className="btn btn-outline-primary btn-block p-2 mx-auto mb-0"
+                >
+                  Signup
+                </button>
               </div>
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr ",
-                  gap: "10px",
-                }}
-              >
-                <label>
-                  Zip Code
-                  <input
-                    type="number"
-                    // value={email}
-                    style={{
-                      width: "100%",
-                      padding: "2px",
-                      borderRadius: "5px",
-                      border: "2px solid #ccc",
-                    }}
-                    // onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                </label>
-              </div>
-            </div> */}
-<div className='d-flex justify-content-center'>
-  
-  <div className="w-50">
-    <button
-      type="submit"
-      className="btn btn-outline-primary btn-block p-2 mx-auto mb-0"
-   
-    >
-      Signup
-    </button>
-  </div>
-</div>
+            </div>
           </form>
         </Modal.Body>
         <Modal.Footer
           style={{ display: "flex", justifyContent: "space-between" }}
         >
-          <Box className={styles.loginSocial}>
+              <Box className={styles.loginSocial}>
+            {/* ---Social-Login with Google */}
             {callOnClick ? (
               <LoginSocialGoogle
                 sx={{ pr: 1 }}
-                client_id="1085137082696-c6a9ta6uk6gn30vf7vmsg8c066vmhl7i.apps.googleusercontent.com"
+                client_id={
+                  "1085137082696-c6a9ta6uk6gn30vf7vmsg8c066vmhl7i.apps.googleusercontent.com"
+                }
                 scope="openid profile email"
                 discoveryDocs="claims_supported"
                 access_type="offline"
                 onResolve={async ({ data }) => {
-                  // ... your existing logic
+                  let checkUser = await axios
+                    .get(
+                      `${process.env.REACT_APP_BACKEND_URL}/api/user/getSocialAppUserData/${data.email}`
+                    )
+                    .then(async (res) => {
+                      if (res.status === 200 || res.status === 201) {
+                        //   console.log("social-data", res);
+                        localStorage.setItem(
+                          `${res.data.data.doc.role}`,
+                          JSON.stringify({
+                            _id: res.data.data.doc._id,
+                            firstName: res.data.data.doc.firstName,
+                            lastName: res.data.data.doc.lastName,
+                            email: res.data.data.doc.email,
+                            role: res.data.data.doc.role,
+                            socialLogin: "User is Login with Google",
+                            token: res.data.data.doc.token,
+                            profileImage: res.data.data.doc.profileImage
+                              ? res.data.data.doc.profileImage
+                              : "",
+                          })
+                        );
+                        // if (res.data.data.doc.role === 'admin') {
+                        //     navigate('/admin');
+                        // }
+                        //  else {
+                        //   console.log("resres", res);
+                        if (res.data.data.doc.role === "user") {
+                          localStorage.setItem("isLoggedIn", "true");
+                          setIsLoggedIn(true); // Update the state immediately.
+                          setloginModal(false);
+                          // Show the alert
+                          toast.success("Login Successful!");
+
+                          navigate("/");
+                        }
+                        // }
+                      }
+                    })
+                    .catch(async (e) => {
+                      if (e.response.data === "User Not found.") {
+                        const userName = data?.name.replace(/\s/g, "");
+                        const givenValues = {
+                          username: userName,
+                          email: data?.email,
+                          profileImage: data?.picture,
+                        };
+                        await axios
+                          .post(
+                            `${process.env.REACT_APP_BACKEND_URL}/api/user/registerSocialAppUser`,
+                            givenValues
+                          )
+                          .then((res) => {
+                            if (res.status === 200 || res.status === 201) {
+                              localStorage.setItem(
+                                "user",
+                                JSON.stringify({
+                                  _id: res.data.data.user._id,
+                                  firstName: res.data.data.user.firstName,
+                                  lastName: res.data.data.user.lastName,
+                                  email: res.data.data.user.email,
+                                  role: res.data.data.user.role,
+                                  socialLogin: "User is Login with Google",
+                                  token: res.data.data.token,
+                                  profileImage: res.data.data.user.profileImage
+                                    ? res.data.data.user.profileImage
+                                    : "",
+                                })
+                              );
+                              localStorage.setItem("isLoggedIn", "true");
+                              setIsLoggedIn(true); // Update the state immediately.
+                              setloginModal(false);
+                              // Show the alert
+                              toast.success("Login Successful!");
+                              navigate("/");
+                              // setLoading(false);
+                              // setAlert(true);
+                              // setTimeout(() => {
+                              //     navigate('/user');
+                              // }, 1000);
+                            }
+                          })
+                          .catch((e) => {
+                            toast.success("UserName or Email Already Exists");
+                            // setLoading(false);
+                            // setErrorMessage('UserName or Email Already Exists');
+                            // setErrorAlert(true);
+                            // setTimeout(() => {
+                            //     setErrorAlert(false);
+                            // }, 2500);
+                          });
+                      }
+                    });
                 }}
                 onReject={(err) => {
                   toast.success("Enter correct email to login");
+                  // setErrorMessage('Enter correct email to login');
+                  // setErrorAlert(true);
+                  // setTimeout(() => {
+                  //     setErrorAlert(false);
+                  // }, 2500);
                 }}
               >
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    cursor: "pointer",
-                  }}
-                >
-                  <img
+               <img
                     loading="lazy"
                     src={Google}
                     alt="google"
                     style={{ marginRight: "8px" }}
                   />
-                  Sign up with Google
-                </div>
+                  Sign Up with Google
               </LoginSocialGoogle>
             ) : null}
           </Box>
+            {/* <img
+              loading="lazy"
+              src={Google}
+              alt="google"
+              style={{ marginRight: "8px" }}
+            />
+            Sign up with Google */}
 
           <div className="sign-text">
             <span>
@@ -1174,3 +1496,11 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
 };
 
 export default Header;
+
+const Error = styled.div`
+ 
+color: #e66e6e;
+padding: 2px 0px;
+font-size: 12px;
+cursor:none;
+`;
