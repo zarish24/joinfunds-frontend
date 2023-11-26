@@ -404,7 +404,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
 
   return (
     <>
-      <header className={`site-header mo-left header style-2 ${changeStyle}`}>
+      <header className={`site-header mo-left header style-2  ${changeStyle}`}>
         <div
           className="sticky-header main-bar-wraper navbar-expand-lg is-fixed">
           <div className="main-bar clearfix ">
@@ -454,7 +454,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
               </button>
 
               <div
-                className={`header-nav navbar-collapse collapse justify-content-start ${
+                className={`header-nav navbar-collapse collapse justify-content-end ${
                   sidebarOpen ? "show" : ""
                 }`}
               >

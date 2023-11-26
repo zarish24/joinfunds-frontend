@@ -112,8 +112,8 @@ const TrendingSlider2 = (props) => {
                                 {/* <p>Alienum phaedrum torquatos nec eu, vis detraxit periculis ex..</p>  */}
                                 <div className="progress-bx style-2">
                                     <div className="progress">
-                                        <div className="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style={{width:d?.progres}}>
-                                            <span className="progress-value">{d.progres}</span>
+                                        <div className="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style={{width:d?.progress}}>
+                                            <span className="progress-value">{d.progress}</span>
                                         </div>
                                     </div>
                                     <ul className="progress-tag">
