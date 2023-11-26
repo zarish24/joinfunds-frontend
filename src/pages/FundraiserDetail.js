@@ -127,6 +127,7 @@ const closeModal = () => {
   const [donationName, setDonationName] = useState("");        
   const [comment, setComment] = useState("");        
   const [followCampaign, setFollowCampaign] = useState(false);              
+  const [KeepAnonymus, setKeepAnonymus] = useState(false);              
   const [nfuseAnnouncments, setNfuseAnnouncments] = useState(false);      
   const [monthlySubscription, setMonthlySubscription] = useState(false);     
   const [singleDonation, setSingleDonation] = useState(true);                
@@ -238,6 +239,7 @@ const closeModal = () => {
           donationType: donationTypes,
           comment: comment,
           follow_campaign: followCampaign,
+          keepMeAnonymous:KeepAnonymus,
           nfuse_announcments: nfuseAnnouncments,
           optional_gift: gift,
         };
@@ -271,6 +273,7 @@ const closeModal = () => {
             setDonationName("");
             setComment("");
             setFollowCampaign(false);
+            setKeepAnonymus(false);
             setNfuseAnnouncments(false);
             setMonthlySubscription(false);
             setSingleDonation(true);
@@ -291,6 +294,7 @@ const closeModal = () => {
           setDonationName("");
           setComment("");
           setFollowCampaign(false);
+          setKeepAnonymus(false);
           setNfuseAnnouncments(false);
           setMonthlySubscription(false);
           setSingleDonation(true);
@@ -1521,6 +1525,7 @@ const closeModal = () => {
                   {/* <small className="text-danger">Please enter a minimum donation of USD $5</small> */}
                 </label>
               </div>
+           
             </div>
 
             <div
@@ -1603,6 +1608,7 @@ const closeModal = () => {
                 gap: "10px",
               }}
             >
+              
               <label>
                 Email<span className="text-danger">*</span>
                 <input
@@ -1721,6 +1727,7 @@ const closeModal = () => {
                   name="follow_campaign"
                   type="checkbox"
                 />
+                
               </div>
 
               <div
@@ -1758,9 +1765,27 @@ const closeModal = () => {
                 />
               </div>
               <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr ",
+                gap: "10px",
+              }}
+            >
+              <Form.Check
+                  checked={KeepAnonymus} 
+                  onChange={(e) => {
+                    setKeepAnonymus(e.target.checked);  
+                  }}    
+                  inline
+                  label="Keep Me anonymous"
+                  name="follow_campaign"
+                  type="checkbox"
+                />
+                 </div>
+              <div
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "2fr ",
+                  gridTemplateColumns: "2fr  ",
                   gap: "10px",
                 }}
               >
