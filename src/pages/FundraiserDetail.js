@@ -278,6 +278,8 @@ const closeModal = () => {
             setMonthlySubscription(false);
             setSingleDonation(true);
             setModalStripeDonate(false);
+            fetchCompgain()
+            fetchCompgaincoments()
             toast.success("Transaction has been completed successfully!");
           } else {
             setLoading(false);
@@ -612,6 +614,79 @@ const closeModal = () => {
     // }
     // Call the async function
   }, [id, paymentUpdate]);
+
+
+  const fetchCompgain = async () => {
+    try {
+      // const config = {
+      //   headers: {
+      //     Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
+      //   },
+      // }
+      const response = await axios
+        .get(
+          `${process.env.REACT_APP_BACKEND_URL}/api/compaign/getSingleCompaign/${id}`
+          // config
+        )
+        .then((res) => {
+          if (res.status === 200 || res.status === 201) {
+            // console.log("all-com", res);
+            setCampaign(res?.data?.data?.doc[0]);
+            setDonners(res?.data?.data?.allDonners);
+            setTopDonners(res?.data?.data?.topDonors);
+            const startDateString = res?.data?.data?.doc[0].start_date;
+            const endDateString = res?.data?.data?.doc[0].end_date;
+
+            calculateDaysLeft(startDateString, endDateString, (daysLeft) => {
+              if (daysLeft !== null) {
+                // console.log("daysLeft:", daysLeft);
+                setDaysLeft(daysLeft);
+              }
+            });
+          } else {
+            toast.error("Compaigns not fount due to some issue!");
+          }
+        })
+        .catch((error) => {
+          // console.log("error", error);
+          // toast.alert(error);
+        });
+      // setCampaigns(response.data); // Set the campaign data in state
+    } catch (error) {
+      toast.error("API request failed", error);
+      // console.error("A/PI request failed", error);
+    }
+  };
+  const fetchCompgaincoments = async (_id, token) => {
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
+        },
+      };
+      const response = await axios
+        .get(
+          `${process.env.REACT_APP_BACKEND_URL}/api/compaign/getCompaignComments/${_id}`,
+          config
+        )
+        .then((res) => {
+          if (res.status === 200 || res.status === 201) {
+            // console.log("allff-com", res?.data?.data);
+            setComments(res?.data?.data);
+          } else {
+            toast.error("Comments not fount due to some issue!");
+          }
+        })
+        .catch((error) => {
+          // console.log("error", error);
+          // toast.alert(error);
+        });
+      // setCampaigns(response.data); // Set the campaign data in state
+    } catch (error) {
+      toast.error("API request failed", error);
+      // console.error("API request failed", error);
+    }
+  };
   useEffect(() => {
     const fetchData = async (_id, token) => {
       try {
@@ -669,7 +744,9 @@ const closeModal = () => {
 
                   <h5>Description</h5>
                   <h2 className="title">{campaign?.subtitle}</h2>
-                  <p>{campaign?.description}</p>
+                  <p style={{ wordWrap: 'break-word' }}>
+  {campaign?.description}
+</p>
 
                   {/* // {console.log("sdds", user_id, campaign)} */}
                   {user_id !== campaign?.user_id ? (
@@ -1055,7 +1132,7 @@ const closeModal = () => {
                         <div
                           className="progress-bar progress-bar-secondary progress-bar-striped progress-bar-animated"
                           role="progressbar"
-                          style={{ width: campaign?.progres }}
+                          style={{ width: campaign?.progress }}
                         ></div>
                       </div>
                     </div>

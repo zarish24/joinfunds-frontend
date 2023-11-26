@@ -158,7 +158,7 @@ const Home3 = () => {
                                     <h2>Trending Fundraisers</h2>
                                 </div>
                                 <div class="col-lg-4 col-md-12 text-end d-none d-lg-block wow fadeInUp" data-wow-delay="0.4s">
-                                    <Link to={"/Campaigns"} class="btn btn-primary">View All Causes</Link>
+                                    <Link to={"/campaigns"} class="btn btn-primary">View All Causes</Link>
                                 </div>
                             </div>
                         </div>
@@ -185,16 +185,16 @@ const Home3 = () => {
                                         <h2>Help is <br/>Our Main Goal</h2>
                                     </div>
                                     <h4 className="font-weight-500 m-b10">We Need Your Help</h4>
-                                    <p className="m-b20">YOUR DONATION IS HELPING IMPROVE LIFE AND FREEDOM FOR INDIVIDUALS AND THE WORLD
+                                    <p className="m-b20">YOUR DONATION IS HELPING IMPROVE LIFE AND FREEDOM FOR INDIVIDUALS AND THE WORLD.
 Helping others improve their lives physically, medically or financially feels wonderful. </p>
                                     <div className="dz-about-info">
                                         <div className="row">
                                             <div className="col-lg-6 col-sm-6">
                                                 <ul className="list-check-3">
-                                                    <li>Food Donate</li>
+                                                    <li>Food Contribution</li>
                                                     <li>Medical Care</li>
-                                                    <li>Child Education</li>
-                                                    <li>Children's Charities</li>
+                                                    <li>Youth Learning</li>
+                                                    <li>Child Welfare</li>
                                                 </ul>
                                             </div>
                                             <div className="col-lg-6 col-sm-6">
@@ -202,7 +202,7 @@ Helping others improve their lives physically, medically or financially feels wo
                                                     <li>Human Care</li>
                                                     <li>Pure Water</li>
                                                     <li>Medical Facilities</li>
-                                                    <li>Pure Education</li>
+                                                    {/* <li>Pure Education</li> */}
                                                 </ul>   
                                             </div>
                                         </div>
@@ -371,9 +371,9 @@ Helping others improve their lives physically, medically or financially feels wo
                             <div class="section-head text-center m-b30 wow fadeInUp" data-wow-delay="0.2s">
                                 <h2 class="title text-capitalize">Donate to charity projects <br />around the world</h2>
                             </div>	
-                            <div class="text-center wow fadeInUp" data-wow-delay="0.4s">	
+                            {/* <div class="text-center wow fadeInUp" data-wow-delay="0.4s">	
                                 <Link to={"/become-a-fundraiser"} class="btn btn-primary">View All Feed</Link>
-                            </div>	
+                            </div>	 */}
                         </div>
                     </section>
                     {/* Section-8  end*/}

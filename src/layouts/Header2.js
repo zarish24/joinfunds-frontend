@@ -329,7 +329,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
               </button>
 
               <div
-                className={`header-nav navbar-collapse collapse justify-content-start ${
+                className={`header-nav navbar-collapse collapse justify-content-end ${
                   sidebarOpen ? "show" : ""
                 }`}
               >

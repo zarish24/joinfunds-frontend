@@ -78,7 +78,7 @@ const handleSwitchToggle = async (campaignId, checked) => {
   const user = JSON.parse(localStorage.getItem('user'));
   const token= user?.token;
   try {
-    
+    setLoading(true);
     const response = await axios.put(`${process.env.REACT_APP_BACKEND_URL}/api/compaign/publish/${campaignId}`, {
       
       headers: {
@@ -91,7 +91,8 @@ const handleSwitchToggle = async (campaignId, checked) => {
     if (response.data.status === "success") {
      toast.success(`Campaign  Published successfully`)
      props.fetchData();
-      console.log(`Campaign  Published successfully!`);
+     console.log(`Campaign  Published successfully!`);
+     setLoading(false);
     } else {
       
       console.error('Failed to update campaign:', response.statusText);

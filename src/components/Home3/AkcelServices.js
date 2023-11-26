@@ -6,10 +6,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import { SVGICON } from '../../constant/theme';
 
 const servicesBlog = [
-    {title:"Industry’s best fundraising success", icon:SVGICON.DoubleHeart },
-    {title:"Supported By 55,00,000+ Donors" , icon:SVGICON.Ring},
+    {title:"Top-tier Fundraising Achievement", icon:SVGICON.DoubleHeart },
+    {title:"National and International" , icon:SVGICON.Ring},
     {title:"Easy-To-Manage Tools To Boost Results",icon:SVGICON.HeartWindow},
-    {title:"Nfuse Get Expert Support 24/7",icon:SVGICON.HeartHelp},
+    {title:" Expert Support 24/7",icon:SVGICON.HeartHelp},
     {title:"A Dedicated Smart-Dashboard",icon:SVGICON.DollerBox},
     {title:"Receive donations via all popular payment",icon:SVGICON.HeartHome},
     {title:"International Payment Support",icon:SVGICON.ThumbDoller1},
@@ -68,7 +68,7 @@ const AkcelServices = () => {
                     <div className="content-bx style-1 bg-primary text-center">
                         <div className="inner-content">
                             <h2 className="title text-white">Newsletter</h2>
-                            <p className="text-white">Sign up for our monthly newsletter to get the latest news, volunteer opportunities.</p>
+                            <p className="text-white">Participate in our monthly newsletter to receive the latest news and exclusive opportunities..</p>
                             <form className="dzSubscribe" onSubmit={handleSubscribe}>
                                 <div className="dzSubscribeMsg text-white"></div>
                                 <input
@@ -97,7 +97,7 @@ const AkcelServices = () => {
                                 </Link>
                             </div>
                             <h3 className="title text-white">Want To Help?</h3>
-                            <p className="m-b30 text-white">Your financial support is very important for our global projects.</p>
+                            <p className="m-b30 text-white">Your financial contribution is pivotal to the success of our global initiative.</p>
                             <Link className="btn btn-light" to={"/project"}>Donate Now</Link>
                         </div>
                     </div>
