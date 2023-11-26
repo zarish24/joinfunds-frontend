@@ -8,12 +8,12 @@ const PageBanner = ({maintitle, pagetitle, background}) => {
                 <div className="container">
                     <div className="dz-bnr-inr-entry">
                         <h1>{pagetitle}</h1>
-                        <nav aria-label="breadcrumb" className="breadcrumb-row">
+                        {/* <nav aria-label="breadcrumb" className="breadcrumb-row">
                             <ul className="breadcrumb">
                                 <li className="breadcrumb-item"><Link to={"/"}>{maintitle}</Link></li>
                                 <li className="breadcrumb-item active">{pagetitle}</li>
                             </ul>
-                        </nav>
+                        </nav> */}
                     </div>
                 </div>
             </div>

@@ -47,7 +47,7 @@ const payload ={
         setDummyData(data.data);
       } catch (error) {
         // console.error("Error fetching data:", error);
-        toast.error("Payout requests not found for the user.");
+        // toast.error("Payout requests not found for the user.");
       } finally {
         setLoading(false);
       }

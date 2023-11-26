@@ -165,7 +165,7 @@ export const MenuListArray2 = [
             //     to:"/wallet-address"
             // },
             {
-                title:" Send Donations",
+                title:" Sent Donations",
                 to:"/donations"
             },
             {
@@ -353,7 +353,7 @@ export const MenuListArray3 = [
             //     to:"/wallet-address"
             // },
             {
-                title:" Send Donations",
+                title:" Sent Donations",
                 to:"/donations"
             },
          
