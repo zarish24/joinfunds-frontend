@@ -11,6 +11,7 @@ import MyDonations from './MyDonations';
 import RecivedDonations from './RecivedDonations';
 import Home3 from './Home3';
 import AboutUs from './AboutUs';
+import Dashboard from './Dashboard';
 import Volunteer from './Volunteer';
 import BecomeVolunteer from './BecomeVolunteer';
 import Faq from './Faq';
@@ -59,6 +60,7 @@ function Index(){
 				<Route  element={<MainLayout />} > 
 					<Route path='/' exact element={<Home />} />
 					<Route path='/about-us' exact element={<AboutUs />} />
+					<Route path='/my-dashboard' exact element={<Dashboard />} />
 					<Route path='/volunteer' exact element={<Volunteer />} />
 					<Route path='/become-a-volunteer' exact element={<BecomeVolunteer />} />
 					<Route path='/faq' exact element={<Faq />} />
