@@ -153,6 +153,10 @@ export const MenuListArray2 = [
         classChange:"sub-menu-down",
         content:[
             {
+                title:"My Dashboard",
+                to:"/my-dashboard"
+            },
+            {
                 title:"Profile Setting",
                 to:"/profile-setting"
             },
