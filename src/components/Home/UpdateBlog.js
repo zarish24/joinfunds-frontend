@@ -41,9 +41,9 @@ const UpdateBlog = () =>{
         <>
             <div className="inner-action overlay-primary-dark" style={{backgroundImage:"url("+ bgimage + ")"  ,backgroundSize: "cover", backgroundRepeat: "no-repeat"}}>
                 <div className="row inner-content justify-content-center">
-                    <div className="col-xl-6 col-lg-9">
+                    <div className="col-xl-8 col-lg-9">
                         <div className="section-head text-center">
-                            <h2 className="title text-white">Don’t miss our weekly updates about donations</h2>
+                            <h3 className="title text-white">Don’t miss our weekly updates </h3>
                         </div>
                         <form className="dzSubscribe" ref={form} onSubmit={handleSubscribe}>
                             <div className="dzSubscribeMsg text-white"></div>

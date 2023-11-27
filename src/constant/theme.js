@@ -35,7 +35,7 @@ export const IMAGES = {
 	Avatar5 : require('./../assets/images/avatar/avatar5.jpg'),
 	AboutPic2 : require('./../assets/images/about/pic2.jpg'),
 	AboutPic3 : require('./../assets/images/about/pic3.jpg'),
-	ProjectPic13 : require('./../assets/images/project/pic13.jpg'),
+	ProjectPic13 : require('./../assets/images/Screenshot_29.png'),
 	largePic1 : require('./../assets/images/testimonials/large/pic1.jpg'),
 	largePic2 : require('./../assets/images/testimonials/large/pic2.jpg'),
 	largePic3 : require('./../assets/images/testimonials/large/pic3.jpg'),

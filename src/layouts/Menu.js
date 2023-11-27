@@ -174,7 +174,7 @@ export const MenuListArray2 = [
             },
             {
                 title:"Received Donations ",
-                to:"/receiveddonations"
+                to:"/received-donations"
             },
             {
                 title:"My Payout Requests",

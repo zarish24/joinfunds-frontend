@@ -88,7 +88,7 @@ function Index(){
 					<Route path='/wallet-address' exact element={<WalletAddress />} />
 					<Route path='/my-requests' exact element={<MyRequests />} />
 					<Route path='/donations' exact element={<MyDonations />} />
-					<Route path='/receiveddonations' exact element={<RecivedDonations />} />
+					<Route path='/received-donations' exact element={<RecivedDonations />} />
 					<Route path='/my-balance' exact element={<MyBalance />} />
 					<Route path='/blog-list' exact element={<BlogList />} />
 					<Route path='/blog-details' exact element={<BlogDetails />} />
