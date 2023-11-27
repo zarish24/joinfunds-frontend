@@ -42,7 +42,7 @@ export const IMAGES = {
 	SliderBg1 : require('../assets/images/main-slider/slider1/slider-bg1.jpg'),
 	SliderBg2 : require('../assets/images/main-slider/slider1/slider-bg2.jpg'),
 	SliderPic1 : require('./../assets/images/main-slider/slider2/pic1.png'),
-	SliderPic2 : require('./../assets/images/main-slider/slider2/pic2.png'),
+	SliderPic2 : require('./../assets/images/WhatsApp Image 2023-11-27 at 1.29.15 AM-PhotoRoom.png-PhotoRoom.png'),
 
 
 

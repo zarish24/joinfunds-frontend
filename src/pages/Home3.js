@@ -58,6 +58,7 @@ const Home3 = () => {
     const [campaigns, setCampaigns] = useState([]);
     const [readModal,setReadModal] = useState(false);
     const [isOpen, setOpen] = useState(false);
+    const [isOpen1, setOpen1] = useState(false);
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -231,7 +232,7 @@ const Home3 = () => {
                                 <div className="col-lg-6 m-b30 wow fadeInUp" data-wow-delay="0.2s">
                                     <div className="dz-media video-bx4 rounded">
                                         <img src={IMAGES.ProjectPic13} alt="image"/>
-                                        <Link to={"https://youtu.be/CapnOV_nOxw"} className="popup-youtube vedio-btn" onClick={()=> setOpen(true)} ><i className="fa-solid fa-play" ></i></Link>
+                                        <Link to={"#"} className="popup-youtube video-btn" onClick={()=> setOpen1(true)} ><i className="fa-solid fa-play" ></i></Link>
                                     </div>
                                 </div>
                                 <div className="col-lg-6 m-b30 wow fadeInUp" data-wow-delay="0.4s">
@@ -389,8 +390,10 @@ const Home3 = () => {
                         <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
                     </div>
                 </Modal>
+                
                 {/* <ModalVideo channel='youtube' autoplay isOpen={isOpen} videoId="bdBG5VO01e0" onClose={() => setOpen(false)} /> */}
-                <ModalVideo channel='youtube'  isOpen={isOpen} videoId="bdBG5VO01e0" onClose={() => setOpen(false)} />
+                <ModalVideo channel='youtube'  isOpen={isOpen} videoId="CapnOV_nOxw" onClose={() => setOpen(false)} />
+                <ModalVideo channel='youtube'  isOpen={isOpen1} videoId="CapnOV_nOxw" onClose={() => setOpen1(false)} />
                 {/* <Link to={"#"} className={classChange} onClick={()=> setOpen(true)} ><i className="fa-solid fa-play" ></i></Link> */}
                 {/* <DonateModal /> */}
         </>

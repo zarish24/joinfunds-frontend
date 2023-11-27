@@ -454,8 +454,8 @@ const closeModal = () => {
 
   const openModalNew = async (id) => {
   
-    console.log('value value',id)
     const token = JSON.parse(localStorage.getItem("user"));
+    console.log('value value',token?.token)
     if (!token) {
       toast.error("Please Login First");
       return;
@@ -467,9 +467,13 @@ const closeModal = () => {
           Authorization: `Bearer ${token?.token}`, 
         },
       };
+      console.log('config value',config)
+
+
       const response = await axios
-      .get(
+      .post(
         `${process.env.REACT_APP_BACKEND_URL}/api/payments/makePayoutRequest/${id}`,
+        null,
         config
       )      
         .then((res) => {
