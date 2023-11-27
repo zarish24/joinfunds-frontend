@@ -82,7 +82,7 @@ console.log('searchText',searchText)
       fetchData(user._id,user.token);
     }
     // Call the async function
-  }, [currentPage,page,campaignType,campaignStatus,searchText]);
+  }, [currentPage,page,campaignType,campaignStatus,CategoryId,searchText]);
 
 
 

@@ -10,7 +10,7 @@ const FooterCommonData = ({logoImage, iconStyle}) => {
     <Link to={"/"}>
         <img src={logoImage} alt="" style={{ height: '105px', width: '150px' }} />
     </Link>
-                    <p>Nfuse is a donation platform with a simple mission of supporting freedom-loving people and projects. We support freedom for everyone. </p>
+                    <p style={{align:'justify'}}>Nfuse is a donation platform with a simple mission of supporting freedom-loving people and projects. We support freedom for everyone. </p>
 </div>
                     <div className="dz-social-icon style-1">
                         <ul>
@@ -27,11 +27,11 @@ const FooterCommonData = ({logoImage, iconStyle}) => {
                     <h5 className="footer-title">Resources</h5>
                     <ul>
                         {/* <li><Link to={"/how-it-works"}>How It Works</Link></li> */}
-                        <li><Link to={"/Linksk-a-question"}>Ask A Question</Link></li>
-                        {/* <li><Link to={"/project-story"}>Project Story</Link></li> */}
+                        <li><Link to={"#"}>Ask A Question</Link></li>
+                        <li><Link to={"#"}>Help center</Link></li>
                         {/* to={"/mission"} */}
-                        <li><Link >Mission-Nfuse is here to help freedom loving people and projects.</Link></li>
-                        {/* <li><Link to={"/certificates"}>Certificates</Link></li> */}
+                        <li><Link >Blog</Link></li>
+                        <li><Link to={"#"}>Careers</Link></li>
                         <li><Link to={"/terms-and-condition"}>Terms And Condition</Link></li>
                     </ul>
                 </div>
@@ -46,6 +46,7 @@ const FooterCommonData = ({logoImage, iconStyle}) => {
                         {/* <li><Link to={"/project"}>Project</Link></li> */}
                         {/* <li><Link to={"/contact-us"}>Contact Us</Link></li> */}
                         <li><Link to={"/faq"}>FAQ</Link></li>
+                        <li><Link to={"/contact-us"}>Contact us </Link></li>
                     </ul>
                 </div>
             </div>

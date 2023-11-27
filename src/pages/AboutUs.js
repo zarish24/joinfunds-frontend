@@ -136,13 +136,13 @@ const AboutUs = () => {
           <div className="container">
             <div className="section-head text-center">
               {/* <h5 className="sub-title">CATEGORIES</h5> */}
-              <h2 className="m-b20">Why choose Nfuse</h2>
+              <h2 className="m-b20">Why choose Nfuse?</h2>
               <p>
-              We are certainly not the only donation platform.  However, we are the platform with freedom at our core.  It’s ingrained in everything we do here at Nfuse.  We understand that Freedom is Macro meaning the Constitution, First Amendment, 2nd Amendment , etc… and we understand that Freedom is also Micro- individualized and personal.  We are here to support all kinds of freedom because we want the world to gain liberty and to live in peace; be it a personalized improvement or a bigger matter.
+              The pursuit of freedom for individuals is a constitutional and universal aspiration. This spirit of inspiration, when combined with the ingrained human desire to help others, can make a real difference in the community. If you're interested in nurturing and embracing your instinct for freedom, we invite you to partner with us in meaningful ways that ensure your fundraising efforts have a far-reaching, lasting impact. Join us, get "Nfused," and live Free!
               </p>
-              <p>
+              {/* <p>
               FIND YOUR PURPOSE.  Get Nufsed.  Live free.
-              </p>
+              </p> */}
             </div>
             <div className="row" hidden>
               {wrapperBlog.map((item, ind) => (

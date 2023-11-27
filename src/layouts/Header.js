@@ -131,14 +131,10 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
 
 
   const nav = useNavigate();
+
+
   const formSubmit = async (e, apiEndpoint) => {
-    // console.log('formSubmitformSubmitformSubmitformSubmitformSubmitformSubmitformSubmit');
-    // console.log('Email', email.length);
-    // console.log('FirstN', FirstN.length);
-    // console.log('LastN', LastN.length);
-    // console.log('MediaLink', MediaLink.length);
-    // console.log('password', password.length);
-    // console.log('City', City.length);
+ 
     e.preventDefault();
     
    
@@ -156,7 +152,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
       };
      
         if (apiEndpoint === "api/user/register") {
-          // Validation for registration
+      
           if (FirstN.length === 0) {
             setFirstNameError(true);
             return;
@@ -177,13 +173,9 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
             };
           
             if (!validateAmericanPhoneNumber(phone)) {
-              // toast.error('Please enter a valid American phone number.');
               setPhoneError1(true);
               return;
             }
-    
-        
-          
         
           if (phone.length === 0 || !validateAmericanPhoneNumber(phone)) {
             setPhoneError1(true);
@@ -205,9 +197,6 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
             return;
           }
         
-       
-      
-        // Validate the password
         if (!validatePassword(password)) {
           setPasswordError2(true);
           return;
@@ -223,7 +212,6 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
           phoneNumber: phone,
           socialMediaProfile: MediaLink,
         };
-      }else{
         const response = await axios
         .post(`${process.env.REACT_APP_BACKEND_URL}/${apiEndpoint}`, data)
         .then((res) => {
@@ -289,17 +277,10 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
           email: email,
           password: password,
         };
-      }
-      if (apiEndpoint === "api/user/sendForgetEmail") {
-        data.email = email;
-      } else {
-        data.email = email;
-        data.password = password;
-      }
-    
-      const response = await axios
+        const response = await axios
         .post(`${process.env.REACT_APP_BACKEND_URL}/${apiEndpoint}`, data)
         .then((res) => {
+
           if (res.status === 200 || res.status === 201) {
             setSignupModal(false);
             setEmail("");
@@ -313,6 +294,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
             setCity("");
             setPassword("");
             setPhone("");
+            setloginModal(false);
             toast.success(
               res?.data?.data?.message
                 ? res?.data?.data?.message
@@ -326,18 +308,79 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                 token: res?.data?.token,
               })
             );
-            if (loginModal === true) {
-              localStorage.setItem("isLoggedIn", "true");
-              setIsLoggedIn(true);
-              setSignupModal(false);
-              setloginModal(false);
-              setSignupModal(false);
+             if (loginModal === true) {
+             localStorage.setItem("isLoggedIn", "true");
+               setIsLoggedIn(true);
+             setSignupModal(false);
+             setloginModal(false);
+             setSignupModal(false);
               navigate("/");
-            } 
-            else {
-              //   console.log("function-called", false);
-              setloginModal(true);
-            }
+             } else {
+              console.log("function-called", false);
+               setloginModal(true);
+             }
+          } 
+           else {
+             toast.error("Authentication failed. Please check your credentials.");
+           }
+        })
+        .catch((e) => {
+         
+          toast.error(
+            e?.response?.data?.message
+              ? e?.response?.data?.message
+              : e?.response?.data,{
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 3000, // Close the toast after 3000 milliseconds (3 seconds)
+              }
+          );
+         
+        });
+      }
+      if (apiEndpoint === "api/user/sendForgetEmail") {
+        data.email = email;
+        const response = await axios
+        .post(`${process.env.REACT_APP_BACKEND_URL}/${apiEndpoint}`, data)
+        .then((res) => {
+
+          if (res.status === 200 || res.status === 201) {
+            setSignupModal(false);
+            setEmail("");
+            setPassword("");
+            setEmail("");
+            setFirstN("");
+            setLastN("");
+            setZip("");
+            setCountry("United States");
+            setMediaLink("");
+            setCity("");
+            setPassword("");
+            setPhone("");
+            
+            toast.success(
+              res?.data?.data?.message
+                ? res?.data?.data?.message
+                : res?.data?.message
+            );
+            // Store user information in local storage
+            localStorage.setItem(
+              "user",
+              JSON.stringify({
+                _id: res?.data?.user?._id,
+                token: res?.data?.token,
+              })
+            );
+            // if (loginModal === true) {
+            //   localStorage.setItem("isLoggedIn", "true");
+            //   setIsLoggedIn(true);
+            //   setSignupModal(false);
+            //   setloginModal(false);
+            //   setSignupModal(false);
+            //   navigate("/");
+            // } else {
+            //   //   console.log("function-called", false);
+            //   setloginModal(true);
+            // }
           } 
           // else {
           //   toast.error("Authentication failed. Please check your credentials.");
@@ -348,9 +391,16 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
           toast.error(
             e?.response?.data?.message
               ? e?.response?.data?.message
-              : e?.response?.data
+              : e?.response?.data,
           );
+         
         });
+      } else {
+        data.email = email;
+        data.password = password;
+      }
+    
+     
     }   
   
 

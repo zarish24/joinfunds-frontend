@@ -21,6 +21,7 @@ import Footer3 from '../layouts/Footer3';
 import Footer from '../layouts/Footer';
 import { ThemeContext } from "../context/ThemeContext";
 import { IMAGES } from '../constant/theme';
+import Screenshot_29 from '../../src/assets/images/Screenshot_29.png';
 import { toast,  } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 // const counterBlog = [
@@ -185,8 +186,7 @@ const Home3 = () => {
                                         <h2>Help is <br/>Our Main Goal</h2>
                                     </div>
                                     <h4 className="font-weight-500 m-b10">We Need Your Help</h4>
-                                    <p className="m-b20">YOUR DONATION IS HELPING IMPROVE LIFE AND FREEDOM FOR INDIVIDUALS AND THE WORLD.
-Helping others improve their lives physically, medically or financially feels wonderful. </p>
+                                    <p className="m-b20">We invite you to the part of something extraordinary. Whether you are a freedom loving individual or a non-profit organisation, Nfuse is here to infuse your funds. </p>
                                     <div className="dz-about-info">
                                         <div className="row">
                                             <div className="col-lg-6 col-sm-6">
@@ -218,8 +218,8 @@ Helping others improve their lives physically, medically or financially feels wo
                     >
                         <div className="container">
                             <div className="section-head text-center wow fadeInUp" data-wow-delay="0.2s">
-                                <h5 className="sub-title text-white">Services</h5>
-                                <h2 className="title text-white">Why Nfuse</h2>
+                                {/* <h5 className="sub-title text-white">Services</h5> */}
+                                <h2 className="title text-white">Services</h2>
                             </div>
                                 <AkcelServices />
                         </div>                     
@@ -231,7 +231,7 @@ Helping others improve their lives physically, medically or financially feels wo
                                 <div className="col-lg-6 m-b30 wow fadeInUp" data-wow-delay="0.2s">
                                     <div className="dz-media video-bx4 rounded">
                                         <img src={IMAGES.ProjectPic13} alt="image"/>
-                                        <Link to={"#"} className="popup-youtube vedio-btn" onClick={()=> setOpen(true)} ><i className="fa-solid fa-play" ></i></Link>
+                                        <Link to={"https://youtu.be/CapnOV_nOxw"} className="popup-youtube vedio-btn" onClick={()=> setOpen(true)} ><i className="fa-solid fa-play" ></i></Link>
                                     </div>
                                 </div>
                                 <div className="col-lg-6 m-b30 wow fadeInUp" data-wow-delay="0.4s">
@@ -239,7 +239,7 @@ Helping others improve their lives physically, medically or financially feels wo
                                         <div className="section-head">
                                             <h2 className="title">Save The<br/> Planet For Better Future</h2>
                                         </div>
-                                        <Link to={"/project-story"} className="btn btn-primary">Project Story</Link>
+                                        {/* <Link to={"/project-story"} className="btn btn-primary">Project Story</Link> */}
                                     </div>
                                 </div>
                             </div>
@@ -336,7 +336,7 @@ Helping others improve their lives physically, medically or financially feels wo
                                             <div className="col-md-4 col-sm-6">
                                                 <button 
                                                 name="submit" type="submit" value="Submit" 
-                                                className="btn btn-light btn-block h-100">Submit Now</button>
+                                                className="btn btn-light btn-block h-100">Submit</button>
                                             </div>
                                         </div>
                                     </form>

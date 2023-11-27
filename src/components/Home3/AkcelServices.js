@@ -7,7 +7,7 @@ import { SVGICON } from '../../constant/theme';
 
 const servicesBlog = [
     {title:"Top-tier Fundraising Achievement", icon:SVGICON.DoubleHeart },
-    {title:"National and International" , icon:SVGICON.Ring},
+    {title:"National and International Donors" , icon:SVGICON.Ring},
     {title:"Easy-To-Manage Tools To Boost Results",icon:SVGICON.HeartWindow},
     {title:" Expert Support 24/7",icon:SVGICON.HeartHelp},
     {title:"A Dedicated Smart-Dashboard",icon:SVGICON.DollerBox},
