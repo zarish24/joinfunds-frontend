@@ -7,6 +7,7 @@ export const IMAGES = {
 	logo2 : require('../assets/images/logo-2.jpg'),
 	logo3 : require('../assets/images/nfuse-without-tagline.jpg'),
 	logoWhite3 : require('../assets/images/nfuse_copy-removebg.png'),
+	homeCover : require('../assets/images/banner/homecover.png'),
 
 	//other all
 	BlogGrid1 : require('../assets/images/blog/blog-grid/pic1.jpg'),
