@@ -82,7 +82,7 @@ const Setting = (props) => {
     const [legalLastName, setLegalLastName] = useState("");      
     const [legalEmail, setLegalEmail] = useState("");       
     const [legalPhoneNumber, setLegalPhoneNumber] = useState("");   
-    const [legalSocailMedia, setLegalSocailMedia] = useState("");   
+    const [legalSocailMedia, setLegalSocailMedia] = useState("---");   
     const [legalAddress, setLegalAddress] = useState("");
     const [legalCity, setLegalCity] = useState("");             
     const [legalState, setLegalState] = useState("");          
@@ -332,7 +332,7 @@ const config = {
             };
             try {
                 const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/bank-details/getBankAccountDetails`, config)
-                const Data= response.data;
+                const Data= response.data.data;
                 console.log("Data >>>>>>>>>>>>>>>>>>>>>>>>>>> ", Data);
                 setLegalIdentity(Data.identity)
              
@@ -340,7 +340,7 @@ const config = {
                 setLegalLastName(Data.lastName);
                 setLegalEmail(Data.email);
                 setLegalPhoneNumber(Data.phoneNumber);
-                setLegalSocailMedia(Data.socailMediaLink);
+                setLegalSocailMedia(Data.socialMediaLink);
                 setLegalAddress(Data.address);
                 setLegalCity(Data.city);
                 setLegalState(Data.state);
@@ -350,14 +350,14 @@ const config = {
                 setLegalCheckingAccountNumber(Data.accountNumber);
                 setLegalRoutingNumber(Data.routingNumber);
                 setLegalConfirmCheckingAccountNumber(Data.accountNumber);
-                const dateOfBirth = Data.dateOfBirth; 
+                const dateOfBirth = Data.dateOfBirth || "";
                 const dateParts = dateOfBirth.split("-");
                 const day = parseInt(dateParts[2], 10);
                 const month = parseInt(dateParts[1], 10);
                 const year = parseInt(dateParts[0], 10);
-                setLegalDay(Data.day);
-                setLegalMonth(Data.month);
-                setLegalYear(Data.year);
+                setLegalDay(day);
+                setLegalMonth(month);
+                setLegalYear(year);
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -377,6 +377,54 @@ const config = {
         
         
       };
+
+
+
+      const fetchBankData = async () => {
+        const items = JSON.parse(localStorage.getItem('user'));
+        const token = items?.token;  
+        const config = {
+            headers: {
+              Authorization: `Bearer ${token}`, 
+            },
+        };
+        try {
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/bank-details/getBankAccountDetails`, config)
+            const Data= response.data.data;
+         
+
+            console.log("Data >>>>>>>>>>>>>>>>>>>>>>>>>>> ", Data);
+       
+            setLegalIdentity(Data.identity)
+         
+            setLegalFirstName(Data.firstName);
+            setLegalLastName(Data.lastName);
+            setLegalEmail(Data.email);
+            setLegalPhoneNumber(Data.phoneNumber);
+            setLegalSocailMedia(Data.socialMediaLink);
+            setLegalAddress(Data.address);
+            setLegalCity(Data.city);
+            setLegalState(Data.state);
+            setLegalPostal(Data.postalCode);
+            setLegalCountry(Data.country);
+            setLegalSecurityNumber(Data.socialSecurityNumber);
+            setLegalCheckingAccountNumber(Data.accountNumber);
+            setLegalRoutingNumber(Data.routingNumber);
+            setLegalConfirmCheckingAccountNumber(Data.accountNumber);
+            const dateOfBirth = Data.dateOfBirth || "";
+            const dateParts = dateOfBirth.split("-");
+            const day = parseInt(dateParts[2], 10);
+            const month = parseInt(dateParts[1], 10);
+            const year = parseInt(dateParts[0], 10);
+            setLegalDay(day);
+            setLegalMonth(month);
+            setLegalYear(year);
+            setLoading(false);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            setLoading(false);
+        }
+    };
     const saveRecipientDetails = async () => {
         setLoading(true);
         if(legalFirstName.length === 0){
@@ -399,11 +447,11 @@ const config = {
             setLoading(false);
             return;
         }
-        if(legalSocailMedia.length === 0){
-            setLegalSocailMediaError(true);
-            setLoading(false);
-            return;
-        }       
+        // if(legalSocailMedia.length === 0){
+        //     setLegalSocailMediaError(true);
+        //     setLoading(false);
+        //     return;
+        // }       
         if(legalState.length === 0){
             setLegalStateError(true);
             setLoading(false);
@@ -514,6 +562,7 @@ const config = {
                         setLegalCheckingAccountNumber("");
                         setLegalRoutingNumber("");
                         setLegalConfirmCheckingAccountNumber("");
+                        fetchBankData()
                         toast.success(
                             "Bank Account Details successfully Stored"
                           );
@@ -1029,12 +1078,13 @@ const config = {
                                                     }}           
                                                     style={{ 
                                                         height: "fit-content",
-                                                        paddingTop: "2%",
+                                                        padding: "2px",
                                                         border: "2px solid rgb(204, 204, 204)",
-                                                        paddingBottom: "1%" 
+                                                        // paddingBottom: "1%" 
                                                     }}
                                                     >
                                                     <option value="myselft">Myself</option>
+                                                    <option value="other">Other</option>
                                                 </select>
                                                 {legalIdentityError && (
                                                     <Error className="input feedback">Identity is required</Error>
@@ -1191,12 +1241,13 @@ const config = {
                         )}
                         </label>
                     </div>
-                    <div
+                    <div 
                         style={{
                         display: "grid",
                         gridTemplateColumns: "1fr ",
                         gap: "10px",
                         }}
+                        hidden
                     >
                     <label>Social Media Profile Link
                         <input

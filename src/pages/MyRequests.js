@@ -101,9 +101,9 @@ const payload ={
               <tr>
                 <th style={cellStylethead}>Request ID</th>
                 <th style={cellStylethead}>Campaign Title</th>
-                <th style={cellStylethead}>Total Donations</th>
+                <th style={cellStylethead}>Total Goal</th>
+                <th style={cellStylethead}>Collected</th>
                 <th style={cellStylethead}>Status</th>
-                <th style={cellStylethead}>Amount</th>
                 <th style={cellStylethead}>Campaign Duration</th>
               </tr>
             </thead>
@@ -113,8 +113,8 @@ const payload ={
                   <td style={cellStyle}>{request._id}</td>
                   <td style={cellStyle}>{request.campaign_details.title}</td>
                   <td style={cellStyle}>{request.campaign_details.total_funding}</td>
+                  <td style={cellStyle}>{request.campaign_details.raised}</td>
                   <td style={cellStyle}>{request.status}</td>
-                  <td style={cellStyle}>{request.amount}</td>
                   <td style={cellStyle}>
   {formattedDate(request.campaign_details.start_date)} - {formattedDate(request.campaign_details.end_date)}
 </td>
