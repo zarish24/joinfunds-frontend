@@ -229,10 +229,10 @@ const Home3 = () => {
                     <section className="content-inner">
                         <div className="container">
                             <div className="row align-items-center content-bx style-2">
-                                <div className="col-lg-6 m-b30 wow fadeInUp" data-wow-delay="0.2s">
+                            <div className="col-lg-6 m-b30 wow fadeInUp" data-wow-delay="0.2s">
                                     <div className="dz-media video-bx4 rounded">
                                         <img src={IMAGES.ProjectPic13} alt="image"/>
-                                        <Link to={"#"} className="popup-youtube video-btn" onClick={()=> setOpen1(true)} ><i className="fa-solid fa-play" ></i></Link>
+                                        <Link to={"#"} className="popup-youtube vedio-btn" onClick={()=> setOpen(true)} ><i className="fa-solid fa-play" ></i></Link>
                                     </div>
                                 </div>
                                 <div className="col-lg-6 m-b30 wow fadeInUp" data-wow-delay="0.4s">
@@ -393,7 +393,7 @@ const Home3 = () => {
                 
                 {/* <ModalVideo channel='youtube' autoplay isOpen={isOpen} videoId="bdBG5VO01e0" onClose={() => setOpen(false)} /> */}
                 <ModalVideo channel='youtube'  isOpen={isOpen} videoId="CapnOV_nOxw" onClose={() => setOpen(false)} />
-                <ModalVideo channel='youtube'  isOpen={isOpen1} videoId="CapnOV_nOxw" onClose={() => setOpen1(false)} />
+                {/* <ModalVideo channel='youtube'  isOpen={isOpen1} videoId="CapnOV_nOxw" onClose={() => setOpen1(false)} /> */}
                 {/* <Link to={"#"} className={classChange} onClick={()=> setOpen(true)} ><i className="fa-solid fa-play" ></i></Link> */}
                 {/* <DonateModal /> */}
         </>
