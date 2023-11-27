@@ -20,7 +20,7 @@ const dataBlog = [
   {
     bgimage: IMAGES.SliderBg2,
     style: 'banner-media2',
-    title: 'INNOVATIONS IN TECHNOLOGY',
+    title: 'Infusing the community',
     title2: 'We Help Surface Innovations',
     image2: IMAGES.homeCover,
   },
@@ -62,7 +62,7 @@ const MainSliderIndex3 = ({ onShowDonate }) => {
                         {/* <h5 className="sub-title text-light">{d.title}</h5> */}
                         <h1 className="title">{d.title2}</h1>
                         <p>
-                        Did you know you can create a campaign for individuals or for businesses?   Take a look at our categories!   get Enthused, Get Nfused!
+                        Remember the act of kindness needs to be a donation and not a lbs act of service.  Many charity pics reference people doing things… but the only thing we do is offer to help fund
                         </p>
                         <div className="d-flex align-items-center">
                           {/* <Link

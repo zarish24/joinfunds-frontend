@@ -436,14 +436,21 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
   };
   const [state, setState] = useReducer(reducer, initialState);
   const handleMenuActive = (status) => {
+    console.log('active',state)
+
     setState({ active: status });
     if (state.active === status) {
+    console.log('active active',state)
+
       setState({ active: "" });
     }
   };
   const handleSubmenuActive = (status) => {
+    console.log('status',state)
     setState({ activeSubmenu: status });
     if (state.activeSubmenu === status) {
+    console.log('status status',state)
+
       setState({ activeSubmenu: "" });
     }
   };
@@ -645,7 +652,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                       );
                     }
                   })}
-                  {/* {//   console.log("log", isLoggedIn)} */}
+                  
                   {!isLoggedIn && (
                     <>
                       {/* <li>

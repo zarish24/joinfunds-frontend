@@ -10,8 +10,8 @@ import bg from "../assets/images/banner/bnr5.jpg";
 import axios from "axios";
 const RecordsPerPage = 12;
 const MyProjects = () => {
-  const [campaignType, setCampaignType] = useState("Campaign Type");
-  const [campaignStatus, setCampaignStatus] = useState("Campaign Status");
+  const [campaignType, setCampaignType] = useState("");
+  const [campaignStatus, setCampaignStatus] = useState("");
   const [campaigns, setCampaigns] = useState([]);
   const [page, setPage] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
@@ -22,21 +22,24 @@ const MyProjects = () => {
 console.log('searchText',searchText)
 
   useEffect(() => {
-    const fetchData = async (user_id, token) => {
+    const fetchData = async () => {
+      const user = JSON.parse(localStorage.getItem("user"));
+    const token =user.token;
+    const id = user._id
       try {
-        // console.log("user_id", user_id);
+       
         const data = {
-          status: "",
+          status: campaignStatus,
           category_id:CategoryId,
-          campaign_type: "",
+          campaign_type: campaignType,
           title_search: searchText,
-          user_id,
+          user_id:id,
           items_per_page: RecordsPerPage,
           page:currentPage,
         };
         const config = {
           headers: {
-            Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
+            Authorization: `Bearer ${token}`, 
           },
         };
         if (campaignType !== "Campaign Type") {
@@ -82,7 +85,7 @@ console.log('searchText',searchText)
       fetchData(user._id,user.token);
     }
     // Call the async function
-  }, [currentPage,page,campaignType,campaignStatus,CategoryId,searchText]);
+  }, [currentPage,campaignType,campaignStatus,CategoryId,searchText]);
 
 
 
@@ -94,9 +97,9 @@ console.log('searchText',searchText)
     try {
       // console.log("user_id", user_id);
       const data = {
-        status: "",
+        status: campaignStatus,
         category_id:CategoryId,
-        campaign_type: "",
+        campaign_type: campaignType,
         title_search: searchText,
         user_id:id,
         items_per_page: RecordsPerPage,

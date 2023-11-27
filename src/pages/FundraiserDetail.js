@@ -452,9 +452,10 @@ const closeModal = () => {
     }
   };
 
-  const openModalNew = async (e) => {
-    const value = e.target.value;
+  const openModalNew = async (id) => {
+  
     const token = JSON.parse(localStorage.getItem("user"));
+    console.log('value value',token?.token)
     if (!token) {
       toast.error("Please Login First");
       return;
@@ -466,9 +467,13 @@ const closeModal = () => {
           Authorization: `Bearer ${token?.token}`, 
         },
       };
+      console.log('config value',config)
+
+
       const response = await axios
-      .get(
-        `${process.env.REACT_APP_BACKEND_URL}/api/payments/makePayoutRequest/${value}`,
+      .post(
+        `${process.env.REACT_APP_BACKEND_URL}/api/payments/makePayoutRequest/${id}`,
+        null,
         config
       )      
         .then((res) => {
@@ -497,7 +502,8 @@ const closeModal = () => {
     }
   };
 
-  const checkBankAccountDetails = async (id) => {
+  const checkBankAccountDetailsss = async (id) => {
+    console.log('id id',id);
     const token = JSON.parse(localStorage.getItem("user"));
     if (!token) {
       toast.error("Please Login First");
@@ -1112,7 +1118,7 @@ const closeModal = () => {
                        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
                        transition: "background-color 0.3s",
                      }}
-                     onClick={() => checkBankAccountDetails(campaign._id)}
+                     onClick={() => checkBankAccountDetailsss(campaign._id)}
                     //  onClick={() => openModalNew(campaign._id)}
                    >
                      Quick Payout of Funds
