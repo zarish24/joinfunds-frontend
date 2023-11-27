@@ -814,13 +814,31 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
             />
           </div>
           <div className="form-group">
-            <input
-              type="password"
-              className="form-control"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+          <div style={{ position: "relative" }}>
+  <input
+    type={showPassword ? "text" : "password"}
+    className="form-control"
+    placeholder="Password"
+    value={password}
+    onChange={(e) => setPassword(e.target.value)}
+    style={{ paddingRight: "40px" }}
+  />
+  <button
+    type="button"
+    onClick={togglePasswordVisibility}
+    style={{
+      position: "absolute",
+      right: "14px",
+      top: "50%",
+      transform: "translateY(-50%)",
+      border: "none",
+      background: "transparent",
+      cursor: "pointer",
+    }}
+  >
+   {showPassword ? <FaEyeSlash /> : <FaEye />}
+  </button>
+</div>
             <div className="reset-password">
               <Link
                 to={"#"}
