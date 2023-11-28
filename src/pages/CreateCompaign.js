@@ -404,7 +404,7 @@ const CreateCompaign = () => {
                         className="form-control"
                       >
                         <option value="funding">Funding</option>
-                        <option value="donation">Donation</option>
+                        {/* <option value="donation">Donation</option> */}
                       </select>
                     </div>
                   </div>

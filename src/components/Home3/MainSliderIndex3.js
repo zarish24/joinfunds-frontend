@@ -11,18 +11,20 @@ SwiperCore.use([Navigation, Autoplay, EffectFade]);
 
 const dataBlog = [
   {
-    bgimage: IMAGES.SliderBg1,
-    style: 'banner-media',
-    title: 'DISCOVER/SEARCH A CAMPAIGN',
-    title2: 'Both for individual and Business',
-    image2: IMAGES.SliderPic1,
-  },
-  {
-    bgimage: IMAGES.SliderBg2,
+    bgimage: IMAGES.SliderPic1,
+    // bgimage: IMAGES.SliderBg2,
     style: 'banner-media2',
     title: 'Infusing the community',
-    title2: 'We Help Surface Innovations',
-    image2: IMAGES.homeCover,
+    title2: 'Nfusing the community',
+    image2: IMAGES.SliderPic2,
+  },
+  {
+    // bgimage: IMAGES.SliderBg1,
+    bgimage: IMAGES.SliderBg2,
+    style: 'banner-media',
+    title: 'DISCOVER/SEARCH A CAMPAIGN',
+    title2: ' Freedom loving individuals',
+    // image2: IMAGES.SliderPic1,
   },
 ];
 
@@ -43,11 +45,12 @@ const MainSliderIndex3 = ({ onShowDonate }) => {
         }}
         navigation
       >
+        {/* backgroundColor: '#3b7bbd' */}
         {dataBlog.map((d, i) => (
           <SwiperSlide key={i}>
             <div
               className="banner-inner"
-              style={{ backgroundImage: `url(${d.bgimage})`, backgroundColor: '#3b7bbd' }}
+              style={{ backgroundImage: `url(${d.bgimage})`, backgroundColor: 'transparent',   }}
             >
               <div className="container-fluid">
                 <div className="row">
@@ -62,7 +65,7 @@ const MainSliderIndex3 = ({ onShowDonate }) => {
                         {/* <h5 className="sub-title text-light">{d.title}</h5> */}
                         <h1 className="title">{d.title2}</h1>
                         <p>
-                        Remember the act of kindness needs to be a donation and not a lbs act of service.  Many charity pics reference people doing things… but the only thing we do is offer to help fund
+                        Join us in making a positive impact! Your support empowers us to create meaningful change, one act of kindness at a time.
                         </p>
                         <div className="d-flex align-items-center">
                           {/* <Link

@@ -105,10 +105,12 @@ const closeModal = () => {
 
   const [modalDonate, setModalDonate] = useState(false);
   const [modalDonate1, setModalDonate1] = useState(false);
+  const [FeedBackModal, setFeedBackModal] = useState(false);
   const [modalDonate2, setModalDonate2] = useState(false);
   const [modalStripeDonate, setModalStripeDonate] = useState(false);
   const [referModal, setReferModal] = useState(false);
   const [campaign, setCampaign] = useState({});
+  console.log('campaign campaign', campaign)
   const [comments, setComments] = useState([]);
   const [donners, setDonners] = useState([]);
   const [topDonners, setTopDonners] = useState([]);
@@ -122,6 +124,15 @@ const closeModal = () => {
   const [donationTypes, setDonationTypes] = useState('singleDonation');
   const [gift, setGift] = useState("");     
   const [email, setEmail] = useState("");       
+  const [Designation, setDesignation] = useState("");
+  const [StoryFName, setStoryFName] = useState("");
+  const [StoryLName, setStoryLName] = useState("");
+  const [Story, setStory] = useState("");        
+  const [DesignationError, setDesignationError] = useState(false);
+  const [StoryLNameError, setStoryLNameError] = useState(false);
+  const [StoryFNameError, setStoryFNameError] = useState(false);
+  const [StoryError, setStoryError] = useState(false);
+
   const [firstName, setFirstName] = useState("");         
   const [lastName, setLastName] = useState("");          
   const [donationName, setDonationName] = useState("");        
@@ -379,7 +390,84 @@ const closeModal = () => {
     } catch (error) {
       toast.error("API request faile", error.response.data.Message);
     }
-  };    
+  };  
+  
+
+  const CreateStory = async (e) => {
+    e.preventDefault();
+    if (StoryFName.length === 0) {
+      setStoryFNameError(true);
+      return;
+    } 
+    if (StoryLName.length === 0) {
+      setStoryLNameError(true);
+      return;
+    } 
+   
+    if (Designation.length === 0) {
+      setDesignationError(true);
+      return;
+    } 
+    if (Story.length === 0) {
+      setStoryError(true);
+      return;
+    }else{
+    try {
+      setLoading(true);
+      const bodyData = {
+        campaign_title: campaign.title,
+        campaign_id: campaign._id,
+        campaign_image: campaign?.campaign_images[0]?.url,
+        lastName: StoryLName,
+        firstName: StoryFName,
+        designation: Designation,
+        successStoryMessage: Story,
+      };
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`, 
+        },
+      };
+      const response = await axios
+        .post(
+          `${process.env.REACT_APP_BACKEND_URL}/api/campaign-story/createCampaignSuccessStory`,
+          bodyData,
+          config
+        )
+        .then((res) => {
+          if (res.status === 200 || res.status === 201) {
+            setFeedBackModal(false)
+            setStoryLName("")
+            setStoryFName("")
+            setDesignation("")
+            setStory("")
+            setLoading(false);
+            toast.success("  your story submitted  Successfully");
+          
+            setModalDonate(false);
+          } else {
+            setLoading(false);
+            toast.error(res.message);
+          }
+        })
+        .catch((error) => {
+          // console.error("API request failed", error);
+          setLoading(false);
+        
+          toast.error(
+            error?.response?.data?.message
+              ? error?.response?.data?.message
+              : error.response.data.Message
+          );
+          setFeedBackModal(false);
+        });
+      // setCampaigns(response.data); // Set the campaign data in state
+    } catch (error) {
+      toast.error("API request faile", error.response.data.Message);
+    }
+  }
+  }; 
+
   const saveDonateCampaign = () => {
     // if (
     //   amount1 === 0 ||
@@ -1026,106 +1114,60 @@ const closeModal = () => {
               </div>
               <div className="col-xl-4 col-lg-4">
                 <aside className="side-bar sticky-top">
-                  {user_id !== campaign?.user_id ? (
-                    <>
-                      <div className="widget style-1 widget_donate">
-                        {/* <Link
-                          to={"#"}
-                          className="btn btn-donate btn-primary w-100"
-                          data-bs-toggle="modal"
-                          data-bs-target="#modalDonate"
-                          onClick={() => setModalDonate(true)}
-                        >
-                          <i className="flaticon-like me-3"></i> Donate Now Crypto
-                        </Link> */}
-                        <Link
-                          to={"#"}
-                          className="btn btn-donate btn-primary w-100 d-none"
-                          data-bs-toggle="modal"
-                          data-bs-target="#modalDonate"
-                          onClick={() => setModalDonate1(true)}
-                        >
-                          <i className="flaticon-like me-3"></i> Donate Now
-                        </Link>
-                        <Link
-                          to={"#"}
-                          className="btn btn-donate btn-primary w-100"
-                          onClick={() =>  setModalDonate1(true)}
-                        >
-                          <i className="flaticon-like me-3"></i> Donate Now Stripe
-                        </Link>
-                        {/* <Link
-                          to={"#"}
-                          className="btn btn-donate btn-primary w-100"
-                          data-bs-toggle="modal"
-                          data-bs-target="#modalDonate"
-                          onClick={() => setModalStripeDonate(true)}
-                        >
-                          <i className="flaticon-like me-3"></i> Donate Now
-                          Through Stripe
-                        </Link> */}
+                {user_id !== campaign?.user_id ? (
+  campaign?.status === 'open' ? (
+    <ul className="fundraiser-bottom">
+      <li>
+        <Link
+          to={"#"}
+          className="btn btn-donate btn-primary w-100"
+          onClick={() => setModalDonate1(true)}
+        >
+          <i className="flaticon-like me-3"></i> Donate Now Stripe
+        </Link>
+      </li>
+    </ul>
+  ) : campaign?.status === 'close' && user_id !== campaign?.user_id ? (
+    <>
+      {/* {console.log('Rendering Success Stories button')} */}
+      <ul className="fundraiser-bottom">
+        <li>
+          <Link
+          to={"#"}
+                      className="btn btn-donate btn-primary w-100"
+                      onClick={() => setFeedBackModal(true)}
+          >
+            <i className="flaticon-feedback me-2"></i> Success Story
+          </Link>
+        </li>
+      </ul>
+    </>
+  ) : campaign?.status === 'close' && user_id === campaign?.user_id ? (
+    <>
+      {console.log('Rendering Quick Payout of Funds button')}
+      <button
+        style={{
+          backgroundColor: 'blue',
+          color: 'white',
+          border: 'none',
+          padding: '10px 20px',
+          marginBottom: '20px',
+          width: '356px',
+          height: '44px',
+          borderRadius: '5px',
+          cursor: 'pointer',
+          fontSize: '16px',
+          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+          transition: 'background-color 0.3s',
+        }}
+        onClick={() => checkBankAccountDetailsss(campaign._id)}
+      >
+        Quick Payout of Funds
+      </button>
+    </>
+  ) : null
+) : null}
 
-                        {/* <div className="tagcloud">
-                      <Link
-                        to={"#"}
-                        data-bs-toggle="modal"
-                        data-bs-target="#modalDonate"
-                      >
-                        Cards
-                      </Link>
-                      <Link
-                        to={"#"}
-                        data-bs-toggle="modal"
-                        data-bs-target="#modalDonate"
-                      >
-                        Net Banking
-                      </Link>
-                      <Link
-                        to={"#"}
-                        data-bs-toggle="modal"
-                        data-bs-target="#modalDonate"
-                      >
-                        UPI
-                      </Link>
-                    </div>
-                    <a
-                      href="https://www.facebook.com/"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="btn btn-primary facebook w-100 btn-bottom"
-                    >
-                      <i className="fa-brands fa-facebook-square me-2"></i>{" "}
-                      Spread The World
-                    </a> */}
-                      </div>
-                    </>
-                  ) : campaign?.status === "close" ||
-                    campaign?.status === "close" ? (
-                      <>
-                 
-                     <button
-                     style={{
-                       backgroundColor: "blue",
-                       color: "white",
-                       border: "none",
-                       padding: "10px 20px",
-                       marginBottom: "20px",
-                       width: "356px",
-                       height: "44px",
-                       borderRadius: "5px",
-                       cursor: "pointer",
-                       fontSize: "16px",
-                       boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                       transition: "background-color 0.3s",
-                     }}
-                     onClick={() => checkBankAccountDetailsss(campaign._id)}
-                    //  onClick={() => openModalNew(campaign._id)}
-                   >
-                     Quick Payout of Funds
-                      
-                   </button>
-                   </>
-                  ) : null}
 
                   {/* <!--  Widget Fund --> */}
                   <div className="widget style-1 widget_fund">
@@ -1919,6 +1961,201 @@ const closeModal = () => {
         </Modal.Footer>
       </Modal>
       <PayOutModal isOpen={isModalOpen} closeModal={closeModal} campaignId={CampaignId} />
+
+
+      <Modal
+        className="fade modal"
+        show={FeedBackModal}
+        onHide={() => setFeedBackModal(false)}
+        size="lg"
+        centered
+      >
+        <Modal.Header
+          className="d-flex justify-content-center align-items-center"
+          style={{ backgroundColor: "#002768" }}
+        >
+          <h4 className="text-center" style={{ color: "white" }}>
+          Success Story
+          </h4>
+          <button
+                type="button"
+                className="btn-close"
+                onClick={() => setFeedBackModal(false)}
+              >
+                <i className="flaticon-close"></i>
+              </button>
+        </Modal.Header>
+        <Modal.Body className="modal-body px-5 py-3">
+          {/* <p>"Every man shall give as he is also, according to the blessing of the LORD your God which He has given you." Deut. 16:17</p> */}
+          <form
+            style={{ display: "grid", gap: "10px" }}
+          >
+       
+       
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr 2fr",
+                gap: "10px",
+              }}
+            >
+              
+              
+
+              <label>
+                First Name<span className="text-danger">*</span>
+                <input
+                  type="text"
+                  placeholder= " First Name"       
+                  value={StoryFName}
+                  onChange={(e) => {
+                    setStoryFName(e.target.value);
+                    if(e.target.value.length > 0){
+                      setStoryFNameError(false);
+                    }
+                  }}                     
+                  style={{
+                    width: "100%",
+                    padding: "2px 6px",
+                    borderRadius: "5px",
+                    border: "2px solid #ccc",
+                  }}
+                />
+                  {StoryFNameError && (
+                    <Error className="input feedback">First Name is required</Error>
+                  )}
+              </label>
+
+              <label>
+                Last Name<span className="text-danger">*</span>
+                <input
+                  type="text"
+                  value={StoryLName}
+                  onChange={(e) => {
+                    setStoryLName(e.target.value);
+                    if(e.target.value.length > 0){
+                      setStoryLNameError(false);
+                    }
+                  }}    
+                  placeholder= " Last Name"                    
+                  style={{
+                    width: "100%",
+                    padding: "2px 6px",
+                    borderRadius: "5px",
+                    border: "2px solid #ccc",
+                  }}
+                />
+                  {StoryLNameError && (
+                    <Error className="input feedback">Last Name is required</Error>
+                  )}
+              </label>
+
+              <label>
+              Designation<span className="text-danger">*</span>
+                <input
+                  className='mb-0'
+                  placeholder= " Designation" 
+                  type="text"  
+                  value={Designation}
+                  onChange={(e) => {
+                    setDesignation(e.target.value);
+                    if(e.target.value.length > 0){
+                      setDesignationError(false);
+                    }
+                  }}                 
+                  style={{
+                    width: "calc(100% - 10px)",
+                    padding: "2px 6px",
+                    borderRadius: "5px",
+                    border: "2px solid #ccc",
+                    marginRight: "30px",
+                    marginBotttom: "0px",
+                    // boxShadow: "rgba(0, 0, 0, 0.4) 0px 2px 5px",
+                  }}
+                />
+                
+                {DesignationError && (
+                    <Error className="input feedback">Designation is required</Error>
+                  )}
+              </label>
+
+            </div>
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "10px",
+              }}
+            >
+              
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr ",
+                  gap: "10px",
+                }}
+              >
+                <label>
+                Success Story<span className="text-danger">*</span>
+                  <textarea 
+                    value={Story}
+                    onChange={(e) => {
+                      setStory(e.target.value);
+                      if(e.target.value.length > 0){
+                        setStoryError(false);
+                      }
+                    }}    
+                     style={{
+                      width: "calc(100% - 10px)",
+                      padding: "2px 6px",
+                      borderRadius: "5px",
+                      border: "2px solid #ccc",
+                    }}
+                    className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                 {StoryError && (
+                    <Error className="input feedback">Success Story is required</Error>
+                  )}
+                </label>
+           
+                
+              </div>
+
+            
+              <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr ",
+                gap: "10px",
+              }}
+            >
+              
+                 </div>
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "2fr  ",
+                  gap: "10px",
+                }}
+              >
+              <div className="py-2 bg-primary text-white text-center" style={{
+                width: "100%",
+                borderRadius: '7px',
+                cursor: 'pointer',
+              }} onClick={CreateStory}>
+                Continue
+              </div>
+              </div>
+            </div>
+          </form>
+        </Modal.Body>
+        <Modal.Footer
+          style={{ display: "flex", justifyContent: "space-between" }}
+        >
+
+         
+        </Modal.Footer>
+      </Modal>
 
       ;
     </>

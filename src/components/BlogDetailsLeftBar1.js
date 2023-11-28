@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import {Link} from 'react-router-dom';
 import axios from "axios";
-import  large from '../assets/images/blog/large/pic1.jpg';
-import  blog2 from '../assets/images/blog/blog-grid/pic2.jpg';
+import  large from '../assets/images/IMG-20231128-WA0013.jpg';
+import  blog2 from '../assets/images/IMG-20231128-WA0006.jpg';
 import  blog1 from '../assets/images/blog/blog-grid/pic1.jpg';
 import  test from '../assets/images/testimonials/pic2.jpg';
 import avat1 from '../assets/images/avatar/avatar1.jpg';
@@ -173,8 +173,8 @@ const BlogDetailsLeftBar = () => {
                         <h1 className="dz-title">A Grateful Harvest: Giving Back on Thanksgiving</h1>
                         <p>As the aroma of roasting turkey and the warmth of family gatherings fill the air, Thanksgiving serves as a poignant reminder to express gratitude and extend a helping hand to those in need. In the spirit of this season, let's explore the joy of giving back and the profound impact it can have on our communities.</p>
                         <ul className="wp-block-gallery columns-3">
-                            <li className="blocks-gallery-item"><img alt="" src={blog2} /></li>
-                            <li className="blocks-gallery-item"><img alt="" src={blog1} /></li>
+                            {/* <li className="blocks-gallery-item"><img alt="" src={blog2} /></li>
+                            <li className="blocks-gallery-item"><img alt="" src={blog1} /></li> */}
                         </ul>
                         <p>Thanksgiving is more than just a feast; it's a time to reflect on the blessings we've received and share them with others. Consider starting your day by acknowledging the simple joys in life – family, health, and the support of friends. Embrace gratitude as the driving force behind your desire to make a positive impact</p>
                         <blockquote hidden className="block-quote style-1">

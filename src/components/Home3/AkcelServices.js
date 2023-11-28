@@ -8,12 +8,12 @@ import { SVGICON } from '../../constant/theme';
 const servicesBlog = [
     {title:"Top-tier Fundraising Achievement", icon:SVGICON.DoubleHeart },
     {title:"National and International Donors" , icon:SVGICON.Ring},
-    {title:"Easy-To-Manage Tools To Boost Results",icon:SVGICON.HeartWindow},
-    {title:" Expert Support 24/7",icon:SVGICON.HeartHelp},
-    {title:"A Dedicated Smart-Dashboard",icon:SVGICON.DollerBox},
-    {title:"Receive donations via all popular payment",icon:SVGICON.HeartHome},
-    {title:"International Payment Support",icon:SVGICON.ThumbDoller1},
-    {title:"Withdraw Funds Without Hassle", icon:SVGICON.ThumbDoller2},
+    {title:"Easy-To-Manage Campaigns",icon:SVGICON.HeartWindow},
+    {title:"       Customer                 Support 24/7",icon:SVGICON.HeartHelp},
+    {title:" Smart-Dashboard",icon:SVGICON.DollerBox},
+    {title:"Receive funds ",icon:SVGICON.HeartHome},
+    {title:" Payment Support",icon:SVGICON.ThumbDoller1},
+    {title:"Withdrawal Funds ", icon:SVGICON.ThumbDoller2},
 ];
 
 const AkcelServices = () => {
@@ -67,8 +67,8 @@ const AkcelServices = () => {
                 <div className="col-lg-4 col-md-6 m-t30 wow fadeInUp" data-wow-delay="0.2s">
                     <div className="content-bx style-1 bg-primary text-center">
                         <div className="inner-content">
-                            <h2 className="title text-white">Newsletter</h2>
-                            <p className="text-white">Participate in our monthly newsletter to receive the latest news and exclusive opportunities..</p>
+                            <h2 className="title text-white mb-3">Newsletter</h2>
+                            {/* <p className="text-white">Participate in our monthly newsletter to receive the latest news and exclusive opportunities..</p> */}
                             <form className="dzSubscribe" onSubmit={handleSubscribe}>
                                 <div className="dzSubscribeMsg text-white"></div>
                                 <input
@@ -91,14 +91,17 @@ const AkcelServices = () => {
                 <div className="col-lg-4 col-md-6 m-t30 wow fadeInUp" data-wow-delay="0.4s">
                     <div className="content-bx style-1 bg-primary text-center">
                         <div className="inner-content">
+                        <h3 className="title text-white ">Help</h3>
                             <div className="icon-lg m-b20">
                                 <Link to={"/project-categories"} className="icon-cell">
-                                    {SVGICON.HelpHeart}
+                                <span style={{ color: 'red' }}>
+        {SVGICON.HelpHeart}
+      </span>
                                 </Link>
                             </div>
-                            <h3 className="title text-white">Want To Help?</h3>
-                            <p className="m-b30 text-white">Your financial contribution is pivotal to the success of our global initiative.</p>
-                            <Link className="btn btn-light" to={"/project"}>Donate Now</Link>
+                            <h3 className="title text-white "></h3>
+                            {/* <p className="m-b30 text-white">Your financial contribution is pivotal to the success of our global initiative.</p> */}
+                            <Link className="btn btn-light" to={"/campaigns"}>Start Funding</Link>
                         </div>
                     </div>
                 </div>

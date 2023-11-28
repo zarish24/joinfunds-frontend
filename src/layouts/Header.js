@@ -187,7 +187,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
             setPasswordError1(true);
             return;
           }
-          if (Zip.length !== 6) {
+          if (Zip.length !== 5) {
             setZipErrorLength(true);
             return;
           }
@@ -473,7 +473,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                       <img
                         src={IMAGES.logo3}
                         alt=""
-                        style={{ height: "60px", width: "112px" }}
+                        style={{ height: "80px", width: "132px" }}
                       />
                     </Link>
                   </div>
@@ -481,7 +481,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                     <Link to={"/"}>
                       <img
                         src={IMAGES.logo3}
-                        style={{ height: "60px", width: "112px" }}
+                        style={{ height: "80px", width: "132px" }}
                         alt=""
                       />
                     </Link>
@@ -492,7 +492,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                   <Link to={"/"}>
                     <img
                       src={IMAGES.logo2}
-                      style={{ height: "60px", width: "112px" }}
+                      style={{ height: "80px", width: "132px" }}
                       alt=""
                     />
                   </Link>

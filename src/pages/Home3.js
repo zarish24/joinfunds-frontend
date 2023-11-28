@@ -156,8 +156,8 @@ const Home3 = () => {
                         <div class="container">
                             <div class="row section-head align-items-center">
                                 <div class="col-lg-8 col-md-12 wow fadeInUp" data-wow-delay="0.2s">
-                                    <h5 class="sub-title">LATEST CAUSES</h5>
-                                    <h2>Trending Fundraisers</h2>
+                                    {/* <h5 class="sub-title">LATEST CAUSES</h5> */}
+                                    <h2>Latest Fundraisers</h2>
                                 </div>
                                 <div class="col-lg-4 col-md-12 text-end d-none d-lg-block wow fadeInUp" data-wow-delay="0.4s">
                                     <Link to={"/campaigns"} class="btn btn-primary">View All Causes</Link>
@@ -186,7 +186,7 @@ const Home3 = () => {
                                         <h5 className="sub-title">About Us</h5>
                                         <h2>Help is <br/>Our Main Goal</h2>
                                     </div>
-                                    <h4 className="font-weight-500 m-b10">We Need Your Help</h4>
+                                    {/* <h4 className="font-weight-500 m-b10">We Need Your Help</h4> */}
                                     <p className="m-b20">We invite you to the part of something extraordinary. Whether you are a freedom loving individual or a non-profit organisation, Nfuse is here to infuse your funds. </p>
                                     <div className="dz-about-info">
                                         <div className="row">
@@ -194,15 +194,15 @@ const Home3 = () => {
                                                 <ul className="list-check-3">
                                                     <li>Food Contribution</li>
                                                     <li>Medical Care</li>
-                                                    <li>Youth Learning</li>
-                                                    <li>Child Welfare</li>
+                                                    <li>Education</li>
+                                                    <li>Emergency</li>
                                                 </ul>
                                             </div>
                                             <div className="col-lg-6 col-sm-6">
                                                 <ul className="list-check-3">
-                                                    <li>Human Care</li>
-                                                    <li>Pure Water</li>
-                                                    <li>Medical Facilities</li>
+                                                    <li>Animals</li>
+                                                    <li>Legal</li>
+                                                    <li>Non-Profit</li>
                                                     {/* <li>Pure Education</li> */}
                                                 </ul>   
                                             </div>
@@ -238,7 +238,7 @@ const Home3 = () => {
                                 <div className="col-lg-6 m-b30 wow fadeInUp" data-wow-delay="0.4s">
                                     <div className="inner-content">
                                         <div className="section-head">
-                                            <h2 className="title">Save The<br/> Planet For Better Future</h2>
+                                            <h2 className="title">Believe <br/> in the power of giving back</h2>
                                         </div>
                                         {/* <Link to={"/project-story"} className="btn btn-primary">Project Story</Link> */}
                                     </div>
@@ -271,8 +271,8 @@ const Home3 = () => {
                             <div className="row">
                                 <div className="col-lg-3 wow fadeInUp" data-wow-delay="0.2s">
                                     <div className="section-head">
-                                        <h5 className="sub-title text-white">JOIN US</h5>
-                                        <h2 className="title text-white">LET'S GET STARTED</h2>
+                                        <h5 className="sub-title text-white"></h5>
+                                        <h2 className="title text-white">Customer Support</h2>
                                     </div>
                                 </div>
                                 <div className="col-lg-9">
@@ -288,7 +288,7 @@ const Home3 = () => {
                                                  required
                                                  type="text"
                                                  className="form-control"
-                                                 placeholder="firstName"
+                                                 placeholder="First Name"
                                                  value={formData.firstName}
                                                  onChange={(e) => setFormData({ ...formData, firstName: e.target.value })} />
                                             </div>
@@ -298,7 +298,7 @@ const Home3 = () => {
                                             required
                                             type="text"
                                             className="form-control"
-                                            placeholder="lastName"
+                                            placeholder="Last Name"
                                             value={formData.lastName}
                                             onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
                                                 />
@@ -330,7 +330,7 @@ const Home3 = () => {
                                                 rows="7"
                                                 required
                                                 className="form-control"
-                                                placeholder="message"
+                                                placeholder="Message"
                                                 value={formData.message}
                                                 onChange={(e) => setFormData({ ...formData, message: e.target.value })} />
                                             </div>
@@ -352,7 +352,7 @@ const Home3 = () => {
                             <div className="row align-items-center">
                                 <div className="col-lg-8 col-md-12 wow fadeInUp" data-wow-delay="0.2s">
                                     <div className="section-head">
-                                        <h2 className="title">Latest News Feed</h2>
+                                        <h2 className="title">Featured Blogs</h2>
                                     </div>
                                 </div>
                                 <div hidden className="col-lg-4 col-md-12 m-b30 text-end d-none d-lg-block wow fadeInUp" data-wow-delay="0.4s">
@@ -370,7 +370,7 @@ const Home3 = () => {
                     <section class="content-inner-3">
                         <div class="container">
                             <div class="section-head text-center m-b30 wow fadeInUp" data-wow-delay="0.2s">
-                                <h2 class="title text-capitalize">Donate to charity projects <br />around the world</h2>
+                                <h2 class="title text-capitalize">Communities we serve<br /></h2>
                             </div>	
                             {/* <div class="text-center wow fadeInUp" data-wow-delay="0.4s">	
                                 <Link to={"/become-a-fundraiser"} class="btn btn-primary">View All Feed</Link>

@@ -5,7 +5,7 @@ import PageBanner from "./../layouts/PageBanner";
 
 //images
 import bgImage from "./../assets/images/banner/bnr1.jpg";
-import pic1 from "./../assets/images/main-slider/slider2/pic1.png";
+import pic1 from "./../assets/images/IMG-20231128-WA0006.jpg";
 import about from "./../assets/images/about/pic1.jpg";
 import signature from "./../assets/images/about/signature.png";
 import bg4 from "./../assets/images/background/bg4.jpg";
@@ -136,9 +136,9 @@ const AboutUs = () => {
           <div className="container">
             <div className="section-head text-center">
               {/* <h5 className="sub-title">CATEGORIES</h5> */}
-              <h2 className="m-b20">Why choose Nfuse?</h2>
+              <h1 className="m-b20">Why choose Nfuse?</h1>
               <p>
-              The pursuit of freedom for individuals is a constitutional and universal aspiration. This spirit of inspiration, when combined with the ingrained human desire to help others, can make a real difference in the community. If you're interested in nurturing and embracing your instinct for freedom, we invite you to partner with us in meaningful ways that ensure your fundraising efforts have a far-reaching, lasting impact. Join us, get "Nfused," and live Free!
+              The pursuit of freedom for individuals is a constitutional and universal aspiration. This spirit of inspiration, when combined with the ingrained human desire to help others, can make a real difference in the community. If you're interested in nurturing and embracing your instinct for freedom, we invite you to partner with us in meaningful ways that ensure your fundraising efforts have a far-reaching, lasting impact. Join us, get "Nfused", and live Free!
               </p>
               {/* <p>
               FIND YOUR PURPOSE.  Get Nufsed.  Live free.
