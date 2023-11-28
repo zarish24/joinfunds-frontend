@@ -1378,7 +1378,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
   onChange={(e) => {
     const enteredValue = e.target.value;
 
-    if (/^\d*$/.test(enteredValue) && enteredValue.length <= 6) {
+    if (/^\d*$/.test(enteredValue) && enteredValue.length <= 5) {
       setZip(enteredValue);
       setZipError(false);
     } else {
@@ -1392,7 +1392,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
     border: `2px solid ${zipError ? 'red' : '#ccc'}`, 
   }}
 />  {zipErrorLength && (
-                    <Error className="input feedback">Postal Code Must be 6 Digits </Error>
+                    <Error className="input feedback">Postal Code Must be 5 Digits </Error>
                   )}
                   {zipError && (
                     <Error className="input feedback">Postal Code is required</Error>

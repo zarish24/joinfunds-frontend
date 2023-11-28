@@ -110,7 +110,7 @@ const closeModal = () => {
   const [modalStripeDonate, setModalStripeDonate] = useState(false);
   const [referModal, setReferModal] = useState(false);
   const [campaign, setCampaign] = useState({});
-  console.log('campaign campaign', campaign)
+  // console.log('campaign campaign', campaign)
   const [comments, setComments] = useState([]);
   const [donners, setDonners] = useState([]);
   const [topDonners, setTopDonners] = useState([]);
@@ -843,7 +843,7 @@ const closeModal = () => {
 </p>
 
                   {/* // {console.log("sdds", user_id, campaign)} */}
-                  {user_id !== campaign?.user_id ? (
+                  {/* {user_id !== campaign?.user_id ? (
                     <>
                       <ul className="fundraiser-bottom">
                         <li>
@@ -856,32 +856,12 @@ const closeModal = () => {
                             <i className="flaticon-like me-2"></i> Donate Now
                           </Link>
                         </li>
-                        {/* <li>
-                      <a
-                        href="https://www.facebook.com/login/"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="btn facebook btn-primary btn-sm"
-                      >
-                        <i className="fa-brands fa-facebook-square me-2"></i>{" "}
-                        Spread The World
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="https://web.whatsapp.com/"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="btn whatsapp btn-primary btn-sm"
-                      >
-                        <i className="fa-brands fa-whatsapp me-2"></i>Share
-                      </a>
-                    </li> */}
+                       
                       </ul>
                     </>
                   ) : (
                     <></>
-                  )}
+                  )} */}
                 </div>
                 <h5>Donners Detail</h5>
                 {donners && donners.length === 0 ? (

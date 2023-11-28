@@ -11,7 +11,7 @@ import bg from "../assets/images/banner/bnr5.jpg";
 import axios from "axios";
 const RecordsPerPage = 12;
 const Project = () => {
-  const [campaignType, setCampaignType] = useState("Campaign Type");
+  const [campaignType, setCampaignType] = useState("");
   const [campaignStatus, setCampaignStatus] = useState("Campaign Status");
   const [campaigns, setCampaigns] = useState([]);
   const [page, setPage] = useState(1);
@@ -26,6 +26,9 @@ const Project = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
+        if (campaignType === "Campaign Type") {
+          data.campaign_type = campaignType;
+        }
         const data = {
           status: "",
           category_id: CategoryId,
@@ -107,47 +110,24 @@ const Project = () => {
             <div className={`${styles.find} bg-white`}>
               <form>
                 <div className="row align-items-center">
-                  <Dropdown className="col-lg-3 col-md-4 select-drop-2">
-                    <Dropdown.Toggle
-                      as="div"
-                      className="i-false select-drop-btn-2"
-                    >
-                      <span>{campaignType}</span>
-                      <i className="fa-regular fa-angle-down"></i>
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu>
-                      <Dropdown.Item
-                        onClick={() => setCampaignType("Campaign Type")}
-                      >
-                        Campaign Type
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        onClick={() => setCampaignType("All Category")}
-                      >
-                        All
-                      </Dropdown.Item>
-                      <Dropdown.Item onClick={() => setCampaignType("funding")}>
-                        funding
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        onClick={() => setCampaignType("donation")}
-                      >
-                        donation
-                      </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
+                <Dropdown className="col-lg-3 col-md-4 select-drop-2">
+  <Dropdown.Toggle as="div" className="i-false select-drop-btn-2">
+  </Dropdown.Toggle>
+ 
+</Dropdown>
 
-                  <div className="col-lg-6 col-md-8">
-                    <div className="input-group">
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Find Projects"
-                        value={searchText}
-                        onChange={(e) => setSearchText(e.target.value)}
-                      />
-                    </div>
-                  </div>
+
+<div className="col-lg-6 col-md-8">
+  <div className="input-group ml-auto">
+    <input
+      type="text"
+      className="form-control"
+      placeholder="Find Projects"
+      value={searchText}
+      onChange={(e) => setSearchText(e.target.value)}
+    />
+  </div>
+</div>
                 </div>
               </form>
             </div>

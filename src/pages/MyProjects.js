@@ -10,7 +10,7 @@ import bg from "../assets/images/banner/bnr5.jpg";
 import axios from "axios";
 const RecordsPerPage = 12;
 const MyProjects = () => {
-  const [campaignType, setCampaignType] = useState("Campaign Type");
+  const [campaignType, setCampaignType] = useState("");
   const [campaignStatus, setCampaignStatus] = useState("Campaign Status");
   const [campaigns, setCampaigns] = useState([]);
   const [page, setPage] = useState(1);
@@ -29,9 +29,9 @@ console.log('searchText',searchText)
       try {
        
         const data = {
-          status: campaignStatus,
           category_id:CategoryId,
-          campaign_type: campaignType,
+          status: "",
+          campaign_type: "",
           title_search: searchText,
           user_id:id,
           items_per_page: RecordsPerPage,
@@ -97,9 +97,9 @@ console.log('searchText',searchText)
     try {
       // console.log("user_id", user_id);
       const data = {
-        status: campaignStatus,
+        status: "",
         category_id:CategoryId,
-        campaign_type: campaignType,
+        campaign_type: "",
         title_search: searchText,
         user_id:id,
         items_per_page: RecordsPerPage,
@@ -172,7 +172,7 @@ console.log('searchText',searchText)
                 <div className="row align-items-center">
                   {/* <div className="col-lg-3 col-md-4">
                     <div className=""> */}
-                      <Dropdown className="col-lg-3 col-md-4 select-drop-2">
+                      {/* <Dropdown className="col-lg-3 col-md-4 select-drop-2">
                         <Dropdown.Toggle
                           as="div"
                           className="i-false select-drop-btn-2"
@@ -202,13 +202,13 @@ console.log('searchText',searchText)
                             donation
                           </Dropdown.Item>
                         </Dropdown.Menu>
-                      </Dropdown>
+                      </Dropdown> */}
                       <Dropdown className="col-lg-3 col-md-4 select-drop-2">
                         <Dropdown.Toggle
                           as="div"
                           className="i-false select-drop-btn-2"
                         >
-                          <span>{campaignStatus}</span>
+                         <span>{campaignStatus ? campaignStatus : "Campaign Status"}</span>
                           <i className="fa-regular fa-angle-down"></i>
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
@@ -220,18 +220,18 @@ console.log('searchText',searchText)
                           <Dropdown.Item
                             onClick={() => setCampaignStatus("open")}
                           >
-                            open
+                            Published
                           </Dropdown.Item>
                           <Dropdown.Item
                             onClick={() => setCampaignStatus("close")}
                           >
-                            close
+                            UnPublished
                           </Dropdown.Item>
-                          <Dropdown.Item
+                          {/* <Dropdown.Item
                             onClick={() => setCampaignStatus("pending")}
                           >
                             pending
-                          </Dropdown.Item>
+                          </Dropdown.Item> */}
                           {/* <Dropdown.Item
                             onClick={() => setCampaignStatus("reject")}
                           >
