@@ -10,8 +10,8 @@ import bg from "../assets/images/banner/bnr5.jpg";
 import axios from "axios";
 const RecordsPerPage = 12;
 const MyProjects = () => {
-  const [campaignType, setCampaignType] = useState("");
-  const [campaignStatus, setCampaignStatus] = useState("");
+  const [campaignType, setCampaignType] = useState("Campaign Type");
+  const [campaignStatus, setCampaignStatus] = useState("Campaign Status");
   const [campaigns, setCampaigns] = useState([]);
   const [page, setPage] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);

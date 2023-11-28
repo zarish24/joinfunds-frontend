@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import {Link} from 'react-router-dom';
 import axios from "axios";
-import  large from '../assets/images/blog/large/pic1.jpg';
-import  blog2 from '../assets/images/blog/blog-grid/pic2.jpg';
+import  large from '../assets/images/IMG-20231128-WA0012.jpg';
+import  blog2 from '../assets/images/IMG-20231128-WA0006.jpg';
 import  blog1 from '../assets/images/blog/blog-grid/pic1.jpg';
 import  test from '../assets/images/testimonials/pic2.jpg';
 import avat1 from '../assets/images/avatar/avatar1.jpg';
@@ -10,7 +10,7 @@ import avat2 from '../assets/images/avatar/avatar2.jpg';
 import avat3 from '../assets/images/avatar/avatar3.jpg';
 import avat4 from '../assets/images/avatar/avatar4.jpg';
 import "./styles.module.scss"
-
+import {img} from '../../src/assets/images/IMG-20231128-WA0012.jpg'
 export const CommentBlog = (props) => {
     const [replying, setReplying] = useState(false);
     const [replyText, setReplyText] = useState('');
@@ -172,9 +172,9 @@ const BlogDetailsLeftBar = () => {
                     <div className="dz-post-text">
                         <h1 className="dz-title">How You Can Make a Difference This December</h1>
                         <p>Amidst the joyous festivities and gift-giving rituals of the holiday season, it's easy to get swept away in the whirl wind of preparations and lose sight of the true essence of this particular time. The holidays are not just about material possessions and external celebrations; they are a profound opportunity to reflect on our blessings, express gratitude, and extend kindness to those in need.</p>
-                        <ul className="wp-block-gallery columns-3">
+                        <ul className="wp-block-gallery ">
                             <li className="blocks-gallery-item"><img alt="" src={blog2} /></li>
-                            <li className="blocks-gallery-item"><img alt="" src={blog1} /></li>
+                            {/* <li className="blocks-gallery-item"><img alt="" src={blog1} /></li> */}
                         </ul>
                         <p>This year, let us make a conscious effort to revert our focus to the core values that underpin the holiday spirit – giving, donating, crowdfunding, safeguarding freedom of speech, and upholding the sound of freedom. By extending our generosity and compassion, not only we can bring joy and relief to others but also enrich our own lives and contribute to a more just and compassionate world.</p>
                         <blockquote hidden className="block-quote style-1">

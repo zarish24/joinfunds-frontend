@@ -4,9 +4,9 @@ import { Accordion } from 'react-bootstrap';
 
 import PageBanner from './../layouts/PageBanner';
 import bgImage from './../assets/images/banner/bnr4.jpg';
-import project3 from './../assets/images/project/pic3.jpg';
-import project2 from './../assets/images/project/pic2.jpg';
-import project6 from './../assets/images/project/pic6.jpg';
+import project3 from './../assets/images/IMG-20231128-WA0004.jpg';
+import project2 from './../assets/images/IMG-20231128-WA0004.jpg';
+import project6 from './../assets/images/IMG-20231128-WA0004.jpg';
 import UpdateBlog from '../components/Home/UpdateBlog';
 
 

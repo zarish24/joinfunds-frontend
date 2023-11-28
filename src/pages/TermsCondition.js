@@ -10,7 +10,7 @@ const TermsCondition = () => {
     return (
         <>
 	        <div className="page-content bg-white">
-                <PageBanner maintitle="Home" pagetitle="Terms And Condition" background={bg} />
+                <PageBanner maintitle="Home" pagetitle="Terms And Conditions" background={bg} />
                 <div className="content-inner-2">
                     <div className="container">
                         <div className="row dz-terms">

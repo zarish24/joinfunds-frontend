@@ -209,7 +209,7 @@ const ContactUs = () => {
                 <section className="clients-wrapper p-0">
                     <div className="container">
                         <div className="section-head text-center">
-                            <h3 className="title">Our Partnership</h3>
+                            <h3 className="title">Our Partnerships</h3>
                         </div>
                         <PartnershipSlider />
                     </div>

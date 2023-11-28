@@ -624,7 +624,7 @@ const config = {
         }
     
         // Validate zip code
-        if (zip.length !== 6) {
+        if (zip.length !== 5) {
             setZipErrorLength(true);
             setLoading(false);
             return;

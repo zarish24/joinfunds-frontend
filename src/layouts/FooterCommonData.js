@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-
+import { IMAGES } from "../constant/theme";
 const FooterCommonData = ({logoImage, iconStyle}) => {
     return (
         <>
@@ -27,12 +27,12 @@ const FooterCommonData = ({logoImage, iconStyle}) => {
                     <h5 className="footer-title">Resources</h5>
                     <ul>
                         {/* <li><Link to={"/how-it-works"}>How It Works</Link></li> */}
-                        <li><Link to={"#"}>Ask A Question</Link></li>
-                        <li><Link to={"#"}>Help center</Link></li>
+                        {/* <li><Link to={"#"}>Ask A Question</Link></li> */}
+                        <li><Link to={"/contact-us"}>Help center</Link></li>
                         {/* to={"/mission"} */}
-                        <li><Link >Blog</Link></li>
-                        <li><Link to={"#"}>Careers</Link></li>
-                        <li><Link to={"/terms-and-condition"}>Terms And Condition</Link></li>
+                        <li><Link to={"/blog-details1"} >Blogs</Link></li>
+                        {/* <li><Link to={"#"}>Careers</Link></li> */}
+                        <li><Link to={"/terms-and-condition"}>Terms And Conditions</Link></li>
                     </ul>
                 </div>
             </div>
@@ -52,7 +52,7 @@ const FooterCommonData = ({logoImage, iconStyle}) => {
             </div>
             <div className="col-xl-4 col-lg-4 col-md-6">
                 <div className="widget widget_getintuch">
-                    <h5 className="footer-title">Get in Touch with Us</h5>
+                    <h5 className="footer-title">Get in touch with us</h5>
                     <ul>
                         {/* <li>
                             {iconStyle   ? 
