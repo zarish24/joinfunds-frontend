@@ -84,29 +84,35 @@ function RightImage({ mainImage, paraModal }) {
     return (
       <>
         <div>
-          {Story &&
-            Story.map((story) => (
-              <div key={story._id} className="col-lg-10 offset-lg-2 m-b50">
-                <div className="testimonial-3 right">
-                  <div className="testimonial-content">
-                    <h5 className="testimonial-title">{story.campaign_title}</h5>
-                    <p className="testimonial-text">{story.successStoryMessage}</p>
-                    <div className="testimonial-info">
-                      <div className="quotes">
-                        <i className="fa-solid fa-quote-left"></i>
-                      </div>
-                      <div className="clearfix">
-                        <h5 className="testimonial-name">{`${story.firstName} ${story.lastName}`}</h5>
-                        <span className="testimonial-position">{story.designation}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="testimonial-media">
-                    <img src={story.campaign_image} alt="" />
-                  </div>
-                </div>
-              </div>
-            ))}
+        {Story &&
+  Story.map((story, index) => (
+    <div
+      key={story._id}
+      className={`col-lg-10 m-b50 ${
+        index % 2 === 0 ? "text-lg-start" : "text-lg-end"
+      }`}
+    >
+      <div className="testimonial-3">
+        <div className="testimonial-media">
+          <img src={story.campaign_image} alt="" />
+        </div>
+        <div className="testimonial-content">
+          <h5 className="testimonial-title">{story.campaign_title}</h5>
+          <p className="testimonial-text">{story.successStoryMessage}</p>
+          <div className="testimonial-info">
+            <div className="quotes">
+              <i className="fa-solid fa-quote-left"></i>
+            </div>
+            <div className="clearfix">
+              <h5 className="testimonial-name">{`${story.firstName} ${story.lastName}`}</h5>
+              <span className="testimonial-position">{story.designation}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  ))}
+
         </div>
       </>
     );

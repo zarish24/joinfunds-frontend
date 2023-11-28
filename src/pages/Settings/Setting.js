@@ -499,7 +499,7 @@ const config = {
             return;
         }         
         else {
-            console.log('Elseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', legalSecurityNumber.length);
+            // console.log('Elseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', legalSecurityNumber.length);
             const items = JSON.parse(localStorage.getItem('user'));
             const token = items?.token;       
             setLoading(true);
@@ -666,10 +666,11 @@ const config = {
             const res = await axios.put(`${process.env.REACT_APP_BACKEND_URL}/api/user`, formData, config);
     
             if (res.status === 200 || res.status === 201) {
+                console.log('res img', res)
                 setUrlImage(res.data.data.doc.profileImage);
                 fetchProfileDetails();
                 setLoading(false);
-                toast.success('Profile updated successfully!');
+                toast.success(res.data.messsage);
             } else {
                 setLoading(false);
                 toast.error('Something went wrong!');
@@ -1017,7 +1018,7 @@ const config = {
                
                 />
                 {zipErrorLength && (
-                    <Error className="input feedback">Postal Code Must be 6 Digits </Error>
+                    <Error className="input feedback">Postal Code Must be 5 Digits </Error>
                   )}
          
                                                 </form>
