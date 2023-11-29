@@ -157,7 +157,7 @@ const Home3 = () => {
                             <div class="row section-head align-items-center">
                                 <div class="col-lg-8 col-md-12 wow fadeInUp" data-wow-delay="0.2s">
                                     {/* <h5 class="sub-title">LATEST CAUSES</h5> */}
-                                    <h2>Latest Fundraisers</h2>
+                                    <h2>Top Trend's </h2>
                                 </div>
                                 <div class="col-lg-4 col-md-12 text-end d-none d-lg-block wow fadeInUp" data-wow-delay="0.4s">
                                     <Link to={"/campaigns"} class="btn btn-primary">View All Causes</Link>

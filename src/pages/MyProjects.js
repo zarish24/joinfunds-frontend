@@ -11,7 +11,7 @@ import axios from "axios";
 const RecordsPerPage = 12;
 const MyProjects = () => {
   const [campaignType, setCampaignType] = useState("");
-  const [campaignStatus, setCampaignStatus] = useState("Campaign Status");
+  const [campaignStatus, setCampaignStatus] = useState("");
   const [campaigns, setCampaigns] = useState([]);
   const [page, setPage] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
@@ -30,7 +30,7 @@ console.log('searchText',searchText)
        
         const data = {
           category_id:CategoryId,
-          status: "",
+          status: campaignStatus,
           campaign_type: "",
           title_search: searchText,
           user_id:id,
@@ -42,13 +42,13 @@ console.log('searchText',searchText)
             Authorization: `Bearer ${token}`, 
           },
         };
-        if (campaignType !== "Campaign Type") {
-          data.campaign_type = campaignType;
-        }
+        // if (campaignType !== "Campaign Type") {
+        //   data.campaign_type = campaignType;
+        // }
 
-        if (campaignStatus !== "Campaign Status") {
-          data.status = campaignStatus;
-        }
+        // if (campaignStatus !== "Campaign Status") {
+        //   data.status = campaignStatus;
+        // }
         const response = await axios
           .post(
             `${process.env.REACT_APP_BACKEND_URL}/api/compaign/getMyCampaigns`,
@@ -84,6 +84,7 @@ console.log('searchText',searchText)
     if (user && user._id) {
       fetchData(user._id,user.token);
     }
+    fetchData();
     // Call the async function
   }, [currentPage,campaignType,campaignStatus,CategoryId,searchText]);
 
@@ -107,16 +108,16 @@ console.log('searchText',searchText)
       };
       const config = {
         headers: {
-          Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
+          Authorization: `Bearer ${token}`, 
         },
       };
-      if (campaignType !== "Campaign Type") {
-        data.campaign_type = campaignType;
-      }
+      // if (campaignType !== "Campaign Type") {
+      //   data.campaign_type = campaignType;
+      // }
 
-      if (campaignStatus !== "Campaign Status") {
-        data.status = campaignStatus;
-      }
+      // if (campaignStatus !== "Campaign Status") {
+      //   data.status = campaignStatus;
+      // }
       const response = await axios
         .post(
           `${process.env.REACT_APP_BACKEND_URL}/api/compaign/getMyCampaigns`,
@@ -204,41 +205,23 @@ console.log('searchText',searchText)
                         </Dropdown.Menu>
                       </Dropdown> */}
                       <Dropdown className="col-lg-3 col-md-4 select-drop-2">
-                        <Dropdown.Toggle
-                          as="div"
-                          className="i-false select-drop-btn-2"
-                        >
-                         <span>{campaignStatus ? campaignStatus : "Campaign Status"}</span>
-                          <i className="fa-regular fa-angle-down"></i>
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu>
-                          <Dropdown.Item
-                            onClick={() => setCampaignStatus("Campaign Status")}
-                          >
-                            Campaign Status
-                          </Dropdown.Item>
-                          <Dropdown.Item
-                            onClick={() => setCampaignStatus("open")}
-                          >
-                            Published
-                          </Dropdown.Item>
-                          <Dropdown.Item
-                            onClick={() => setCampaignStatus("close")}
-                          >
-                            UnPublished
-                          </Dropdown.Item>
-                          {/* <Dropdown.Item
-                            onClick={() => setCampaignStatus("pending")}
-                          >
-                            pending
-                          </Dropdown.Item> */}
-                          {/* <Dropdown.Item
-                            onClick={() => setCampaignStatus("reject")}
-                          >
-                            reject
-                          </Dropdown.Item> */}
-                        </Dropdown.Menu>
-                      </Dropdown>
+      <Dropdown.Toggle as="div" className="i-false select-drop-btn-2">
+        <span>{campaignStatus || 'campaignStatus'}</span>
+        <i className="fa-regular fa-angle-down"></i>
+      </Dropdown.Toggle>
+      <Dropdown.Menu>
+        <Dropdown.Item onClick={() => setCampaignStatus("")}>
+          Campaign Status
+        </Dropdown.Item>
+        <Dropdown.Item onClick={() => setCampaignStatus("open")}>
+          open
+        </Dropdown.Item>
+        <Dropdown.Item onClick={() => setCampaignStatus("close")}>
+          close
+        </Dropdown.Item>
+        {/* Additional options */}
+      </Dropdown.Menu>
+    </Dropdown>
                     {/* </div>
                   </div> */}
                   <div className="col-lg-6 col-md-8">

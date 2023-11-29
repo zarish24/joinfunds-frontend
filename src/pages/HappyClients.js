@@ -89,7 +89,7 @@ function RightImage({ mainImage, paraModal }) {
     <div
       key={story._id}
       className={`col-lg-10 m-b50 ${
-        index % 2 === 0 ? "text-lg-start" : "text-lg-end"
+        index % 2 === 0 ? "text-lg-start" : "text-lg-start"
       }`}
     >
       <div className="testimonial-3">

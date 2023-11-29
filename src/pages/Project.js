@@ -11,8 +11,8 @@ import bg from "../assets/images/banner/bnr5.jpg";
 import axios from "axios";
 const RecordsPerPage = 12;
 const Project = () => {
-  const [campaignType, setCampaignType] = useState("");
-  const [campaignStatus, setCampaignStatus] = useState("Campaign Status");
+  const [campaignType, setCampaignType] = useState("Campaign Status");
+  const [campaignStatus, setCampaignStatus] = useState("");
   const [campaigns, setCampaigns] = useState([]);
   const [page, setPage] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
@@ -26,30 +26,23 @@ const Project = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        if (campaignType === "Campaign Type") {
-          data.campaign_type = campaignType;
-        }
+      
         const data = {
-          status: "",
+          status: campaignStatus,
           category_id: CategoryId,
           campaign_type: "",
           title_search: searchText,
           items_per_page: RecordsPerPage,
           page: currentPage,
         };
-        // const config = {
-        //   headers: {
-        //     Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
-        //   },
-        // };
-        // console.log("campggg",campaignType)
-        if (campaignType !== "Campaign Type") {
-          data.campaign_type = campaignType;
-        }
+       
+        // if (campaignType !== "Campaign Type") {
+        //   data.campaign_type = campaignType;
+        // }
 
-        if (campaignStatus !== "Campaign Status") {
-          data.status = campaignStatus;
-        }
+        // if (campaignStatus !== "Campaign Status") {
+        //   data.status = campaignStatus;
+        // }
 
         const response = await axios
           .post(
@@ -89,7 +82,7 @@ const Project = () => {
     // }
 
     // Call the async function
-  }, [currentPage, campaignType, CategoryId, searchText]);
+  }, [currentPage, campaignStatus, CategoryId, searchText]);
   const goToNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
@@ -111,10 +104,23 @@ const Project = () => {
               <form>
                 <div className="row align-items-center">
                 <Dropdown className="col-lg-3 col-md-4 select-drop-2">
-  <Dropdown.Toggle as="div" className="i-false select-drop-btn-2">
-  </Dropdown.Toggle>
- 
-</Dropdown>
+      <Dropdown.Toggle as="div" className="i-false select-drop-btn-2">
+        <span>{campaignStatus || 'campaignStatus'}</span>
+        <i className="fa-regular fa-angle-down"></i>
+      </Dropdown.Toggle>
+      <Dropdown.Menu>
+        <Dropdown.Item onClick={() => setCampaignStatus("")}>
+          Campaign Status
+        </Dropdown.Item>
+        <Dropdown.Item onClick={() => setCampaignStatus("open")}>
+          open
+        </Dropdown.Item>
+        <Dropdown.Item onClick={() => setCampaignStatus("close")}>
+          close
+        </Dropdown.Item>
+        {/* Additional options */}
+      </Dropdown.Menu>
+    </Dropdown>
 
 
 <div className="col-lg-6 col-md-8">
