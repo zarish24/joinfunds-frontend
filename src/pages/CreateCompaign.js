@@ -243,8 +243,7 @@ const CreateCompaign = () => {
       start_date: formData.start_date,
       end_date: formData.end_date,
       campaign_status: formData.campaign_status,
-      campaign_type: formData.campaign_type, 
-      user_id: formData.user_id
+      campaign_type: formData.campaign_type,
     };
 
     const bodyData = new FormData();
