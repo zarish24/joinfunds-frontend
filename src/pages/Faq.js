@@ -11,12 +11,12 @@ import UpdateBlog from '../components/Home/UpdateBlog';
 
 
 const accordBlog = [
-    {
-        title: "How does the money I raise get to my account?",
-        paragraph: "Nfuse uses Stripe as our payment processor. When you create your campaign, you'll add a Stripe email address so that donations go directly to your account." +
-        "You or the campaign recipient will add your personal details and banking information to your Stripe Account, which is separate from Nfuse. Once your Stripe account is set up, any donations made to your campaign will go straight to your Stripe account, and then to your bank account." +
-        "Stripe charges a fee of 2.9% + $0.30 per transaction - this goes to Stripe, Nfuse does not receive any part of that transaction cost.<br>"
-    },
+    // {
+    //     title: "How does the money I raise get to my account?",
+    //     paragraph: "Nfuse uses Stripe as our payment processor. When you create your campaign, you'll add a Stripe email address so that donations go directly to your account." +
+    //     "You or the campaign recipient will add your personal details and banking information to your Stripe Account, which is separate from Nfuse. Once your Stripe account is set up, any donations made to your campaign will go straight to your Stripe account, and then to your bank account." +
+    //     "Stripe charges a fee of 2.9% + $0.30 per transaction - this goes to Stripe, Nfuse does not receive any part of that transaction cost.<br>"
+    // },
     {
         title: "Are there any fees on donations made to my campaign?",
         paragraph:

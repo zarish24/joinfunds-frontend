@@ -992,7 +992,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
           </Box>
           <div className="sign-text">
             <span>
-              Sign Up Don't have a Crowdfunding account?
+               Don't have a Nfuse account ?
               <Link
                 to={"#"}
                 className="btn-link collapsed"
@@ -1551,7 +1551,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
 
           <div className="sign-text">
             <span>
-              Already have a Crowdfunding account?{" "}
+              Already have a Nfuse account?{" "}
               <Link
                 to="#"
                 className="btn-link collapsed"

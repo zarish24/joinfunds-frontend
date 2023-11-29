@@ -436,7 +436,7 @@ const PasswordResetPageHeader = ({onShowDonate, changeStyle, changeLogo}) => {
                         <input type="password" className="form-control" placeholder="New Password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)}/>
                         </div>
                         <div className="form-group">
-                        <input type="password" className="form-control" placeholder="Conferm Password" value={confermNewPassword} onChange={(e) => setConfermNewPassword(e.target.value)}/>
+                        <input type="password" className="form-control" placeholder="Confirm Password" value={confermNewPassword} onChange={(e) => setConfermNewPassword(e.target.value)}/>
                         </div>
                         <div className="form-group">
                             <button type="submit" className="btn btn-outline-primary btn-block">Forgot Password</button>

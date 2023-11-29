@@ -123,7 +123,7 @@ console.log('Self ',Self);
   const [user_id, setUser_id] = useState("");
   const [amount1, setAmount1] = useState(0);   
   const [donationTypes, setDonationTypes] = useState('singleDonation');
-  const [gift, setGift] = useState("");  
+  const [gift, setGift] = useState(0);  
   const [totalCharges, setTotalCharges] = useState(0);   
   const [email, setEmail] = useState("");       
   const [Designation, setDesignation] = useState("");
@@ -274,7 +274,7 @@ console.log('Self ',Self);
             );
           } else {
             response = await axios.post(
-              `${process.env.REACT_APP_BACKEND_URL}/api/payments/makeStripeAnonymousPayment`,
+              `${process.env.REACT_APP_BACKEND_URL}/api/payments/makeStripeAnonymousUserPayment`,
               bodyData
             );
           }
@@ -670,16 +670,20 @@ console.log('Self ',Self);
       const items = JSON.parse(localStorage.getItem('user'));
       const token = items?.token;
       try {
-        const config = {
-          headers: {
-            Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
-          },
+        let config = {}; // Default empty config
+
+        if (token) {
+          config = {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          };
         }
-        const response = await axios
-          .get(
-            `${process.env.REACT_APP_BACKEND_URL}/api/compaign/getSingleCompaign/${id}`,
-            config
-          )
+        
+        const response = await axios.get(
+          `${process.env.REACT_APP_BACKEND_URL}/api/compaign/getSingleCompaign/${id}`,
+          config
+        )
           .then((res) => {
             if (res.status === 200 || res.status === 201) {
               // console.log("all-com", res);
