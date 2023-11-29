@@ -206,18 +206,28 @@ console.log('searchText',searchText)
                       </Dropdown> */}
                       <Dropdown className="col-lg-3 col-md-4 select-drop-2">
       <Dropdown.Toggle as="div" className="i-false select-drop-btn-2">
-        <span>{campaignStatus || 'campaignStatus'}</span>
-        <i className="fa-regular fa-angle-down"></i>
+      <span>
+  {(() => {
+    switch (campaignStatus) {
+      case 'open':
+        return 'Open Campaigns';
+      case 'close':
+        return 'Closed Campaigns';
+      default:
+        return 'Campaign Status';
+    }
+  })()}
+</span>
       </Dropdown.Toggle>
       <Dropdown.Menu>
         <Dropdown.Item onClick={() => setCampaignStatus("")}>
           Campaign Status
         </Dropdown.Item>
         <Dropdown.Item onClick={() => setCampaignStatus("open")}>
-          open
+        Open Campaigns
         </Dropdown.Item>
         <Dropdown.Item onClick={() => setCampaignStatus("close")}>
-          close
+        Closed Campaigns
         </Dropdown.Item>
         {/* Additional options */}
       </Dropdown.Menu>

@@ -103,7 +103,7 @@ const ContactUs = () => {
                     <div className="container-fluid">
                         <div className="map-iframe style-1">
                             {/* <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14448.884443175983!2d75.81853095!3d25.128214449999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396f835fcc2a9e43%3A0x69e74069e551d77d!2sRajasthan%20Technical%20University%2C%20Kota!5e0!3m2!1sen!2sin!4v1645506412870!5m2!1sen!2sin" style={{border:"0"}} allowfullscreen="" loading="lazy"></iframe> */}
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d50921.957033264225!2d-95.75409074959893!3d37.090301341761!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54eab584e432360b%3A0x1c3bb99243deb742!2sUnited%20States!5e0!3m2!1sen!2s!4v1700467956131!5m2!1sen!2s" style={{border:"0"}} allowfullscreen="" loading="lazy" ></iframe>
+                            {/* <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d50921.957033264225!2d-95.75409074959893!3d37.090301341761!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54eab584e432360b%3A0x1c3bb99243deb742!2sUnited%20States!5e0!3m2!1sen!2s!4v1700467956131!5m2!1sen!2s" style={{border:"0"}} allowfullscreen="" loading="lazy" ></iframe> */}
                         </div>
                         <div className="row justify-content-end">
                             <div className="col-xl-6 col-lg-8 col-sm-12">
