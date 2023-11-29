@@ -72,6 +72,7 @@ const Home3 = () => {
         nav("/contact-us");
     };
     useEffect(() => {
+        console.log('Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
         const fetchData = async () => {
           try {
             // const config = {
@@ -192,7 +193,7 @@ const Home3 = () => {
                                         <div className="row">
                                             <div className="col-lg-6 col-sm-6">
                                                 <ul className="list-check-3">
-                                                    <li>Food Contribution</li>
+                                                    <li>Food Contributions</li>
                                                     <li>Medical Care</li>
                                                     <li>Education</li>
                                                     <li>Emergency</li>

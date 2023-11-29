@@ -27,6 +27,7 @@ import avat3 from './../../assets/images/avatar/avatar3.jpg';
 
 const TrendingSlider2 = (props) => {
     const dataBlog = props.campaigns
+    console.log('dataBlog ',dataBlog );
     const calculateDaysLeft = (startDateString, endDateString) => {
         const today = new Date();
         const startDate = new Date(startDateString);
@@ -44,12 +45,12 @@ const TrendingSlider2 = (props) => {
           return Math.ceil(timeDiff / (1000 * 60 * 60 * 24)); // Days left for the ongoing campaign
         }
       };
-      
+    //   const slidesPerView = dataBlog.length === 1 ? 1 : 3;
     return (
         <> 
             <Swiper className="recent-blog2"
 				speed= {1500}
-				//parallax= {true}
+				parallax= {true}
 				slidesPerView= {5}
 				spaceBetween= {30}
 				loop={true}
@@ -57,73 +58,69 @@ const TrendingSlider2 = (props) => {
 				   delay: 3000,
 				}}
 				modules={[ Autoplay ]}
-				breakpoints = {{
-					1600: {
-                        slidesPerView: 5,
-                    },
-                    1281: {
-                        slidesPerView: 4,
-                    },
-                    1024: {
-                        slidesPerView: 3,
-                    },
-                    767: {
-                        slidesPerView: 2,
-                    },
-                    320: {
-                        slidesPerView: 1,
-                    },
-				}}
+				// breakpoints = {{
+				// 	1600: {
+                //         slidesPerView: 5,
+                //     },
+                //     1281: {
+                //         slidesPerView: 4,
+                //     },
+                //     1024: {
+                //         slidesPerView: 3,
+                //     },
+                //     767: {
+                //         slidesPerView: 2,
+                //     },
+                //     320: {
+                //         slidesPerView: 1,
+                //     },
+				// }}
 			>	
-				{dataBlog?.map((d,i)=>(
-					<SwiperSlide key={i}>	
-                    {/* {console.log("value of d",d)} */}
-                        <div className="dz-card style-5">
-                            <div className="dz-media square-container bg-danger">
-                                <Link to={`/fundraiser-detail/${d?._id}`}>
-                                    <img src={d?.campaign_images[0]?.url} alt="" className="img1" />
-                                </Link>
-                            </div>
-                            <div className="dz-info">
-                                <ul className="dz-category">
-                                    <li><Link to={"#"}>{d?.subtitle}</Link></li>
-                                </ul>                                
-                                <h5 className="dz-title"><Link to={`/fundraiser-detail/${d?._id}`}>{d?.title} </Link></h5>  
-                                <ul className="dz-meta">
-                                    <li className="author-wrappper author-wrappper-sm mt-0">
-                                        <div className="author-media">
-                                            <img src={d?.campaignuserDetails?.profileImage} alt="" /> 
-                                        </div>
-                                        <span>{d?.campaignuserDetails?.firstName} {d?.campaignuserDetails?.lastName}</span>
-                                    </li>
-                                    <li key={d._id} className="dz-date">
-                                    <i className="fa-solid fa-calendar"></i>
-                                    <span>
-                                        {calculateDaysLeft(d.start_date, d.end_date) !== null
-                                        ? `  ${calculateDaysLeft(d.start_date, d.end_date)} Days left`
-                                        : 'Invalid date format'}
-                                    </span>
-                                    </li>
-                                    {/* <li className="dz-date">
-                                        <i className="fa-solid fa-calendar"></i>
-                                        {" "}<span>45 Days left</span>
-                                    </li> */}
-                                </ul>
-                                {/* <p>Alienum phaedrum torquatos nec eu, vis detraxit periculis ex..</p>  */}
-                                <div className="progress-bx style-2">
-                                    <div className="progress">
-                                        <div className="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style={{width:d?.progress}}>
-                                            <span className="progress-value">{d.progress}</span>
-                                        </div>
-                                    </div>
-                                    <ul className="progress-tag">
-                                        <li className="raised">Raised: <span className="text-primary">${d?.raised}</span></li>
-                                        <li className="goal">Goal: <span className="text-primary">${d?.total_funding}</span></li>
-                                    </ul>
-                                </div> 
-                            </div>
-                        </div>									
-					</SwiperSlide>
+                    {console.log("value of dataBlog",dataBlog.length)}
+
+				{dataBlog?.map((d, i) => (
+                      <SwiperSlide key={i}>
+                      <div className="dz-card style-5">
+                          <div className="dz-media square-container bg-danger" >
+                              <Link to={`/fundraiser-detail/${d?._id}`}>
+                                  <img src={d?.campaign_images[0]?.url} alt="" className="img1" />
+                              </Link>
+                          </div>
+                          <div className="dz-info">
+                              <ul className="dz-category">
+                                  <li><Link to={"#"}>{d?.subtitle}</Link></li>
+                              </ul>
+                              <h5 className="dz-title"><Link to={`/fundraiser-detail/${d?._id}`}>{d?.title}</Link></h5>
+                              <ul className="dz-meta">
+                                  <li className="author-wrappper author-wrappper-sm mt-0">
+                                      <div className="author-media">
+                                          <img src={d?.campaignuserDetails?.profileImage} alt="" />
+                                      </div>
+                                      <span>{d?.campaignuserDetails?.firstName} {d?.campaignuserDetails?.lastName}</span>
+                                  </li>
+                                  <li key={d._id} className="dz-date">
+                                      <i className="fa-solid fa-calendar"></i>
+                                      <span>
+                                          {calculateDaysLeft(d.start_date, d.end_date) !== null
+                                              ? `  ${calculateDaysLeft(d.start_date, d.end_date)} Days left`
+                                              : 'Invalid date format'}
+                                      </span>
+                                  </li>
+                              </ul>
+                              <div className="progress-bx style-2">
+                                  <div className="progress">
+                                      <div className="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style={{ width: d?.progress }}>
+                                          <span className="progress-value">{d.progress}</span>
+                                      </div>
+                                  </div>
+                                  <ul className="progress-tag">
+                                      <li className="raised">Raised: <span className="text-primary">${d?.raised}</span></li>
+                                      <li className="goal">Goal: <span className="text-primary">${d?.total_funding}</span></li>
+                                  </ul>
+                              </div>
+                          </div>
+                      </div>
+                  </SwiperSlide>			
 				))}				
 			</Swiper>
         </>

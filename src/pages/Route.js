@@ -28,6 +28,7 @@ import BrowseFundraiser from './BrowseFundraiser';
 import BecomeFundraiser from './BecomeFundraiser';
 import FundraiserDetail from './FundraiserDetail';
 import Project from './Project';
+import Privacy from './Privacy';
 import ProjectCategories from './ProjectCategories';
 import ProjectSidebar from './ProjectSidebar';
 import ProjectStory from './ProjectStory';
@@ -69,6 +70,7 @@ function Index(){
 					<Route path='/happy-clients' exact element={<HappyClients />} />
 					<Route path='/how-it-works' exact element={<HowItWorks />} />
 					<Route path='/mission' exact element={<Mission />} />
+					<Route path='/privacy-policy' exact element={<Privacy />} />
 					<Route path='/terms-and-condition' exact element={<TermsCondition />} />
 					<Route path='/browse-fundraiser' exact element={<BrowseFundraiser />} />
 					<Route path='/become-a-fundraiser' exact element={<BecomeFundraiser />} />

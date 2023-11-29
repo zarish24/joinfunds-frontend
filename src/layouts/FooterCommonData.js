@@ -33,6 +33,7 @@ const FooterCommonData = ({logoImage, iconStyle}) => {
                         <li><Link to={"/blog-details1"} >Blogs</Link></li>
                         {/* <li><Link to={"#"}>Careers</Link></li> */}
                         <li><Link to={"/terms-and-condition"}>Terms And Conditions</Link></li>
+                        <li><Link to={"/privacy-policy"}>Privacy Policy </Link></li>
                     </ul>
                 </div>
             </div>
@@ -47,6 +48,7 @@ const FooterCommonData = ({logoImage, iconStyle}) => {
                         {/* <li><Link to={"/contact-us"}>Contact Us</Link></li> */}
                         <li><Link to={"/faq"}>FAQ</Link></li>
                         <li><Link to={"/contact-us"}>Contact us </Link></li>
+                        
                     </ul>
                 </div>
             </div>
