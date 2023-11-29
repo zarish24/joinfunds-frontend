@@ -123,7 +123,7 @@ console.log('Self ',Self);
   const [user_id, setUser_id] = useState("");
   const [amount1, setAmount1] = useState(0);   
   const [donationTypes, setDonationTypes] = useState('singleDonation');
-  const [gift, setGift] = useState("");  
+  const [gift, setGift] = useState(0);  
   const [totalCharges, setTotalCharges] = useState(0);   
   const [email, setEmail] = useState("");       
   const [Designation, setDesignation] = useState("");
