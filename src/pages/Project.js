@@ -97,7 +97,7 @@ const Project = () => {
   return (
     <>
       <div className="page-content bg-white">
-        <PageBanner maintitle="Campaign" pagetitle="Campaign" background={bg} />
+        <PageBanner maintitle="Campaign" pagetitle="Campaigns" background={bg} />
         <div className="find-bx-wrapper">
           <div className="container">
             <div className={`${styles.find} bg-white`}>
@@ -105,7 +105,20 @@ const Project = () => {
                 <div className="row align-items-center">
                 <Dropdown className="col-lg-3 col-md-4 select-drop-2">
       <Dropdown.Toggle as="div" className="i-false select-drop-btn-2">
-        <span>{campaignStatus || 'campaignStatus'}</span>
+        {/* <span>{campaignStatus || 'Campaign Status'}</span> */}
+        <span>
+  {(() => {
+    switch (campaignStatus) {
+      case 'open':
+        return 'Open Campaigns';
+      case 'close':
+        return 'Closed Campaigns';
+      default:
+        return 'Campaign Status';
+    }
+  })()}
+</span>
+
         <i className="fa-regular fa-angle-down"></i>
       </Dropdown.Toggle>
       <Dropdown.Menu>
@@ -113,10 +126,10 @@ const Project = () => {
           Campaign Status
         </Dropdown.Item>
         <Dropdown.Item onClick={() => setCampaignStatus("open")}>
-          open
+          Open Campaigns
         </Dropdown.Item>
         <Dropdown.Item onClick={() => setCampaignStatus("close")}>
-          close
+          Closed Campaigns
         </Dropdown.Item>
         {/* Additional options */}
       </Dropdown.Menu>

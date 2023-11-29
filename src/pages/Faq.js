@@ -13,10 +13,9 @@ import UpdateBlog from '../components/Home/UpdateBlog';
 const accordBlog = [
     {
         title: "How does the money I raise get to my account?",
-        paragraph: `
-            Nfuse utilizes Stripe as its third-party payment processor. When setting up a campaign, you will link a Stripe account to it, and contributions will be directed straight to your connected Stripe account.<br>
-            It's important to note that your Stripe account operates independently of your Nfuse account. Refer to Stripe's terms of use for guidance, as they apply to any transactions conducted through Stripe via Nfuse.<br>
-        `
+        paragraph: "Nfuse uses Stripe as our payment processor. When you create your campaign, you'll add a Stripe email address so that donations go directly to your account." +
+        "You or the campaign recipient will add your personal details and banking information to your Stripe Account, which is separate from Nfuse. Once your Stripe account is set up, any donations made to your campaign will go straight to your Stripe account, and then to your bank account." +
+        "Stripe charges a fee of 2.9% + $0.30 per transaction - this goes to Stripe, Nfuse does not receive any part of that transaction cost.<br>"
     },
     {
         title: "Are there any fees on donations made to my campaign?",
@@ -31,18 +30,20 @@ const accordBlog = [
     {
         title: "How can I make sure my fundraiser is successful?",
         paragraph: `
-            While there is no way to guarantee success, there are a few things you can do to make it more likely that your campaign will succeed.<br>
-            1. First, make sure you have a compelling and detailed description. People are not likely to donate unless they understand who you are, who the beneficiary is, what happened, and why help is needed..<br>
-            2. Add clear and descriptive pictures. Videos are even better!<br>
-            3. Send personal emails, texts, or messages containing the link to as many of your close friends and family as you believe would be interested in helping the campaign.<br>
+        While there is no way to guarantee success, there are a few things you can do to make it more likely that your campaign will succeed.<br>
+            1. First, make sure you have a compelling and detailed description. People are not likely to donate unless they understand who you are, who the beneficiary is, what happened, and why help is needed.<br>
+            2. Add clear and descriptive pictures.  Videos are even better!<br>
+            3. Send personal emails, texts or messages containing the link to as many of your close friends and family as you believe would be interested in helping the campaign.<br>
             4. Show urgency by defining the specific thing that you need to raise money for and when you need it by.<br>
             5. Keep in contact with your donors and let them know how much you appreciate the support.
+
+
         `
     },
     {
         title: "What if my campaign ends and I want to continue fundraising?",
         paragraph:
-            "Nfuse campaigns are set to run for 90 days and will automatically end.  Should you need to extend your campaign, please send a message to info@nfuse-me.com and explain your situation.  The requires will be reviewed case by case."
+            "Nfuse campaigns are set to run for 90 days and will automatically end.  Should you need to extend your campaign, please send a message to info@nfuse-me.com and explain your situation.  The request will be reviewed case by case and only granted in rare exceptions."
     }
 ];
 
@@ -155,10 +156,11 @@ const Faq = () => {
                                         <div id="collapseOne1" className="accordion-collapse " eventKey="1">
                                             <Accordion.Body >
                                                 <p className="m-b0">
-                                                    Nfuse utilizes Stripe as its third-party payment processor. When setting up a campaign, you will link a Stripe account to it, and contributions will be directed straight to your connected Stripe account.
+                                                Nfuse uses Stripe as our payment processor. When you create your campaign, you'll add a Stripe email address so that donations go directly to your account.
+        You or the campaign recipient will add your personal details and banking information to your Stripe Account, which is separate from Nfuse. Once your Stripe account is set up, any donations made to your campaign will go straight to your Stripe account, and then to your bank account.
                                                 </p>
                                                 <p className="m-b0 mt-2">
-                                                    It's important to note that your Stripe account operates independently of your Nfuse account. Refer to Stripe's terms of use for guidance, as they apply to any transactions conducted through Stripe via Nfuse.
+                                                Stripe charges a fee of 2.9% + $0.30 per transaction - this goes to Stripe, Nfuse does not receive any part of that transaction cost.
                                                 </p>
                                             </Accordion.Body>
                                         </div>
