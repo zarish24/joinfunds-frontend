@@ -30,11 +30,8 @@ const CreateCompaign = () => {
     // subtitle: '',
     total_funding: 0,
     description: '',
-    minimum_amount: 0,
-    maximum_amount: 0,
     start_date: '',
     end_date: '',
-    goal_type:'',
     created_by:'',
     donation_to_nfuse:'1',
     campaign_url:'',
@@ -227,6 +224,8 @@ const CreateCompaign = () => {
 
         return;
     }
+    const user = JSON.parse(localStorage.getItem('user'));
+    const token = user?.token;
     const config = {
         headers: {
             Authorization: `Bearer ${token}`,
@@ -238,12 +237,8 @@ const CreateCompaign = () => {
       title: formData.title,
       total_funding: formData.total_funding,
       description: formData.description,
-      minimum_amount: formData.minimum_amount,
-      maximum_amount: formData.maximum_amount,
-      goal_type:formData.goal_type,
       created_by:formData.created_by,
       donation_to_nfuse:formData.donation_to_nfuse,
-      campaign_url:formData.campaign_url,
       country:formData.country,
       start_date: formData.start_date,
       end_date: formData.end_date,

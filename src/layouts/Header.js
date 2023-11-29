@@ -40,7 +40,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
   const [FirstN, setFirstN] = useState("");
   const [LastN, setLastN] = useState("");
   const [Zip, setZip] = useState("");
-  const [country, setCountry] = useState("United States");
+  const [country, setCountry] = useState("USA");
   const [MediaLink, setMediaLink] = useState("");
   const [City, setCity] = useState("");
   const [password, setPassword] = useState("");
@@ -224,7 +224,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
             setFirstN("");
             setLastN("");
             setZip("");
-            setCountry("United States");
+            setCountry("USA");
             setMediaLink("");
             setCity("");
             setPassword("");
@@ -289,7 +289,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
             setFirstN("");
             setLastN("");
             setZip("");
-            setCountry("United States");
+            setCountry("USA");
             setMediaLink("");
             setCity("");
             setPassword("");
@@ -351,7 +351,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
             setFirstN("");
             setLastN("");
             setZip("");
-            setCountry("United States");
+            setCountry("USA");
             setMediaLink("");
             setCity("");
             setPassword("");
@@ -1200,7 +1200,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
           border: "2px solid #ccc",
         }}
       >
-        <option value="United States" >USA</option>
+        <option value="USA" >USA</option>
       </select>
               </label>
 

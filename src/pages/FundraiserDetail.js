@@ -102,7 +102,8 @@ const closeModal = () => {
   // console.log('closeeeeee')
   setCampaignId(null); // Reset the campaign ID when closing the modal
 };
-
+const [Self, setSelf]  = useState(false)
+console.log('Self ',Self);
   const [modalDonate, setModalDonate] = useState(false);
   const [modalDonate1, setModalDonate1] = useState(false);
   const [FeedBackModal, setFeedBackModal] = useState(false);
@@ -110,7 +111,7 @@ const closeModal = () => {
   const [modalStripeDonate, setModalStripeDonate] = useState(false);
   const [referModal, setReferModal] = useState(false);
   const [campaign, setCampaign] = useState({});
-  // console.log('campaign campaign', campaign)
+  console.log('campaign campaign', campaign)
   const [comments, setComments] = useState([]);
   const [donners, setDonners] = useState([]);
   const [topDonners, setTopDonners] = useState([]);
@@ -122,7 +123,8 @@ const closeModal = () => {
   const [user_id, setUser_id] = useState("");
   const [amount1, setAmount1] = useState(0);   
   const [donationTypes, setDonationTypes] = useState('singleDonation');
-  const [gift, setGift] = useState("");     
+  const [gift, setGift] = useState("");  
+  const [totalCharges, setTotalCharges] = useState(0);   
   const [email, setEmail] = useState("");       
   const [Designation, setDesignation] = useState("");
   const [StoryFName, setStoryFName] = useState("");
@@ -161,6 +163,11 @@ const closeModal = () => {
   const [stripeFormData, setStripeFormData] = useState({
     amount: 0,
   });
+  useEffect(() => {
+    const calculatedTotalCharges = parseInt(gift, 10) + parseInt(amount1, 10);
+
+    setTotalCharges(calculatedTotalCharges);
+  }, [gift, amount1]);
   // console.log("current-amount", amount);
   const setChain = async (e) => {
     const selectedValue = parseInt(e.target.value, 10); 
@@ -660,20 +667,23 @@ const closeModal = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      const items = JSON.parse(localStorage.getItem('user'));
+      const token = items?.token;
       try {
-        // const config = {
-        //   headers: {
-        //     Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
-        //   },
-        // }
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
+          },
+        }
         const response = await axios
           .get(
-            `${process.env.REACT_APP_BACKEND_URL}/api/compaign/getSingleCompaign/${id}`
-            // config
+            `${process.env.REACT_APP_BACKEND_URL}/api/compaign/getSingleCompaign/${id}`,
+            config
           )
           .then((res) => {
             if (res.status === 200 || res.status === 201) {
               // console.log("all-com", res);
+              setSelf(res?.data?.data?.isMyCampaign)
               setCampaign(res?.data?.data?.doc[0]);
               setDonners(res?.data?.data?.allDonners);
               setTopDonners(res?.data?.data?.topDonors);
@@ -711,20 +721,23 @@ const closeModal = () => {
 
 
   const fetchCompgain = async () => {
+    const items = JSON.parse(localStorage.getItem('user'));
+      const token = items?.token;
     try {
-      // const config = {
-      //   headers: {
-      //     Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
-      //   },
-      // }
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`, // Use Bearer authentication, replace "Bearer" if you have a different authentication method
+        },
+      }
       const response = await axios
         .get(
-          `${process.env.REACT_APP_BACKEND_URL}/api/compaign/getSingleCompaign/${id}`
-          // config
+          `${process.env.REACT_APP_BACKEND_URL}/api/compaign/getSingleCompaign/${id}`,
+          config
         )
         .then((res) => {
           if (res.status === 200 || res.status === 201) {
             // console.log("all-com", res);
+            setSelf(res?.data?.data?.isMyCampaign)
             setCampaign(res?.data?.data?.doc[0]);
             setDonners(res?.data?.data?.allDonners);
             setTopDonners(res?.data?.data?.topDonors);
@@ -1094,7 +1107,7 @@ const closeModal = () => {
               </div>
               <div className="col-xl-4 col-lg-4">
                 <aside className="side-bar sticky-top">
-                {user_id !== campaign?.user_id ? (
+                {Self === false ? (
   campaign?.status === 'open' ? (
     <ul className="fundraiser-bottom">
       <li>
@@ -1107,22 +1120,24 @@ const closeModal = () => {
         </Link>
       </li>
     </ul>
-  ) : campaign?.status === 'close' && user_id !== campaign?.user_id ? (
+  ) : campaign?.status === 'close' ? (
     <>
       {/* {console.log('Rendering Success Stories button')} */}
       <ul className="fundraiser-bottom">
         <li>
           <Link
-          to={"#"}
-                      className="btn btn-donate btn-primary w-100"
-                      onClick={() => setFeedBackModal(true)}
+            to={"#"}
+            className="btn btn-donate btn-primary w-100"
+            onClick={() => setFeedBackModal(true)}
           >
             <i className="flaticon-feedback me-2"></i> Success Story
           </Link>
         </li>
       </ul>
     </>
-  ) : campaign?.status === 'close' && user_id === campaign?.user_id ? (
+  ) : null
+) : (
+  campaign?.status === 'close' && Self === true ? (
     <>
       {console.log('Rendering Quick Payout of Funds button')}
       <button
@@ -1146,7 +1161,7 @@ const closeModal = () => {
       </button>
     </>
   ) : null
-) : null}
+)}
 
 
                   {/* <!--  Widget Fund --> */}
@@ -1692,6 +1707,7 @@ const closeModal = () => {
                       // onChange={setChain}
                     >
                       <option disabled>Choose Amount</option>
+                      <option value="0">$ 0</option>
                       <option value="1">$ 1</option>
                       <option value="2">$ 2</option>
                       <option value="3">$ 3</option>
@@ -1704,7 +1720,7 @@ const closeModal = () => {
                       <option value="10">$ 10</option>
                     </select>
                   </div>
-            <p className="text-dark"> <b> Total charges: USD $ </b></p>
+            <p className="text-dark"> <b> Total charges: USD ${totalCharges} </b></p>
             </div>
             <div
               style={{

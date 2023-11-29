@@ -55,6 +55,7 @@ const initialValues = {
 const Setting = (props) => {
     const navigate = useNavigate();
     const [item, setItems] = useState([]);
+    const [BankAvalible, setBankAvalible] = useState(false);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [phone, setphone] = useState("");
@@ -77,7 +78,7 @@ const Setting = (props) => {
     const [loading, setLoading] = useState(false);
     const [passwordTypeConfirm, setPasswordTypeConfirm] = useState('password');
 
-    const [legalIdentity, setLegalIdentity] = useState("myselft");   
+    const [legalIdentity, setLegalIdentity] = useState("myself");   
     const [legalFirstName, setLegalFirstName] = useState("");   
     const [legalLastName, setLegalLastName] = useState("");      
     const [legalEmail, setLegalEmail] = useState("");       
@@ -87,7 +88,7 @@ const Setting = (props) => {
     const [legalCity, setLegalCity] = useState("");             
     const [legalState, setLegalState] = useState("");          
     const [legalPostal, setLegalPostal] = useState("");
-    const [legalCountry, setLegalCountry] = useState("United States");      
+    const [legalCountry, setLegalCountry] = useState("USA");      
     const [legalSecurityNumber, setLegalSecurityNumber] = useState("");      
     
     const [legalCheckingAccountNumber, setLegalCheckingAccountNumber] = useState("");    
@@ -335,7 +336,7 @@ const config = {
                 const Data= response.data.data;
                 console.log("Data >>>>>>>>>>>>>>>>>>>>>>>>>>> ", Data);
                 setLegalIdentity(Data.identity)
-             
+                setBankAvalible(true);
                 setLegalFirstName(Data.firstName);
                 setLegalLastName(Data.lastName);
                 setLegalEmail(Data.email);
@@ -396,7 +397,7 @@ const config = {
             console.log("Data >>>>>>>>>>>>>>>>>>>>>>>>>>> ", Data);
        
             setLegalIdentity(Data.identity)
-         
+            setBankAvalible(true)
             setLegalFirstName(Data.firstName);
             setLegalLastName(Data.lastName);
             setLegalEmail(Data.email);
@@ -514,7 +515,6 @@ const config = {
                 lastName: legalLastName,
                 email: legalEmail,
                 phoneNumber: legalPhoneNumber,
-                socialMediaLink: legalSocailMedia,
                 address: legalAddress,
                 city: legalCity,
                 state: legalState,
@@ -534,9 +534,11 @@ const config = {
                 formData.append(key, option[key]);
             }
             console.log("formData Recipent >>>>> ", formData);
-            await axios
-                .post(`${process.env.REACT_APP_BACKEND_URL}/api/bank-details/createBankAccountDetails`, option, config
-                )
+            const apiUrl = BankAvalible
+  ? `${process.env.REACT_APP_BACKEND_URL}/api/bank-details/updateBankAccountDetails`
+  : `${process.env.REACT_APP_BACKEND_URL}/api/bank-details/createBankAccountDetails`;
+  const axiosMethod = BankAvalible ? axios.put : axios.post;
+  await axiosMethod(apiUrl, option, config)
                 .then((res) => {
                     if ((res.status === 200 || res.status === 201)) {
                         localStorage.removeItem('user');
@@ -874,14 +876,14 @@ const config = {
                                                         required
                                                     />
                                                     {emailError && (
-                    <Error className="input feedback">Last Name is required</Error>
+                    <Error className="input feedback">Email is required</Error>
                   )}
                                                 </form>
                                             </Grid>
                                             <Grid item xs={6}>
                                                 <form>
                       
-                                                    <label className="mb-1" htmlFor="phone" style={{ marginLeft: '5px' }}>Phone</label>
+                                                    <label className="mb-1" htmlFor="phone" style={{ marginLeft: '5px' }}>Phone Number</label>
                                                         <div style={{ display: 'flex', alignItems: 'center' }}>  
                                                         <div className="input-group-prepend">
                                 <div 
@@ -936,7 +938,7 @@ const config = {
           border: "2px solid #ccc",
         }}
       >
-        <option value="United States" >USA</option>
+        <option value="USA" >USA</option>
       </select>
           
                                                     {/* <label className="mb-1" htmlFor="country">Country</label>
@@ -1084,7 +1086,7 @@ const config = {
                                                         // paddingBottom: "1%" 
                                                     }}
                                                     >
-                                                    <option value="myselft">Myself</option>
+                                                    <option value="myself">Myself</option>
                                                     <option value="other">Other</option>
                                                 </select>
                                                 {legalIdentityError && (
