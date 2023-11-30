@@ -198,7 +198,7 @@ const Header2 = ({onShowDonate}) => {
                                     <Link to={"#"} className="btn btn-light btn-login btn-sm" data-bs-toggle="modal" data-bs-target="#modalLogin"
                                         onClick={()=>setloginModal(true)}
                                     >
-                                        <i className="flaticon-logout me-3"></i>Login / Sign Up
+                                        <i className="flaticon-logout me-3"></i>Start a Campaign
                                     </Link>
                                     <div className="dz-social-icon">
                                         <ul>

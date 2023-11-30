@@ -94,10 +94,10 @@ const ContactUs = () => {
 
                         </div>
                     </div>
-                    <img src={shape1} className="shape-1 move-1" alt="shape" />
+                    {/* <img src={shape1} className="shape-1 move-1" alt="shape" />
                     <img src={shape3} className="shape-3 move-1" alt="shape" />
                     <img src={shape5} className="shape-4 rotating" alt="shape"/>
-                    <img src={shape6} className="shape-5 rotating" alt="shape"/>
+                    <img src={shape6} className="shape-5 rotating" alt="shape"/> */}
                 </section>
                 <section className="content-inner map-wrapper1">
                     <div className="container-fluid">
@@ -122,7 +122,7 @@ const ContactUs = () => {
                             required
                             type="text"
                             className="form-control"
-                            placeholder="John"
+                            // placeholder="John"
                             value={formData.firstName}
                             onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
                         />
@@ -136,7 +136,7 @@ const ContactUs = () => {
                            required
                            type="text"
                            className="form-control"
-                           placeholder="Deo"
+                        //    placeholder="Deo"
                            value={formData.lastName}
                            onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
                         />
@@ -150,7 +150,7 @@ const ContactUs = () => {
                             required
                             type="text"
                             className="form-control"
-                            placeholder="info@example.com"
+                            // placeholder="info@example.com"
                             value={formData.email}
                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         />
@@ -164,7 +164,7 @@ const ContactUs = () => {
                             required
                             type="tel"
                             className="form-control"
-                            placeholder="+1 987 654 321"
+                            // placeholder="+1 987 654 321"
                             pattern="[0-9]+"
                             value={formData.phoneNumber}
                             onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
@@ -179,7 +179,7 @@ const ContactUs = () => {
                             rows="7"
                             required
                             className="form-control"
-                            placeholder="Dear Sir/Madam"
+                            // placeholder="Dear Sir/Madam"
                             value={formData.message}
                             onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                         ></textarea>
@@ -202,9 +202,9 @@ const ContactUs = () => {
                             </div>
                         </div>
                     </div>
-                    <img src={shape5} className="shape-2 move-2" alt="shape"/>
+                    {/* <img src={shape5} className="shape-2 move-2" alt="shape"/>
                     <img src={shape7} className="shape-1 move-2" alt="shape"/>
-                    <img src={shape6} className="shape-3 move-2" alt="shape"/>
+                    <img src={shape6} className="shape-3 move-2" alt="shape"/> */}
                 </section>
                 <section className="clients-wrapper p-0">
                     <div className="container">

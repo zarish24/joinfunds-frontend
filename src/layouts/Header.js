@@ -21,8 +21,10 @@ import {
 } from "../../node_modules/@mui/material/index";
 import { ThreeDots } from "../../node_modules/react-loader-spinner/dist/index";
 import axios from "axios";
-import CitiesList from './CitiesList'
-const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
+import sortedCitiesList from './CitiesList'
+console.log('sortedCitiesList',sortedCitiesList)
+
+const Header = ({ onShowDonate, changeStyle, changeLogo,Login,open,updateOpens  }) => {
   const [emailError, setEmailError] = useState(false);
   const [firstNameError, setFirstNameError] = useState(false);
   const [lastNameError, setLastNameError] = useState(false);
@@ -56,8 +58,14 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [selectedCityPostalCode, setSelectedCityPostalCode] = useState('');
 
-  // Assuming you have the CitiesList object
-  // const cities = Object.keys(CitiesList);
+
+  useEffect(() => {
+    if (open === true) {
+      setloginModal(true);
+      updateOpens(false);
+    }
+  }, [open]);
+ 
   const handleCityChange = (e) => {
     const selectedCity = e.target.value;
 
@@ -183,8 +191,12 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
           }
    
         
-          if (password.length === 0 || !validatePassword(password)) {
+          if (password.length === 0 ) {
             setPasswordError1(true);
+            return;
+          }
+          if (!validatePassword(password)) {
+            setPasswordError2(true);
             return;
           }
           if (Zip.length !== 5) {
@@ -197,10 +209,6 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
             return;
           }
         
-        if (!validatePassword(password)) {
-          setPasswordError2(true);
-          return;
-        }
         data = {
           email: email,
           password: password,
@@ -672,7 +680,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                           data-bs-target="#modalLogin"
                           onClick={() => setloginModal(true)}
                         >
-                          Login / Sign Up
+                          Start a Campaign
                         </Link>
                       </li>
                     </>
@@ -806,10 +814,20 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
         className="modal fade modal-wrapper auth-modal"
         id="modalLogin"
         show={loginModal}
-        onHide={setloginModal}
+        // onHide={setloginModal}
         centered
       >
-        <h2 className="title">Login Your Account</h2>
+    <h2 className="title d-flex justify-content-between align-items-center">
+  <span className="text-center mx-auto">Login Your Account</span>
+  <button
+    type="button"
+    className="btn-close"
+    aria-label="Close"
+    onClick={() => setloginModal(false)}
+    style={{ color: "white" }}
+  >X</button>
+</h2>
+      
         <form onSubmit={(e) => formSubmit(e, "api/user/login")}>
           <div className="form-group">
             <input
@@ -871,7 +889,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
               <LoginSocialGoogle
                 sx={{ pr: 1 }}
                 client_id={
-                  "1085137082696-c6a9ta6uk6gn30vf7vmsg8c066vmhl7i.apps.googleusercontent.com"
+                  "970840168013-0p5ofhslkc9apf65hi1udj5fr0kug82v.apps.googleusercontent.com"
                 }
                 scope="openid profile email"
                 discoveryDocs="claims_supported"
@@ -1052,18 +1070,25 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
       <Modal
         className="fade modal   "
         show={signupModal}
-        onHide={setSignupModal}
+        // onHide={setSignupModal}
         size="lg"
         centered
       >
-        <Modal.Header
-          className="d-flex justify-content-center align-items-center "
-          style={{ backgroundColor: "#002768" }}
-        >
-          <h4 className="text-center" style={{ color: "white" }}>
-            Sign Up/Start a Campaign 
-          </h4>
-        </Modal.Header>
+       <Modal.Header
+  className="d-flex justify-content-between align-items-center"
+  style={{ backgroundColor: "#002768" }}
+>
+  <h4 className="text-center  mx-auto" style={{ color: "white" }}>
+    Sign Up/Start a Campaign 
+  </h4>
+  <button
+    type="button"
+    className="btn-close"
+    aria-label="Close"
+    onClick={() => setSignupModal(false)}
+    style={{ color: "white" }}
+  >X</button>
+</Modal.Header>
         <Modal.Body className="modal-body">
           <form
             onSubmit={(e) => formSubmit(e, "api/user/register")}
@@ -1334,7 +1359,9 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                   style={{
                     position: "relative",
                     right: "8px",
-                    top: passwordError1 ? "-50%" : "-36%",
+                   top: !passwordError1 && !passwordError2 ? "-38%" : 
+     passwordError1 ? "-48%" :
+     passwordError2 ? "-56%" : "-38%",
                     left: "91%",
                     border: "none",
                     background: "transparent",
@@ -1357,12 +1384,16 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
           border: `2px solid ${cityError ? 'red' : '#ccc'}`, 
         }}
       >
-        <option value="" disabled>Select a State</option>
-        {Object.keys(CitiesList).map((cityName) => (
-            <option key={cityName} value={cityName}>
-              {cityName}
-            </option>
-          ))}
+    <option value="" disabled>Select a State</option>
+{Object.keys(sortedCitiesList)
+  .sort((cityA, cityB) => cityA.localeCompare(cityB))
+  .map((cityName) => (
+    <option key={cityName} value={sortedCitiesList[cityName]}>
+      {cityName}
+    </option>
+))}
+<option value="Others">Others</option>
+
       </select>  
                   {cityError && (
                     <Error className="input feedback">State is required</Error>
@@ -1416,17 +1447,19 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
         <Modal.Footer
           style={{ display: "flex", justifyContent: "space-between" }}
         >
-              <Box className={styles.loginSocial}>
+        <Box className={styles.loginSocial}>
             {/* ---Social-Login with Google */}
             {callOnClick ? (
-              <LoginSocialGoogle
-                sx={{ pr: 1 }}
-                client_id={
-                  "1085137082696-c6a9ta6uk6gn30vf7vmsg8c066vmhl7i.apps.googleusercontent.com"
-                }
-                scope="openid profile email"
-                discoveryDocs="claims_supported"
-                access_type="offline"
+              <>
+             {console.log('running sign-up')}
+             <LoginSocialGoogle
+  sx={{ pr: 1 }}
+  client_id={
+    "970840168013-0p5ofhslkc9apf65hi1udj5fr0kug82v.apps.googleusercontent.com"
+  }
+  scope="openid profile email"
+  discoveryDocs="claims_supported"
+  access_type="offline"
                 onResolve={async ({ data }) => {
                   let checkUser = await axios
                     .get(
@@ -1537,9 +1570,9 @@ const Header = ({ onShowDonate, changeStyle, changeLogo }) => {
                     alt="google"
                     style={{ marginRight: "8px" }}
                   />
-                  Sign Up with Google
+                SignUp with Google
               </LoginSocialGoogle>
-            ) : null}
+              </> ) : null}
           </Box>
             {/* <img
               loading="lazy"

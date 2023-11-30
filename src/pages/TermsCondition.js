@@ -12,7 +12,7 @@ const TermsCondition = () => {
       <div className="page-content bg-white">
         <PageBanner
           maintitle="Home"
-          pagetitle="Terms And Conditions"
+          pagetitle="Terms Of Service"
           background={bg}
         />
         <div className="content-inner-2">

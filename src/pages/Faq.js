@@ -165,7 +165,7 @@ const Faq = () => {
                                             </Accordion.Body>
                                         </div>
                                     </Accordion.Item>
-                                    <Accordion.Item className="accordion-item" key="2" eventKey="2">
+                                    {/* <Accordion.Item className="accordion-item" key="2" eventKey="2">
                                         <Accordion.Header as="h2"  id="headingOne1">
                                             Are there any fees on donations made to my campaign?
                                             <span className="toggle-close"></span>
@@ -177,7 +177,7 @@ const Faq = () => {
                                                 </p>
                                             </Accordion.Body>
                                         </div>
-                                    </Accordion.Item>
+                                    </Accordion.Item> */}
                                     <Accordion.Item className="accordion-item" key="3" eventKey="3">
                                         <Accordion.Header as="h2"  id="headingOne1">
                                             Are there any fees on donations made to my campaign?
