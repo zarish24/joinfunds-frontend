@@ -105,8 +105,9 @@ const Setting = (props) => {
     const [legalStateError, setLegalStateError] = useState(false);
     const [legalCityError, setLegalCityError] = useState(false);
     const [legalPostalError, setLegalPostalError] = useState(false);
-
+   
     const [legalAddressError, setLegalAddressError] = useState(false);
+    const [LegalDateOfBirthError,  setLegalDateOfBirthError] = useState(false);
     const [legalSecurityNumberError, setLegalSecurityNumberError] = useState(false);
     const [legalCheckingAccountNumberError, setLegalCheckingAccountNumberError] = useState(false);
     const [legalRoutingNumberError, setLegalRoutingNumberError] = useState(false);
@@ -478,6 +479,15 @@ const config = {
             setLoading(false);
             return;
         }       
+          
+          const currentDate = new Date();
+          const selectedDate = new Date(`${legalMonth} ${legalDay} ${legalYear}`);
+          const ageDifference = currentDate.getFullYear() - selectedDate.getFullYear();
+          if (ageDifference < 18) {
+            setLegalDateOfBirthError(true);
+            setLoading(false);
+            return;
+          }
         if(legalRoutingNumber.length === 0){
             setLegalRoutingNumberError(true);
             setLoading(false);
@@ -549,6 +559,7 @@ const config = {
                             })
                         );
                         fetchProfileDetails();
+                        setLegalDateOfBirthError(false)
                         setLoading(false);
                         setLegalFirstName("");
                         setLegalLastName("");
@@ -1291,7 +1302,7 @@ const config = {
                             // gap: "10px",
                         }}
                     >
-                   <label className="mb-0">Recipient's Country<span className="text-danger">*</span></label>
+                   <label className="mb-0">Recipient Country<span className="text-danger">*</span></label>
                         <div style={{ height: '100%' }} className="input-group mb-2">
                             <select
                                 className="form-control"
@@ -1358,7 +1369,7 @@ const config = {
                             gap: "10px",
                         }}
                     >
-                 <label>Recipient's City/Town/Village<span className="text-danger">*</span>
+                 <label>Recipient City/Town/Village<span className="text-danger">*</span>
                         <input
                             type="text"
                             value={legalCity}
@@ -1377,7 +1388,7 @@ const config = {
                             }}
                         />
                         {legalCityError && (
-                            <Error className="input feedback">Recipient's City is required</Error>
+                            <Error className="input feedback">Recipient City is required</Error>
                         )}
                         </label>
                     </div>
@@ -1388,7 +1399,7 @@ const config = {
                             gap: "10px",
                         }}
                     >
-                        <label>Recipient's Postal Code<span className="text-danger">*</span>
+                        <label>Recipient Postal Code<span className="text-danger">*</span>
                         <input
                             type="text"
                             value={legalPostal}
@@ -1407,7 +1418,7 @@ const config = {
                             }}
                         />
                         {legalPostalError && (
-                            <Error className="input feedback">Recipient's City is required</Error>
+                            <Error className="input feedback">Recipient City is required</Error>
                         )}
                         </label>
                     </div>
@@ -1427,7 +1438,7 @@ const config = {
                             gap: "10px",
                         }}
                     >
-                          <label>Recipient's Address<span className="text-danger">*</span>
+                          <label>Recipient Address<span className="text-danger">*</span>
                         <input
                             type="text"
                             value={legalAddress}
@@ -1446,7 +1457,7 @@ const config = {
                             }}
                         />
                         {legalAddressError && (
-                            <Error className="input feedback">Recipient's Address is required</Error>
+                            <Error className="input feedback">Recipient Address is required</Error>
                         )}
                         </label>
                       
@@ -1459,7 +1470,7 @@ const config = {
                             gap: "10px",
                         }}
                     >
-                        <label className="mb-1">Social Security number<span className="text-danger">*</span>
+                        <label className="mb-1">Social Security Number<span className="text-danger">*</span>
                         <input
                          
     type="text"
@@ -1483,73 +1494,35 @@ const config = {
                     </div>
                 </div>
                
-                <label className="mt-3 mb-1">Recipient's  Date of Birth<span className="text-danger">*</span></label>
-           <div
+                <label className="mt-3 mb-1">Recipient  Date of Birth<span className="text-danger">*</span></label>
+                <div
     style={{
         display: "grid",
-        gridTemplateColumns: "1fr 2fr 1fr",
+        gridTemplateColumns: "1fr",
         gap: "10px",
     }}
 >
-    <div
-        style={{
-            display: "grid",
-            gridTemplateColumns: "1fr ",
-            gap: "10px",
-        }}
-    >
-        <div style={{ height: '100%' }} className="input-group mb-2">
-            <DatePicker
-                selected={new Date(`${legalMonth} ${legalDay} ${legalYear}`)}
-                onChange={(date) => {
-                    setLegalDay(date.getDate());
-                }}
-                dateFormat="dd"
-                placeholderText="Day"
-            />
-        </div>
+    <div style={{ height: '100%' }} className="input-group mb-2">
+        <DatePicker
+            selected={new Date(`${legalMonth} ${legalDay} ${legalYear}`)}
+            onChange={(date) => {
+                setLegalDay(date.getDate());
+                setLegalMonth(date.getMonth() + 1);
+                setLegalYear(date.getFullYear());
+            }}
+            dateFormat="dd/MM/yyyy"
+            placeholderText="Select Date"
+            showYearDropdown
+            yearDropdownItemNumber={100}
+            scrollableYearDropdown
+            showMonthDropdown
+        />
+ 
+       
     </div>
-    <div
-        style={{
-            display: "grid",
-            gridTemplateColumns: "1fr ",
-            gap: "10px",
-        }}
-    >
-        <div style={{ height: '100%' }} className="input-group mb-2">
-            <DatePicker
-                selected={new Date(`${legalMonth} ${legalDay} ${legalYear}`)}
-                onChange={(date) => {
-                    setLegalMonth(date.getMonth() + 1); 
-                }}
-                dateFormat="MMMM"
-                placeholderText="Month"
-                showMonthYearPicker
-                
-            />
-        </div>
-    </div>
-    <div
-        style={{
-            display: "grid",
-            gridTemplateColumns: "1fr ",
-            gap: "10px",
-        }}
-    >
-        <div style={{ height: '100%' }} className="input-group mb-2">
-            <DatePicker
-                selected={new Date(`${legalMonth} ${legalDay} ${legalYear}`)}
-                onChange={(date) => {
-                    setLegalYear(date.getFullYear());
-                }}
-                dateFormat="yyyy"
-                placeholderText="Year"
-                showYearDropdown
-                yearDropdownItemNumber={10}
-                scrollableYearDropdown
-            />
-        </div>
-    </div>
+    { LegalDateOfBirthError && (
+        <Error className="input feedback">You must be 18 or older to proceed.</Error>
+    )}
 </div>
 
             <h5 className="mb-0 mt-3">Bank Account</h5>
@@ -1567,7 +1540,7 @@ const config = {
                         gap: "10px",
                     }}
                 >
-                    <label>Checking Account number<span className="text-danger">*</span>
+                    <label> Account Number<span className="text-danger">*</span>
                     <input
                         type="text"
                         value={legalCheckingAccountNumber}
@@ -1586,7 +1559,7 @@ const config = {
                         }}
                     />
                     {legalCheckingAccountNumberError && (
-                        <Error className="input feedback">Checking Number is required</Error>
+                        <Error className="input feedback">Account Number is required</Error>
                     )}
                     </label>
                 </div>
@@ -1597,7 +1570,7 @@ const config = {
                         gap: "10px",
                     }}
                 >
-                <label>Routing number<span className="text-danger">*</span>
+                <label>Routing Number<span className="text-danger">*</span>
                 <input
                     type="text"
                     value={legalRoutingNumber}
@@ -1627,7 +1600,7 @@ const config = {
                     gap: "10px",
                 }}
             >
-                <label>Confirm Checking Account number<span className="text-danger">*</span>
+                <label>Confirm  Account Number<span className="text-danger">*</span>
                 <input
                     type="text"
                     value={legalConfirmCheckingAccountNumber}

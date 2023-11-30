@@ -1,3 +1,5 @@
+/* eslint-disable no-restricted-globals */
+/* eslint no-restricted-globals: ["error", "history"] */
 import React,{useState,useContext, useEffect,useRef} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import {Modal} from 'react-bootstrap';
@@ -24,6 +26,8 @@ import { IMAGES } from '../constant/theme';
 import Screenshot_29 from '../../src/assets/images/Screenshot_29.png';
 import { toast,  } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { SVGICON } from '../../src/constant/theme';
+import { redirect } from "react-router-dom";
 // const counterBlog = [
 //     {title: "Completed Projects", number:"1854", },
 //     {title: "Countries Served", number:"35", symbal:"+"},
@@ -34,6 +38,35 @@ import 'react-toastify/dist/ReactToastify.css';
 const Home3 = () => {    
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const form = useRef(null);
+    const [email, setEmail] = useState('');
+    const [subscribeMsg, setSubscribeMsg] = useState('');
+  
+
+
+    const handleSubscribe = async (e) => {
+      e.preventDefault();
+  const payload = {
+    email:email
+  }
+      try {
+        const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/subscribe/subscribeForm`,  payload );
+       
+       
+        console.log('Subscription successful:', response.data);
+  toast.success('Subscription successful')
+       
+        setSubscribeMsg('Subscription successful');
+  
+        setEmail('');
+  
+      } catch (error) {
+       
+        console.error('Error subscribing:', error);
+        toast.error("Email is already subscribed")
+       
+        setSubscribeMsg('Error subscribing. Please try again.');
+      }
+    };
     useEffect(() => {
         const intervalId = setInterval(() => {
           const storedValue = localStorage.getItem('isLoggedIn');
@@ -67,6 +100,28 @@ const Home3 = () => {
         message: '',
       });
     const nav = useNavigate();
+
+const [open, setOpens] = useState(false);
+console.log('open',open)
+    const handlemodal = () =>{
+        const user = JSON.parse(localStorage.getItem('user'));
+        const token = user?.token;
+        if(token){
+console.log('if',open)
+window.location.href = '/create-compaign';
+//  redirect('https://reactrouter.com/en/main/fetch/redirect');
+        }else{
+console.log('else',open)
+
+            setOpens(true)
+        }
+
+    }
+    const updateOpens = (value) => {
+console.log('updateOpens value',value)
+
+        setOpens(value);
+      };
     const FormSubmit = (e) => {
         e.preventDefault();
         nav("/contact-us");
@@ -147,7 +202,7 @@ const Home3 = () => {
                 {isLoggedIn ? (
         <Header2 changeStyle="header-transparent" changeLogo={true} />
       ) : (
-        <Header changeStyle="header-transparent" changeLogo={true} />
+        <Header changeStyle="header-transparent" changeLogo={true} updateOpens={updateOpens} open={open}  />
       )}           
                 <div className="page-content bg-white">	
                     <div className="main-bnr-two">
@@ -158,7 +213,7 @@ const Home3 = () => {
                             <div class="row section-head align-items-center">
                                 <div class="col-lg-8 col-md-12 wow fadeInUp" data-wow-delay="0.2s">
                                     {/* <h5 class="sub-title">LATEST CAUSES</h5> */}
-                                    <h2>Top Trend's </h2>
+                                    <h2>Top Trending </h2>
                                 </div>
                                 <div class="col-lg-4 col-md-12 text-end d-none d-lg-block wow fadeInUp" data-wow-delay="0.4s">
                                     <Link to={"/campaigns"} class="btn btn-primary">View All Causes</Link>
@@ -184,11 +239,11 @@ const Home3 = () => {
                                 </div>
                                 <div className="col-lg-6 m-b30" >
                                     <div className="section-head">
-                                        <h5 className="sub-title">About Us</h5>
+                                        {/* <h5 className="sub-title">About Us</h5> */}
                                         <h2>Help is <br/>Our Main Goal</h2>
                                     </div>
                                     {/* <h4 className="font-weight-500 m-b10">We Need Your Help</h4> */}
-                                    <p className="m-b20">We invite you to the part of something extraordinary. Whether you are a freedom loving individual or a non-profit organisation, Nfuse is here to infuse your funds. </p>
+                                    <p className="m-b20">We invite you to be the part of something extraordinary. Whether you are a freedom-loving individual or a non-profit organization, Nfuse is here to infuse your funds. </p>
                                     <div className="dz-about-info">
                                         <div className="row">
                                             <div className="col-lg-6 col-sm-6">
@@ -196,7 +251,7 @@ const Home3 = () => {
                                                     <li>Food Contributions</li>
                                                     <li>Medical Care</li>
                                                     <li>Education</li>
-                                                    <li>Emergency</li>
+                                                    <li>Emergencies</li>
                                                 </ul>
                                             </div>
                                             <div className="col-lg-6 col-sm-6">
@@ -215,17 +270,69 @@ const Home3 = () => {
                         </div>
                     </section>
                     
-                    <section className="section-wrapper2 content-inner-2 overlay-black-middle background-luminosity bg-dark" 
+                    {/* <section className="section-wrapper2 content-inner-2 overlay-black-middle" style={{ background: 'none' }}
                         style={{backgroundImage:"url("+ IMAGES.Background5 +")", backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundPosition: "center"}}
-                    >
+                    > */}
                         <div className="container">
-                            <div className="section-head text-center wow fadeInUp" data-wow-delay="0.2s">
-                                {/* <h5 className="sub-title text-white">Services</h5> */}
+                            {/* <div className="section-head text-center wow fadeInUp" data-wow-delay="0.2s">
+                                <h5 className="sub-title text-white">Services</h5>
                                 <h2 className="title text-white">Services</h2>
+                            </div> */}
+                                {/* <AkcelServices /> */}
+                                <div className="row justify-content-center mt-0 mt-md-3 mt-xl-5">
+                <div className="col-lg-4 col-md-6 m-t30 wow fadeInUp" data-wow-delay="0.2s">
+                    <div className="content-bx style-1 bg-primary text-center">
+                        <div className="inner-content">
+                            <h2 className="title text-white mb-3">Newsletter</h2>
+                            {/* <p className="text-white">Participate in our monthly newsletter to receive the latest news and exclusive opportunities..</p> */}
+                            <form className="dzSubscribe" onSubmit={handleSubscribe}>
+                                <div className="dzSubscribeMsg text-white"></div>
+                                <input
+        name="dzEmail"
+        required="required"
+        type="email"
+        className="form-control transparent m-b15"
+        placeholder="Enter your email address"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+                <button name="submit" value="Submit" type="submit" className="btn btn-light btn-rounded btn-block">
+        Subscribe Now
+      </button>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div className="col-lg-4 col-md-6 m-t30 wow fadeInUp" data-wow-delay="0.4s">
+                    <div className="content-bx style-1 bg-primary text-center">
+                        <div className="inner-content">
+                        <h3 className="title text-white ">Help</h3>
+                            <div className="icon-lg m-b20">
+                                <Link to={"/project-categories"} className="icon-cell">
+                                <span style={{ color: 'red' }}>
+        {SVGICON.HelpHeart}
+      </span>
+                                </Link>
                             </div>
-                                <AkcelServices />
+                            <h3 className="title text-white "></h3>
+                            {/* <p className="m-b30 text-white">Your financial contribution is pivotal to the success of our global initiative.</p> */}
+                            <Link className="btn btn-light"  onClick={handlemodal}>Start a Campaign</Link>
+                        </div>
+                    </div>
+                </div>
+                {/* <div className="col-lg-4 col-md-6 m-t30 wow fadeInUp" data-wow-delay="0.6s">
+                    <div className="content-bx style-1 bg-dark text-center">
+                        <div className="inner-content">
+                            <h2 className="title text-white">33,986+</h2>
+                            <p className="m-b30 text-white">Our campaign is powered by contributions from supporters like you</p>
+                            <Link to={"/fundraiser-detail"} className="btn btn-primary">Online Voter</Link>
+                        </div>
+                    </div>
+                </div> */}
+            </div> 
                         </div>                     
-                    </section>
+                    {/* </section> */}
                     
                     <section className="content-inner">
                         <div className="container">

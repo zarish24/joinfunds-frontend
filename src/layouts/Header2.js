@@ -490,7 +490,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                           data-bs-target="#modalLogin"
                           onClick={() => setloginModal(true)}
                         >
-                          Login / Sign Up
+                         Start a Campaign
                         </Link>
                       </li>
                     </>
@@ -504,7 +504,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                     data-bs-target="#modalLogin"
                     onClick={() => setloginModal(true)}
                   >
-                    <i className="flaticon-logout me-3"></i>Login / Sign Up
+                    <i className="flaticon-logout me-3"></i> Start a Campaign
                   </Link>
                   <div className="dz-social-icon">
                     <ul>

@@ -51,4 +51,8 @@ const CitiesList = {
   "West Virginia": "25301",
   "Vermont": "05601",
   };
+  export const sortedCitiesList = Object.fromEntries(
+    Object.entries(CitiesList).sort(([cityA], [cityB]) => cityA.localeCompare(cityB))
+  );
+  console.log('sortedCitiesList CitiesList',sortedCitiesList)
 export default   CitiesList;

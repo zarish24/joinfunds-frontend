@@ -6,13 +6,13 @@ const FooterCommonData = ({logoImage, iconStyle}) => {
         <>
             <div className="col-xl-4 col-lg-12 col-md-12">
                 <div className="widget widget_about">
-                <div className="footer-logo logo-white">
+                <div className="footer-logo logo-white mx-3">
     <Link to={"/"}>
         <img src={logoImage} alt="" style={{ height: '105px', width: '150px' }} />
     </Link>
-                    <p style={{align:'justify'}}>Nfuse is a donation platform with a simple mission of supporting freedom-loving people and projects. We support freedom for everyone. </p>
+                    <p hidden style={{align:'justify'}}>Nfuse is a donation platform with a simple mission of supporting freedom-loving people and projects. We support freedom for everyone. </p>
 </div>
-                    <div className="dz-social-icon style-1">
+                    <div className="dz-social-icon style-1 mr-2">
                         <ul>
                             <li><a target="_blank" className="fab fa-facebook-f"  rel="noreferrer" href="https://www.facebook.com/"></a></li>
                             {" "}<li><a target="_blank" className="fab fa-instagram"  rel="noreferrer" href="https://www.instagram.com/"></a></li>
@@ -32,7 +32,7 @@ const FooterCommonData = ({logoImage, iconStyle}) => {
                         {/* to={"/mission"} */}
                         <li><Link to={"/blog-details1"} >Blogs</Link></li>
                         {/* <li><Link to={"#"}>Careers</Link></li> */}
-                        <li><Link to={"/terms-and-condition"}>Terms And Conditions</Link></li>
+                        <li><Link to={"/terms-and-condition"}>Terms Of Service</Link></li>
                         <li><Link to={"/privacy-policy"}>Privacy Policy </Link></li>
                     </ul>
                 </div>

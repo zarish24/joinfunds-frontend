@@ -1174,6 +1174,14 @@ console.log('Self ',Self);
                     <p>
                       raised of <span>$ {campaign?.total_funding}</span> goal
                     </p>
+                    {/* <ul style={{ marginLeft: '16vh', display: 'flex', justifyContent: 'flex-end', listStyle: 'none', padding: 0 }}>
+  <li key={campaign?._id} className="dz-date">
+    <i className="fa-solid fa-calendar" style={{ marginRight: '1vh',color: 'rgb(0,39,104)' }}></i>
+    <span>
+      {campaign?.remain_days} Days Left
+    </span>
+  </li>
+</ul> */}
                     <div className="progress-bx style-1">
                       <div className="progress">
                         <div

@@ -101,7 +101,7 @@ const AkcelServices = () => {
                             </div>
                             <h3 className="title text-white "></h3>
                             {/* <p className="m-b30 text-white">Your financial contribution is pivotal to the success of our global initiative.</p> */}
-                            <Link className="btn btn-light" to={"/campaigns"}>Start Funding</Link>
+                            <Link className="btn btn-light" to={"/campaigns"}>Start a Campaign</Link>
                         </div>
                     </div>
                 </div>

@@ -252,7 +252,8 @@ const handleCopyUrl = async (url) => {
             cardData.map((item, index) => {
               console.log('item item',item)
               const progressValue = parseInt(item.progress, 10);
-              console.log("progressValue", progressValue);
+              
+              // console.log("progressValue", progressValue);
               return (
                 <motion.li
                 layout
@@ -392,11 +393,20 @@ const handleCopyUrl = async (url) => {
                               <i className="fa fa-star gray-light"></i>
                             </li>
                           </ul> */}
+                        <ul style={{ marginLeft: '16vh', display: 'flex', justifyContent: 'flex-end', listStyle: 'none', padding: 0 }}>
+  <li key={item._id} className="dz-date">
+    <i className="fa-solid fa-calendar" style={{ marginRight: '1vh',color: 'rgb(0,39,104)' }}></i>
+    <span>
+      {item?.remain_days} Days Left
+    </span>
+  </li>
+</ul>
                         </div>
                         {/* <ul className="author-meta">
                           <li className="campaign">{item?.user_detail[0]?.publishedCampaignsCount} Campaign</li>
                           <li className="location">{item?.user_detail[0]?.country},{item?.user_detail[0]?.city}</li>
                         </ul> */}
+                         
                       </div>
                     </div>
                   </div>

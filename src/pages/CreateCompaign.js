@@ -37,7 +37,7 @@ const CreateCompaign = () => {
     campaign_url:'',
     country:'United States',
     campaign_status: 'pending',  
-    campaign_type: 'funding',  
+    campaign_type: 'Funding',  
     user_id: ''
   });
   //   console.log('formData',formData)
@@ -397,7 +397,7 @@ const CreateCompaign = () => {
                         onChange={handleChange}
                         className="form-control"
                       >
-                        <option value="funding">Funding</option>
+                        <option value="Funding">Funding</option>
                         {/* <option value="donation">Donation</option> */}
                       </select>
                     </div>
