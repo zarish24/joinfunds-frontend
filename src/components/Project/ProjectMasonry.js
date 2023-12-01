@@ -79,14 +79,16 @@ const handleSwitchToggle = async (campaignId, checked) => {
   const token= user?.token;
   try {
     setLoading(true);
-    const response = await axios.put(`${process.env.REACT_APP_BACKEND_URL}/api/compaign/publish/${campaignId}`, {
-      
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`, 
-      },
-      
-    });
+    const response = await axios.put(
+      `${process.env.REACT_APP_BACKEND_URL}/api/compaign/publish/${campaignId}`,
+      {},
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     console.log('response',response)
     if (response.data.status === "success") {
      toast.success(`Campaign  Published successfully`)
@@ -273,7 +275,7 @@ const handleCopyUrl = async (url) => {
                   <div className="dz-info">
                     <ul className="dz-category">
                       <li>
-                        <Link to={"#"}>{item.campaign_type}</Link>
+                        <Link to={"#"}>Campaign</Link>
                       </li>
                     </ul>
                     <div className="d-flex justify-content-between align-items-end">
