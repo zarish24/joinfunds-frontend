@@ -50,7 +50,7 @@ const AboutUs = () => {
                   <h2>NFUSE</h2>
                   <p className="m-t20">
                   Nfuse is a donation platform with a simple mission of supporting freedom-loving people and projects.  
-                  We support freedom for everyone. Freedom doesn’t pick a political side- everyone should have access to the 
+                  We support freedom for everyone. Freedom doesn’t pick a political side-everyone should have access to the 
                   many forms of freedom.  We have a broad range of campaign  categories where you can help expand 
                   freedom for yourself and for others.{" "}
                   </p>
@@ -68,7 +68,7 @@ const AboutUs = () => {
                     key={index}
                   >
                     <div className="icon-lg">
-                      <Link to={"/services-details"} className="icon-cell">
+                      <Link to={"#"} className="icon-cell">
                         <i className="flaticon-shield"></i>
                       </Link>
                     </div>

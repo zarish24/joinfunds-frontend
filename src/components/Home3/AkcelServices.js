@@ -51,7 +51,7 @@ const AkcelServices = () => {
                     <div className="col-xl-3 col-lg-4 col-sm-6" key={ind}>
                         <div className="icon-bx-wraper text-center style-4 transparent m-b30 wow fadeInUp" data-wow-delay="0.2s">
                             <div className="icon-bx-sm m-b20">
-                                <Link to={"/project-categories"} className="icon-cell">
+                                <Link to={"#"} className="icon-cell">
                                     {data.icon}
                                 </Link>
                             </div>
@@ -63,12 +63,12 @@ const AkcelServices = () => {
                     </div>
                 ))}
             </div>
-            <div className="row justify-content-center mt-0 mt-md-3 mt-xl-5">
+            {/* <div className="row justify-content-center mt-0 mt-md-3 mt-xl-5">
                 <div className="col-lg-4 col-md-6 m-t30 wow fadeInUp" data-wow-delay="0.2s">
                     <div className="content-bx style-1 bg-primary text-center">
                         <div className="inner-content">
                             <h2 className="title text-white mb-3">Newsletter</h2>
-                            {/* <p className="text-white">Participate in our monthly newsletter to receive the latest news and exclusive opportunities..</p> */}
+                            <p className="text-white">Participate in our monthly newsletter to receive the latest news and exclusive opportunities..</p>
                             <form className="dzSubscribe" onSubmit={handleSubscribe}>
                                 <div className="dzSubscribeMsg text-white"></div>
                                 <input
@@ -100,12 +100,12 @@ const AkcelServices = () => {
                                 </Link>
                             </div>
                             <h3 className="title text-white "></h3>
-                            {/* <p className="m-b30 text-white">Your financial contribution is pivotal to the success of our global initiative.</p> */}
+                            <p className="m-b30 text-white">Your financial contribution is pivotal to the success of our global initiative.</p>
                             <Link className="btn btn-light" to={"/campaigns"}>Start a Campaign</Link>
                         </div>
                     </div>
                 </div>
-                {/* <div className="col-lg-4 col-md-6 m-t30 wow fadeInUp" data-wow-delay="0.6s">
+                <div className="col-lg-4 col-md-6 m-t30 wow fadeInUp" data-wow-delay="0.6s">
                     <div className="content-bx style-1 bg-dark text-center">
                         <div className="inner-content">
                             <h2 className="title text-white">33,986+</h2>
@@ -113,8 +113,8 @@ const AkcelServices = () => {
                             <Link to={"/fundraiser-detail"} className="btn btn-primary">Online Voter</Link>
                         </div>
                     </div>
-                </div> */}
-            </div>   
+                </div>
+            </div>    */}
         </>
     );
 };

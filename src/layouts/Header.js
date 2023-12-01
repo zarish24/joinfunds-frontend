@@ -679,6 +679,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo,Login,open,updateOpens  
                           data-bs-toggle="modal"
                           data-bs-target="#modalLogin"
                           onClick={() => setloginModal(true)}
+                          style={{ textTransform: 'none' }}
                         >
                           Start a Campaign
                         </Link>
@@ -883,8 +884,8 @@ const Header = ({ onShowDonate, changeStyle, changeLogo,Login,open,updateOpens  
             </button>
           </div>
   
-          <Box className={styles.loginSocial}>
-            {/* ---Social-Login with Google */}
+          {/* <Box className={styles.loginSocial}>
+            ---Social-Login with Google
             {callOnClick ? (
               <LoginSocialGoogle
                 sx={{ pr: 1 }}
@@ -901,7 +902,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo,Login,open,updateOpens  
                     )
                     .then(async (res) => {
                       if (res.status === 200 || res.status === 201) {
-                        //   console.log("social-data", res);
+                       
                         localStorage.setItem(
                           `${res.data.data.doc.role}`,
                           JSON.stringify({
@@ -917,21 +918,17 @@ const Header = ({ onShowDonate, changeStyle, changeLogo,Login,open,updateOpens  
                               : "",
                           })
                         );
-                        // if (res.data.data.doc.role === 'admin') {
-                        //     navigate('/admin');
-                        // }
-                        //  else {
-                        //   console.log("resres", res);
+                       
                         if (res.data.data.doc.role === "user") {
                           localStorage.setItem("isLoggedIn", "true");
-                          setIsLoggedIn(true); // Update the state immediately.
+                          setIsLoggedIn(true); 
                           setloginModal(false);
-                          // Show the alert
+                         
                           toast.success("Login Successful!");
 
                           navigate("/");
                         }
-                        // }
+                      
                       }
                     })
                     .catch(async (e) => {
@@ -965,37 +962,24 @@ const Header = ({ onShowDonate, changeStyle, changeLogo,Login,open,updateOpens  
                                 })
                               );
                               localStorage.setItem("isLoggedIn", "true");
-                              setIsLoggedIn(true); // Update the state immediately.
+                              setIsLoggedIn(true);
                               setloginModal(false);
-                              // Show the alert
+                             
                               toast.success("Login Successful!");
                               navigate("/");
-                              // setLoading(false);
-                              // setAlert(true);
-                              // setTimeout(() => {
-                              //     navigate('/user');
-                              // }, 1000);
+                            
                             }
                           })
                           .catch((e) => {
                             toast.success("UserName or Email Already Exists");
-                            // setLoading(false);
-                            // setErrorMessage('UserName or Email Already Exists');
-                            // setErrorAlert(true);
-                            // setTimeout(() => {
-                            //     setErrorAlert(false);
-                            // }, 2500);
+                            
                           });
                       }
                     });
                 }}
                 onReject={(err) => {
                   toast.success("Enter correct email to login");
-                  // setErrorMessage('Enter correct email to login');
-                  // setErrorAlert(true);
-                  // setTimeout(() => {
-                  //     setErrorAlert(false);
-                  // }, 2500);
+                 
                 }}
               >
                <img
@@ -1007,7 +991,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo,Login,open,updateOpens  
                 Login with Google
               </LoginSocialGoogle>
             ) : null}
-          </Box>
+          </Box> */}
           <div className="sign-text">
             <span>
                Don't have a Nfuse account ?
@@ -1030,7 +1014,16 @@ const Header = ({ onShowDonate, changeStyle, changeLogo,Login,open,updateOpens  
         centered
       >
         <div className="reset-password" id="reset-password">
-          <h2 className="title">Reset password?</h2>
+        <h2 className="title d-flex justify-content-between align-items-center">
+  <span className="text-center mx-auto">Reset password?</span>
+  <button
+    type="button"
+    className="btn-close"
+    aria-label="Close"
+    onClick={() => setResetModal(false)}
+    style={{ color: "white" }}
+  >X</button>
+</h2>
           <form onSubmit={(e) => formSubmit(e, "api/user/sendForgetEmail")}>
             <div className="form-group password-icon-bx">
               <i className="fa fa-lock"></i>
@@ -1447,8 +1440,8 @@ const Header = ({ onShowDonate, changeStyle, changeLogo,Login,open,updateOpens  
         <Modal.Footer
           style={{ display: "flex", justifyContent: "space-between" }}
         >
-        <Box className={styles.loginSocial}>
-            {/* ---Social-Login with Google */}
+        {/* <Box className={styles.loginSocial}>
+            ---Social-Login with Google
             {callOnClick ? (
               <>
              {console.log('running sign-up')}
@@ -1467,7 +1460,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo,Login,open,updateOpens  
                     )
                     .then(async (res) => {
                       if (res.status === 200 || res.status === 201) {
-                        //   console.log("social-data", res);
+                        
                         localStorage.setItem(
                           `${res.data.data.doc.role}`,
                           JSON.stringify({
@@ -1483,21 +1476,17 @@ const Header = ({ onShowDonate, changeStyle, changeLogo,Login,open,updateOpens  
                               : "",
                           })
                         );
-                        // if (res.data.data.doc.role === 'admin') {
-                        //     navigate('/admin');
-                        // }
-                        //  else {
-                        //   console.log("resres", res);
+                      
                         if (res.data.data.doc.role === "user") {
                           localStorage.setItem("isLoggedIn", "true");
-                          setIsLoggedIn(true); // Update the state immediately.
+                          setIsLoggedIn(true); 
                           setloginModal(false);
-                          // Show the alert
+                          
                           toast.success("Login Successful!");
 
                           navigate("/");
                         }
-                        // }
+                        
                       }
                     })
                     .catch(async (e) => {
@@ -1531,37 +1520,24 @@ const Header = ({ onShowDonate, changeStyle, changeLogo,Login,open,updateOpens  
                                 })
                               );
                               localStorage.setItem("isLoggedIn", "true");
-                              setIsLoggedIn(true); // Update the state immediately.
+                              setIsLoggedIn(true); 
                               setloginModal(false);
-                              // Show the alert
+                            
                               toast.success("Login Successful!");
                               navigate("/");
-                              // setLoading(false);
-                              // setAlert(true);
-                              // setTimeout(() => {
-                              //     navigate('/user');
-                              // }, 1000);
+                             
                             }
                           })
                           .catch((e) => {
                             toast.success("UserName or Email Already Exists");
-                            // setLoading(false);
-                            // setErrorMessage('UserName or Email Already Exists');
-                            // setErrorAlert(true);
-                            // setTimeout(() => {
-                            //     setErrorAlert(false);
-                            // }, 2500);
+                          
                           });
                       }
                     });
                 }}
                 onReject={(err) => {
                   toast.success("Enter correct email to login");
-                  // setErrorMessage('Enter correct email to login');
-                  // setErrorAlert(true);
-                  // setTimeout(() => {
-                  //     setErrorAlert(false);
-                  // }, 2500);
+              
                 }}
               >
                <img
@@ -1573,7 +1549,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo,Login,open,updateOpens  
                 SignUp with Google
               </LoginSocialGoogle>
               </> ) : null}
-          </Box>
+          </Box> */}
             {/* <img
               loading="lazy"
               src={Google}

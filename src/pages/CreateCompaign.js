@@ -68,6 +68,11 @@ const CreateCompaign = () => {
 
     fetchCategories();
   }, []);
+
+
+  const today = new Date();
+const formattedToday = today.toISOString().split('T')[0];
+
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
     if (user && user._id) {
@@ -195,6 +200,32 @@ const CreateCompaign = () => {
         setLoading(false);
         return;
     }
+    const startDateIsValid = isStartDateValid(formData.start_date, formData.end_date);
+const endDateIsValid = isEndDateValid(formData.start_date, formData.end_date);
+
+const getDaysDifference = (startDate, endDate) => {
+  const oneDay = 24 * 60 * 60 * 1000;
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+  const diffDays = Math.round(Math.abs((start - end) / oneDay));
+  return diffDays;
+};
+const daysDifference = getDaysDifference(formData.start_date, formData.end_date);
+    if (!startDateIsValid || !endDateIsValid || daysDifference > 90) {
+      setLoading(false);
+    
+      if (formData.start_date === formData.end_date) {
+        toast.error('Start and end date cannot be the same.');
+      }  else if (daysDifference > 90) {
+        toast.error('Campaign can only be valid for 90 days. Select a date range within 90 days.');
+      }
+     else if (startDateIsValid && endDateIsValid) {
+        toast.error('Start and end date must be present or future.');
+      }
+    
+      return;
+    }
+    
 
     if (images.length === 0) {
         setImageError(true);
@@ -202,28 +233,28 @@ const CreateCompaign = () => {
         return;
     }
 
-    const startDateIsValid = isStartDateValid(formData.start_date, formData.end_date);
-    const endDateIsValid = isEndDateValid(formData.start_date, formData.end_date);
-    const getDaysDifference = (startDate, endDate) => {
-      const oneDay = 24 * 60 * 60 * 1000; 
-      const start = new Date(startDate);
-      const end = new Date(endDate);
-      const diffDays = Math.round(Math.abs((start - end) / oneDay));
-      return diffDays;
-  };
-    if (!startDateIsValid || !endDateIsValid) {
-        setLoading(false);
+  //   const startDateIsValid = isStartDateValid(formData.start_date, formData.end_date);
+  //   const endDateIsValid = isEndDateValid(formData.start_date, formData.end_date);
+  //   const getDaysDifference = (startDate, endDate) => {
+  //     const oneDay = 24 * 60 * 60 * 1000; 
+  //     const start = new Date(startDate);
+  //     const end = new Date(endDate);
+  //     const diffDays = Math.round(Math.abs((start - end) / oneDay));
+  //     return diffDays;
+  // };
+  //   if (!startDateIsValid || !endDateIsValid) {
+  //       setLoading(false);
 
-        if (formData.start_date === formData.end_date) {
-            toast.error('Start and end date cannot be the same.');
-        } else if (startDateIsValid && endDateIsValid) {
-            toast.error('Start and end date must be present or future.');
-        } else if (getDaysDifference(formData.start_date, formData.end_date) > 90) {
-            toast.error('Campaign can only be valid for 90 days. Select a date between them.');
-        }
+  //       if (formData.start_date === formData.end_date) {
+  //           toast.error('Start and end date cannot be the same.');
+  //       } else if (startDateIsValid && endDateIsValid) {
+  //           toast.error('Start and end date must be present or future.');
+  //       } else if (getDaysDifference(formData.start_date, formData.end_date) > 90) {
+  //           toast.error('Campaign can only be valid for 90 days. Select a date between them.');
+  //       }
 
-        return;
-    }
+  //       return;
+  //   }
     const user = JSON.parse(localStorage.getItem('user'));
     const token = user?.token;
     const config = {
@@ -376,7 +407,7 @@ const CreateCompaign = () => {
                       </div>
                   </div>
                  
-                  <div className="form-group mb-3">
+                  {/* <div className="form-group mb-3">
                   <div className="row">
                     <div className="col-md-6">
                       <label>Campaign Status:</label>
@@ -398,11 +429,11 @@ const CreateCompaign = () => {
                         className="form-control"
                       >
                         <option value="Funding">Funding</option>
-                        {/* <option value="donation">Donation</option> */}
+                        <option value="donation">Donation</option>
                       </select>
                     </div>
                   </div>
-                </div>
+                </div> */}
 
                 <div className="row">
                   <div className="col-md-6">
@@ -519,6 +550,7 @@ const CreateCompaign = () => {
                           value={formData.start_date}
                           onChange={handleChange}
                           className="form-control"
+                          min={formattedToday}
                         />
                         {startDateError && (
                           <Error className="input feedback">Start Date is required</Error>

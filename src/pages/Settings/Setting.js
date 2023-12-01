@@ -229,17 +229,17 @@ const config = {
                 if (response.status === 200) {
                     //   console.log('Error fetching profile details:', response);
                     const data = await response.json();
-                    const data1 = data.user_details;
-                    setEmail(data1.email);
-                    setphone(data1.phoneNumber);
-                    setLastName(data1.lastName);
-                    setlink(data1.socialMediaProfile);
-                    setFirstName(data1.firstName);
-                    setcity(data1.city);
-                    setzip(data1.zipcode);
-                    setcountry(data1.country);
+                    const data1 = data?.user_details;
+                    setEmail(data1?.email);
+                    setphone(data1?.phoneNumber);
+                    setLastName(data1?.lastName);
+                    setlink(data1?.socialMediaProfile);
+                    setFirstName(data1?.firstName);
+                    setcity(data1?.city);
+                    setzip(data1?.zipcode);
+                    setcountry(data1?.country);
            
-                    setUrlImage(data1.profileImage);
+                    setUrlImage(data1?.profileImage);
                     //   console.log('Profile details fetched successfully:', data1);
                   }
             } catch (error) {
@@ -676,7 +676,7 @@ const config = {
           };
         try {
          
-            const res = await axios.put(`${process.env.REACT_APP_BACKEND_URL}/api/user`, formData, config);
+            const res = await axios.put(`${process.env.REACT_APP_BACKEND_URL}/api/user/updateProfile`, formData, config);
     
             if (res.status === 200 || res.status === 201) {
                 console.log('res img', res)

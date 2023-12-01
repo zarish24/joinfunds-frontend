@@ -1120,7 +1120,7 @@ console.log('Self ',Self);
           className="btn btn-donate btn-primary w-100"
           onClick={() => setModalDonate1(true)}
         >
-          <i className="flaticon-like me-3"></i> Donate Now Stripe
+          <i className="flaticon-like me-3"></i> Donate Now 
         </Link>
       </li>
     </ul>
@@ -1956,7 +1956,7 @@ console.log('Self ',Self);
               </Link>
                and acknowledge receipt of our  
                <Link
-                to="#"
+                to={'/privacy-policy'}
                 className="btn-link collapsed mx-1"
                 data-bs-toggle="collapse"
               >

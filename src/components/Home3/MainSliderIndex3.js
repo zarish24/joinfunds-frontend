@@ -24,7 +24,7 @@ const dataBlog = [
     style: 'banner-media',
     title: 'DISCOVER/SEARCH A CAMPAIGN',
     // title2: 'Nfusing the community',
-    title2: ' Freedom loving individuals',
+    title2: ' Freedom-loving individuals',
     // image2: IMAGES.SliderPic1,
   },
 ];

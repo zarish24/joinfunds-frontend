@@ -44,6 +44,11 @@ const accordBlog = [
         title: "What if my campaign ends and I want to continue fundraising?",
         paragraph:
             "Nfuse campaigns are set to run for 90 days and will automatically end.  Should you need to extend your campaign, please send a message to info@nfuse-me.com and explain your situation.  The request will be reviewed case by case and only granted in rare exceptions."
+    },
+    {
+        title: "What happens if i don't reach my campaign goal? Do I lose the donations?",
+        paragraph:
+            "Nfuse operates on the concept of \"KEEP IT ALL\".Campaign owners quickly recive the money donated, so even you don't hit your goal you'll keep whtever you raise. "
     }
 ];
 
@@ -161,6 +166,9 @@ const Faq = () => {
                                                 </p>
                                                 <p className="m-b0 mt-2">
                                                 Stripe charges a fee of 2.9% + $0.30 per transaction - this goes to Stripe, Nfuse does not receive any part of that transaction cost.
+                                                </p>
+                                                <p className="m-b0 mt-2">
+                                                After the first donation, the initial transfer from your Stripe account to your bank account will occur after 7 days. Subsequent transfers will occur every 2 days after that. You can check your account to know when the next transfer is scheduled. If your campaign is closed and has reached its desired amount or has some desired funds, you can request a payout. Follow these steps: First, log in to your Nfuse account and navigate to the "My Campaigns" section. Then, open the relevant campaign. If the campaign has a closed status and has reached the desired amount, you will see a "payout-request" button. Click on it to submit a payout request. After the admin approves it, the amount will be transferred to your bank account as the campaign owner. You can view the total holding amount in the "dashboard" tab if you are managing one or multiple campaigns.
                                                 </p>
                                             </Accordion.Body>
                                         </div>

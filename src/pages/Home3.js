@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-duplicate-props */
 /* eslint-disable no-restricted-globals */
 /* eslint no-restricted-globals: ["error", "history"] */
 import React,{useState,useContext, useEffect,useRef} from 'react';
@@ -270,15 +271,15 @@ console.log('updateOpens value',value)
                         </div>
                     </section>
                     
-                    {/* <section className="section-wrapper2 content-inner-2 overlay-black-middle" style={{ background: 'none' }}
+                    <section className="section-wrapper2 content-inner-2 overlay-black-middle" style={{ background: 'none' }}
                         style={{backgroundImage:"url("+ IMAGES.Background5 +")", backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundPosition: "center"}}
-                    > */}
+                    >
                         <div className="container">
-                            {/* <div className="section-head text-center wow fadeInUp" data-wow-delay="0.2s">
-                                <h5 className="sub-title text-white">Services</h5>
+                            <div className="section-head text-center wow fadeInUp" data-wow-delay="0.2s">
+                                {/* <h5 className="sub-title text-white">Services</h5> */}
                                 <h2 className="title text-white">Services</h2>
-                            </div> */}
-                                {/* <AkcelServices /> */}
+                            </div>
+                                <AkcelServices />
                                 <div className="row justify-content-center mt-0 mt-md-3 mt-xl-5">
                 <div className="col-lg-4 col-md-6 m-t30 wow fadeInUp" data-wow-delay="0.2s">
                     <div className="content-bx style-1 bg-primary text-center">
@@ -317,7 +318,7 @@ console.log('updateOpens value',value)
                             </div>
                             <h3 className="title text-white "></h3>
                             {/* <p className="m-b30 text-white">Your financial contribution is pivotal to the success of our global initiative.</p> */}
-                            <Link className="btn btn-light"  onClick={handlemodal}>Start a Campaign</Link>
+                            <Link className="btn btn-light"  style={{ textTransform: 'none' }} onClick={handlemodal}>Start a Campaign</Link>
                         </div>
                     </div>
                 </div>
@@ -332,7 +333,7 @@ console.log('updateOpens value',value)
                 </div> */}
             </div> 
                         </div>                     
-                    {/* </section> */}
+                    </section>
                     
                     <section className="content-inner">
                         <div className="container">
