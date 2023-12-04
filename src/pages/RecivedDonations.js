@@ -85,6 +85,7 @@ const RecivedDonations = () => {
       <PageBanner maintitle=" Donations" pagetitle="My Received Donations" background={bg} />
       <div style={{ textAlign: 'center', marginTop: '20px', height: '100vh', marginBottom: '30px' }}>
         {dummyData.length > 0 ? (
+          <div className="table-responsive">
           <table style={{ borderCollapse: 'collapse', width: '70%', margin: 'auto' }}>
             <thead>
               <tr>
@@ -116,6 +117,7 @@ const RecivedDonations = () => {
               ))}
             </tbody>
           </table>
+          </div>
         ) : (
           <p>No Donations available.</p>
         )}
