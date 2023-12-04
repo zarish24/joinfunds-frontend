@@ -94,6 +94,7 @@ const payload ={
         {loading ? (
           <ThreeDots color="#36a2ae" className='center' height={50} width={50} />
         ) : dummyData && dummyData.length > 0 ? (
+          <div className="table-responsive">
           <table
             style={{ borderCollapse: "collapse", width: "70%", margin: "auto" }}
           >
@@ -122,6 +123,7 @@ const payload ={
               ))}
             </tbody>
           </table>
+          </div>
         ) : (
           <p>No requests available.</p>
         )}

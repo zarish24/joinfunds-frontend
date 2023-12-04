@@ -84,34 +84,37 @@ const MyDonations = () => {
     <>
       <PageBanner pagetitle="My Sent Donations" background={bg} />
       <div style={{ textAlign: 'center', marginTop: '20px', height: '100vh', marginBottom: '30px' }}>
-        {dummyData.length > 0 ? (
-          <table style={{ borderCollapse: 'collapse', width: '70%', margin: 'auto' }}>
-            <thead>
-              <tr>
-                <th style={cellStylethead}>Date</th>
-                <th style={cellStylethead}>Campaign</th>
-                <th style={cellStylethead}>Donation to Campaign</th>
-                <th style={cellStylethead}>Donation to Nfuse</th>
-                <th style={cellStylethead}>Donation Status</th>
-                <th style={cellStylethead}>Donation Method</th>
-              </tr>
-            </thead>
-            <tbody>
-              {dummyData.map(request => (
-                <tr key={request._id}>
-                  <td style={cellStyle}>{formattedDate(request.created_time)}</td>
-                  <td style={cellStyle}>{request.title}</td>
-                  <td style={cellStyle}>{request.amount}</td>
-                  <td style={cellStyle}>{request.system_fees}</td>
-                  <td style={cellStyle}>{request.payment_status}</td>
-                  <td style={cellStyle}>{request.payment_method}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        ) : (
-          <p>No Donations available.</p>
-        )}
+      {dummyData.length > 0 ? (
+  <div className="table-responsive">
+    <table style={{ borderCollapse: 'collapse', width: '70%', margin: 'auto' }}>
+      <thead>
+        <tr>
+          <th style={cellStylethead}>Date</th>
+          <th style={cellStylethead}>Campaign</th>
+          <th style={cellStylethead}>Donation to Campaign</th>
+          <th style={cellStylethead}>Donation to Nfuse</th>
+          <th style={cellStylethead}>Donation Status</th>
+          <th style={cellStylethead}>Donation Method</th>
+        </tr>
+      </thead>
+      <tbody>
+        {dummyData.map(request => (
+          <tr key={request._id}>
+            <td style={cellStyle}>{formattedDate(request.created_time)}</td>
+            <td style={cellStyle}>{request.title}</td>
+            <td style={cellStyle}>{request.amount}</td>
+            <td style={cellStyle}>{request.system_fees}</td>
+            <td style={cellStyle}>{request.payment_status}</td>
+            <td style={cellStyle}>{request.payment_method}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+) : (
+  <p>No Donations available.</p>
+)}
+
      
           <div className="col-12 m-sm-t0 m-t30">
             <nav className="pagination-bx">
