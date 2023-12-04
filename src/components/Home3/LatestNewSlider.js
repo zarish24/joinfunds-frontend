@@ -34,15 +34,21 @@ const LatestNewSlider = () => {
       },
       pagination: { clickable: true },
       breakpoints: {
-        1200: {
-          slidesPerView: 2,
-        },
-        768: {
-          slidesPerView: 2,
-        },
-        320: {
-          slidesPerView: 2,
-        },
+        1600: {
+                      slidesPerView: 5,
+                  },
+                  1281: {
+                      slidesPerView: 4,
+                  },
+                  1024: {
+                      slidesPerView: 3,
+                  },
+                  767: {
+                      slidesPerView: 2,
+                  },
+                  320: {
+                      slidesPerView: 1,
+                  },
       },
     });
   }, []);
