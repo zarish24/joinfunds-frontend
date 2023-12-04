@@ -6,7 +6,7 @@ const FooterCommonData = ({logoImage, iconStyle}) => {
         <>
             <div className="col-xl-4 col-lg-12 col-md-12">
                 <div className="widget widget_about">
-                <div className="footer-logo logo-white mx-3">
+                <div className="footer-logo logo-white mx-3 w-100">
     <Link to={"/"}>
         <img src={logoImage} alt="" style={{ height: '105px', width: '150px' }} />
     </Link>
