@@ -305,14 +305,15 @@ const Dashboard = () => {
     <ThreeDots color="#36a2ae" className='center' height={50} width={50} />
   </div>
 ) : (
+  <div className="table-responsive">
   <table style={{ borderCollapse: "collapse", width: "80%", margin: "auto" }}>
     <thead>
       <tr>
-        <th style={cellStylethead}>Campaign Title</th>
-        <th style={cellStylethead}>Donor</th>
-        <th style={cellStylethead}>Total Donations</th>
-        <th style={cellStylethead}>System Fee</th>
-        <th style={cellStylethead}>Payment Method</th>
+        <th scope="col" style={cellStylethead}>Campaign Title</th>
+        <th scope="col" style={cellStylethead}>Donor</th>
+        <th scope="col" style={cellStylethead}>Total Donations</th>
+        <th scope="col" style={cellStylethead}>System Fee</th>
+        <th scope="col" style={cellStylethead}>Payment Method</th>
       </tr>
     </thead>
     {dummyData && dummyData.length > 0 ? (
@@ -337,6 +338,7 @@ const Dashboard = () => {
       </tbody>
     )}
   </table>
+    </div>
 )}
 
         <div className="col-12 m-sm-t0 m-t30">
@@ -392,44 +394,44 @@ const Dashboard = () => {
     <ThreeDots color="#36a2ae" className='center' height={50} width={50} />
   </div>
 ) : (
-  <table style={{ borderCollapse: "collapse", width: "80%", margin: "auto" }}>
-    <thead>
+<div className="table-responsive">
+  <table className="table table-bordered" style={{ width: "80%", margin: "auto" }}>
+    <thead className="thead-dark" style={{ background: "#bf0b32", color: "white  " }}>
       <tr>
-        <th style={cellStylethead}>Campaign Title</th>
-        <th style={cellStylethead}>Donor</th>
-        <th style={cellStylethead}>Total Donations</th>
-        <th style={cellStylethead}>System Fee</th>
-        <th style={cellStylethead}>Payment Method</th>
-        <th style={cellStylethead}>Payment Status</th>
-        <th style={cellStylethead}>Campaign Duration</th>
+        <th scope="col" style={{  color: "white" }}>Campaign Title</th>
+        <th scope="col" style={{  color: "white" }}>Donor</th>
+        <th scope="col" style={{  color: "white" }}>Total Donations</th>
+        <th scope="col" style={{  color: "white" }}>System Fee</th>
+        <th scope="col" style={{  color: "white" }}>Payment Method</th>
+        <th scope="col" style={{  color: "white" }}>Payment Status</th>
+        <th scope="col" style={{  color: "white" }}>Campaign Duration</th>
       </tr>
     </thead>
     {dummyData1 && dummyData1.length > 0 ? (
       <tbody>
         {dummyData1.map((request) => (
           <tr key={request._id}>
-            <td style={cellStyle}>{request.title}</td>            
-            <td style={cellStyle}>{request.user_details.firstName} {request.user_details.lastName}</td>
-            <td style={cellStyle}>{request.amount} {request.currency}</td>
-            <td style={cellStyle}>{request.system_fees} {request.currency}</td>            
-            <td style={cellStyle}>{request.payment_method}</td>
-            <td style={cellStyle}>{request.payment_status}</td>
-            <td style={cellStyle}>
-              {formattedDate(request.created_time)}
-            </td>
+            <td>{request.title}</td>
+            <td>{request.user_details.firstName} {request.user_details.lastName}</td>
+            <td>{request.amount} {request.currency}</td>
+            <td>{request.system_fees} {request.currency}</td>
+            <td>{request.payment_method}</td>
+            <td>{request.payment_status}</td>
+            <td>{formattedDate(request.created_time)}</td>
           </tr>
         ))}
       </tbody>
     ) : (
       <tbody>
         <tr>
-          <td colSpan="6">
+          <td colSpan="7">
             <p className="my-3">No data found.</p>
           </td>
         </tr>
       </tbody>
     )}
   </table>
+</div>
 )}
 
         <div className="col-12 m-sm-t0 m-t30">
