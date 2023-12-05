@@ -987,7 +987,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo,Login,open,updateOpens  
           </Box>
           <div className="sign-text">
             <span>
-               Don't have a Nfuse account ?
+               Don't have an Nfuse account ?
               <Link
                 to={"#"}
                 className="btn-link collapsed"
@@ -1524,7 +1524,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo,Login,open,updateOpens  
 
           <div className="sign-text">
             <span>
-              Already have a Nfuse account?{" "}
+              Already have an Nfuse account?{" "}
               <Link
                 to="#"
                 className="btn-link collapsed"
