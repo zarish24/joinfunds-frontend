@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {Link} from 'react-router-dom';
 import axios from "axios";
-import  large from '../assets/images/IMG-20231128-WA0012.jpg';
+import  large from '../assets/images/IMG-20231205-WA0004.jpg';
 import  blog2 from '../assets/images/IMG-20231128-WA0006.jpg';
 import  blog1 from '../assets/images/blog/blog-grid/pic1.jpg';
 import  test from '../assets/images/testimonials/pic2.jpg';
@@ -173,7 +173,7 @@ const BlogDetailsLeftBar = () => {
                         <h1 className="dz-title">How You Can Make a Difference This December</h1>
                         <p>Amidst the joyous festivities and gift-giving rituals of the holiday season, it's easy to get swept away in the whirl wind of preparations and lose sight of the true essence of this particular time. The holidays are not just about material possessions and external celebrations; they are a profound opportunity to reflect on our blessings, express gratitude, and extend kindness to those in need.</p>
                         <ul className="wp-block-gallery ">
-                            <li className="blocks-gallery-item"><img alt="" src={blog2} /></li>
+                            {/* <li className="blocks-gallery-item"><img alt="" src={blog2} /></li> */}
                             {/* <li className="blocks-gallery-item"><img alt="" src={blog1} /></li> */}
                         </ul>
                         <p>This year, let us make a conscious effort to revert our focus to the core values that underpin the holiday spirit – giving, donating, crowdfunding, safeguarding freedom of speech, and upholding the sound of freedom. By extending our generosity and compassion, not only we can bring joy and relief to others but also enrich our own lives and contribute to a more just and compassionate world.</p>
