@@ -281,9 +281,9 @@ const handleCopyUrl = async (url) => {
                     <div className="d-flex justify-content-between align-items-end">
                     <div>
                     <h5 className="dz-title">
-                      <Link to={`/fundraiser-detail/${item._id}`}>
-                        {item.title.length > 25
-                          ? item.title.slice(0, 25) + "..."
+                      <Link to={`/fundraiser-detail/${item._id}`} title={item.title}>
+                        {item.title.length > 15
+                          ? item.title.slice(0, 15) + "..."
                           : item.title}
                       </Link>
                       </h5>

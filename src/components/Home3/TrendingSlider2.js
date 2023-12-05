@@ -1,20 +1,20 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Link} from 'react-router-dom';
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore, { Navigation, Autoplay, Pagination } from 'swiper';
 // Import Swiper styles
 //import "swiper/css";
-import { Autoplay } from "swiper";
 
 //Images
-import project1 from './../../assets/images/project/project1/pic1.jpg';
-import project2 from './../../assets/images/project/project1/pic2.jpg';
-import project3 from './../../assets/images/project/project1/pic3.jpg';
-import project4 from './../../assets/images/project/project1/pic4.jpg';
-import project5 from './../../assets/images/project/project1/pic5.jpg';
-import avat1 from './../../assets/images/avatar/avatar1.jpg';
-import avat2 from './../../assets/images/avatar/avatar2.jpg';
-import avat3 from './../../assets/images/avatar/avatar3.jpg';
+// import project1 from './../../assets/images/project/project1/pic1.jpg';
+// import project2 from './../../assets/images/project/project1/pic2.jpg';
+// import project3 from './../../assets/images/project/project1/pic3.jpg';
+// import project4 from './../../assets/images/project/project1/pic4.jpg';
+// import project5 from './../../assets/images/project/project1/pic5.jpg';
+// import avat1 from './../../assets/images/avatar/avatar1.jpg';
+// import avat2 from './../../assets/images/avatar/avatar2.jpg';
+// import avat3 from './../../assets/images/avatar/avatar3.jpg';
 
 
 // const dataBlog = [
@@ -46,36 +46,40 @@ const TrendingSlider2 = (props) => {
         }
       };
     //   const slidesPerView = dataBlog.length === 1 ? 1 : 3;
+    useEffect(() => {
+        // Initialize Swiper after rendering
+        const swiper = new SwiperCore('.recent-blog2', {
+          speed: 1500,
+          slidesPerView: 3,
+          spaceBetween: 30,
+          loop: true,
+          autoplay: {
+            delay: 3000,
+          },
+          pagination: { clickable: true },
+          breakpoints: {
+            1600: {
+              slidesPerView: 5,
+            },
+            1281: {
+              slidesPerView: 4,
+            },
+            1024: {
+              slidesPerView: 3,
+            },
+            767: {
+              slidesPerView: 2,
+            },
+            320: {
+              slidesPerView: 1,
+            },
+          },
+        });
+      }, []);
+
     return (
         <> 
-            <Swiper className="recent-blog2"
-				speed= {1500}
-				parallax= {true}
-				slidesPerView= {5}
-				spaceBetween= {30}
-				loop={true}
-				autoplay= {{
-				   delay: 3000,
-				}}
-				modules={[ Autoplay ]}
-				// breakpoints = {{
-				// 	1600: {
-                //         slidesPerView: 5,
-                //     },
-                //     1281: {
-                //         slidesPerView: 4,
-                //     },
-                //     1024: {
-                //         slidesPerView: 3,
-                //     },
-                //     767: {
-                //         slidesPerView: 2,
-                //     },
-                //     320: {
-                //         slidesPerView: 1,
-                //     },
-				// }}
-			>	
+            <Swiper className="recent-blog2">	
                     {console.log("value of dataBlog",dataBlog.length)}
 
 				{dataBlog?.map((d, i) => (
