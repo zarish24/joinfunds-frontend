@@ -51,7 +51,10 @@ const MainSliderIndex3 = ({ onShowDonate }) => {
           <SwiperSlide key={i}>
             <div
               className="banner-inner"
-              style={{ backgroundImage: `url(${d.bgimage})`, backgroundColor: 'transparent',   }}
+              style={{ backgroundImage: `url(${d.bgimage})`, backgroundColor: 'transparent',  
+              maxWidth: '100%',
+              backgroundSize: 'contain',
+              border: 'none',  }}
             >
               <div className="container-fluid">
                 <div className="row">
@@ -60,7 +63,16 @@ const MainSliderIndex3 = ({ onShowDonate }) => {
                     <img
   src={d.image2}
   alt=""
-  style={d.image2 ? { height: '130vh', border: 'none' } : {}}
+  style={
+    d.image2
+      ? {
+          height: '120vh', 
+          maxWidth: '100%',
+          backgroundSize: 'contain', 
+          border: 'none',
+        }
+      : {}
+  }
 />
                     </div>
                   </div>
