@@ -52,6 +52,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo,Login,open,updateOpens  
     localStorage.getItem("isLoggedIn") === "true"
   );
   const [callOnClick, setCallOnClick] = useState(true);
+  const [callOnSignUpClick, setCallOnSignUpClick] = useState(true);
   const [loading, setLoading] = useState(false);
   const [phoneError, setPhoneError] = useState("");
   const [passwordError, setPasswordError] = useState('');
@@ -679,7 +680,6 @@ const Header = ({ onShowDonate, changeStyle, changeLogo,Login,open,updateOpens  
                           data-bs-toggle="modal"
                           data-bs-target="#modalLogin"
                           onClick={() => setloginModal(true)}
-                          style={{ textTransform: 'none' }}
                         >
                           Start a Campaign
                         </Link>
@@ -884,14 +884,12 @@ const Header = ({ onShowDonate, changeStyle, changeLogo,Login,open,updateOpens  
             </button>
           </div>
   
-          {/* <Box className={styles.loginSocial}>
-            ---Social-Login with Google
+          <Box className={styles.loginSocial}>
+            {/* ---Social-Login with Google */}
             {callOnClick ? (
               <LoginSocialGoogle
-                sx={{ pr: 1 }}
-                client_id={
-                  "970840168013-0p5ofhslkc9apf65hi1udj5fr0kug82v.apps.googleusercontent.com"
-                }
+                sx={{ pr: 1 }} 
+                client_id={"1085137082696-c6a9ta6uk6gn30vf7vmsg8c066vmhl7i.apps.googleusercontent.com"}
                 scope="openid profile email"
                 discoveryDocs="claims_supported"
                 access_type="offline"
@@ -902,40 +900,45 @@ const Header = ({ onShowDonate, changeStyle, changeLogo,Login,open,updateOpens  
                     )
                     .then(async (res) => {
                       if (res.status === 200 || res.status === 201) {
-                       
+                        console.log("redsdsdsdsdd",res)
+                        //   console.log("social-data", res);
                         localStorage.setItem(
                           `${res.data.data.doc.role}`,
                           JSON.stringify({
-                            _id: res.data.data.doc._id,
-                            firstName: res.data.data.doc.firstName,
-                            lastName: res.data.data.doc.lastName,
-                            email: res.data.data.doc.email,
-                            role: res.data.data.doc.role,
                             socialLogin: "User is Login with Google",
-                            token: res.data.data.doc.token,
-                            profileImage: res.data.data.doc.profileImage
-                              ? res.data.data.doc.profileImage
-                              : "",
+                            token: res.data.data.doc.token
                           })
                         );
-                       
+                        // if (res.data.data.doc.role === 'admin') {
+                        //     navigate('/admin');
+                        // }
+                        //  else {
+                        //   console.log("resres", res);
                         if (res.data.data.doc.role === "user") {
                           localStorage.setItem("isLoggedIn", "true");
-                          setIsLoggedIn(true); 
+                          setIsLoggedIn(true); // Update the state immediately.
                           setloginModal(false);
-                         
+                          // Show the alert
                           toast.success("Login Successful!");
-
                           navigate("/");
                         }
-                      
+                        // }
                       }
                     })
                     .catch(async (e) => {
+                      console.log("user-name ===>",data)
                       if (e.response.data === "User Not found.") {
-                        const userName = data?.name.replace(/\s/g, "");
+                        const userName = data?.name;
+                        // Split the userName into an array using the space character as the delimiter
+                        const nameParts = userName.split(' ');
+
+                        // Assign the parts to firstName and lastName
+                        const firstName = nameParts[0];
+                        const lastName = nameParts.slice(1).join(' '); // Join the remaining parts (if any) as the last name
+                        // const userName = data?.name.replace(/\s/g, "");
                         const givenValues = {
-                          username: userName,
+                          firstName: firstName,
+                          lastName: lastName,
                           email: data?.email,
                           profileImage: data?.picture,
                         };
@@ -945,41 +948,31 @@ const Header = ({ onShowDonate, changeStyle, changeLogo,Login,open,updateOpens  
                             givenValues
                           )
                           .then((res) => {
+                            console.log("res ====>",res)
                             if (res.status === 200 || res.status === 201) {
                               localStorage.setItem(
                                 "user",
                                 JSON.stringify({
-                                  _id: res.data.data.user._id,
-                                  firstName: res.data.data.user.firstName,
-                                  lastName: res.data.data.user.lastName,
-                                  email: res.data.data.user.email,
-                                  role: res.data.data.user.role,
                                   socialLogin: "User is Login with Google",
-                                  token: res.data.data.token,
-                                  profileImage: res.data.data.user.profileImage
-                                    ? res.data.data.user.profileImage
-                                    : "",
+                                  token: res.data.token
                                 })
                               );
                               localStorage.setItem("isLoggedIn", "true");
-                              setIsLoggedIn(true);
+                              setIsLoggedIn(true); // Update the state immediately.
                               setloginModal(false);
-                             
                               toast.success("Login Successful!");
                               navigate("/");
-                            
+                              
                             }
                           })
                           .catch((e) => {
                             toast.success("UserName or Email Already Exists");
-                            
                           });
                       }
                     });
                 }}
                 onReject={(err) => {
-                  toast.success("Enter correct email to login");
-                 
+                  toast.success(`${err.message} your google account data.`);
                 }}
               >
                <img
@@ -991,10 +984,10 @@ const Header = ({ onShowDonate, changeStyle, changeLogo,Login,open,updateOpens  
                 Login with Google
               </LoginSocialGoogle>
             ) : null}
-          </Box> */}
+          </Box>
           <div className="sign-text">
             <span>
-               Don't have a Nfuse account ?
+               Don't have an Nfuse account ?
               <Link
                 to={"#"}
                 className="btn-link collapsed"
@@ -1014,16 +1007,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo,Login,open,updateOpens  
         centered
       >
         <div className="reset-password" id="reset-password">
-        <h2 className="title d-flex justify-content-between align-items-center">
-  <span className="text-center mx-auto">Reset password?</span>
-  <button
-    type="button"
-    className="btn-close"
-    aria-label="Close"
-    onClick={() => setResetModal(false)}
-    style={{ color: "white" }}
-  >X</button>
-</h2>
+          <h2 className="title">Reset password?</h2>
           <form onSubmit={(e) => formSubmit(e, "api/user/sendForgetEmail")}>
             <div className="form-group password-icon-bx">
               <i className="fa fa-lock"></i>
@@ -1440,116 +1424,96 @@ const Header = ({ onShowDonate, changeStyle, changeLogo,Login,open,updateOpens  
         <Modal.Footer
           style={{ display: "flex", justifyContent: "space-between" }}
         >
-        {/* <Box className={styles.loginSocial}>
-            ---Social-Login with Google
-            {callOnClick ? (
-              <>
-             {console.log('running sign-up')}
-             <LoginSocialGoogle
-  sx={{ pr: 1 }}
-  client_id={
-    "970840168013-0p5ofhslkc9apf65hi1udj5fr0kug82v.apps.googleusercontent.com"
-  }
-  scope="openid profile email"
-  discoveryDocs="claims_supported"
-  access_type="offline"
-                onResolve={async ({ data }) => {
-                  let checkUser = await axios
-                    .get(
-                      `${process.env.REACT_APP_BACKEND_URL}/api/user/getSocialAppUserData/${data.email}`
-                    )
-                    .then(async (res) => {
-                      if (res.status === 200 || res.status === 201) {
-                        
-                        localStorage.setItem(
-                          `${res.data.data.doc.role}`,
-                          JSON.stringify({
-                            _id: res.data.data.doc._id,
-                            firstName: res.data.data.doc.firstName,
-                            lastName: res.data.data.doc.lastName,
-                            email: res.data.data.doc.email,
-                            role: res.data.data.doc.role,
-                            socialLogin: "User is Login with Google",
-                            token: res.data.data.doc.token,
-                            profileImage: res.data.data.doc.profileImage
-                              ? res.data.data.doc.profileImage
-                              : "",
-                          })
-                        );
-                      
-                        if (res.data.data.doc.role === "user") {
-                          localStorage.setItem("isLoggedIn", "true");
-                          setIsLoggedIn(true); 
-                          setloginModal(false);
-                          
-                          toast.success("Login Successful!");
+        { console.log("REACT_APP_CLIENT_ID:", process.env.REACT_APP_CLIENT_ID)}
+     <Box className={styles.loginSocial}>
+  {/* ---Social-Login with Google */}
+  {callOnClick  ? (
+    <LoginSocialGoogle
+        sx={{ pr: 1 }}                                 
+        client_id="1085137082696-c6a9ta6uk6gn30vf7vmsg8c066vmhl7i.apps.googleusercontent.com"
+        scope="openid profile email"
+        discoveryDocs="claims_supported"
+        access_type="offline"
+      onResolve={async ({ data }) => {
+        try {
+          let checkUser = await axios
+            .get(
+              `${process.env.REACT_APP_BACKEND_URL}/api/user/getSocialAppUserData/${data.email}`
+            );
 
-                          navigate("/");
-                        }
-                        
-                      }
-                    })
-                    .catch(async (e) => {
-                      if (e.response.data === "User Not found.") {
-                        const userName = data?.name.replace(/\s/g, "");
-                        const givenValues = {
-                          username: userName,
-                          email: data?.email,
-                          profileImage: data?.picture,
-                        };
-                        await axios
-                          .post(
-                            `${process.env.REACT_APP_BACKEND_URL}/api/user/registerSocialAppUser`,
-                            givenValues
-                          )
-                          .then((res) => {
-                            if (res.status === 200 || res.status === 201) {
-                              localStorage.setItem(
-                                "user",
-                                JSON.stringify({
-                                  _id: res.data.data.user._id,
-                                  firstName: res.data.data.user.firstName,
-                                  lastName: res.data.data.user.lastName,
-                                  email: res.data.data.user.email,
-                                  role: res.data.data.user.role,
-                                  socialLogin: "User is Login with Google",
-                                  token: res.data.data.token,
-                                  profileImage: res.data.data.user.profileImage
-                                    ? res.data.data.user.profileImage
-                                    : "",
-                                })
-                              );
-                              localStorage.setItem("isLoggedIn", "true");
-                              setIsLoggedIn(true); 
-                              setloginModal(false);
-                            
-                              toast.success("Login Successful!");
-                              navigate("/");
-                             
-                            }
-                          })
-                          .catch((e) => {
-                            toast.success("UserName or Email Already Exists");
-                          
-                          });
-                      }
-                    });
-                }}
-                onReject={(err) => {
-                  toast.success("Enter correct email to login");
-              
-                }}
-              >
-               <img
-                    loading="lazy"
-                    src={Google}
-                    alt="google"
-                    style={{ marginRight: "8px" }}
-                  />
-                SignUp with Google
-              </LoginSocialGoogle>
-              </> ) : null}
-          </Box> */}
+          if (checkUser.status === 200 || checkUser.status === 201) {
+            console.log("redsdsdsdsdd", checkUser);
+            localStorage.setItem(
+              `${checkUser.data.data.doc.role}`,
+              JSON.stringify({
+                socialLogin: "User is Sign-Up with Google",
+                token: checkUser.data.data.doc.token,
+              })
+            );
+
+            if (checkUser.data.data.doc.role === "user") {
+              localStorage.setItem("isLoggedIn", "true");
+              setIsLoggedIn(true);
+              setloginModal(false);
+              toast.success("Sign Up Successful!");
+              navigate("/");
+            }
+          }
+        } catch (error) {
+          console.log("user-name ===>", data);
+          if (error.response.data === "User Not found.") {
+            const userName = data?.name;
+            const nameParts = userName.split(' ');
+            const firstName = nameParts[0];
+            const lastName = nameParts.slice(1).join(' ');
+            const givenValues = {
+              firstName: firstName,
+              lastName: lastName,
+              email: data?.email,
+              profileImage: data?.picture,
+            };
+
+            try {
+              let registerUser = await axios.post(
+                `${process.env.REACT_APP_BACKEND_URL}/api/user/registerSocialAppUser`,
+                givenValues
+              );
+
+              if (registerUser.status === 200 || registerUser.status === 201) {
+                localStorage.setItem(
+                  "user",
+                  JSON.stringify({
+                    socialLogin: "User is Login with Google",
+                    token: registerUser.data.token,
+                  })
+                );
+                localStorage.setItem("isLoggedIn", "true");
+                setIsLoggedIn(true);
+                setloginModal(false);
+                toast.success("Login Successful!");
+                navigate("/");
+              }
+            } catch (e) {
+              toast.success("UserName or Email Already Exists");
+            }
+          }
+        }
+      }}
+      onReject={(err) => {
+        toast.success(`${err.message} your google account data.`);
+      }}
+    >
+      <img
+        loading="lazy"
+        src={Google}
+        alt="google"
+        style={{ marginRight: "8px" }}
+      />
+      Sign Up with Google
+    </LoginSocialGoogle>
+  ) : null}
+</Box>;
+
             {/* <img
               loading="lazy"
               src={Google}
@@ -1560,7 +1524,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo,Login,open,updateOpens  
 
           <div className="sign-text">
             <span>
-              Already have a Nfuse account?{" "}
+              Already have an Nfuse account?{" "}
               <Link
                 to="#"
                 className="btn-link collapsed"

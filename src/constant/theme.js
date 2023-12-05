@@ -11,7 +11,7 @@ export const IMAGES = {
 
 	//other all
 	BlogGrid1 : require('../assets/images/IMG-20231128-WA0013.jpg'),
-	BlogGrid2 : require('../assets/images/IMG-20231128-WA0012.jpg'),
+	BlogGrid2 : require('../assets/images/IMG-20231205-WA0004.jpg'),
 	BlogGrid3 : require('../assets/images/blog/blog-grid/pic3.jpg'),
 	Shape : require('../assets/images/shape.png'),
 	Shape1 : require('./../assets/images/pattern/shape1.png'),
@@ -35,15 +35,17 @@ export const IMAGES = {
 	Avatar4 : require('./../assets/images/avatar/avatar4.jpg'),
 	Avatar5 : require('./../assets/images/avatar/avatar5.jpg'),
 	AboutPic2 : require('./../assets/images/about/pic2.jpg'),
-	AboutPic3 : require('./../assets/images/pexels-rdne-stock-project-6646907.jpg'),
+	AboutPic3 : require('./../assets/images/IMG-20231205-WA0005.jpg'),
 	ProjectPic13 : require('./../assets/images/Screenshot_29.png'),
 	largePic1 : require('./../assets/images/testimonials/large/pic1.jpg'),
 	largePic2 : require('./../assets/images/testimonials/large/pic2.jpg'),
 	largePic3 : require('./../assets/images/testimonials/large/pic3.jpg'),
 	SliderBg1 : require('../assets/images/main-slider/slider1/slider-bg1.jpg'),
 	SliderBg2 : require('../assets/images/IMG-20231128-WA0001.jpg'),
-	SliderPic1 : require('./../assets/images/IMG-20231128-WA0000.jpg'),
-	SliderPic2 : require('./../assets/images/main-slider/slider2/pic1.png'),
+	// SliderBg2 : require('../assets/images/download (1).png'),
+	SliderPic1 : require('./../assets/images/download (1).png'),
+	// SliderPic2 : require('./../assets/images/main-slider/slider2/pic1.png'),
+	SliderPic2 : require('./../assets/images/IMG-20231205-WA0006.jpg'),
 
 
 
