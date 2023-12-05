@@ -45,7 +45,8 @@ export const IMAGES = {
 	// SliderBg2 : require('../assets/images/download (1).png'),
 	SliderPic1 : require('./../assets/images/download (1).png'),
 	// SliderPic2 : require('./../assets/images/main-slider/slider2/pic1.png'),
-	SliderPic2 : require('./../assets/images/IMG-20231205-WA0006.jpg'),
+	// SliderPic2 : require('./../assets/images/IMG-20231205-WA0006.jpg'),
+	SliderPic2 : require('./../assets/images/IMG-20231205-WA0008.jpg'),
 
 
 

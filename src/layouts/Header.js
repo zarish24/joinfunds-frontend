@@ -679,6 +679,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo,Login,open,updateOpens  
                           to={"#"}
                           data-bs-toggle="modal"
                           data-bs-target="#modalLogin"
+                          style={{ textTransform: 'none' }}
                           onClick={() => setloginModal(true)}
                         >
                           Start a Campaign
@@ -884,8 +885,8 @@ const Header = ({ onShowDonate, changeStyle, changeLogo,Login,open,updateOpens  
             </button>
           </div>
   
-          <Box className={styles.loginSocial}>
-            {/* ---Social-Login with Google */}
+          {/* <Box className={styles.loginSocial}>
+            
             {callOnClick ? (
               <LoginSocialGoogle
                 sx={{ pr: 1 }} 
@@ -984,7 +985,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo,Login,open,updateOpens  
                 Login with Google
               </LoginSocialGoogle>
             ) : null}
-          </Box>
+          </Box> */}
           <div className="sign-text">
             <span>
                Don't have an Nfuse account ?
@@ -1425,8 +1426,8 @@ const Header = ({ onShowDonate, changeStyle, changeLogo,Login,open,updateOpens  
           style={{ display: "flex", justifyContent: "space-between" }}
         >
         { console.log("REACT_APP_CLIENT_ID:", process.env.REACT_APP_CLIENT_ID)}
-     <Box className={styles.loginSocial}>
-  {/* ---Social-Login with Google */}
+     {/* <Box className={styles.loginSocial}>
+  
   {callOnClick  ? (
     <LoginSocialGoogle
         sx={{ pr: 1 }}                                 
@@ -1512,7 +1513,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo,Login,open,updateOpens  
       Sign Up with Google
     </LoginSocialGoogle>
   ) : null}
-</Box>;
+</Box>; */}
 
             {/* <img
               loading="lazy"
