@@ -60,7 +60,7 @@ const MainSliderIndex3 = ({ onShowDonate }) => {
                     <img
   src={d.image2}
   alt=""
-  style={d.image2 ? { height: 'inherit', border: 'none' } : {}}
+  style={d.image2 ? { height: '130vh', border: 'none' } : {}}
 />
                     </div>
                   </div>
