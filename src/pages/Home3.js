@@ -207,7 +207,7 @@ console.log('updateOpens value',value)
       )}           
                 <div className="page-content bg-white">	
                     <div className="main-bnr-two">
-                        <MainSliderIndex3  />
+                        <MainSliderIndex3 handlemodal={handlemodal} />
                     </div>     
                     <section class="content-inner-1 section-wrapper1">
                         <div class="container">
@@ -465,7 +465,7 @@ console.log('updateOpens value',value)
                                     </div>
                                 </div>
                                 <div hidden className="col-lg-4 col-md-12 m-b30 text-end d-none d-lg-block wow fadeInUp" data-wow-delay="0.4s">
-                                    <Link to={"/blog-grid"} className="btn btn-primary">All Blogs</Link>
+                                    <Link to={"/blog-grid"} className="btn btn-primary">All Blog</Link>
                                 </div>
                             </div>
                         </div>

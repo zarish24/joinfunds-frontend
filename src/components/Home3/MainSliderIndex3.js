@@ -50,7 +50,7 @@ const dataBlog = [
   },
 ];
 
-const MainSliderIndex3 = ({ onShowDonate }) => {
+const MainSliderIndex3 = ({ onShowDonate,handlemodal }) => {
   const modalRef = useRef(null);
 
   return (
@@ -72,9 +72,9 @@ const MainSliderIndex3 = ({ onShowDonate }) => {
           <SwiperSlide key={i}>
             <div
               className={`banner-inner ${i !== 3 ? 'bgSize' : ''}`} 
-              style={{ backgroundImage: `url(${d.bgimage})`, backgroundColor: 'transparent',   }}
+           
             >
-              <div className="container-fluid">
+              <div className="container-fluid"    style={{ backgroundImage: `url(${d.bgimage})`, backgroundColor: 'transparent',   }}>
                 <div className="row">
                   {/* <div className="col-xl-6 col-md-5">
                     <div className={d.style}>
@@ -85,7 +85,7 @@ const MainSliderIndex3 = ({ onShowDonate }) => {
 />
                     </div>
                   </div> */}
-                  <div className="col-xl-6 col-md-7">
+                  <div className="col-xl-6 col-xs-12 col-md-7">
                     <div className="banner-content">
                       <div className="top-content pl-5">
                         {/* <h5 className="sub-title text-light">{d.title}</h5> */}
@@ -102,7 +102,7 @@ const MainSliderIndex3 = ({ onShowDonate }) => {
                             <span>Donate</span>
                             <i className="flaticon-heart ms-3" />
                           </Link> */}
-                          <Link to={'/about-us'}  className={`btn btn-light btnhover2 mt-2 textTransformIssue ${(i === 0 || i === 1 || i === 2) ? 'btnStart' : ''}` }>
+                          <Link to={'#'}   onClick={handlemodal}  className={`btn btn-light btnhover2 mt-2 textTransformIssue ${(i === 0 || i === 1 || i === 2) ? 'btnStart' : ''}` }>
                             Start a Campaign{' '}
                             <i className="flaticon-right-arrow ms-3" />
                           </Link>

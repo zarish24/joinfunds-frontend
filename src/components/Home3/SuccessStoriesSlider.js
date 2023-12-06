@@ -52,6 +52,9 @@ const SuccessStoriesSlider = ({ setReadModal }) => {
           navigation={{ prevEl: navigationPrevRef.current, nextEl: navigationNextRef.current }}
           pagination={{ clickable: true }}
           breakpoints={{
+            1800: {
+              slidesPerView: 8,
+            },
             1600: {
               slidesPerView: 5,
             },
