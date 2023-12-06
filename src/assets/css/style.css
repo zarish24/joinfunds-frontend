@@ -18039,7 +18039,7 @@ ul a.rsswidget {
       color: #fff; }
       @media only screen and (max-width: 1480px) {
         .main-bnr-two .banner-content .title {
-          font-size: 52px; } }
+          font-size: 37px; text-align: justify; } }
       @media only screen and (max-width: 1280px) {
         .main-bnr-two .banner-content .title {
           font-size: 42px; } }
@@ -18198,21 +18198,14 @@ ul a.rsswidget {
     padding-top: 100px; }
     .main-bnr-two .banner-inner .row {
       height: 100%; }
-    .main-bnr-two .banner-inner:before {
-      content: "";
-      position: absolute;
-      opacity: 0.8;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: #141818; }
+
+    
     @media only screen and (max-width: 1680px) {
       .main-bnr-two .banner-inner {
-        height: 800px; } }
+        height: 556px; } }
     @media only screen and (max-width: 1280px) {
       .main-bnr-two .banner-inner {
-        height: 700px; } }
+        height: 556px; } }
     @media only screen and (max-width: 1191px) {
       .main-bnr-two .banner-inner {
         height: 580px; } }
@@ -24657,5 +24650,21 @@ pre {
   [data-primary="color-skin-3"] .form-wizard.dz-form-step .nav-wizard .nav-link.completed,
   [data-primary="color-skin-3"] .dz-team.style-1 .team-social li a {
     background-color: #bf0b32; }
+.textTransformIssue {
+  text-transform: inherit !important; 
+}
 
+@media only screen and (min-width: 1400px) and (max-width: 1680px) {
+  .bgSize {
+    background-size: contain !important;
+  }
+.btnStart {
+  padding: 11px 5px !important;
+}
+
+.btnStartdiv {
+  margin-left: -46px;
+  margin-top: 20rem;
+}
+}
 /*# sourceMappingURL=style.css.map */
