@@ -18190,7 +18190,7 @@ ul a.rsswidget {
     position: relative;
     height: 880px;
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: cover;
     display: flex;
     background-position: bottom left;
     background-color: #141818;
@@ -24651,6 +24651,20 @@ pre {
   [data-primary="color-skin-3"] .dz-team.style-1 .team-social li a {
     background-color: #bf0b32; }
 .textTransformIssue {
-  text-transform: "inherit !important"
+  text-transform: inherit !important; 
+}
+
+@media only screen and (min-width: 1400px) and (max-width: 1680px) {
+  .bgSize {
+    background-size: contain !important;
+  }
+.btnStart {
+  padding: 11px 5px !important;
+}
+
+.btnStartdiv {
+  margin-left: -46px;
+  margin-top: 20rem;
+}
 }
 /*# sourceMappingURL=style.css.map */
