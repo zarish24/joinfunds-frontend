@@ -42,10 +42,10 @@ export const IMAGES = {
 	largePic3 : require('./../assets/images/testimonials/large/pic3.jpg'),
 	SliderBg1 : require('../assets/images/main-slider/slider1/slider-bg1.jpg'),
 	SliderBg2 : require('../assets/images/IMG-20231128-WA0001.jpg'),
-	SliderPic1 : require('./../assets/images/IMG-20231128-WA0000.jpg'),
-	SliderPic2 : require('./../assets/images/main-slider/slider2/pic1.png'),
-
-
+	SliderPic1 : require('./../assets/images/main-slider/slider1/new-slide1.jpg'),
+	SliderPic2 : require('./../assets/images/main-slider/slider1/new-slide2.jpg'),
+	SliderPic3 : require('./../assets/images/main-slider/slider1/new-slide3.jpg'),
+	SliderPic4 : require('./../assets/images/main-slider/slider1/new-slide4.jpg'),
 
 };
 

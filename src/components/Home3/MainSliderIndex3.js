@@ -15,16 +15,35 @@ const dataBlog = [
     // bgimage: IMAGES.SliderBg2,
     style: 'banner-media2',
     title: 'Infusing the community',
-    title2: 'Nfusing the community',
-    image2: IMAGES.SliderPic2,
+    title2: '',
+    // image2: IMAGES.SliderPic2,
   },
   {
     // bgimage: IMAGES.SliderBg1,
-    bgimage: IMAGES.SliderBg2,
+    bgimage: IMAGES.SliderPic2,
+    style: 'banner-media',
+    title: '',
+    // title2: 'Nfusing the community',
+    title2: '',
+    // image2: IMAGES.SliderPic1,
+  },
+  {
+    // bgimage: IMAGES.SliderBg1,
+    bgimage: IMAGES.SliderPic3,
     style: 'banner-media',
     title: 'DISCOVER/SEARCH A CAMPAIGN',
     // title2: 'Nfusing the community',
-    title2: ' Freedom-loving individuals',
+    title2: ' ',
+    // image2: IMAGES.SliderPic1,
+  },
+
+  {
+    // bgimage: IMAGES.SliderBg1,
+    bgimage: IMAGES.SliderPic4,
+    style: 'banner-media',
+    title: 'DISCOVER/SEARCH A CAMPAIGN',
+    // title2: 'Nfusing the community',
+    title2: '“Happiest of Holidays to You!  Here’s to 2024 being your best year yet!”',
     // image2: IMAGES.SliderPic1,
   },
 ];
@@ -55,19 +74,17 @@ const MainSliderIndex3 = ({ onShowDonate }) => {
             >
               <div className="container-fluid">
                 <div className="row">
-                  <div className="col-xl-6 col-md-5">
+                  {/* <div className="col-xl-6 col-md-5">
                     <div className={d.style}>
                       <img src={d.image2} alt="" />
                     </div>
-                  </div>
+                  </div> */}
                   <div className="col-xl-6 col-md-7">
                     <div className="banner-content">
-                      <div className="top-content">
+                      <div className="top-content pl-5">
                         {/* <h5 className="sub-title text-light">{d.title}</h5> */}
-                        <h1 className="title">{d.title2}</h1>
-                        <p>
-                        Join us in making a positive impact! Your support empowers us to create meaningful change, one act of kindness at a time.
-                        </p>
+                        <h4 className="title">{d.title2}</h4>
+                        {/* <p>{d.title2}</p> */}
                         <div className="d-flex align-items-center">
                           {/* <Link
                             to={'#'}
@@ -79,8 +96,8 @@ const MainSliderIndex3 = ({ onShowDonate }) => {
                             <span>Donate</span>
                             <i className="flaticon-heart ms-3" />
                           </Link> */}
-                          <Link to={'/about-us'} className="btn btn-light btnhover2">
-                            Learn More{' '}
+                          <Link to={'/about-us'} className="btn btn-light btnhover2 mt-2 textTransformIssue" style={{ textTransform: "inherit !important" }}>
+                            Start a Campaign{' '}
                             <i className="flaticon-right-arrow ms-3" />
                           </Link>
                         </div>
