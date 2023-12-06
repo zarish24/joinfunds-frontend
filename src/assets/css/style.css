@@ -24654,7 +24654,7 @@ pre {
   text-transform: inherit !important; 
 }
 
-@media only screen and (min-width: 1400px) and (max-width: 1680px) {
+@media only screen and (min-width: 1200px) and (max-width: 1680px) {
   .bgSize {
     background-size: contain !important;
   }
