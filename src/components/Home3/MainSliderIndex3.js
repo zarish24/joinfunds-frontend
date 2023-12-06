@@ -76,7 +76,11 @@ const MainSliderIndex3 = ({ onShowDonate }) => {
                 <div className="row">
                   {/* <div className="col-xl-6 col-md-5">
                     <div className={d.style}>
-                      <img src={d.image2} alt="" />
+                    <img
+  src={d.image2}
+  alt=""
+  style={d.image2 ? { height: '130vh', border: 'none' } : {}}
+/>
                     </div>
                   </div> */}
                   <div className="col-xl-6 col-md-7">
