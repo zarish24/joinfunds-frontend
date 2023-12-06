@@ -214,10 +214,10 @@ console.log('updateOpens value',value)
                             <div class="row section-head align-items-center">
                                 <div class="col-lg-8 col-md-12 wow fadeInUp" data-wow-delay="0.2s">
                                     {/* <h5 class="sub-title">LATEST CAUSES</h5> */}
-                                    <h2>Top Trending </h2>
+                                    <h2>Trending Campaigns </h2>
                                 </div>
                                 <div class="col-lg-4 col-md-12 text-end d-none d-lg-block wow fadeInUp" data-wow-delay="0.4s">
-                                    <Link to={"/campaigns"} class="btn btn-primary">View All Causes</Link>
+                                    <Link to={"/campaigns"} class="btn btn-primary">View All</Link>
                                 </div>
                             </div>
                         </div>

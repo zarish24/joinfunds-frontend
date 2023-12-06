@@ -72,9 +72,9 @@ const MainSliderIndex3 = ({ onShowDonate,handlemodal }) => {
           <SwiperSlide key={i}>
             <div
               className={`banner-inner ${i !== 3 ? 'bgSize' : ''}`} 
-           
+              style={{ backgroundImage: `url(${d.bgimage})`, backgroundColor: 'transparent',   }}
             >
-              <div className="container-fluid"    style={{ backgroundImage: `url(${d.bgimage})`, backgroundColor: 'transparent',   }}>
+              <div className="container-fluid"    >
                 <div className="row">
                   {/* <div className="col-xl-6 col-md-5">
                     <div className={d.style}>
