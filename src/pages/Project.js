@@ -141,7 +141,7 @@ const Project = () => {
     <input
       type="text"
       className="form-control"
-      placeholder="Find Projects"
+      placeholder="Search a Campaign"
       value={searchText}
       onChange={(e) => setSearchText(e.target.value)}
     />
