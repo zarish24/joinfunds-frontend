@@ -100,7 +100,7 @@ const LatestNewSlider = () => {
                   <h5 className="dz-title">
                     <Link to="/blog-details1">A Grateful Harvest: Giving Back on Thanksgiving</Link>
                   </h5>
-                  <p>As the aroma of roasting turkey and the warmth of family gatherings fill the air, Thanksgiving serves as a poignant reminder to express gratitude</p>
+                  <p class="blogDetail">As the aroma of roasting turkey and the warmth of family gatherings fill the air, Thanksgiving serves as a poignant reminder to express gratitude</p>
                   <Link to="/blog-details1" className="btn btn-primary">
                     Read More
                   </Link>
