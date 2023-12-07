@@ -506,8 +506,8 @@ console.log('Self ',Self);
   };
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("user");
-
+    const user = JSON.parse(localStorage.getItem("user"));
+    const token = user?.token;
     if (!token) {
       toast.error("Please Login First");
       return;
@@ -515,7 +515,6 @@ console.log('Self ',Self);
     try {
       const data = {
         campaign_id: id,
-        user_id: user_id,
         comment_message: comment_message,
       };
       const config = {
