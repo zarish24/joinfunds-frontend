@@ -207,7 +207,7 @@ console.log('updateOpens value',value)
       )}           
                 <div className="page-content bg-white">	
                     <div className="main-bnr-two">
-                        <MainSliderIndex3  />
+                        <MainSliderIndex3  handlemodal={handlemodal} />
                     </div>     
                     <section class="content-inner-1 section-wrapper1">
                         <div class="container">

@@ -50,7 +50,7 @@ const dataBlog = [
   },
 ];
 
-const MainSliderIndex3 = ({ onShowDonate }) => {
+const MainSliderIndex3 = ({ onShowDonate, handlemodal }) => {
   const modalRef = useRef(null);
 
   return (
@@ -71,57 +71,45 @@ const MainSliderIndex3 = ({ onShowDonate }) => {
         {dataBlog.map((d, i) => (
           <SwiperSlide key={i}>
             <div
-              className={`banner-inner ${i !== 3 ? 'bgSize' : ''}`} 
-              style={{ backgroundImage: `url(${d.bgimage})`, backgroundColor: 'transparent',   }}
-            >
-              <div className="container-fluid">
-                <div className="row">
-                  {/* <div className="col-xl-6 col-md-5">
-                    <div className={d.style}>
-                    <img
-  src={d.image2}
-  alt=""
-  style={
-    d.image2
-      ? {
-          height: '120vh', 
-          maxWidth: '100%',
-          backgroundSize: 'contain', 
-          border: 'none',
-        }
-      : {}
-  }
-/>
-                    </div>
-                  </div> */}
-                  <div className="col-xl-6 col-md-7">
-                    <div className="banner-content">
-                      <div className="top-content pl-5">
-                        {/* <h5 className="sub-title text-light">{d.title}</h5> */}
-                        <h4 className="title">{d.title2}</h4>
-                        {/* <p>{d.title2}</p> */}
-                        <div className={`${(i === 0 || i === 1 || i === 2) ? 'btnStartdiv' : ''}`}>
-                          {/* <Link
-                            to={'#'}
-                            className="btn btn-primary btnhover1"
-                            onClick={() => {
-                              modalRef.current.handleModalOpen();
-                            }}
-                          >
-                            <span>Donate</span>
-                            <i className="flaticon-heart ms-3" />
-                          </Link> */}
-                          <Link to={'/about-us'}  className={`btn btn-light btnhover2 mt-2 textTransformIssue ${(i === 0 || i === 1 || i === 2) ? 'btnStart' : ''}` }>
-                            Start a Campaign{' '}
-                            <i className="flaticon-right-arrow ms-3" />
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+  className={`banner-inner ${i !== 3 ? 'bgSize' : ''} img-fluid`}
+  style={{ backgroundImage: `url(${d.bgimage})`, backgroundColor: 'transparent','@media (max-width: 767px)': {
+      backgroundSize: 'cover',
+    }, }}
+>
+  <div className="container-fluid">
+    <div className="row">
+      <div className="col-xl-6 col-xs-12 col-md-7">
+        <div className="banner-content">
+          <div className="top-content pl-5">
+            {/* <h5 className="sub-title text-light">{d.title}</h5> */}
+            <h4 className="title">{d.title2}</h4>
+            {/* <p>{d.title2}</p> */}
+            <div className={`${(i === 0 || i === 1 || i === 2) ? 'btnStartdiv' : ''}`}>
+              {/* <Link
+                to={'#'}
+                className="btn btn-primary btnhover1"
+                onClick={() => {
+                  modalRef.current.handleModalOpen();
+                }}
+              >
+                <span>Donate</span>
+                <i className="flaticon-heart ms-3" />
+              </Link> */}
+              <Link
+                onClick={handlemodal}
+                className={`btn btn-light btnhover2 mt-2 textTransformIssue ${(i === 0 || i === 1 || i === 2) ? 'btnStart' : ''}`}
+              >
+                Start a Campaign{' '}
+                <i className="flaticon-right-arrow ms-3" />
+              </Link>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
           </SwiperSlide>
         ))}
         <div className="bottom-wrapper">
