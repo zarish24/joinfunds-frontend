@@ -229,7 +229,7 @@ console.log('updateOpens value',value)
                     <section className="content-inner">
                         <div className="container">
                             <div className="row about-bx5 align-items-center">
-                                <div className="col-lg-6 m-b30">
+                                {/* <div className="col-lg-6 m-b30">
                                     <div className="dz-about-media">
                                         <div className="img-wrapper">
                                             <img src={IMAGES.AboutPic2} alt="" className="img1" />
@@ -237,8 +237,8 @@ console.log('updateOpens value',value)
                                         </div>
                                         <img src={IMAGES.AboutPic3} alt=""  className="img2"  />
                                     </div>
-                                </div>
-                                <div className="col-lg-6 m-b30" >
+                                </div> */}
+                                <div className="col-lg-6 col-xs-12 m-b30" >
                                     <div className="section-head">
                                         {/* <h5 className="sub-title">About Us</h5> */}
                                         <h2>Help is <br/>Our Main Goal</h2>

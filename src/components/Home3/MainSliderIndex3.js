@@ -17,7 +17,7 @@ const dataBlog = [
     // bgimage: IMAGES.SliderBg2,
     style: 'banner-media2',
     title: 'Infusing the community',
-    title2: '',
+    // title2: '',
     // image2: IMAGES.SliderPic2,
   },
   {
@@ -26,7 +26,7 @@ const dataBlog = [
     style: 'banner-media',
     title: '',
     // title2: 'Nfusing the community',
-    title2: '',
+    // title2: '',
     // image2: IMAGES.SliderPic1,
   },
   {
@@ -35,7 +35,7 @@ const dataBlog = [
     style: 'banner-media',
     title: 'DISCOVER/SEARCH A CAMPAIGN',
     // title2: 'Nfusing the community',
-    title2: ' ',
+    // title2: ' ',
     // image2: IMAGES.SliderPic1,
   },
 
@@ -63,7 +63,7 @@ const MainSliderIndex3 = ({ onShowDonate,handlemodal }) => {
         spaceBetween={0}
         loop={true}
         autoplay={{
-          delay: 3000,
+          delay: 6000,
         }}
         navigation
       >
@@ -89,8 +89,8 @@ const MainSliderIndex3 = ({ onShowDonate,handlemodal }) => {
                     <div className="banner-content">
                       <div className="top-content pl-5">
                         {/* <h5 className="sub-title text-light">{d.title}</h5> */}
-                        <h4 className="title">{d.title2}</h4>
-                        {/* <p>{d.title2}</p> */}
+                        {/* <h4 className="title">{d.title2}</h4> */}
+                        {d.title2 && <p className="titleSlider">{d.title2}</p>}
                         <div className={`${(i === 0 || i === 1 || i === 2) ? 'btnStartdiv' : ''}`}>
                           {/* <Link
                             to={'#'}
@@ -115,7 +115,7 @@ const MainSliderIndex3 = ({ onShowDonate,handlemodal }) => {
             </div>
           </SwiperSlide>
         ))}
-        <div className="bottom-wrapper">
+        {/* <div className="bottom-wrapper">
           <div className="btn-wrapper">
             <div className="main-btn main-btn-prev">
               <i className="flaticon-left-arrow-1" />
@@ -124,7 +124,7 @@ const MainSliderIndex3 = ({ onShowDonate,handlemodal }) => {
               <i className="flaticon-next" />
             </div>
           </div>
-        </div>
+        </div> */}
       </Swiper>
       <DonateModal ref={modalRef} />
     </>

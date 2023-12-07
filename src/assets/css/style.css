@@ -27828,17 +27828,24 @@ ul a.rsswidget:hover {
   .main-bnr-two .banner-inner {
     padding-top: 100px;
     height: 300px;
-    background-size: contain;
-    /* Scale the background image to cover the entire container */
-    background-position: center;
-    /* Center the background image */
     background-repeat: no-repeat;
+    background-size: 373px 219px;
     /* Do not repeat the image */
   }
 
   .btnStartdiv {
     position: absolute;
-    bottom: -181px;
+    bottom: -197px;
+  }
+  .titleSlider {
+    padding: 34px;
+    text-align: justify;
+    font-size: 15px;
+    font-weight: 800;
+    color: #fff;
+  }
+  .textTransformIssue  {
+    padding: 7px 7px !important;
   }
 }
 

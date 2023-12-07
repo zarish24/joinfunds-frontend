@@ -75,7 +75,7 @@ const LatestNewSlider = () => {
                   <h5 className="dz-title">
                     <Link to="/blog-details">How You Can Make a Difference This December</Link>
                   </h5>
-                  <p>Amidst the joyous festivities and gift-giving rituals of the holiday season, it's easy to get swept away in the whirl wind of preparations</p>
+                  <p>Amidst the joyous festivities and gift-giving rituals of the holiday season, it's easy to get swept away in the whirl wind of preparations</p><br/>
                   <Link to="/blog-details" className="btn btn-primary">
                     Read More
                   </Link>
