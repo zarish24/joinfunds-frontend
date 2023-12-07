@@ -349,9 +349,9 @@ const Setting = (props) => {
                 setLegalPostal(Data.postalCode);
                 setLegalCountry(Data.country);
                 setLegalSecurityNumber(Data.socialSecurityNumber);
-                setLegalCheckingAccountNumber(Data.accountNumber);
+                setLegalCheckingAccountNumber(Data.stripeConnectedAccountNumber);
                 setLegalRoutingNumber(Data.routingNumber);
-                setLegalConfirmCheckingAccountNumber(Data.accountNumber);
+                // setLegalConfirmCheckingAccountNumber(Data.accountNumber);
                 const dateOfBirth = Data.dateOfBirth || "";
                 const dateParts = dateOfBirth.split("-");
                 const day = parseInt(dateParts[2], 10);
@@ -410,9 +410,9 @@ const Setting = (props) => {
             setLegalPostal(Data.postalCode);
             setLegalCountry(Data.country);
             setLegalSecurityNumber(Data.socialSecurityNumber);
-            setLegalCheckingAccountNumber(Data.accountNumber);
+            setLegalCheckingAccountNumber(Data.stripeConnectedAccountNumber);
             setLegalRoutingNumber(Data.routingNumber);
-            setLegalConfirmCheckingAccountNumber(Data.accountNumber);
+            // setLegalConfirmCheckingAccountNumber(Data.accountNumber);
             const dateOfBirth = Data.dateOfBirth || "";
             const dateParts = dateOfBirth.split("-");
             const day = parseInt(dateParts[2], 10);
@@ -488,17 +488,17 @@ const Setting = (props) => {
             setLoading(false);
             return;
         }
-        if (legalRoutingNumber.length === 0) {
-            setLegalRoutingNumberError(true);
-            setLoading(false);
-            return;
-        }
-        if (legalConfirmCheckingAccountNumber.length === 0) {
-            setLegalConfirmCheckingAccountNumberError(true);
+        // if (legalRoutingNumber.length === 0) {
+        //     setLegalRoutingNumberError(true);
+        //     setLoading(false);
+        //     return;
+        // }
+        // if (legalConfirmCheckingAccountNumber.length === 0) {
+        //     setLegalConfirmCheckingAccountNumberError(true);
 
-            setLoading(false);
-            return;
-        }
+        //     setLoading(false);
+        //     return;
+        // }
         if (legalSecurityNumber.length === 0) {
             setLegalSecurityNumberError(true);
             setLoading(false);
@@ -532,8 +532,8 @@ const Setting = (props) => {
                 country: legalCountry,
                 socialSecurityNumber: legalSecurityNumber,
                 dateOfBirth: `${legalDay} ${legalMonth} ${legalYear}`,
-                accountNumber: legalCheckingAccountNumber,
-                routingNumber: legalRoutingNumber
+                stripeConnectedAccountNumber: legalCheckingAccountNumber,
+                // routingNumber: legalRoutingNumber
             };
 
 
@@ -1420,7 +1420,7 @@ const Setting = (props) => {
                                                     <h5 className="mb-0 mt-3">Bank Account</h5>
                                                 </Grid>
                                                 <Grid item xs={12} md={6} lg={6} >
-                                                    <label> Account Number<span className="text-danger">*</span></label>
+                                                    <label>Stripe Account Number<span className="text-danger">*</span></label>
                                                     <input
                                                         type="text"
                                                         value={legalCheckingAccountNumber}
@@ -1443,7 +1443,7 @@ const Setting = (props) => {
                                                     )}
 
                                                 </Grid>
-                                                <Grid item xs={12} md={6} lg={6} >
+                                                {/* <Grid item xs={12} md={6} lg={6} >
                                                     <label>Routing Number<span className="text-danger">*</span></label>
                                                     <input
                                                         type="text"
@@ -1489,20 +1489,20 @@ const Setting = (props) => {
                                                         <Error className="input feedback">Confirm Checking Account is required</Error>
                                                     )}
 
-                                                </Grid>
+                                                </Grid> */}
 
 
-                                                <Grid item xs={12} md={6} lg={6} >
+                                            </Grid>
+                                        </form>
+                                                <Grid item xs={12} md={6} lg={12} >
                                                     <div
-                                                        className="btn btn-primary btn-block p-2 mx-auto mb-0"
+                                                        className="btn btn-primary btn-block p-2 mx-auto "
                                                         onClick={saveRecipientDetails}
                                                     >
                                                         Save Recipient Details
                                                     </div>
 
                                                 </Grid>
-                                            </Grid>
-                                        </form>
                                     </Grid>
                                 </Grid>
                             </>

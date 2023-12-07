@@ -74,7 +74,7 @@ const MainSliderIndex3 = ({ onShowDonate,handlemodal }) => {
               className={`banner-inner ${i !== 3 ? 'bgSize' : ''}`} 
               style={{ backgroundImage: `url(${d.bgimage})`, backgroundColor: 'transparent',   }}
             >
-              <div className="container-fluid">
+              <div className="container-fluid"    >
                 <div className="row">
                   {/* <div className="col-xl-6 col-md-5">
                     <div className={d.style}>
@@ -85,12 +85,12 @@ const MainSliderIndex3 = ({ onShowDonate,handlemodal }) => {
 />
                     </div>
                   </div> */}
-                  <div className="col-xl-6 col-md-7">
+                  <div className="col-xl-6 col-xs-12 col-md-7">
                     <div className="banner-content">
                       <div className="top-content pl-5">
                         {/* <h5 className="sub-title text-light">{d.title}</h5> */}
-                        <h4 className="title">{d.title2}</h4>
-                        {/* <p>{d.title2}</p> */}
+                        {/* <h4 className="title">{d.title2}</h4> */}
+                        {d.title2 && <p className="titleSlider">{d.title2}</p>}
                         <div className={`${(i === 0 || i === 1 || i === 2) ? 'btnStartdiv' : ''}`}>
                           {/* <Link
                             to={'#'}
@@ -102,7 +102,7 @@ const MainSliderIndex3 = ({ onShowDonate,handlemodal }) => {
                             <span>Donate</span>
                             <i className="flaticon-heart ms-3" />
                           </Link> */}
-                          <Link to={'/about-us'}  className={`btn btn-light btnhover2 mt-2 textTransformIssue ${(i === 0 || i === 1 || i === 2) ? 'btnStart' : ''}` }>
+                          <Link to={'#'}   onClick={handlemodal}  className={`btn btn-light btnhover2 mt-2 textTransformIssue ${(i === 0 || i === 1 || i === 2) ? 'btnStart' : ''}` }>
                             Start a Campaign{' '}
                             <i className="flaticon-right-arrow ms-3" />
                           </Link>
