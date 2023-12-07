@@ -14,7 +14,7 @@ const BlogGrid = () => {
     return (
         <>
             <div className="page-content bg-white">
-                <PageBanner maintitle="Blog" pagetitle="Blog grid" background={bg}/>
+                <PageBanner maintitle="Blog" pagetitle="Blog" background={bg}/>
                 <section className="content-inner-2">
                     <div className="container">
                         <div className="row">

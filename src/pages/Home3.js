@@ -207,17 +207,17 @@ console.log('updateOpens value',value)
       )}           
                 <div className="page-content bg-white">	
                     <div className="main-bnr-two">
-                        <MainSliderIndex3  handlemodal={handlemodal} />
+                        <MainSliderIndex3 handlemodal={handlemodal} />
                     </div>     
                     <section class="content-inner-1 section-wrapper1">
                         <div class="container">
                             <div class="row section-head align-items-center">
                                 <div class="col-lg-8 col-md-12 wow fadeInUp" data-wow-delay="0.2s">
                                     {/* <h5 class="sub-title">LATEST CAUSES</h5> */}
-                                    <h2>Top Trending </h2>
+                                    <h2>Trending Campaigns </h2>
                                 </div>
                                 <div class="col-lg-4 col-md-12 text-end d-none d-lg-block wow fadeInUp" data-wow-delay="0.4s">
-                                    <Link to={"/campaigns"} class="btn btn-primary">View All Causes</Link>
+                                    <Link to={"/campaigns"} class="btn btn-primary">View All</Link>
                                 </div>
                             </div>
                         </div>
@@ -231,14 +231,14 @@ console.log('updateOpens value',value)
                             <div className="row about-bx5 align-items-center">
                                 <div className="col-lg-6 m-b30">
                                     <div className="dz-about-media">
-                                        <div className="img-wrapper">
+                                        {/* <div className="img-wrapper">
                                             <img src={IMAGES.AboutPic2} alt="" className="img1" />
                                             <Link to={"#"} className="popup-youtube video-btn" onClick={()=> setOpen(true)} ><i className="fa-solid fa-play" ></i></Link>
-                                        </div>
+                                        </div> */}
                                         <img src={IMAGES.AboutPic3} alt=""  className="img2"  />
                                     </div>
                                 </div>
-                                <div className="col-lg-6 m-b30" >
+                                <div className="col-lg-6 col-xs-12 m-b30" >
                                     <div className="section-head">
                                         {/* <h5 className="sub-title">About Us</h5> */}
                                         <h2>Help is <br/>Our Main Goal</h2>
@@ -465,7 +465,7 @@ console.log('updateOpens value',value)
                                     </div>
                                 </div>
                                 <div hidden className="col-lg-4 col-md-12 m-b30 text-end d-none d-lg-block wow fadeInUp" data-wow-delay="0.4s">
-                                    <Link to={"/blog-grid"} className="btn btn-primary">All Blogs</Link>
+                                    <Link to={"/blog-grid"} className="btn btn-primary">All Blog</Link>
                                 </div>
                             </div>
                         </div>

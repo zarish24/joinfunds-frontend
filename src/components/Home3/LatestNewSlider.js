@@ -75,7 +75,7 @@ const LatestNewSlider = () => {
                   <h5 className="dz-title">
                     <Link to="/blog-details">How You Can Make a Difference This December</Link>
                   </h5>
-                  <p>Amidst the joyous festivities and gift-giving rituals of the holiday season, it's easy to get swept away in the whirl wind of preparations</p>
+                  <p className="blogDetail1">Amidst the joyous festivities and gift-giving rituals of the holiday season, it's easy to get swept away in the whirl wind of preparations</p><br/>
                   <Link to="/blog-details" className="btn btn-primary">
                     Read More
                   </Link>
@@ -100,7 +100,7 @@ const LatestNewSlider = () => {
                   <h5 className="dz-title">
                     <Link to="/blog-details1">A Grateful Harvest: Giving Back on Thanksgiving</Link>
                   </h5>
-                  <p>As the aroma of roasting turkey and the warmth of family gatherings fill the air, Thanksgiving serves as a poignant reminder to express gratitude</p>
+                  <p className="blogDetail">As the aroma of roasting turkey and the warmth of family gatherings fill the air, Thanksgiving serves as a poignant reminder to express gratitude</p>
                   <Link to="/blog-details1" className="btn btn-primary">
                     Read More
                   </Link>
