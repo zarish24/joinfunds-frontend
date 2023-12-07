@@ -229,15 +229,15 @@ console.log('updateOpens value',value)
                     <section className="content-inner">
                         <div className="container">
                             <div className="row about-bx5 align-items-center">
-                                {/* <div className="col-lg-6 m-b30">
+                                <div className="col-lg-6 m-b30">
                                     <div className="dz-about-media">
-                                        <div className="img-wrapper">
+                                        {/* <div className="img-wrapper">
                                             <img src={IMAGES.AboutPic2} alt="" className="img1" />
                                             <Link to={"#"} className="popup-youtube video-btn" onClick={()=> setOpen(true)} ><i className="fa-solid fa-play" ></i></Link>
-                                        </div>
+                                        </div> */}
                                         <img src={IMAGES.AboutPic3} alt=""  className="img2"  />
                                     </div>
-                                </div> */}
+                                </div>
                                 <div className="col-lg-6 col-xs-12 m-b30" >
                                     <div className="section-head">
                                         {/* <h5 className="sub-title">About Us</h5> */}

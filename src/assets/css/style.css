@@ -27829,7 +27829,7 @@ ul a.rsswidget:hover {
     padding-top: 100px;
     height: 300px;
     background-repeat: no-repeat;
-    background-size: 373px 219px;
+    background-size: 380px 219px;
     /* Do not repeat the image */
   }
 
@@ -27848,7 +27848,15 @@ ul a.rsswidget:hover {
     padding: 7px 7px !important;
   }
 }
-
+@media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 812px) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+    /* Styles for iPhone X, XS, XR, 11, 11 Pro, 12 Mini, 12 and 13 (and similar sizes) */
+    .main-bnr-two .banner-inner {
+        background-size: 450px 219px !important;
+      }
+}
 .banner-one {
   position: relative;
   align-items: center;
@@ -28325,7 +28333,7 @@ ul a.rsswidget:hover {
   position: relative;
   overflow: unset;
   margin-right: 20px;
-  padding-top: 100px;
+  /* padding-top: 100px; */
 }
 
 .about-bx5 .dz-about-media .img-wrapper {
@@ -28377,7 +28385,7 @@ ul a.rsswidget:hover {
 
 @media only screen and (max-width: 1280px) {
   .about-bx5 .dz-about-media {
-    padding-left: 80px;
+    /* padding-left: 80px; */
   }
 
   .about-bx5 .dz-about-media .img-wrapper .img1 {
