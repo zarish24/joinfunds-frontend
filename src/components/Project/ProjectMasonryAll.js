@@ -53,7 +53,7 @@ import {
 
 const RecordsPerPage = 12;
 
-const ProjectMasonry = (props) => {
+const ProjectMasonryAll = (props) => {
   console.log("props-data", props.searchText);
 
   //  const { page, setPage } = props;
@@ -305,7 +305,7 @@ const handleCopyUrl = async (url) => {
             <i className="fas fa-paper-plane"></i>
           </button> */}
                       <div className="mb-2 d-flex flex">
-                      {/* <button
+                      <button
           onClick={() => {
             toggleShareModal(item._id);
             handleCopyUrl(`${process.env.REACT_APP_BACKEND_URL}/fundraiser-detail/${item._id}`);
@@ -313,10 +313,10 @@ const handleCopyUrl = async (url) => {
             className="btn share-button float-right"
           >
             <i className="fas fa-paper-plane"></i>
-          </button> */}
-                      {item.isMyCampaign === true && item.status === 'open' ? (
-  <>
-    <button
+          </button>
+                      {/* {item.isMyCampaign === true && item.status === 'open' ? ( */}
+  {/* <> */}
+    {/* <button
       onClick={() => {
         toggleShareModal(item._id);
         handleCopyUrl(`${process.env.REACT_APP_BACKEND_URL}/fundraiser-detail/${item._id}`);
@@ -324,9 +324,9 @@ const handleCopyUrl = async (url) => {
       className="btn share-button float-right"
     >
       <i className="fas fa-paper-plane"></i>
-    </button>
+    </button> */}
 
-    <div className="d-grid ">
+    {/* <div className="d-grid ">
       <label>Close</label>
       <AntSwitch
         checked={true}
@@ -338,7 +338,7 @@ const handleCopyUrl = async (url) => {
       />
     </div>
   </>
-) : 'Closed'}
+) : null} */}
                       {/* {item.isMyCampaign === true && item.status === 'open'? (
           <button
           onClick={() => {
@@ -538,4 +538,4 @@ const handleCopyUrl = async (url) => {
   );
 };
 
-export default ProjectMasonry;
+export default ProjectMasonryAll;

@@ -35,10 +35,10 @@ const ContactUs = () => {
       const sendEmail = async (e) => {
         e.preventDefault();
     
-        // Validation
+        // Validation || !phoneNumber.trim() 
         const { firstName, lastName, email, phoneNumber, message } = formData;
         console.log('formData',formData);
-        if (!firstName.trim() || !lastName.trim() || !email.trim() || !phoneNumber.trim() || !message.trim()) {
+        if (!firstName.trim() || !lastName.trim() || !email.trim() || !message.trim()) {
           toast.error("All fields are required");
         } else {
           try {
@@ -161,7 +161,7 @@ const ContactUs = () => {
                     <div className="input-group">
                         <input
                             name="phoneNumber"
-                            required
+                            // required
                             type="tel"
                             className="form-control"
                             // placeholder="+1 987 654 321"

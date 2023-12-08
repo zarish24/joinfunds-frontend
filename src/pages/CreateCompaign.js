@@ -32,8 +32,8 @@ const CreateCompaign = () => {
     description: '',
     start_date: '',
     end_date: '',
-    created_by:'',
-    donation_to_nfuse:'1',
+    created_by:'My-Self',
+    donation_to_nfuse:'15',
     campaign_url:'',
     country:'United States',
     campaign_status: 'pending',  
@@ -436,22 +436,26 @@ const daysDifference = getDaysDifference(formData.start_date, formData.end_date)
                 </div> */}
 
                 <div className="row">
-                  <div className="col-md-6">
-                        <label>Created By</label>
-                        <input
-                          type="text"
-                          name="created_by"
-                          value={formData.created_by}
-                          onChange={handleChange}
-                          style={{
-                            border: `2px solid ${createdByError ? 'red' : '#ccc'}`, 
-                          }}
-                          className="form-control"
-                        />
-                        {createdByError && (
-                          <Error className="input feedback">Created By is required</Error>
-                        )}
-                      </div>
+                <div className="col-md-6">
+  <label>Created By</label>
+  <select
+    name="created_by"
+    value={formData.created_by}
+    onChange={handleChange}
+    style={{
+      border: `2px solid ${createdByError ? 'red' : '#ccc'}`,
+    }}
+    className="form-control"
+  >
+    {/* <option value="">Select an option</option> */}
+    <option value="My-Self">My-Self</option>
+    <option value="Other">Other</option>
+    {/* Add more options as needed */}
+  </select>
+  {createdByError && (
+    <Error className="input feedback">Created By is required</Error>
+  )}
+</div>
                    
                     <div className="col-md-6">
                       <label>Country</label>
@@ -478,10 +482,10 @@ const daysDifference = getDaysDifference(formData.start_date, formData.end_date)
                         onChange={handleChange}
                         className="form-control"
                       >
-                        <option value="0">0%</option>
                         <option value="15">15%</option>
                         <option value="10">10%</option>
                         <option value="5">5%</option>
+                        <option value="0">0%</option>
                         {/* <option value="5">5%</option> */}
                     
                       </select>

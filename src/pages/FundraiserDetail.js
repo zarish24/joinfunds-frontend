@@ -1123,10 +1123,27 @@ console.log('Self ',Self);
         </Link>
       </li>
     </ul>
-  ) : campaign?.status === 'close' ? (
+  ) : campaign?.status === 'close'  ? (
     <>
-      {/* {console.log('Rendering Success Stories button')} */}
-      <ul className="fundraiser-bottom">
+      {console.log('Rendering Success Stories button')}
+      {/* <ul className="fundraiser-bottom">
+        <li>
+          <Link
+            to={"#"}
+            className="btn btn-donate btn-primary w-100"
+            onClick={() => setFeedBackModal(true)}
+          >
+            <i className="flaticon-feedback me-2"></i> Success Story
+          </Link>
+        </li>
+      </ul> */}
+    </>
+  ) : null
+) : (
+  campaign?.status === 'close' && Self === true ? (
+    <>
+      {console.log('Rendering Quick Payout of Funds button')}
+      <ul className="fundraiser-bottom mb-4">
         <li>
           <Link
             to={"#"}
@@ -1137,13 +1154,7 @@ console.log('Self ',Self);
           </Link>
         </li>
       </ul>
-    </>
-  ) : null
-) : (
-  campaign?.status === 'close' && Self === true ? (
-    <>
-      {console.log('Rendering Quick Payout of Funds button')}
-      <button
+      {/* <button
         style={{
           backgroundColor: 'blue',
           color: 'white',
@@ -1161,10 +1172,37 @@ console.log('Self ',Self);
         onClick={() => checkBankAccountDetailsss(campaign._id)}
       >
         Quick Payout of Funds
-      </button>
+      </button> */}
     </>
   ) : null
 )}
+
+{Self === true && (
+  <>
+    {console.log('Rendering Quick Payout of Funds button')}
+    <button
+      style={{
+        backgroundColor: 'blue',
+        color: 'white',
+        border: 'none',
+        padding: '10px 20px',
+        marginBottom: '20px',
+        width: '356px',
+        height: '44px',
+        borderRadius: '5px',
+        cursor: 'pointer',
+        fontSize: '16px',
+        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+        transition: 'background-color 0.3s',
+      }}
+      onClick={() => checkBankAccountDetailsss(campaign._id)}
+    >
+      Quick Payout of Funds
+    </button>
+  </>
+)}
+
+
 
 
                   {/* <!--  Widget Fund --> */}
@@ -1173,14 +1211,7 @@ console.log('Self ',Self);
                     <p>
                       raised of <span>$ {campaign?.total_funding}</span> goal
                     </p>
-                    {/* <ul style={{ marginLeft: '16vh', display: 'flex', justifyContent: 'flex-end', listStyle: 'none', padding: 0 }}>
-  <li key={campaign?._id} className="dz-date">
-    <i className="fa-solid fa-calendar" style={{ marginRight: '1vh',color: 'rgb(0,39,104)' }}></i>
-    <span>
-      {campaign?.remain_days} Days Left
-    </span>
-  </li>
-</ul> */}
+             
                     <div className="progress-bx style-1">
                       <div className="progress">
                         <div
@@ -1190,6 +1221,14 @@ console.log('Self ',Self);
                         ></div>
                       </div>
                     </div>
+                    <ul style={{ marginLeft: '16vh', display: 'flex', justifyContent: 'flex-end', listStyle: 'none', padding: 0 }}>
+  <li key={campaign?._id} className="dz-date">
+    <i className="fa-solid fa-calendar" style={{ marginRight: '1vh',color: 'rgb(0,39,104)' }}></i>
+    <span>
+      {campaign?.remain_days} Days Left
+    </span>
+  </li>
+</ul>
                     <ul className="detail" hidden>
                       <li className="d-flex">
                         <h5>2422</h5>
