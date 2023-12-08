@@ -1417,7 +1417,14 @@ const Setting = (props) => {
                                                     )}
                                                 </Grid>
                                                 <Grid item xs={12} md={12} lg={12} >
-                                                    <h5 className="mb-0 mt-3">Bank Account</h5>
+                                                    <h5 className="mb-0 mt-3">Account Details</h5>
+                                                    <small style={{ textAlign: 'justify' }}>
+                                                    If you do not have a Stripe account, please{' '}
+    <a href="https://stripe.com/" target="_blank" rel="noopener noreferrer">
+      create one
+    </a>{' '}
+    to proceed with the verification process.
+                                            </small>
                                                 </Grid>
                                                 <Grid item xs={12} md={6} lg={6} >
                                                     <label>Stripe Account Number<span className="text-danger">*</span></label>

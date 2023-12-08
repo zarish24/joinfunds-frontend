@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Dropdown } from "react-bootstrap";
 import styles from "./styles.module.scss";
 import PageBanner from "../layouts/PageBanner";
-import ProjectMasonry from "../components/Project/ProjectMasonry";
+import ProjectMasonryAll from "../components/Project/ProjectMasonryAll";
 import UpdateBlog from "../components/Home/UpdateBlog";
 import { toast } from "react-toastify";
 
@@ -154,7 +154,7 @@ const Project = () => {
         </div>
         <section className="content-inner-2">
           <div className="container">
-            <ProjectMasonry
+            <ProjectMasonryAll
               campaigns={campaigns}
               setCategoryId={setCategoryId}
               page={page}

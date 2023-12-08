@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useReducer, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation  } from "react-router-dom";
 import { Modal } from "react-bootstrap";
 import styles from "./styles.module.scss";
 import styled from 'styled-components';
@@ -58,7 +58,20 @@ const Header = ({ onShowDonate, changeStyle, changeLogo,Login,open,updateOpens  
   const [passwordError, setPasswordError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [selectedCityPostalCode, setSelectedCityPostalCode] = useState('');
+  const location = useLocation();
 
+
+  useEffect(() => {
+   
+      const searchParams = new URLSearchParams(location.search);
+      const successParam = searchParams.get('success');
+
+      if (successParam === 'true') {
+        setloginModal(true);
+      }
+
+    
+  }, [location.search]);
 
   useEffect(() => {
     if (open === true) {
