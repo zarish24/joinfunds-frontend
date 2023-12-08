@@ -28,7 +28,7 @@ const Project = () => {
         setLoading(true);
       
         const data = {
-          status: campaignStatus,
+          // status: campaignStatus,
           category_id: CategoryId,
           campaign_type: "",
           title_search: searchText,
@@ -104,8 +104,8 @@ const Project = () => {
               <form>
                 <div className="row align-items-center">
                 <Dropdown className="col-lg-3 col-md-4 select-drop-2">
-      <Dropdown.Toggle as="div" className="i-false select-drop-btn-2">
-        {/* <span>{campaignStatus || 'Campaign Status'}</span> */}
+      {/* <Dropdown.Toggle as="div" className="i-false select-drop-btn-2">
+       
         <span>
   {(() => {
     switch (campaignStatus) {
@@ -120,8 +120,8 @@ const Project = () => {
 </span>
 
         <i className="fa-regular fa-angle-down"></i>
-      </Dropdown.Toggle>
-      <Dropdown.Menu>
+      </Dropdown.Toggle> */}
+      {/* <Dropdown.Menu>
         <Dropdown.Item onClick={() => setCampaignStatus("")}>
           Campaign Status
         </Dropdown.Item>
@@ -131,8 +131,8 @@ const Project = () => {
         <Dropdown.Item onClick={() => setCampaignStatus("close")}>
           Closed Campaigns
         </Dropdown.Item>
-        {/* Additional options */}
-      </Dropdown.Menu>
+  
+      </Dropdown.Menu> */}
     </Dropdown>
 
 
