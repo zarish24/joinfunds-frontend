@@ -879,7 +879,7 @@ console.log('Self ',Self);
                     <></>
                   )} */}
                 </div>
-                <h5>Donners Detail</h5>
+                <h5>Doners Detail</h5>
                 {donners && donners.length === 0 ? (
                   <Box
                     className={styles.noDataFound}
@@ -888,7 +888,7 @@ console.log('Self ',Self);
                     alignItems="center"
                   >
                     <Typography variant="h7">
-                      No Donners Detail Available Right Now!
+                      No Doners Detail Available Right Now!
                     </Typography>
                   </Box>
                 ) : (
@@ -1010,7 +1010,7 @@ console.log('Self ',Self);
                 </div>
                 <div className="clear" id="comment-list">
                   <div className="comments-area" id="comments">
-                    <div className="widget-title style-1">
+                    <div className="widget-title ">
                       <h4 className="title">Comments</h4>
                     </div>
                     {/* {console.log("comments", comments)} */}
@@ -1060,7 +1060,7 @@ console.log('Self ',Self);
                         ))}
                       </ol>
                       <div className="comment-respond" id="respond">
-                        <div className="widget-title style-1">
+                        <div className="widget-title ">
                           <h4 className="title" id="reply-title">
                             Leave Your Comment
                             <small>
@@ -1293,7 +1293,7 @@ console.log('Self ',Self);
                   </div>
 
                   {/* <!-- Top Donors --> */}
-                  <div className="widget style-1 widget_avatar">
+                  <div className="widget  widget_avatar">
                     <div className="widget-title">
                       <h5 className="title">Top Donors</h5>
                     </div>
@@ -1615,7 +1615,7 @@ console.log('Self ',Self);
             </div>
             <div className="modal-body">
               <div className="col-lg-12 text-center">
-                <h5>Please Add your Bank Account first in your Profile Settings</h5>
+                <h5>Please add your bank account first in your profile settings</h5>
               </div>
               <div className="col-lg-12">
                 <div className="form-group mb-0 text-center">
