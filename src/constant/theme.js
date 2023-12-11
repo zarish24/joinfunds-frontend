@@ -11,7 +11,7 @@ export const IMAGES = {
 
 	//other all
 	BlogGrid1 : require('../assets/images/IMG-20231128-WA0013.jpg'),
-	BlogGrid2 : require('../assets/images/IMG-20231205-WA0004.jpg'),
+	BlogGrid2 : require('../assets/images/IMG-20231211-WA0012.jpg'),
 	BlogGrid3 : require('../assets/images/blog/blog-grid/pic3.jpg'),
 	Shape : require('../assets/images/shape.png'),
 	Shape1 : require('./../assets/images/pattern/shape1.png'),
