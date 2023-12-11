@@ -501,7 +501,7 @@ console.log('updateOpens value',value)
                 </Modal>
                 
                 {/* <ModalVideo channel='youtube' autoplay isOpen={isOpen} videoId="bdBG5VO01e0" onClose={() => setOpen(false)} /> */}
-                <ModalVideo channel='youtube'  isOpen={isOpen} videoId="CapnOV_nOxw" onClose={() => setOpen(false)} />
+                <ModalVideo channel='youtube'  isOpen={isOpen} videoId="bj3vyIEq0Vg" onClose={() => setOpen(false)} />
                 {/* <ModalVideo channel='youtube'  isOpen={isOpen1} videoId="CapnOV_nOxw" onClose={() => setOpen1(false)} /> */}
                 {/* <Link to={"#"} className={classChange} onClick={()=> setOpen(true)} ><i className="fa-solid fa-play" ></i></Link> */}
                 {/* <DonateModal /> */}
