@@ -32,7 +32,7 @@ const CreateCompaign = () => {
     description: '',
     start_date: '',
     end_date: '',
-    created_by:'My-Self',
+    created_by:'MySelf',
     donation_to_nfuse:'15',
     campaign_url:'',
     country:'United States',
@@ -448,7 +448,7 @@ const daysDifference = getDaysDifference(formData.start_date, formData.end_date)
     className="form-control"
   >
     {/* <option value="">Select an option</option> */}
-    <option value="My-Self">My-Self</option>
+    <option value="MySelf">MySelf</option>
     <option value="Other">Other</option>
     {/* Add more options as needed */}
   </select>

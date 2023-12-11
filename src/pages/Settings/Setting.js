@@ -5,6 +5,7 @@ import styles from './styles.module.scss';
 import styled from 'styled-components';
 import editIcon from '../../assets/images/editIcon.svg';
 import HeaderUser from '../../assets/images/header_user.svg';
+import { InputGroup, FormControl } from 'react-bootstrap';
 import axios from '../../../node_modules/axios/index';
 import { ThreeDots } from '../../../node_modules/react-loader-spinner/dist/index';
 import { useFormik } from 'formik';
@@ -17,6 +18,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import countriesData from './CountryCode'
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { AiOutlineCalendar } from 'react-icons/ai';
 import CitiesList from '../../layouts/CitiesList'
 import validUrl from 'valid-url';
 function TabPanel(props) {
@@ -1388,39 +1390,43 @@ const Setting = (props) => {
 
 
 
-                                                <Grid item xs={12} md={6} lg={6} >
-                                                    <label>Recipient  Date of Birth<span className="text-danger">*</span></label>
+                                                <Grid item xs={12} md={6} lg={6}>
+      <label>
+        Recipient Date of Birth<span className="text-danger">*</span>
+      </label>
+     
+      
+      <input
+        selected={new Date(`${legalMonth} ${legalDay} ${legalYear}`)}
+        className="form-control"
+        style={{
+          width: '100%',
+          height:'7vh'
+        }}
+        onChange={(date) => {
+          setLegalDay(date.getDate());
+          setLegalMonth(date.getMonth() + 1);
+          setLegalYear(date.getFullYear());
+        }}
+        dateFormat="dd/MM/yyyy"
+        placeholderText="Select Date"
+        type="date"
+        showYearDropdown
+        yearDropdownItemNumber={100}
+        scrollableYearDropdown
+        showMonthDropdown
+      />
+   
 
-                                                    <DatePicker
-                                                        selected={new Date(`${legalMonth} ${legalDay} ${legalYear}`)}
-                                                        className="form-control w-100"
-                                                        style={{
-                                                            width: '100%'
-                                                        }}
-                                                        onChange={(date) => {
-                                                            setLegalDay(date.getDate());
-                                                            setLegalMonth(date.getMonth() + 1);
-                                                            setLegalYear(date.getFullYear());
-                                                        }}
-                                                        dateFormat="dd/MM/yyyy"
-                                                        placeholderText="Select Date"
-                                                        showYearDropdown
-                                                        yearDropdownItemNumber={100}
-                                                        scrollableYearDropdown
-                                                        showMonthDropdown
-                                                    />
-
-
-
-                                                    {LegalDateOfBirthError && (
-                                                        <Error className="input feedback">You must be 18 or older to proceed.</Error>
-                                                    )}
-                                                </Grid>
+      {LegalDateOfBirthError && (
+        <Error className="input feedback">You must be 18 or older to proceed.</Error>
+      )}
+    </Grid>
                                                 <Grid item xs={12} md={12} lg={12} >
                                                     <h5 className="mb-0 mt-3">Account Details</h5>
                                                     <small style={{ textAlign: 'justify' }}>
                                                     If you do not have a Stripe account, please{' '}
-    <a href="https://stripe.com/" target="_blank" rel="noopener noreferrer">
+    <a href="https://dashboard.stripe.com/register" target="_blank" rel="noopener noreferrer">
       create one
     </a>{' '}
     to proceed with the verification process.

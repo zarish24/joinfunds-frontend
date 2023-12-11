@@ -242,7 +242,7 @@ const Dashboard = () => {
                       All Donations
                       </h5>
                       <p>
-                      {donorsDetails} 
+                      {donorsDetails} USD
                       </p>
                     </div>
                   </div>
@@ -262,7 +262,7 @@ const Dashboard = () => {
                       Today Received Donations
                       </h5>
                       <p>
-                      {recievedTransactions} 
+                      {recievedTransactions} USD
                       </p>
                     </div>
                   </div>
@@ -299,7 +299,7 @@ const Dashboard = () => {
           marginBottom: "10px",
         }}
       >
-        <h4 className="mb-3" style={{ color: '#515151' }}>My Campaign's Donors </h4>
+        <h4 className="mb-3" style={{ color: '#515151' }}>All Campaigns Donors </h4>
         {loading ? (
   <div className="text-center" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
     <ThreeDots color="#36a2ae" className='center' height={50} width={50} />
