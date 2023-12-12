@@ -127,6 +127,32 @@ const Setting = (props) => {
     const [zipError, setZipError] = useState(false);
     const [zipErrorLength, setZipErrorLength] = useState(false);
     const [emailError, setEmailError] = useState(false);
+    const [desiredAmountError, setDesiredAmountError] = useState(false);
+  const [categoryError, setCategoryError] = useState(false);
+  const [images, setImages] = useState([]);
+  const [titleOptions, setTitleOptions] = useState([]);
+  const [descriptionError, setDescriptionError] = useState(false);
+  const [titleError, setTitleError] = useState(false);
+  const [createdByError, setCreatedByError] = useState(false);
+  const [startDateError, setStartDateError] = useState(false);
+  const [endDateError, setEndDateError] = useState(false);  
+  const [imageError, setImageError] = useState(false);  
+    const [formData, setFormData] = useState({
+        category_id:'',
+        title: '',
+        // subtitle: '',
+        total_funding: 0,
+        description: '',
+        start_date: '',
+        end_date: '',
+        created_by:'Other',
+        donation_to_nfuse:'15',
+        campaign_url:'',
+        country:'United States',
+        campaign_status: 'pending',  
+        campaign_type: 'Funding',  
+        user_id: ''
+      });
     console.log('link', link);
 
     useEffect(() => {
@@ -138,6 +164,89 @@ const Setting = (props) => {
         }
     }, [legalDay, legalMonth, legalYear]);
 
+    const MultipleFileChange = async (e) => {
+        const files = Array.from(e.target.files);
+        setImageError(false);
+        setImages(files);
+      };
+    useEffect(() => {
+        const fetchCategories = async () => {
+            const items = JSON.parse(localStorage.getItem('user'));
+            const token = items?.token;
+          try {
+            const config = {
+              headers: {
+                Authorization: `Bearer ${token}`, 
+              },
+            };
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/category/getCategories`,config);
+            if (response.status === 200) {
+              // Extract category names from the response
+              const categories = response.data.categories
+              //   console.log('categories',categories)
+    
+              setTitleOptions(categories);
+            }
+          } catch (error) {
+            //   console.error('Error fetching categories:', error);
+          }
+        };
+    
+        fetchCategories();
+      }, []);
+      const handleChange2 = (e) => {
+        const { name, value } = e.target;
+        switch (name) {
+          case 'total_funding':
+              if (value > 0) {
+                  setDesiredAmountError(false);
+              }
+              break;
+          case 'category_id':
+              if (value !== '') {
+                  setCategoryError(false);
+              }
+              break;
+          case 'title':
+              if (value !== '') {
+                  setTitleError(false);
+              }
+              break;
+          case 'description':
+              if (value !== '') {
+                  setDescriptionError(false);
+              }
+              break;
+          case 'created_by':
+              if (value !== '') {
+                  setCreatedByError(false);
+              }
+              break;
+          case 'start_date':
+              if (value !== '') {
+                  setStartDateError(false);
+              }
+              break;
+          case 'end_date':
+              if (value !== '') {
+                  setEndDateError(false);
+              }
+              break;
+          // Add cases for other fields as needed
+          // case 'campaign_url':
+          //   if (value !== '') {
+          //     setUrlError(false);
+          //   }
+          //   break;
+          default:
+              break;
+      }
+    
+        setFormData({
+          ...formData,
+          [name]: value,
+        });
+      };
     const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
         initialValues: initialValues,
         validationSchema: ValidationPassword,
@@ -381,7 +490,16 @@ const Setting = (props) => {
 
 
     };
-
+    const isStartDateValid = (startDate, endDate) => {
+        const today = new Date().toISOString().split('T')[0];
+        return startDate >= today && startDate !== endDate;
+      };
+    
+      const isEndDateValid = (startDate, endDate) => {
+        const today = new Date().toISOString().split('T')[0];
+        return endDate >= today && startDate !== endDate;
+      };
+    
 
 
     const fetchBankData = async () => {
@@ -429,6 +547,11 @@ const Setting = (props) => {
             setLoading(false);
         }
     };
+    const today = new Date();
+    const formattedToday = today.toISOString().split('T')[0];
+    
+
+
     const saveRecipientDetails = async () => {
         setLoading(true);
         if (legalFirstName.length === 0) {
@@ -739,7 +862,287 @@ const Setting = (props) => {
         setLegalLastPhoneNumberError(false);
         setLegalPhoneNumber(input);
     };
+    const saveOtherRecipientDetails = async () => {
+        console.log('other is runinig')
+        setLoading(true);
+        if (legalFirstName.length === 0) {
+            setLegalFirstNameError(true);
+            setLoading(false);
+            return;
+        }
+        if (legalLastName.length === 0) {
+            setLegalLastNameError(true);
+            setLoading(false);
+            return;
+        }
+        if (legalEmail.length === 0) {
+            setLegalLastEmailError(true);
+            setLoading(false);
+            return;
+        }
+        if (legalPhoneNumber.length === 0) {
+            setLegalLastPhoneNumberError(true);
+            setLoading(false);
+            return;
+        }
+        // if(legalSocailMedia.length === 0){
+        //     setLegalSocailMediaError(true);
+        //     setLoading(false);
+        //     return;
+        // }       
+        // if (legalState.length === 0) {
+        //     setLegalStateError(true);
+        //     setLoading(false);
+        //     return;
+        // }
+        // if (legalCity.length === 0) {
+        //     setLegalCityError(true);
+        //     setLoading(false);
+        //     return;
+        // }
+        // if (legalPostal.length === 0) {
+        //     setLegalPostalError(true);
+        //     setLoading(false);
+        //     return;
+        // }
+        // if (legalCheckingAccountNumber.length === 0) {
+        //     setLegalCheckingAccountNumberError(true);
+        //     setLoading(false);
+        //     return;
+        // }
+        // if (legalAddress.length === 0) {
+        //     setLegalAddressError(true);
+        //     setLoading(false);
+        //     return;
+        // }
 
+        // const currentDate = new Date();
+        // const selectedDate = new Date(`${legalMonth} ${legalDay} ${legalYear}`);
+        // const ageDifference = currentDate.getFullYear() - selectedDate.getFullYear();
+        // if (ageDifference < 18) {
+        //     setLegalDateOfBirthError(true);
+        //     setLoading(false);
+        //     return;
+        // }
+        // if (legalRoutingNumber.length === 0) {
+        //     setLegalRoutingNumberError(true);
+        //     setLoading(false);
+        //     return;
+        // }
+        // if (legalConfirmCheckingAccountNumber.length === 0) {
+        //     setLegalConfirmCheckingAccountNumberError(true);
+
+        //     setLoading(false);
+        //     return;
+        // }
+        // if (legalSecurityNumber.length === 0) {
+        //     setLegalSecurityNumberError(true);
+        //     setLoading(false);
+        //     return;
+        // }
+        // if (legalIdentity.length === 0) {
+        //     setLegalIdentityError(true);
+        //     setLoading(false);
+        //     return;
+        // }
+        if (!formData.category_id) {
+            setCategoryError(true);
+            setLoading(false);
+            return;
+        }
+      
+          if (!formData.title) {
+            setTitleError(true);
+            setLoading(false);
+            return;
+        }
+        if (!formData.description) {
+          setDescriptionError(true);
+          setLoading(false);
+          return;
+      }
+          if (!formData.total_funding) {
+              setDesiredAmountError(true);
+              setLoading(false);
+              return;
+          }
+      
+         
+        
+      
+       
+      
+          if (!formData.created_by) {
+              setCreatedByError(true);
+              setLoading(false);
+              return;
+          }
+      
+          if (!formData.start_date) {
+              setStartDateError(true);
+              setLoading(false);
+              return;
+          }
+      
+          if (!formData.end_date) {
+              setEndDateError(true);
+              setLoading(false);
+              return;
+          }
+          const startDateIsValid = isStartDateValid(formData.start_date, formData.end_date);
+      const endDateIsValid = isEndDateValid(formData.start_date, formData.end_date);
+      
+      const getDaysDifference = (startDate, endDate) => {
+        const oneDay = 24 * 60 * 60 * 1000;
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        const diffDays = Math.round(Math.abs((start - end) / oneDay));
+        return diffDays;
+      };
+      const daysDifference = getDaysDifference(formData.start_date, formData.end_date);
+          if (!startDateIsValid || !endDateIsValid || daysDifference > 90) {
+            setLoading(false);
+          
+            if (formData.start_date === formData.end_date) {
+              toast.error('Start and end date cannot be the same.');
+            }  else if (daysDifference > 90) {
+              toast.error('Campaign can only be valid for 90 days. Select a date range within 90 days.');
+            }
+           else if (startDateIsValid && endDateIsValid) {
+              toast.error('Start and end date must be present or future.');
+            }
+          
+            return;
+          }
+          
+      
+          if (images.length === 0) {
+              setImageError(true);
+              setLoading(false);
+              return;
+          }
+        else {
+            // console.log('Elseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', legalSecurityNumber.length);
+            const items = JSON.parse(localStorage.getItem('user'));
+            const token = items?.token;
+            setLoading(true);
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            };
+            // const option = {
+            //     userDetails: {
+            //       identity: legalIdentity,
+            //       firstName: legalFirstName,
+            //       lastName: legalLastName,
+            //       email: legalEmail,
+            //       phoneNumber: legalPhoneNumber,
+            //       country: legalCountry,
+            //     },
+            //     campaignDetail: {
+            //       category_id: formData.category_id,
+            //       title: formData.title,
+            //       total_funding: formData.total_funding,
+            //       description: formData.description,
+            //       created_by: formData.created_by,
+            //       donation_to_nfuse: formData.donation_to_nfuse,
+            //       country: formData.country,
+            //       start_date: formData.start_date,
+            //       end_date: formData.end_date,
+            //       campaign_status: formData.campaign_status,
+            //       campaign_type: formData.campaign_type,
+            //     },
+            //   };
+            const option = {
+               
+                  identity: legalIdentity,
+                  firstName: legalFirstName,
+                  lastName: legalLastName,
+                  email: legalEmail,
+                  phoneNumber: legalPhoneNumber,
+                  country: legalCountry,
+              
+               
+                  category_id: formData.category_id,
+                  title: formData.title,
+                  total_funding: formData.total_funding,
+                  description: formData.description,
+                  created_by: formData.created_by,
+                  donation_to_nfuse: formData.donation_to_nfuse,
+                  donation_country: formData.country,
+                  start_date: formData.start_date,
+                  end_date: formData.end_date,
+                  campaign_status: formData.campaign_status,
+                  campaign_type: formData.campaign_type,
+               
+              };
+              console.log("formData option >>>>> ", option);
+
+            const jsonData = JSON.stringify(option);
+
+            const bodyData = new FormData();
+            for (var key in option) {
+                bodyData.append(key, option[key]);
+            }
+            for (let i = 0; i < images.length; i++) {
+                bodyData.append("images", images[i]);
+            }
+            console.log("formData Recipent >>>>> ", bodyData);
+            const apiUrl =  `${process.env.REACT_APP_BACKEND_URL}/api/compaign/createCompaignForAnotherUser`
+            const axiosMethod = axios.post;
+            await axiosMethod(apiUrl, bodyData, config)
+                .then((res) => {
+                    if ((res.status === 200 || res.status === 201)) {
+                       
+                        setLegalIdentity("myself");
+                        setLegalDateOfBirthError(false);
+                        setLoading(false);
+                        setLegalFirstName("");
+                        setLegalLastName("");
+                        setLegalEmail("");
+                        setLegalPhoneNumber("");
+                        setLegalSocailMedia("");
+                        setLegalAddress("");
+                        setLegalCity("");
+                        setLegalState("");
+                        setLegalPostal("");
+                        setLegalCountry("");
+                        setLegalSecurityNumber("");
+                        setLegalCheckingAccountNumber("");
+                        setLegalRoutingNumber("");
+                        setLegalConfirmCheckingAccountNumber("");
+                        setFormData({
+                            category_id: '',
+                            title: '',
+                            total_funding: 0,
+                            description: '',
+                            created_by: '',
+                            donation_to_nfuse: '15',
+                            campaign_status: 'pending',
+                            campaign_type: 'Funding',
+                            start_date: '',
+                            end_date: '',
+                            user_id: '',
+                          });
+                        toast.success(
+                            "Campaign created successfully"
+                        );
+                    } else {
+                        setLoading(false);
+                        toast.error(
+                            "Something went wrong!"
+                        );
+                    }
+                })
+                .catch((e) => {
+                    setLoading(false);
+                    toast.error(
+                        e.response.data.message
+                    );
+                });
+        }
+    };
     return (
         <Box className={styles.mainProfile}>
             {alert ? (
@@ -1263,6 +1666,8 @@ const Setting = (props) => {
                                                         </select>
                                                     </div>
                                                 </Grid>
+                                                {legalIdentity !== 'other' && (
+                                                    <>
                                                 <Grid item xs={12} md={6} lg={6} >
                                                     <label>State/Province<span className="text-danger">*</span></label>
                                                     <input
@@ -1364,32 +1769,35 @@ const Setting = (props) => {
                                                     )}
 
                                                 </Grid>
-                                                <Grid item xs={12} md={6} lg={6} >
-                                                    <label className="mb-1">Social Security Number<span className="text-danger">*</span></label>
-                                                    <input
+                                                </>
+                                                )}
+                                                {legalIdentity !== 'other' && (
+  <Grid item xs={12} md={6} lg={6}>
+    <label className="mb-1">
+      Social Security Number<span className="text-danger">*</span>
+    </label>
+    <input
+      type="text"
+      placeholder="123-45-6789"
+      value={legalSecurityNumber}
+      onChange={handleSecuritynumberChange}
+      style={{
+        width: "100%",
+        padding: "6px 6px",
+        borderRadius: "5px",
+        border: `2px solid ${legalSecurityNumberError || errorMessage ? 'red' : '#ccc'}`,
+      }}
+    />
+    {legalSecurityNumberError && (
+      <Error className="input feedback">Social Security number is required</Error>
+    )}
+    {errorMessage && <Error className="input feedback">{errorMessage}</Error>}
+  </Grid>
+)}
 
-                                                        type="text"
-                                                        placeholder="123-45-6789"
-                                                        value={legalSecurityNumber}
-                                                        onChange={handleSecuritynumberChange}
-                                                        style={{
-                                                            width: "100%",
-                                                            padding: "6px 6px",
-                                                            borderRadius: "5px",
-                                                            border: `2px solid ${legalSecurityNumberError || errorMessage ? 'red' : '#ccc'}`,
-                                                        }}
-                                                    />
-                                                    {legalSecurityNumberError && (
-                                                        <Error className="input feedback">Social Security number is required</Error>
-                                                    )}
-                                                    {errorMessage &&
-                                                        <Error className="input feedback">{errorMessage}</Error>
-                                                    }
+ 
 
-                                                </Grid>
-
-
-
+{legalIdentity !== 'other' && (
                                                 <Grid item xs={12} md={6} lg={6}>
       <label>
         Recipient Date of Birth<span className="text-danger">*</span>
@@ -1415,6 +1823,7 @@ const Setting = (props) => {
         yearDropdownItemNumber={100}
         scrollableYearDropdown
         showMonthDropdown
+        // disabled={legalIdentity === 'other'}
       />
    
 
@@ -1422,6 +1831,9 @@ const Setting = (props) => {
         <Error className="input feedback">You must be 18 or older to proceed.</Error>
       )}
     </Grid>
+    )}
+    {legalIdentity !== 'other' && (
+        <>
                                                 <Grid item xs={12} md={12} lg={12} >
                                                     <h5 className="mb-0 mt-3">Account Details</h5>
                                                     <small style={{ textAlign: 'justify' }}>
@@ -1456,61 +1868,168 @@ const Setting = (props) => {
                                                     )}
 
                                                 </Grid>
-                                                {/* <Grid item xs={12} md={6} lg={6} >
-                                                    <label>Routing Number<span className="text-danger">*</span></label>
-                                                    <input
-                                                        type="text"
-                                                        value={legalRoutingNumber}
-                                                        onChange={(e) => {
-                                                            setLegalRoutingNumber(e.target.value);
-                                                            if (e.target.value.length > 0) {
-                                                                setLegalRoutingNumberError(false);
-                                                            }
-                                                        }}
-                                                        style={{
-                                                            width: "100%",
-                                                            padding: "6px 6px",
-                                                            borderRadius: "5px",
-                                                            border: `2px solid ${legalRoutingNumberError ? 'red' : '#ccc'}`,
-
-                                                        }}
-                                                    />
-                                                    {legalRoutingNumberError && (
-                                                        <Error className="input feedback">Routing number is required</Error>
-                                                    )}
-
-                                                </Grid>
-                                                <Grid item xs={12} md={6} lg={6} >
-                                                    <label>Confirm  Account Number<span className="text-danger">*</span></label>
-                                                    <input
-                                                        type="text"
-                                                        value={legalConfirmCheckingAccountNumber}
-                                                        onChange={(e) => {
-                                                            setLegalConfirmCheckingAccountNumber(e.target.value);
-                                                            if (e.target.value.length > 0) {
-                                                                setLegalConfirmCheckingAccountNumberError(false);
-                                                            }
-                                                        }}
-                                                        style={{
-                                                            width: "100%",
-                                                            padding: "6px 6px",
-                                                            borderRadius: "5px",
-                                                            border: `2px solid ${legalConfirmCheckingAccountNumberError ? 'red' : '#ccc'}`,
-                                                        }}
-                                                    />
-                                                    {legalConfirmCheckingAccountNumberError && (
-                                                        <Error className="input feedback">Confirm Checking Account is required</Error>
-                                                    )}
-
-                                                </Grid> */}
-
-
+                                                </>
+                                                   )}
+                                              
+                                              {/* <div className={legalIdentity === 'other' ? "col-lg-11 mx-auto" : ""}> */}
+      {legalIdentity === 'other' && (
+       <form onSubmit={saveOtherRecipientDetails} style={{ marginLeft: '3vh' }}>
+     <h2> Campaign </h2>
+          <Grid container spacing={1} >
+            <Grid item xs={12} md={6} lg={6}>
+              <label>Category</label>
+              <select
+                name="category_id"
+                value={formData.category_id}
+                onChange={handleChange2}
+                className="form-control"
+                style={{ border: `2px solid ${categoryError ? 'red' : '#ccc'}` }}
+              >
+                <option value="" disabled>
+                  Select Campaign Category
+                </option>
+                {titleOptions.map((option) => (
+                  <option key={option._id} value={option._id}>
+                    {option.name}
+                  </option>
+                ))}
+              </select>
+              {categoryError && <Error className="input feedback">Campaign Category is required</Error>}
+            </Grid>
+            <Grid item xs={12} md={6} lg={6}>
+              <label>Title</label>
+              <input
+                type="text"
+                name="title"
+                value={formData.subtitle}
+                style={{ border: `2px solid ${titleError ? 'red' : '#ccc'}` }}
+                onChange={handleChange2}
+                className="form-control"
+              />
+              {titleError && <Error className="input feedback">Title is required</Error>}
+            </Grid>
+            <Grid item xs={12} md={6} lg={6}>
+              <label>Description:</label>
+              <textarea
+                name="description"
+                value={formData.description}
+                onChange={handleChange2}
+                style={{ border: `2px solid ${descriptionError ? 'red' : '#ccc'}` }}
+                className="form-control"
+              />
+              {descriptionError && <Error className="input feedback">Description is required</Error>}
+            </Grid>
+            <Grid item xs={12} md={6} lg={6}>
+              <label>Desired Amount:</label>
+              <input
+                type="number"
+                name="total_funding"
+                value={formData.total_funding}
+                style={{ border: `2px solid ${desiredAmountError ? 'red' : '#ccc'}` }}
+                onChange={handleChange2}
+                className="form-control"
+                step="1"
+              />
+              {desiredAmountError && <Error className="input feedback">Desired Amount is required</Error>}
+            </Grid>
+            <Grid item xs={12} md={6} lg={6}>
+              <label>Created By</label>
+              <select
+                name="created_by"
+                value={formData.created_by}
+                onChange={handleChange2}
+                style={{ border: `2px solid ${createdByError ? 'red' : '#ccc'}` }}
+                className="form-control"
+              >
+                {/* <option value="MySelf">MySelf</option> */}
+                <option value="Other">Other</option>
+              </select>
+              {createdByError && <Error className="input feedback">Created By is required</Error>}
+            </Grid>
+            <Grid item xs={12} md={6} lg={6}>
+              <label>Country</label>
+              <select
+                name="country"
+                value={formData.country}
+                onChange={handleChange2}
+                className="form-control"
+              >
+                <option value="United States">USA</option>
+              </select>
+            </Grid>
+            <Grid item xs={12} md={6} lg={6}>
+              <label>Donation To Nfuse:</label>
+              <select
+                name="donation_to_nfuse"
+                value={formData.donation_to_nfuse}
+                onChange={handleChange2}
+                className="form-control"
+              >
+                <option value="15">15%</option>
+                <option value="10">10%</option>
+                <option value="5">5%</option>
+                <option value="0">0%</option>
+              </select>
+            </Grid>
+            <Grid item xs={12} md={6} lg={6}>
+              <div className="form-group">
+                <label>Select Campaign Images</label>
+                <input
+                  type="file"
+                  onChange={(e) => MultipleFileChange(e)}
+                  className="form-control"
+                  style={{ border: `2px solid ${imageError ? 'red' : '#ccc'}` }}
+                  multiple
+                />
+                {imageError && <Error className="input feedback">Campaign Images is required</Error>}
+              </div>
+            </Grid>
+            <Grid item xs={12} md={6} lg={6}>
+              <label>Start Date:</label>
+              <input
+                type="date"
+                name="start_date"
+                value={formData.start_date}
+                onChange={handleChange2}
+                className="form-control"
+                min={formattedToday}
+              />
+              {startDateError && <Error className="input feedback">Start Date is required</Error>}
+            </Grid>
+            <Grid item xs={12} md={6} lg={6}>
+              <label>End Date:</label>
+              <input
+                type="date"
+                name="end_date"
+                value={formData.end_date}
+                onChange={handleChange2}
+                className="form-control"
+              />
+              {endDateError && <Error className="input feedback">End Date is required</Error>}
+            </Grid>
+            {/* <Grid item xs={12}>
+              <button type="submit" className="btn btn-primary mb-5">
+                Create Campaign
+              </button>
+            </Grid> */}
+          </Grid>
+        </form>
+      )}
+    {/* </div> */}
                                             </Grid>
                                         </form>
                                                 <Grid item xs={12} md={6} lg={12} >
                                                     <div
                                                         className="btn btn-primary btn-block p-2 mx-auto "
-                                                        onClick={saveRecipientDetails}
+                                                        onClick={() => {
+                                                            if (legalIdentity === 'other') {
+                                                              // Call the function for 'other' identity
+                                                              saveOtherRecipientDetails();
+                                                            } else {
+                                                              // Call the default function
+                                                              saveRecipientDetails();
+                                                            }
+                                                          }}
                                                     >
                                                         Save Recipient Details
                                                     </div>
