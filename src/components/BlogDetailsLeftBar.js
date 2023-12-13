@@ -155,12 +155,24 @@ export const CommentBlog = (props) => {
       </>
     );
   };
-const BlogDetailsLeftBar = () => {
+const BlogDetailsLeftBar = ({blogDetails}) => {
+  console.log("blogDetails blogDetails",blogDetails)
+  const addLineBreaks = (text) => {
+    const words = text.split(' ');
+    const chunkedWords = [];
+
+    for (let i = 0; i < words.length; i += 15) {
+      const chunk = words.slice(i, i + 15).join(' ');
+      chunkedWords.push(chunk);
+    }
+
+    return chunkedWords.join('\n');
+  };
     return (
         <>
             <div className="dz-card blog-single sidebar">
                 <div className="dz-media">
-                    <img src={large} alt="" />
+                    <img src={blogDetails?.blog_images[0]?.url} alt="" />
                 </div>
                 <div className="dz-info">
                     {/* <div className="dz-meta">
@@ -170,20 +182,17 @@ const BlogDetailsLeftBar = () => {
                         </ul>
                     </div> */}
                     <div className="dz-post-text">
-                        <h1 className="dz-title">Giving feels really good!</h1>
-                        <p>We are a society of consumerism which means that there are plenty of choices of things to buy.
-This is something somewhat new to people of a certain age. At one point in many of our lives,
-there were very limited choices of items at the store. For that matter, there were very few
-stores.</p>
+                        <h1 className="dz-title">{blogDetails?.title}</h1>
+                        {blogDetails && <p>{addLineBreaks(blogDetails?.description)}</p>}
                         <ul className="wp-block-gallery ">
                             {/* <li className="blocks-gallery-item"><img alt="" src={blog2} /></li> */}
                             {/* <li className="blocks-gallery-item"><img alt="" src={blog1} /></li> */}
                         </ul>
-                        <p>
+                        {/* <p>
 However, what is not new is that having things does not take the place of real connections with
 real people. Think back to a time you received an invitation by mail or a thank you note sent on
 a pretty card. These are so much more special than an e-vite or a text saying thanks. These
-little things enhance your life. They make a difference.</p>
+little things enhance your life. They make a difference.</p> */}
                         {/* <blockquote hidden className="block-quote style-1">
                             <p>“You can make anything look good. Only a quarter of young adults are financially literate. You don’t want to overwhelm them with terrible advice.”</p>
                             <cite> Akcel </cite>
@@ -196,12 +205,12 @@ little things enhance your life. They make a difference.</p>
                             <li>Spread Kindness in Your Neighborhood</li>
                             <li>Support Local Businesses</li>
                         </ul> */}
-                        <p>This holiday season, consider taking time to really make a difference in someone's life. Skip the
+                        {/* <p>This holiday season, consider taking time to really make a difference in someone's life. Skip the
 gift card, it's impersonal. Find something a person could really use or would really appreciate
 or something that would greatly impact his or her daily life in a great way.</p>
 <p>Enhancing someone's life means so much more than a gift card or a plate of bland cookies.</p>
 <p>The spirit of giving is alive and well.</p>
-<p>Blessings to you during this special time of year from all of us at Nfuse.</p>
+<p>Blessings to you during this special time of year from all of us at Nfuse.</p> */}
                     </div>
                 </div>
                 <div className="dz-share-post" hidden>
