@@ -2,7 +2,7 @@ import React,{useState, useEffect, useRef} from 'react';
 import { Link } from 'react-router-dom';
 import { Modal } from 'react-bootstrap';
 
-import logo from '../assets/images/logo-white.png';
+import logo from '../assets/images/nfuse_copy-removebg.png';
 import bnr from '../assets/images/banner/bnr3.jpg';
 import DonutChart2 from '../components/DonutChart2';
 
@@ -61,15 +61,15 @@ const ComingSoon = () => {
 	
     return (
         <>
-            <div className="coming-soon background-luminosity" data-text="CHARITY" style={{backgroundImage: "url("+ require('../assets/images/background/bg5.jpg') + ")"}}>
+            <div className="coming-soon background-luminosity" data-text="CHARITY" style={{backgroundImage: "url("+ require('../assets/images/IMG-20231128-WA0000.jpg') + ")"}}>
                 <div className="inner-content">
                     <div className="logo-header logo-dark">
                         <Link to={"/"}><img src={logo} alt="" /></Link>
                     </div>
                     <h1 className="dz-head">We Are Coming <span className="text-secondary">Soon !</span></h1>
-                    <p>We`ll be here soon with our new awesome site, subscribe to be notified.</p>
-                    <Link to={"/contact-us"} className="btn btn-light btn-skew m-r15"> <span>GET IN TOUCH</span></Link>
-                    <Link to={"#"}  onClick={()=>setSubscribe(true)} className="btn btn-skew btn-secondary"><span>SUBSCRIBE NOW</span></Link>
+                    <p>We`ll be here soon with our new awesome site.</p>
+                    {/* <Link to={"/contact-us"} className="btn btn-light btn-skew m-r15"> <span>GET IN TOUCH</span></Link>
+                    <Link to={"#"}  onClick={()=>setSubscribe(true)} className="btn btn-skew btn-secondary"><span>SUBSCRIBE NOW</span></Link> */}
                 </div>
                 <div className="countdown-timer countdown-container">
                     <div className="clock">

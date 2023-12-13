@@ -1,7 +1,7 @@
 export const MenuListArray2 = [
     {
         title:"Home",
-        to : "/"
+        to : "/home"
     },
     // {
     //     title:"Pages",
@@ -193,7 +193,7 @@ export const MenuListArray2 = [
 export const MenuListArray3 = [
     {
         title:"Home",
-        to : "/"
+        to : "/home"
     },
     // {
     //     title:"Pages",
