@@ -94,7 +94,7 @@ function Index(){
 					<Route path='/received-donations' exact element={<RecivedDonations />} />
 					<Route path='/my-balance' exact element={<MyBalance />} />
 					<Route path='/blog-list' exact element={<BlogList />} />
-					<Route path='/blog-details' exact element={<BlogDetails />} />
+					<Route path='/blog-details/:Id' element={<BlogDetails />} />
 					<Route path='/blog-details1' exact element={<BlogDetails1 />} />
 					<Route path='/contact-us' exact element={<ContactUs />} />
 				</Route>

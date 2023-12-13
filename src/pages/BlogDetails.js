@@ -1,10 +1,5 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
-
-//import pic1 from '../assets/images/blog/recent-blog/pic1.jpg';
-//import pic2 from '../assets/images/blog/recent-blog/pic2.jpg';
-//import pic3 from '../assets/images/blog/recent-blog/pic3.jpg';
-//import pic4 from '../assets/images/blog/recent-blog/pic4.jpg';
+import React, { useRef, useEffect,useState } from 'react';
+import {Link,useParams} from 'react-router-dom';
 import NewsSlider from '../components/Home/NewsSlider';
 import UpdateBlog from '../components/Home/UpdateBlog';
 import BlogDetailsLeftBar from '../components/BlogDetailsLeftBar';
@@ -28,7 +23,34 @@ const tagData = [
     { title:"Modern"},
 ];
 const BlogDetails = () => {
-    
+    const { Id } = useParams();
+    const [blogDetails, setBlogDetails] = useState(null);
+console.log("id", Id)
+useEffect(() => {
+    console.log('id:2', Id);
+}, [Id]);
+    useEffect(() => {
+        const fetchBlogDetails = async () => {
+            try {
+                const apiUrl = `${process.env.REACT_APP_BACKEND_URL}/api/user/getSingleBlog/${Id}`;  // Replace with your actual API endpoint
+
+                const response = await fetch(apiUrl);
+console.log('BlogDetails response',response)
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                setBlogDetails(data.blog);  
+
+            } catch (error) {
+                console.error("Error fetching blog details:", error);
+            }
+        };
+
+        fetchBlogDetails();
+
+    }, [Id]);
     return (
         <>
             <div className="page-content bg-white">
@@ -36,7 +58,7 @@ const BlogDetails = () => {
                     <div className="container">			
                         <div className="row ">
                             <div className="col-xl-12 col-lg-12 m-b30">
-                                <BlogDetailsLeftBar />
+                                <BlogDetailsLeftBar blogDetails={blogDetails} />
                             </div>
                             <div className="col-xl-4 col-lg-4" hidden>
                                 <aside className="side-bar sticky-top">
