@@ -24,6 +24,8 @@ const ProjectOthers = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      const user = JSON.parse(localStorage.getItem("user"));
+      const token =user.token;
       try {
         setLoading(true);
       
@@ -35,7 +37,11 @@ const ProjectOthers = () => {
           items_per_page: RecordsPerPage,
           page: currentPage,
         };
-       
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`, 
+          },
+        };
         // if (campaignType !== "Campaign Type") {
         //   data.campaign_type = campaignType;
         // }
@@ -46,14 +52,14 @@ const ProjectOthers = () => {
 
         const response = await axios
           .post(
-            `${process.env.REACT_APP_BACKEND_URL}/api/compaign/getAllCompaigns`,
-            data //,  config
+            `${process.env.REACT_APP_BACKEND_URL}/api/compaign/getCreatedCampaignsForAnotherUser`,
+            data , config
           )
           .then((res) => {
             if (res.status === 200 || res.status === 201) {
-              // console.log("all-comp-data", res?.data?.data?.data);
-              setTotalPages(Math.ceil(res?.data?.data?.count / RecordsPerPage));
-              setCampaigns(res?.data?.data?.data || res?.data);
+              // console.log("all-comp-data", res?.data);
+              setTotalPages(Math.ceil(res?.data?.totalCount / RecordsPerPage));
+              setCampaigns(res?.data?.campaigns || res?.data);
               setLoading(false);
 
               // setCampaigns(res?.data?.data);
