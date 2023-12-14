@@ -95,6 +95,10 @@ export const MenuListArray2 = [
                 to:"/my-campaigns"
             },
             {
+                title:"Campaigns For Others",
+                to:"/others-campaigns"
+            },
+            {
                 title:"Create Campaign",
                 to:"/create-compaign"
             },
