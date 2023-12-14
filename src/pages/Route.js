@@ -28,6 +28,7 @@ import BrowseFundraiser from './BrowseFundraiser';
 import BecomeFundraiser from './BecomeFundraiser';
 import FundraiserDetail from './FundraiserDetail';
 import Project from './Project';
+import ProjectOthers from './ProjectOthers';
 import Privacy from './Privacy';
 import ProjectCategories from './ProjectCategories';
 import ProjectSidebar from './ProjectSidebar';
@@ -82,6 +83,7 @@ function Index(){
 					<Route path='/campaigns' exact element={<Project />} />
 					<Route path='/project-categories' exact element={<ProjectCategories />} />
 					<Route path='/my-campaigns' exact element={<MyProjects />} />
+					<Route path='/others-campaigns' exact element={<ProjectOthers />} />
 					<Route path='/project-sidebar' exact element={<ProjectSidebar />} />
 					<Route path='/project-story' exact element={<ProjectStory />} />
 					<Route path='/blog' exact element={<Blog />} />
