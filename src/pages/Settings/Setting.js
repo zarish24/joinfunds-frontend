@@ -850,6 +850,16 @@ const Setting = (props) => {
         // Check if it matches the pattern ###-###-#### or ##########
         return /^(\d{3}-\d{3}-\d{4}|\d{10})$/.test(numericValue);
     };
+    const handleDateChange = (event) => {
+        const selectedDate = new Date(event.target.value);
+    console.log('selectedDate',selectedDate)
+        if (!isNaN(selectedDate.getTime())) {
+          setLegalDay(selectedDate.getDate());
+          setLegalMonth(selectedDate.getMonth() + 1);
+          setLegalYear(selectedDate.getFullYear());
+        }
+      };
+
 
     const handlePhoneNumberChange = (e) => {
         const input = e.target.value;
@@ -1811,11 +1821,7 @@ const Setting = (props) => {
           width: '100%',
           height:'7vh'
         }}
-        onChange={(date) => {
-          setLegalDay(date.getDate());
-          setLegalMonth(date.getMonth() + 1);
-          setLegalYear(date.getFullYear());
-        }}
+        onChange={(event) => handleDateChange(event)}
         dateFormat="dd/MM/yyyy"
         placeholderText="Select Date"
         type="date"

@@ -12,8 +12,8 @@ const servicesBlog = [
     {title:"       Customer                 Support 24/7",icon:SVGICON.HeartHelp},
     {title:" Smart-Dashboard",icon:SVGICON.DollerBox},
     {title:"Receive funds ",icon:SVGICON.HeartHome},
-    {title:" Payment Support",icon:SVGICON.ThumbDoller1},
-    {title:"Withdrawal Funds ", icon:SVGICON.ThumbDoller2},
+    // {title:" Payment Support",icon:SVGICON.ThumbDoller1},
+    // {title:"Withdrawal Funds ", icon:SVGICON.ThumbDoller2},
 ];
 
 const AkcelServices = () => {

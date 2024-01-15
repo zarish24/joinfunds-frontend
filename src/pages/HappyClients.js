@@ -44,43 +44,42 @@ function LeftImage({sideimage, paraModal}){
         </>
     )
 }
-
 function RightImage({ mainImage, paraModal }) {
-    const RecordsPerPage = 6;
-    const [Story, setStory] = useState([]);
-    const [page, setPage] = useState(1);
-    const [currentPage, setCurrentPage] = useState(1);
-  
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const payload = {
-            items_per_page: RecordsPerPage,
-            page: page,
-          };
-  
-          const response = await axios.post(
-            `${process.env.REACT_APP_BACKEND_URL}/api/campaign-story/getAllCampaignSuccessStories`,
-            payload
-          );
-  
-          if (response.status === 200 || response.status === 201) {
-            console.log("all-res", response);
-            setStory(response?.data?.successStories || []);
-          } else {
-            // toast.error("Compaigns not fount due to some issue!");
-          }
-        } catch (error) {
-          toast.error("API request failed", error);
-          // console.error("A/PI request failed", error);
+  const RecordsPerPage = 6;
+  const [Story, setStory] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedStory, setSelectedStory] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const payload = {
+          items_per_page: RecordsPerPage,
+          page: currentPage,
+        };
+
+        const response = await axios.post(
+          `${process.env.REACT_APP_BACKEND_URL}/api/campaign-story/getAllCampaignSuccessStories`,
+          payload
+        );
+
+        if (response.status === 200 || response.status === 201) {
+          console.log("all-res", response);
+          setStory(response?.data?.successStories || []);
+        } else {
+          // toast.error("Compaigns not fount due to some issue!");
         }
-      };
-  
-      const user = JSON.parse(localStorage.getItem("user"));
-  
-      fetchData();
-    }, [currentPage]);
-  
+      } catch (error) {
+        toast.error("API request failed", error);
+        // console.error("API request failed", error);
+      }
+    };
+
+    fetchData();
+  }, [currentPage]);
+
+ 
+
     return (
       <>
         <div>
@@ -88,6 +87,7 @@ function RightImage({ mainImage, paraModal }) {
   Story.map((story, index) => (
     <div
       key={story._id}
+     
       className={`col-lg-10 m-b50 ${
         index % 2 === 0 ? "text-lg-start" : "text-lg-start"
       }`}
@@ -121,14 +121,47 @@ function RightImage({ mainImage, paraModal }) {
 
 const HappyClients = () => {
     const [paraModal, setParaModal] = useState(false);
-
-    // const showModal = () =>{
-    //     setParaModal(true);
-    // }
+    const RecordsPerPage = 6;
+    const [Story, setStory] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [selectedStory, setSelectedStory] = useState(null);
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const payload = {
+            items_per_page: RecordsPerPage,
+            page: currentPage,
+          };
+  
+          const response = await axios.post(
+            `${process.env.REACT_APP_BACKEND_URL}/api/campaign-story/getAllCampaignSuccessStories`,
+            payload
+          );
+  
+          if (response.status === 200 || response.status === 201) {
+            console.log("all-res", response);
+            setStory(response?.data?.successStories || []);
+          } else {
+            // toast.error("Compaigns not fount due to some issue!");
+          }
+        } catch (error) {
+          toast.error("API request failed", error);
+          // console.error("API request failed", error);
+        }
+      };
+  
+      fetchData();
+    }, [currentPage]);
     const hideModal = () =>{
         setParaModal(false);
+        setSelectedStory(false);
     }
-
+    const handleStoryClick = (story) => {
+      setSelectedStory(story);
+      setParaModal(true);
+      // You can set other modal-related logic here
+      // paraModal.openModal(); // Assuming paraModal has a function to open the modal
+    };
     return (
         <>
             <div className="page-content bg-white">
@@ -136,14 +169,43 @@ const HappyClients = () => {
                 <section className="content-inner bg-light section-pattren1">
                     <div className="container">
                         <div className="row">
-                            <LeftImage  paraModal={setParaModal} sideimage={test1}/>
-                            <RightImage paraModal={setParaModal} mainImage={test2}/>
+                        {Story &&
+  Story.map((story, index) => (
+    <div
+      key={story._id}
+      onClick={() => handleStoryClick(story.successStoryMessage)}
+      className={`col-lg-10 m-b50 ${
+        index % 2 === 0 ? "text-lg-start" : "text-lg-start"
+      }`}
+    >
+      <div className="testimonial-3">
+        <div className="testimonial-media">
+          <img src={story.campaign_image} alt="" />
+        </div>
+        <div className="testimonial-content">
+          <h5 className="testimonial-title">{story.campaign_title}</h5>
+          <p className="testimonial-text">{story.successStoryMessage}</p>
+          <div className="testimonial-info">
+            <div className="quotes">
+              <i className="fa-solid fa-quote-left"></i>
+            </div>
+            <div className="clearfix">
+              <h5 className="testimonial-name">{`${story.firstName} ${story.lastName}`}</h5>
+              <span className="testimonial-position">{story.designation}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  ))}
+                            {/* <LeftImage  paraModal={setParaModal} sideimage={test1}/> */}
+                            {/* <RightImage paraModal={setParaModal} mainImage={test2}/> */}
                             {/* <LeftImage  paraModal={setParaModal} sideimage={test3}/> */}
                             {/* <RightImage paraModal={setParaModal} mainImage={test4}/> */}
                             {/* <LeftImage  paraModal={setParaModal} sideimage={test2}/>                        */}
                         </div>
                     </div>
-                    <img src={shape1} className="shape-1 move-1" alt="shape"/>
+                    {/* <img src={shape1} className="shape-1 move-1" alt="shape"/> */}
                     {/* <img src={shape2} className="shape-2 move-2" alt="shape"/> */}
                     {/* <img src={shape3} className="shape-3 move-1" alt="shape"/> */}
                     {/* <img src={shape5} className="shape-4 rotating" alt="shape"/> */}
@@ -153,7 +215,7 @@ const HappyClients = () => {
             </div>
             <Modal className="modal fade modal-wrapper" id="read" show={paraModal} onHide={hideModal} centered> 
                 <div className="modal-body">
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                    <p>{selectedStory}</p>
                 </div>
             </Modal>
         </>
