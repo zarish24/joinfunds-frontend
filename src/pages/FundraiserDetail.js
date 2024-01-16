@@ -126,7 +126,7 @@ console.log('Self ',Self);
   const [gift, setGift] = useState(0);  
   const [totalCharges, setTotalCharges] = useState(0);   
   const [email, setEmail] = useState("");       
-  const [Designation, setDesignation] = useState("");
+  const [Designation, setDesignation] = useState("empty");
   const [StoryFName, setStoryFName] = useState("");
   const [StoryLName, setStoryLName] = useState("");
   const [Story, setStory] = useState("");        
@@ -446,7 +446,7 @@ console.log('Self ',Self);
             setFeedBackModal(false)
             setStoryLName("")
             setStoryFName("")
-            setDesignation("")
+            setDesignation("empty")
             setStory("")
             setLoading(false);
             toast.success("  your story submitted  Successfully");
@@ -641,6 +641,7 @@ console.log('Self ',Self);
       // console.error("API request failed", error.message);
     }
   };
+
   const calculateDaysLeft = (startDateString, endDateString, callback) => {
     const today = new Date();
     const startDate = new Date(startDateString);
@@ -767,6 +768,7 @@ console.log('Self ',Self);
       // console.error("A/PI request failed", error);
     }
   };
+
   const fetchCompgaincoments = async (_id, token) => {
     try {
       const config = {
@@ -797,6 +799,7 @@ console.log('Self ',Self);
       // console.error("API request failed", error);
     }
   };
+
   useEffect(() => {
     const fetchData = async (_id, token) => {
       try {
@@ -833,12 +836,13 @@ console.log('Self ',Self);
       fetchData(id, user.token);
     }
   }, [id, comment_message, reply]);
+
   return (
     <>
       <div className="page-content bg-white">
         <PageBanner
-          maintitle="Fundraiser"
-          pagetitle="Fundraiser Detail"
+          maintitle="Campaign"
+          pagetitle="Campaign Details"
           background={bg}
         />
         <section className="content-inner-2">
@@ -879,7 +883,7 @@ console.log('Self ',Self);
                     <></>
                   )} */}
                 </div>
-                <h5>Doners Detail</h5>
+                <h5>Donner Detail</h5>
                 {donners && donners.length === 0 ? (
                   <Box
                     className={styles.noDataFound}
@@ -888,7 +892,7 @@ console.log('Self ',Self);
                     alignItems="center"
                   >
                     <Typography variant="h7">
-                      No Doners Detail Available Right Now!
+                      No Donner Detail Available Right Now!
                     </Typography>
                   </Box>
                 ) : (
@@ -1295,7 +1299,7 @@ console.log('Self ',Self);
                   {/* <!-- Top Donors --> */}
                   <div className="widget  widget_avatar">
                     <div className="widget-title">
-                      <h5 className="title">Top Donors</h5>
+                      <h5 className="title">Top Donners</h5>
                     </div>
                     {donners && donners.length === 0 ? (
                       <Box
@@ -1651,7 +1655,7 @@ console.log('Self ',Self);
               </button>
         </Modal.Header>
         <Modal.Body className="modal-body px-5 py-3">
-          <p>"Every man shall give as he is also, according to the blessing of the LORD your God which He has given you." Deut. 16:17</p>
+          <p>"Every man shall give as he is also, according to the blessing of the LORD your God which He has given you."</p>
           <form
             style={{ display: "grid", gap: "10px" }}
           >
@@ -1704,7 +1708,7 @@ console.log('Self ',Self);
                 gap: "10px",
               }}
             >
-             <label>Please chooese donation type <span className="text-danger">*</span> </label>
+             <label>Please choose donation type <span className="text-danger">*</span> </label>
               <div
                 style={{
                   display: "flex",
@@ -1741,7 +1745,7 @@ console.log('Self ',Self);
             >
 
               <h4>Help Keep Nfuse Free!</h4>
-              <p className="text-dark mb-2"> <b> Unlike other sides. Nfuse is FREE. We rely 100% on Givers like you to operate our site.</b></p>
+              <p className="text-dark mb-2"> <b> Unlike other sites. Nfuse is FREE. We rely 100% on Nfusers like you to nfue our site.</b></p>
                  <label>Add an optional gift to Nfuse below</label>
                   <div className="input-group mb-2 w-50">
                     <select
@@ -2041,7 +2045,7 @@ console.log('Self ',Self);
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "1fr 1fr 2fr",
+                gridTemplateColumns: "1fr 1fr ",
                 gap: "10px",
               }}
             >
@@ -2096,7 +2100,7 @@ console.log('Self ',Self);
                   )}
               </label>
 
-              <label>
+              {/* <label>
               Designation<span className="text-danger">*</span>
                 <input
                   className='mb-0'
@@ -2123,14 +2127,14 @@ console.log('Self ',Self);
                 {DesignationError && (
                     <Error className="input feedback">Designation is required</Error>
                   )}
-              </label>
+              </label> */}
 
             </div>
 
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "1fr 1fr",
+                gridTemplateColumns: "1fr ",
                 gap: "10px",
               }}
             >
@@ -2180,16 +2184,18 @@ console.log('Self ',Self);
               <div
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "2fr  ",
+                  gridTemplateColumns: "1fr  ",
                   gap: "10px",
                 }}
+                className="d-flex justify-content-end"
+
               >
               <div className="py-2 bg-primary text-white text-center" style={{
-                width: "100%",
+                width: "50%",
                 borderRadius: '7px',
                 cursor: 'pointer',
               }} onClick={CreateStory}>
-                Continue
+              Submit
               </div>
               </div>
             </div>

@@ -437,7 +437,7 @@ const daysDifference = getDaysDifference(formData.start_date, formData.end_date)
 
                 <div className="row">
                 <div className="col-md-6">
-  <label>Created By</label>
+  <label>Created For</label>
   <select
     name="created_by"
     value={formData.created_by}
