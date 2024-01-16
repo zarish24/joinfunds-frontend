@@ -88,7 +88,7 @@ const Dashboard = () => {
         }
 
         const data = await response.json();
-        setTotalPages(Math.ceil(data.totalRecords / RecordsPerPage));
+        setTotalPages(Math.ceil(data.totalCount / RecordsPerPage));
         console.log('data.data 111  -------------------->>>>>>>>>>>>>', data);
         setDonorsDetails(data.totalCount);        
         setDummyData1(data.transactions);
@@ -219,7 +219,7 @@ const Dashboard = () => {
                     </div>
                     <div className="icon-content">
                       <h5 className="dz-tilte m-b5 text-capitalize">
-                      Payout Balance
+                      Total Available Balance
                       </h5>
                       <p>
                       {payoutBalance} USD
@@ -279,7 +279,7 @@ const Dashboard = () => {
                     </div>
                     <div className="icon-content">
                       <h5 className="dz-tilte m-b5 text-capitalize">
-                      Total Donors
+                      Today Donors
                       </h5>
                       <p>
                       {dummyDataCount} 
@@ -292,7 +292,7 @@ const Dashboard = () => {
           </div>
         </section>
       </div>
-      <div
+      {/* <div
         style={{
           textAlign: "center",
           marginTop: "10px",
@@ -380,7 +380,7 @@ const Dashboard = () => {
             </div>
           </nav>
         </div>
-      </div>
+      </div> */}
       <div
         style={{
           textAlign: "center",
@@ -403,7 +403,7 @@ const Dashboard = () => {
         <th scope="col" style={{  color: "white" }}>Total Donations</th>
         <th scope="col" style={{  color: "white" }}>System Fee</th>
         <th scope="col" style={{  color: "white" }}>Payment Method</th>
-        <th scope="col" style={{  color: "white" }}>Payment Status</th>
+        {/* <th scope="col" style={{  color: "white" }}>Paym/ent Status</th> */}
         <th scope="col" style={{  color: "white" }}>Campaign Duration</th>
       </tr>
     </thead>
@@ -416,7 +416,7 @@ const Dashboard = () => {
             <td>{request.amount} {request.currency}</td>
             <td>{request.system_fees} {request.currency}</td>
             <td>{request.payment_method}</td>
-            <td>{request.payment_status}</td>
+            {/* <td>{request.payment_status}</td> */}
             <td>{formattedDate(request.created_time)}</td>
           </tr>
         ))}

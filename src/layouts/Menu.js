@@ -91,7 +91,7 @@ export const MenuListArray2 = [
         classChange:"sub-menu-down",
         content : [
             {
-                title:"My Campaigns",
+                title:"Campaigns",
                 to:"/my-campaigns"
             },
             {
@@ -104,7 +104,7 @@ export const MenuListArray2 = [
             },
            
             {
-                title:"Campaigns",
+                title:"All Campaigns",
                 to:"/campaigns"
             },
             // {
@@ -126,7 +126,7 @@ export const MenuListArray2 = [
     //     title:"Blog",
     //     classChange:"sub-menu-down",
     //     content:[
-    //         {
+    //         {0
     //             title:"Blog",
     //             to:"/blog"
     //         },

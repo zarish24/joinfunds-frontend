@@ -79,7 +79,7 @@ const TermsCondition = () => {
                           Ownership and Limited Right to Use{" "}
                         </Link>
                       </li>
-                      {/* <li><Link to="scrollNavSection08" className="nav-link scroll">Communications Not Confidential</Link></li> */}
+                   
                       <li>
                         <Link
                           to="scrollNavSection09"
@@ -125,111 +125,75 @@ const TermsCondition = () => {
                 </aside>
               </div>
               <div className="col-xl-8 col-lg-7">
-                <div className="dz-terms-content" id="scrollNavSection01">
-                  <h4 className="title">Our Services</h4>
-                  <ul>
-                    <p>
-                      Terms of Service and Use Of the fundraising platform
-                      <strong>
-                      <a
-                        className="text-dark gmail"
-                        target="_blank"
-                        rel="noreferrer"
-                        href="#"
-                      >
-                       www.nfuse-me.com,
-                      </a>
-                    </strong>  the branded website owned by Arbucas LLC
-                      November 27, 2023 <strong>
-                      <a
-                        className="text-dark gmail"
-                        target="_blank"
-                        rel="noreferrer"
-                        href="#"
-                      >
-                       www.nfuse-me.com,
-                      </a>
-                    </strong> is a 0% platform fee
-                      online crowdfunding and charitable donation platform owned
-                      by Arbucas LLC. <strong>
-                      <a
-                        className="text-dark gmail"
-                        target="_blank"
-                        rel="noreferrer"
-                        href="#"
-                      >
-                       www.nfuse-me.com,
-                      </a>
-                    </strong> provides users the
-                      ability to fund a variety of user-generated campaigns with
-                      designated individuals, businesses, for-profit and
-                      non-profit organizations, and United States federal
-                      political candidates receiving the contributions. Standard
-                      credit and debit card fees apply. You are agreeing to our
-                      Terms of Service and Use in order for us to process your
-                      contribution and distribute the proceeds to the designated
-                      funding destination and/or host your fundraising campaign.
-                      Payments are issued after a bank account is linked via the
-                      User Dashboard. Our third party payment processor will
-                      disburse money via direct deposit within a few days
-                      business days of a request. In the incident that fraud is
-                      suspected, additional time may be required. If you have
-                      any questions at any time, please reach out to us at
-                      <strong>
-                      <a
-                        className="text-dark gmail"
-                        target="_blank"
-                        rel="noreferrer"
-                        href="#"
-                      >
-                      info@nfuse-me.com.
-                      </a>
-                    </strong>
-                    <strong>
-                      <a
-                        className="text-dark gmail"
-                        target="_blank"
-                        rel="noreferrer"
-                        href="#"
-                      >
-                       www.nfuse-me.com,
-                      </a>
-                    </strong>
-                       does not allow
-                      campaigns that benefit illegal activities. All campaigns
-                      are subject to internal review for compliance and
-                      <strong>
-                      <a
-                        className="text-dark gmail"
-                        target="_blank"
-                        rel="noreferrer"
-                        href="#"
-                      >
-                       www.Nfuse-me.com
-                      </a>
-                    </strong>
-                       reserves the right to cancel or suspend
-                      any campaign for any reason. These Terms of Service (this
-                      “Agreement”), are made between you (“you” or “User” or
-                      “Subscriber”), and Arbucas LLC, registered in Texas,(“we”
-                      or “us”), and govern the terms and conditions of your
-                      access to and use of our Services (as defined below).
-                      However, if you have entered into this Agreement on behalf
-                      of an entity, such as a corporation or limited liability
-                      company then “you” or “User” or “Subscriber” refer to the
-                      entity, and you represent and warrant that you have power
-                      and authority to enter into this Agreement on behalf of
-                      the entity. This Agreement also includes and incorporates
-                      by reference any operating rules, policies, price
-                      schedules, or other supplemental documents which may be
-                      published generally from time to time by us, both prior
-                      and subsequent to the effective date of this Agreement. By
-                      registering for and/or using any of the Services, you
-                      confirm your acceptance of, and agree to be bound by, this
-                      Agreement.
-                    </p>
-                  </ul>
-                </div>
+              <div className="dz-terms-content" id="scrollNavSection01">
+  <h4 className="title">Our Services</h4>
+  <ul>
+    <p>
+      Terms of Service and Use of the fundraising platform &nbsp;
+      <strong>
+        <a className="text-dark gmail" target="_blank" rel="noreferrer" href="#">
+          www.nfuse-me.com,
+        </a>
+      </strong>
+      &nbsp;the branded website owned by Arbucas LLC, November 27, 2023 &nbsp;
+      <strong>
+        <a className="text-dark gmail" target="_blank" rel="noreferrer" href="#">
+          www.nfuse-me.com,
+        </a>
+      </strong>
+      &nbsp;is a 0% platform fee online crowdfunding and charitable donation platform owned
+      by Arbucas LLC. &nbsp;
+      <strong>
+        <a className="text-dark gmail" target="_blank" rel="noreferrer" href="#">
+          www.nfuse-me.com,
+        </a>
+      </strong>
+      &nbsp;provides users the ability to fund a variety of user-generated campaigns with
+      designated individuals, businesses, for-profit and non-profit organizations,
+      and United States federal political candidates receiving the contributions.
+      Standard credit and debit card fees apply. You are agreeing to our
+      Terms of Service and Use in order for us to process your contribution and
+      distribute the proceeds to the designated funding destination and/or host your
+      fundraising campaign. Payments are issued after a bank account is linked via the
+      User Dashboard. Our third-party payment processor will disburse money via
+      direct deposit within a few business days of a request. In the incident that
+      fraud is suspected, additional time may be required. If you have any questions
+      at any time, please reach out to us at
+      <strong> &nbsp;
+        <a className="text-dark gmail" target="_blank" rel="noreferrer" href="#">
+          info@nfuse-me.com.
+        </a>
+      </strong> &nbsp;
+      <strong>
+        <a className="text-dark gmail" target="_blank" rel="noreferrer" href="#">
+          www.nfuse-me.com,
+        </a>
+      </strong>
+      &nbsp;does not allow campaigns that benefit illegal activities. All campaigns are
+      subject to internal review for compliance and
+      <strong>&nbsp;
+        <a className="text-dark gmail" target="_blank" rel="noreferrer" href="#">
+          www.Nfuse-me.com
+        </a>
+      </strong>
+      &nbsp;reserves the right to cancel or suspend any campaign for any reason. These Terms
+      of Service (this “Agreement”), are made between you (“you” or “User” or
+      “Subscriber”), and Arbucas LLC, registered in Texas, (“we” or “us”), and govern
+      the terms and conditions of your access to and use of our Services (as defined
+      below). However, if you have entered into this Agreement on behalf of an entity,
+      such as a corporation or limited liability company, then “you” or “User” or
+      “Subscriber” refer to the entity, and you represent and warrant that you have
+      power and authority to enter into this Agreement on behalf of the entity. This
+      Agreement also includes and incorporates by reference any operating rules,
+      policies, price schedules, or other supplemental documents which may be published
+      generally from time to time by us, both prior and subsequent to the effective
+      date of this Agreement. By registering for and/or using any of the Services, you
+      confirm your acceptance of, and agree to be bound by, this Agreement.
+    </p>
+  </ul>
+</div>
+
+
                 <div className="dz-terms-content" id="scrollNavSection02">
                   <h4 className="title">
                     Arbucas LLC Responsibilities to Users
@@ -807,7 +771,7 @@ const TermsCondition = () => {
                     {" "}
                     If there are any questions regarding our terms and
                     conditions you may contact us using the information below.
-                    Arbucas LLC
+                    Arbucas LLC&nbsp;
                     <strong>
                       <a
                         className="text-dark gmail"

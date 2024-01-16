@@ -191,7 +191,7 @@ const HappyClients = () => {
             </div>
             <div className="clearfix">
               <h5 className="testimonial-name">{`${story.firstName} ${story.lastName}`}</h5>
-              <span className="testimonial-position">{story.designation}</span>
+              {/* <span className="testimonial-position">{story.designation}</span> */}
             </div>
           </div>
         </div>
