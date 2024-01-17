@@ -108,6 +108,7 @@ console.log('Self ',Self);
   const [modalDonate1, setModalDonate1] = useState(false);
   const [FeedBackModal, setFeedBackModal] = useState(false);
   const [modalDonate2, setModalDonate2] = useState(false);
+  const [textModal, settextModal] = useState(false);
   const [modalStripeDonate, setModalStripeDonate] = useState(false);
   const [referModal, setReferModal] = useState(false);
   const [campaign, setCampaign] = useState({});
@@ -666,6 +667,7 @@ console.log('Self ',Self);
   };
 
   useEffect(() => {
+    settextModal(true);
     const fetchData = async () => {
       const items = JSON.parse(localStorage.getItem('user'));
       const token = items?.token;
@@ -1201,7 +1203,7 @@ console.log('Self ',Self);
       }}
       onClick={() => checkBankAccountDetailsss(campaign._id)}
     >
-      Quick Payout of Funds
+   {campaign.status === 'close' ? ' Payout of Funds' : 'Quick Payout of Funds'}
     </button>
   </>
 )}
@@ -1632,6 +1634,47 @@ console.log('Self ',Self);
           </>
         )}
       </Modal>
+
+
+      <Modal
+        className="modal fade modal-wrapper"
+        id="modalDonate"
+        show={textModal}
+        onHide={() => settextModal(false)}
+      >
+        {loading ? (
+          <Box className={styles.bars}>
+            <ThreeDots color="#E6007C" width={50} height={50} />
+          </Box>
+        ) : (
+          <>
+            <div className="modal-header">
+              {/* <h5 className="modal-title">Enter Bank Account Details</h5> */}
+              <button
+                type="button"
+                className="btn-close"
+                onClick={() => settextModal(false)}
+              >
+                <i className="flaticon-close"></i>
+              </button>
+            </div>
+            <div className="modal-body">
+              <div className="col-lg-12 text-center">
+                <h5>Some Informational text</h5>
+              </div>
+              <div className="col-lg-12">
+                {/* <div className="form-group mb-0 text-center">
+                  <a href={`${process.env.REACT_APP_BACKEND_URL}/profile-setting`} className="btn btn-primary btn-block">
+                    Click here to add details
+                  </a>
+                </div> */}
+              </div>
+            </div>
+          </>
+        )}
+      </Modal>
+
+
       <Modal
         className="fade modal"
         show={modalDonate1}
