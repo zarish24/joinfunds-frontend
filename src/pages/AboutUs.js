@@ -47,18 +47,16 @@ const AboutUs = () => {
               <div className="col-lg-7">
                 <div className="section-head">
                   <h5 className="sub-title">Who We Are</h5>
-                  <h2>NFUSE</h2>
+                  <h2>Join Funds - Uniting Hearts and Changing Lives! </h2>
                   <p className="m-t20">
-                  Nfuse is a donation platform with a simple mission of supporting freedom-loving people and projects.  
-                  We support freedom for everyone. Freedom doesn’t pick a political side-everyone should have access to the 
-                  many forms of freedom.  We have a broad range of campaign  categories where you can help expand 
-                  freedom for yourself and for others.{" "}
+                  Join Funds serves as a catalyst for change, linking passionate individuals and organisation with impactful causes, empowering them to pave the way towards a liberated and promising future. 
+{" "}
                   </p>
                   <p>
-                  Nfuse is here for ALL.
+                  JoinFund is here for ALL.
                   </p>
                   <p>
-                  By having a large reach of potential donors, Nfuse can do so much more than an individual or small group of people can do.
+                  By having a large reach of potential donors, JoinFund can do so much more than an individual or small group of people can do.
                   </p>
                 </div>
 
@@ -77,7 +75,7 @@ const AboutUs = () => {
                         {data.title}
                       </h5>
                       <p>
-                      Here at Nfuse we believe each person has a responsibility to help where he or she can.  We take that statement seriously and that is why we created this platform that provides a venue for helping others.{" "}
+                      At Join Funds, we are on a mission where we believe in the power of giving, drive freedom and positive change in our community. We believe in the transformative power of unity, where every hand joined symbolises not just an act of giving, but a promise of individuals brighter tomorrows. {" "}
                       </p>
                     </div>
                   </div>
@@ -136,9 +134,9 @@ const AboutUs = () => {
           <div className="container">
             <div className="section-head text-center">
               {/* <h5 className="sub-title">CATEGORIES</h5> */}
-              <h1 className="m-b20">Why choose Nfuse?</h1>
+              <h1 className="m-b20">Why choose JoinFund?</h1>
               <p>
-              The pursuit of freedom for individuals is a constitutional and universal aspiration. This spirit of inspiration, when combined with the ingrained human desire to help others, can make a real difference in the community. If you're interested in nurturing and embracing your instinct for freedom, we invite you to partner with us in meaningful ways that ensure your fundraising efforts have a far-reaching, lasting impact. Join us, get "Nfused", and live Free!
+              The pursuit of freedom for individuals is a constitutional and universal aspiration. This spirit of inspiration, when combined with the ingrained human desire to help others, can make a real difference in the community. If you're interested in nurturing and embracing your instinct for freedom, we invite you to partner with us in meaningful ways that ensure your fundraising efforts have a far-reaching, lasting impact. Join and become a significant part of something truly extraordinary!
               </p>
               {/* <p>
               FIND YOUR PURPOSE.  Get Nufsed.  Live free.

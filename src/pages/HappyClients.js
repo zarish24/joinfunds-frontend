@@ -28,7 +28,7 @@ function LeftImage({sideimage, paraModal}){
                     </div>
                     <div className="testimonial-content">
                         <h5 className="testimonial-title">Support Local HomeLess </h5>
-                        <p className="testimonial-text">Nfuse helped me raise a campaign to support local homeless shelters. I always wanted to help by funding for clothing and blankets. With the help of the Nfuse, I was able to share my campaign with convenience to my friends and family. <Link to={"#"} onClick={()=>paraModal(true)} >Read More</Link></p>
+                        <p className="testimonial-text">JoinFund helped me raise a campaign to support local homeless shelters. I always wanted to help by funding for clothing and blankets. With the help of the JoinFund, I was able to share my campaign with convenience to my friends and family. <Link to={"#"} onClick={()=>paraModal(true)} >Read More</Link></p>
                         <div className="testimonial-info">
                             <div className="quotes">
                                 <i className="fa-solid fa-quote-left"></i>

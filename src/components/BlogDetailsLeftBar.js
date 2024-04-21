@@ -210,7 +210,7 @@ gift card, it's impersonal. Find something a person could really use or would re
 or something that would greatly impact his or her daily life in a great way.</p>
 <p>Enhancing someone's life means so much more than a gift card or a plate of bland cookies.</p>
 <p>The spirit of giving is alive and well.</p>
-<p>Blessings to you during this special time of year from all of us at Nfuse.</p> */}
+<p>Blessings to you during this special time of year from all of us at JoinFund.</p> */}
                     </div>
                 </div>
                 <div className="dz-share-post" hidden>

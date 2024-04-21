@@ -92,7 +92,7 @@ const MyDonations = () => {
           <th style={cellStylethead}>Date</th>
           <th style={cellStylethead}>Campaign</th>
           <th style={cellStylethead}>Donation to Campaign</th>
-          <th style={cellStylethead}>Donation to Nfuse</th>
+          <th style={cellStylethead}>Donation to JoinFund</th>
           <th style={cellStylethead}>Donation Status</th>
           <th style={cellStylethead}>Donation Method</th>
         </tr>

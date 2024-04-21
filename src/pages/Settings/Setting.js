@@ -1482,7 +1482,7 @@ const Setting = (props) => {
                                         >
                                             <h2> Recipient Details</h2>
                                             <small style={{ textAlign: 'justify' }}>
-                                                Nfuse will attempt to verify your identity and other information you provide and we may delay, withhold, reverse or refund any contributions or other amounts without notice or
+                                            JoinFund will attempt to verify your identity and other information you provide and we may delay, withhold, reverse or refund any contributions or other amounts without notice or
                                                 liability in the event that we are unable to verify any information to our satistaction.
                                             </small>
                                             <Grid container spacing={3}>
@@ -1964,7 +1964,7 @@ const Setting = (props) => {
               </select>
             </Grid>
             <Grid item xs={12} md={6} lg={6}>
-              <label>Donation To Nfuse:</label>
+              <label>Donation To JoinFund:</label>
               <select
                 name="donation_to_nfuse"
                 value={formData.donation_to_nfuse}

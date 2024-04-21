@@ -244,7 +244,7 @@ console.log('updateOpens value',value)
                                         <h2>Help is <br/>Our Main Goal</h2>
                                     </div>
                                     {/* <h4 className="font-weight-500 m-b10">We Need Your Help</h4> */}
-                                    <p className="m-b20">We invite you to be the part of something extraordinary. Whether you are a freedom-loving individual or a non-profit organization, Nfuse is here to infuse your funds. </p>
+                                    <p className="m-b20">We invite you to be the part of something extraordinary. Whether you are a freedom-loving individual or a non-profit organization, JoinFund is here to infuse your funds. </p>
                                     <div className="dz-about-info">
                                         <div className="row">
                                             <div className="col-lg-6 col-sm-6">

@@ -132,20 +132,20 @@ const TermsCondition = () => {
       Terms of Service and Use of the fundraising platform &nbsp;
       <strong>
         <a className="text-dark gmail" target="_blank" rel="noreferrer" href="#">
-          www.nfuse-me.com,
+          www.JoinFund-me.com,
         </a>
       </strong>
       &nbsp;the branded website owned by Arbucas LLC, November 27, 2023 &nbsp;
       <strong>
         <a className="text-dark gmail" target="_blank" rel="noreferrer" href="#">
-          www.nfuse-me.com,
+          www.JoinFund-me.com,
         </a>
       </strong>
       &nbsp;is a 0% platform fee online crowdfunding and charitable donation platform owned
       by Arbucas LLC. &nbsp;
       <strong>
         <a className="text-dark gmail" target="_blank" rel="noreferrer" href="#">
-          www.nfuse-me.com,
+          www.JoinFund-me.com,
         </a>
       </strong>
       &nbsp;provides users the ability to fund a variety of user-generated campaigns with
@@ -161,19 +161,19 @@ const TermsCondition = () => {
       at any time, please reach out to us at
       <strong> &nbsp;
         <a className="text-dark gmail" target="_blank" rel="noreferrer" href="#">
-          info@nfuse-me.com.
+          info@JoinFund-me.com.
         </a>
       </strong> &nbsp;
       <strong>
         <a className="text-dark gmail" target="_blank" rel="noreferrer" href="#">
-          www.nfuse-me.com,
+          www.JoinFund-me.com,
         </a>
       </strong>
       &nbsp;does not allow campaigns that benefit illegal activities. All campaigns are
       subject to internal review for compliance and
       <strong>&nbsp;
         <a className="text-dark gmail" target="_blank" rel="noreferrer" href="#">
-          www.Nfuse-me.com
+          www.JoinFund-me.com
         </a>
       </strong>
       &nbsp;reserves the right to cancel or suspend any campaign for any reason. These Terms
@@ -204,7 +204,7 @@ const TermsCondition = () => {
                       if you are a User of the platform, you agree that the
                       platform will A. receive and process online contributions
                       (online Contributions) made by individuals or entities
-                      (Donors) through the www.Nfuse-me.com platform; B. remit
+                      (Donors) through the www.JoinFund-me.com platform; B. remit
                       funds to the designated funding destination, to the bank
                       account provided by the funding destnation, less a payment
                       processing fee. D. in the event of non-profit
@@ -228,7 +228,7 @@ const TermsCondition = () => {
                         rel="noreferrer"
                         href="/privacy-policy"
                       >
-                        https://www.nfuse-me.com/privacy
+                        https://www.JoinFund-me.com/privacy
                       </a>
                     </strong>
                      
@@ -295,14 +295,14 @@ const TermsCondition = () => {
                       a Recipient that is a political candidate or committee and
                       a “donation” to a Recipient that is a for-profit or
                       non-profit organization, individual, or business.
-                      www.nfuse-me.com makes no representation or warranty that
+                      www.JoinFund-me.com makes no representation or warranty that
                       any contribution is tax-deductible. You agree to be
                       responsible for the tax reporting and characterization of
                       any contribution for your account to any Recipient. All
                       Contributions via the Services must be made in U.S.
                       Dollars or converted to U.S. Dollars. You do not purchase
                       any goods or receive any services or obtain equity in any
-                      business or entity as a result of www.nfuse-me.com having
+                      business or entity as a result of www.JoinFund-me.com having
                       approved funding destinations in return for your
                       contribution. Contributions made to nonprofit and
                       political funding destinations, although earmarked for a
@@ -344,7 +344,7 @@ const TermsCondition = () => {
                       that we assume your rights against the Recipient, and may
                       pursue those rights directly or on your behalf. If you
                       register to create an account to receive payments via our
-                      application, you expressly authorize www.nfuse-me.com’s
+                      application, you expressly authorize www.JoinFund-me.com’s
                       payment processor service provider(s) to originate credit
                       transfers to your financial institution account. You must
                       be at least 13 years old and obtain parental permission if
@@ -352,7 +352,7 @@ const TermsCondition = () => {
                       share with our your personal information including full
                       name, email address and financial information, and you are
                       responsible for the accuracy and completeness of that
-                      data. www.nfuse-me.com’s Privacy Policy is available here.
+                      data. www.JoinFund-me.com’s Privacy Policy is available here.
                       D. Refund and Cancellation Policy Donate with intention as
                       refunds for the base donation amount must be secured from
                       the recipient of your Contribution. Requests to change the
@@ -394,12 +394,12 @@ const TermsCondition = () => {
                       potentially libelous, benefit groups that support violence
                       of any kind, or benefit the accused perpetrators of
                       violent crimes. All campaigns are subject to internal
-                      review for compliance and www.nfuse-me.com reserves the
+                      review for compliance and www.JoinFund-me.com reserves the
                       right to cancel or suspend any campaign for any reason. F.
                       Privacy and Other Policies Your use of the Services is
                       subject to our Privacy Policy and other applicable
                       policies, each as established by us from time to time,
-                      available at www.nfuse-me,com, which are incorporated
+                      available at www.JoinFund-me,com, which are incorporated
                       herein by reference. We shall disclose to Recipients and,
                       if required, governmental bodies such information about
                       you as a contributor as must be disclosed by law or as may
@@ -422,33 +422,33 @@ const TermsCondition = () => {
                       content, and this method can and should be used to notify
                       us of any content that needs to be reviewed by our
                       moderators. H. Documentation and Tax Implications Because
-                      www.nfuse-me.com is not sharing your personal information
+                      www.JoinFund-me.com is not sharing your personal information
                       with any of the non-political funding destinations, the
                       non-political funding organizations are unable to further
                       acknowledge your contributions. You will receive an email
-                      receipt from www.nfuse-me.com when your credit card is
+                      receipt from www.JoinFund-me.com when your credit card is
                       billed which will serve as your only acknowledgement of
                       your contribution. The contribution will appear on your
                       credit card statement as an aggregated transaction.
-                      Www.nfuse-me.com makes no representation or warranty that
+                      Www.JoinFund-me.com makes no representation or warranty that
                       any contribution is tax-deductible. You agree to be
                       responsible for the tax reporting and characterization of
-                      any contribution by www.nfuse-me.com for your account to
+                      any contribution by www.JoinFund-me.com for your account to
                       any Recipient. I. Ownership of Uploaded Content By
-                      uploading images, text, and video to www.nfuse-me.com, you
+                      uploading images, text, and video to www.JoinFund-me.com, you
                       acknowledge that you have the right to do so and that the
-                      content uploaded to www.nfuse-me.com does not violate any
-                      copyrights of the owner. www.nfuse-me.com reserves the
+                      content uploaded to www.JoinFund-me.com does not violate any
+                      copyrights of the owner. www.JoinFund-me.com reserves the
                       right to remove any content that is in violation of an
-                      owner’s copyright and ban users from the www.nfuse-me.com
+                      owner’s copyright and ban users from the www.JoinFund-me.com
                       platform who repeatedly violate this term. If you feel a
                       copyright violation has occurred, contact
-                      info@nfuse-me.com with the subject line of “potential
+                      info@JoinFund-me.com with the subject line of “potential
                       copyright issue”. J. Specificity of Fundraising
                       Commitments Unless you are an authorized representative of
                       a funding destination, you may not pledge or promise that
                       funds raised through your campaign will be used for any
-                      specific purpose. www.nfuse-me.com reserves the right to
+                      specific purpose. www.JoinFund-me.com reserves the right to
                       remove any campaigns that are in violation of this term.
                     </p>
                   </ul>
@@ -457,7 +457,7 @@ const TermsCondition = () => {
                   <h4 className="title">Our Fees ("Fees")</h4>
                   <ul>
                     <p>
-                      A. www.nfuse-me.com has a 0% platform fee for all donation
+                      A. www.JoinFund-me.com has a 0% platform fee for all donation
                       campaigns, regardless of destination type.  B. You agree
                       to pay all payment processing fees for your transactions
                       at the prices set by our payment processor(s) then in use,
@@ -649,7 +649,7 @@ const TermsCondition = () => {
                         rel="noreferrer"
                         href="#"
                       >
-                        info@nfuse-me.com
+                        info@JoinFund-me.com
                       </a>
                     </strong>
                   </p>
@@ -719,7 +719,7 @@ const TermsCondition = () => {
                         rel="noreferrer"
                         href="#"
                       >
-                        info@nfuse-me.com
+                        info@JoinFund-me.com
                       </a>
                     </strong>
                   </p>
@@ -760,7 +760,7 @@ const TermsCondition = () => {
                         rel="noreferrer"
                         href="#"
                       >
-                        info@nfuse-me.com
+                        info@JoinFund-me.com
                       </a>
                     </strong>
                   </p>
@@ -779,7 +779,7 @@ const TermsCondition = () => {
                         rel="noreferrer"
                         href="#"
                       >
-                        info@nfuse-me.com
+                        info@JoinFund-me.com
                       </a>
                     </strong>
                   </p>

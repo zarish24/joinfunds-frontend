@@ -474,7 +474,7 @@ const daysDifference = getDaysDifference(formData.start_date, formData.end_date)
 
                 <div className="row">
                 <div className="col-md-6">
-                  <label>Donation To Nfuse:</label>
+                  <label>Donation To JoinFund:</label>
                   
                   <select
                         name="donation_to_nfuse"

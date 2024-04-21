@@ -495,7 +495,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo,Login,open,updateOpens  
                       <img
                         src={IMAGES.logo3}
                         alt=""
-                        style={{ height: "80px", width: "132px" }}
+                        style={{ height: "100px", width: "132px" }}
                       />
                     </Link>
                   </div>
@@ -503,7 +503,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo,Login,open,updateOpens  
                     <Link to={"/"}>
                       <img
                         src={IMAGES.logo3}
-                        style={{ height: "80px", width: "132px" }}
+                        style={{ height: "100px", width: "132px" }}
                         alt=""
                       />
                     </Link>
@@ -514,7 +514,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo,Login,open,updateOpens  
                   <Link to={"/"}>
                     <img
                       src={IMAGES.logo2}
-                      style={{ height: "80px", width: "132px" }}
+                      style={{ height: "100px", width: "132px" }}
                       alt=""
                     />
                   </Link>
@@ -1001,7 +1001,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo,Login,open,updateOpens  
           </Box> */}
           <div className="sign-text">
             <span>
-               Don't have an Nfuse account ?
+               Don't have an JoinFund account ?
               <Link
                 to={"#"}
                 className="btn-link collapsed"
@@ -1067,7 +1067,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo,Login,open,updateOpens  
       >
        <Modal.Header
   className="d-flex justify-content-between align-items-center"
-  style={{ backgroundColor: "#002768" }}
+  style={{ backgroundColor: "#6a53a2" }}
 >
   <h4 className="text-center  mx-auto" style={{ color: "white" }}>
     Sign Up/Start a Campaign 
@@ -1538,7 +1538,7 @@ const Header = ({ onShowDonate, changeStyle, changeLogo,Login,open,updateOpens  
 
           <div className="sign-text">
             <span>
-              Already have an Nfuse account?{" "}
+              Already have an JoinFund account?{" "}
               <Link
                 to="#"
                 className="btn-link collapsed"

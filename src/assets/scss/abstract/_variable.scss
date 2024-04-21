@@ -3,7 +3,7 @@ $enable-deprecation-messages: false;
 $ignore-warning             : true;
 
 // Color
-$primary   : #002768;
+$primary   : #6a53a2;
 $secondary : #bf0b32 !default;
 $success   : #13c24d !default;
 $info      : #00aeff !default;
@@ -84,7 +84,7 @@ $border-radius-sm: .75rem !default;
 	--secondary: #{$secondary};
 	--gray: #{$gray};
 	--primary-hover: #bf0b32;
-	--secondary-hover: #002768;
+	--secondary-hover: #6a53a2;
 	--primary-dark: #ea4619;
 	--rgba-secondary-1: #{rgba($secondary, 0.1)};
 	--rgba-primary-1: #{rgba($primary, 0.1)};

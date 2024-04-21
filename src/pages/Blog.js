@@ -79,7 +79,7 @@ const Blog = () => {
                                                 <li><Link to={"#"}>BUSSINESS STRATEGY</Link></li>
                                             </ul>
                                         </div>
-                                        <h5 className="dz-title"><Link to={"/blog-details"} className="text-white">Nfuse Academy 2021 Grand Opening at Jakarta</Link></h5>
+                                        <h5 className="dz-title"><Link to={"/blog-details"} className="text-white">JoinFund Academy 2021 Grand Opening at Jakarta</Link></h5>
                                     </div>
                                 </div>
                             </div>

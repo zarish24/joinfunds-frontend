@@ -30,7 +30,7 @@ const Footer = () => {
                         <div className="text-center"> 
                             <span className="copyright-text" style={{
                                color: 'rgba(255, 255, 255, 0.5)' 
-                            }}>Copyright © 2023 <a href="/" target="_blank" rel="noreferrer">Nfuse</a>. All rights reserved.&nbsp;&nbsp;Powered By <a href="https://solususa.com/" target="_blank" rel="noreferrer">Solususa.</a></span> 
+                            }}>Copyright © 2023 <a href="/" target="_blank" rel="noreferrer">JoinFund</a>. All rights reserved.&nbsp;&nbsp;Powered By <a href="https://solususa.com/" target="_blank" rel="noreferrer">Solususa.</a></span> 
                         </div>
                     </div>
                 </div>

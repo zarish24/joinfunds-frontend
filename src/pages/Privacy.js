@@ -36,7 +36,7 @@ const Privacy = () => {
                                 <div className="dz-terms-content" id="scrollNavSection01">
                                     <h4 className="title">Acceptance</h4>
                                     <ul>
-                                        <p>We have created this Privacy Policy (the “Policy”) because we value users’ privacy. The Policy describes the types of information we may collect from you, or that you may provide, when you access www.nfuse-me.com (the “Site”). This Policy does not apply to information collected by any third party, including through any external website that may link to or be accessible from the Site. Please check directly with each such third party to avoid unfair surprises and misunderstandings.
+                                        <p>We have created this Privacy Policy (the “Policy”) because we value users’ privacy. The Policy describes the types of information we may collect from you, or that you may provide, when you access www.JoinFund-me.com (the “Site”). This Policy does not apply to information collected by any third party, including through any external website that may link to or be accessible from the Site. Please check directly with each such third party to avoid unfair surprises and misunderstandings.
 Your use of this Site constitutes your acceptance of this Privacy Policy. If you do not agree with this Privacy Policy, you may not use our Site. This Policy may change from time to time.   Your continued use of this Site after we revise this Policy is deemed to be acceptance of the revisions, so please check this page from time to time for updates. 
  
 </p>
@@ -104,14 +104,14 @@ Most browsers allow you to turn off cookies. Switching off cookies may restrict 
                                 <div className="dz-terms-content" id="scrollNavSection07">
                                     <h4 className="title">Children’s Privacy</h4>
                                     <p>Our site is not directed to children under the age of 13. We do not knowingly collect any personal information about children under the age of 13. If we obtain actual knowledge that we have collected personal information about a child under the age of 13, that information will be immediately deleted from our database. 
-If a parent believes that his or her child has submitted personal information to us, he or she can contact us via e-mail at info@nfuse-me.com. We will promptly delete the information upon learning that it relates to a child under the age of 13. Please note that it is possible some of this information may remain archived in web logs and back-up archives after we delete the information from our active database.
+If a parent believes that his or her child has submitted personal information to us, he or she can contact us via e-mail at info@JoinFund-me.com. We will promptly delete the information upon learning that it relates to a child under the age of 13. Please note that it is possible some of this information may remain archived in web logs and back-up archives after we delete the information from our active database.
 
 .</p>
                                     
                                 </div>                                
                                 <div className="dz-terms-content" id="scrollNavSection08">
                                     <h4 className="title">Accessing and correcting your personal information</h4>
-                                    <p>Please send us an e-mail to info@nfuse-me.com to request access to, correct or delete any personal information that you have provided to us or to ask questions about this Privacy Policy. We reserve the right to refuse a request if we believe it would violate any law or cause the information to be incorrect.
+                                    <p>Please send us an e-mail to info@JoinFund-me.com to request access to, correct or delete any personal information that you have provided to us or to ask questions about this Privacy Policy. We reserve the right to refuse a request if we believe it would violate any law or cause the information to be incorrect.
 </p>
                                 </div>                                
                                 {/* <div className="dz-terms-content" id="scrollNavSection09">

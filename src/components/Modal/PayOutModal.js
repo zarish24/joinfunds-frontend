@@ -99,7 +99,7 @@ const PayOutModal = ({ isOpen, closeModal ,campaignId}) => {
       centered
     >
        <div className="modal-content">
-       <Modal.Header style={{ backgroundColor: "#002768" }}  closeButton>
+       <Modal.Header style={{ backgroundColor: "#6a53a2" }}  closeButton>
   <div className="row w-100">
     <div className="col-lg-12 d-flex">
       <h5 className="text-white">Add account Details</h5>

@@ -291,7 +291,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                       <img
                         src={IMAGES.logo3}
                         alt=""
-                        style={{ height: "60px", width: "112px" }}
+                        style={{ height: "100px", width: "112px" }}
                       />
                     </Link>
                   </div>
@@ -299,7 +299,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                     <Link to={"/"}>
                       <img
                         src={IMAGES.logo3}
-                        style={{ height: "60px", width: "112px" }}
+                        style={{ height: "100px", width: "112px" }}
                         alt=""
                       />
                     </Link>
@@ -310,7 +310,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                   <Link to={"/"}>
                     <img
                       src={IMAGES.logo2}
-                      style={{ height: "60px", width: "112px" }}
+                      style={{ height: "100px", width: "112px" }}
                       alt=""
                     />
                   </Link>
@@ -338,7 +338,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                     <Link to={"/"}>
                       <img
                         src={IMAGES.logo3}
-                        style={{ height: "60px", width: "112px" }}
+                        style={{ height: "100px", width: "112px" }}
                         alt=""
                       />
                     </Link>
@@ -346,7 +346,7 @@ const Header2 = ({ onShowDonate, changeStyle, changeLogo }) => {
                     <Link to={"/"}>
                       <img
                         src={IMAGES.logo2}
-                        style={{ height: "60px", width: "112px" }}
+                        style={{ height: "100px", width: "112px" }}
                         alt=""
                       />
                     </Link>

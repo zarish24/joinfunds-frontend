@@ -18,7 +18,7 @@ import { toast,  } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const cardBlog = [
-    {title:"Mail", subtitle:"info@nfuse-me.com", icon:"flaticon-email"},
+    {title:"Mail", subtitle:"info@JoinFund-me.com", icon:"flaticon-email"},
     // {title:"", subtitle:"", },
     // {title:"Our Address", subtitle:"832  Thompson Drive, San Fransisco, United States", icon:"flaticon-pin"},
 ];

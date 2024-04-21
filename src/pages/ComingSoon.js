@@ -2,7 +2,7 @@ import React,{useState, useEffect, useRef} from 'react';
 import { Link } from 'react-router-dom';
 import { Modal } from 'react-bootstrap';
 
-import logo from '../assets/images/nfuse_copy-removebg.png';
+import logo from '../assets/images/join-funds-trenas.png';
 import bnr from '../assets/images/banner/bnr3.jpg';
 import DonutChart2 from '../components/DonutChart2';
 
